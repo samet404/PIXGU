@@ -1,0 +1,19 @@
+#usersContainer > ::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+/* Track */
+#usersContainer > ::-webkit-scrollbar-track {
+  border-radius: 1rem;
+}
+
+/* Handle */
+#usersContainer > ::-webkit-scrollbar-thumb {
+  background: rgb(181, 181, 181);
+  border-radius: 10px;
+}
+
+#usersContainer > ::-webkit-scrollbar-thumb:hover {
+      background: rgb(170, 170, 170);
+
+}

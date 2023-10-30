@@ -1,0 +1,46 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "checkJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "noUncheckedIndexedAccess": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"],
+      "@/functions*": ["./src/functions/*"],
+      "@/components*": ["./src/components/*"],
+      "@/hooks*": ["./src/hooks/*"],
+      "@/server*": ["./src/server/*"],
+      "@/styles*": ["./src/styles/*"],
+      "@/types*": ["./src/types/*"],
+      "@/app*": ["./src/app/*"],
+      "@/public*": ["./public/*"],
+      "@/svg*": ["public/images/svg/*"],
+      "@/png*": ["public/images/png/*"],
+      "@/jpg*": ["public/images/jpg/*"]
+    },
+    "plugins": [{ "name": "next" }]
+  },
+  "include": [
+    ".eslintrc.cjs",
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.cjs",
+    "**/*.mjs",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": ["node_modules"]
+}

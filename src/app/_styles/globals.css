@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+html,
+body,
+body:first-child{
+  width: 100%;
+  height: 100%;
+}
+
+/*global font size*/
+html {
+  font-size: calc(15px + 0.390625vw);
+}
+
+/*cursor*/
+.cursor {
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ffb200;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+  pointer-events: none;
+  transform: scale(1);
+  opacity: 1;
+  transition:
+    background 0.5s ease,
+    transform 0.5s ease,
+    opacity 0.5s ease-out;
+  transform-origin: center;
+}
+
+/** Hover Effect */
+.cursor .hover {
+  transform: rotate(90deg) scale(2);
+  background: #f77e21;
+}
+
+/** Click Effect */
+.cursor .click {
+  transform: scale(0.6);
+  opacity: 0.5;
+}
+
+@keyframes position {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+#a {
+    animation: postion 5s ease infinite;
+}

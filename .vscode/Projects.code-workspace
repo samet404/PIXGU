@@ -1,0 +1,18 @@
+{
+    "folders": [
+        {
+            "path": "../.."
+        },
+        {
+            "path": ".."
+        }
+    ],
+    "settings": {
+        "editor.fontSize": 14,
+        "typescript.tsdk": "painter'sCards\\node_modules\\typescript\\lib",
+        "liveServer.settings.multiRootWorkspaceName": "Projects"
+    },
+    "extensions": {
+        "recommendations": []
+    }
+}
