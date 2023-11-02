@@ -2,6 +2,8 @@ import { useRef, useEffect } from 'react'
 import type { RefObject } from 'react'
 import { useIsomorphicLayoutEffect } from 'usehooks-ts'
 
+/* eslint-disable */  
+
 // MediaQueryList Event based useEventListener interface
 function useEventListener<K extends keyof MediaQueryListEventMap>(
   eventName: K,

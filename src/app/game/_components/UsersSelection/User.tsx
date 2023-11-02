@@ -1,9 +1,8 @@
-import type { NextFont } from 'next/font'
 import { Pixelify_Sans, Tilt_Neon } from 'next/font/google'
 import Image from 'next/image'
 import pfp from '@/png/pfp2.png'
 
-const pixelifySans: NextFont = Pixelify_Sans({
+const pixelifySans = Pixelify_Sans({
   subsets: ['latin'],
   weight: '700',
 })

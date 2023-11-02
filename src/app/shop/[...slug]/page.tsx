@@ -1,9 +1,8 @@
 import Link from 'next/link'
 // types
-import { NextFont } from '@next/font'
 // fonts
 import { Inter } from 'next/font/google'
-const inter: NextFont = Inter({ subsets: ['latin'] })
+const inter  = Inter({ subsets: ['latin'] })
 
 const page = () => {
     return (

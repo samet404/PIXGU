@@ -13,12 +13,25 @@ const config = {
     'eslint:recommended',
     'plugin:react/recommended',
   ],
+  globals: {
+    React: true,
+    google: true,
+    mount: true,
+    mountWithRouter: true,
+    shallow: true,
+    shallowWithRouter: true,
+    context: true,
+    expect: true,
+    jsdom: true,
+    JSX: true,
+  },
   rules: {
     // These opinionated rules are enabled in stylistic-type-checked above.
     // Feel free to reconfigure them to your own preference.
     'react/react-in-jsx-scope': 'off',
     'react/jsx-uses-react': 'off',
     'no-unused-vars': 'warn',
+    '@typescript-eslint/no-unsafe-return': 'off',
     '@typescript-eslint/no-unsafe-member-access': 'off',
     '@typescript-eslint/no-unsafe-call': 'off',
     '@typescript-eslint/no-unsafe-assignment': 'off',
@@ -43,5 +56,5 @@ const config = {
     ],
   },
 };
- 
+
 module.exports = config;

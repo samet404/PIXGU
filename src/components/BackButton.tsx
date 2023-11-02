@@ -3,9 +3,9 @@
 import type { ComponentProps, ReactNode } from 'react'
 import { useRouter } from 'next/navigation'
 
-type BackButton = { children: ReactNode } & ComponentProps<'button'>
+type BackButtonProps = { children: ReactNode } & ComponentProps<'button'>
 
-const BackButton = ({ children, ...rest }: BackButton) => {
+const BackButton = ({ children, ...rest }: BackButtonProps) => {
     const router = useRouter()
 
     return (

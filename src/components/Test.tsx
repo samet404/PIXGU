@@ -4,16 +4,16 @@ import clsx from 'clsx'
 import { usePathname } from 'next/navigation'
 import { useReducer, useState } from 'react'
 
-const reducer = (state, action) => {
+// const reducer = (state, action) => {
   
-}
+// }
 
 
 const Test = () => {
   const [count, setCount] = useState(0)
   const pathname = usePathname()
 
-  const [state, dispatch] = useReducer(reducer, { count: 0 })
+  // const [state, dispatch] = useReducer(reducer, { count: 0 })
 
   const handleIncrement = () => {
     setCount((prev) => prev - 1)
@@ -34,18 +34,6 @@ const Test = () => {
       <button onClick={handleIncrement}>-</button>
       <div>{count}</div>
       <button onClick={handleDecrement}>+</button>
-
-
-
-      <DarkMode.Provider>
-        <isLogin.Proiver>
-          <Cookie.Provider>
-            <Preferences.Provider>
-              <Main />
-            </Preferences.Provider>
-          </Cookie.Provider>
-        </isLogin.Proiver>
-      </DarkMode.Provider>
     </div>
   )
 }

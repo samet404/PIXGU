@@ -3,9 +3,8 @@ import Image from 'next/image'
 import { Pixelify_Sans } from 'next/font/google'
 // images
 import catPC from '@/png/catPC_.png'
-import { NextFont } from '@next/font'
 
-const pixelifySans: NextFont = Pixelify_Sans({
+const pixelifySans = Pixelify_Sans({
     subsets: ['latin'],
     weight: '400',
 })
