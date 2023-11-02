@@ -32,7 +32,7 @@ export default function RootLayout(props: {
         {props.children}
 
         <Analytics />
-        {/* <AnimatedCursor
+        <AnimatedCursor
           outerStyle={animatedCursorStyles.outerStyle}
           innerSize={8}
           outerSize={8}
@@ -54,7 +54,7 @@ export default function RootLayout(props: {
             'button',
             '.link',
           ]}
-        /> */}
+        />
       </body>
     </html>
   )
