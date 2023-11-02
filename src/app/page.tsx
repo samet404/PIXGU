@@ -1,5 +1,5 @@
 // react
-import { Fragment } from 'react'
+import { CSSProperties, Fragment } from 'react'
 // next
 import Image from 'next/image'
 // components
@@ -13,10 +13,44 @@ import questionmark from '@/png/questionmark.png'
 import play from '@/png/play.png'
 import createroom from '@/png/createroom.png'
 import Twitter from '@/public/images/svg/Twitter'
+import AnimatedCursor from 'react-animated-cursor'
 
 const Home = () => {
+  
+  const animatedCursorStyles: Record<string, CSSProperties> = {
+    outerStyle: {
+      backdropFilter: 'blur(5px)',
+      backgroundColor: 'rgba(0, 0, 0, 0.15)',
+      boxShadow: '0 0 10px 0 rgba(0, 0, 0, 0.6)',
+    },
+  }
+
   return (
     <Fragment>
+      <AnimatedCursor
+        outerStyle={animatedCursorStyles.outerStyle}
+        innerSize={8}
+        outerSize={8}
+        color="255, 255, 255"
+        outerAlpha={0.2}
+        innerScale={0.7}
+        outerScale={5}
+        clickables={[
+          'img',
+          'a',
+          'input[type="text"]',
+          'input[type="email"]',
+          'input[type="number"]',
+          'input[type="submit"]',
+          'input[type="image"]',
+          'label[for]',
+          'select',
+          'textarea',
+          'button',
+          '.link',
+        ]}
+      />
+      
       <main
         className={`flex h-full w-full flex-col items-center gap-3 overflow-y-auto bg-gray-900 py-[1rem]`}
       >
