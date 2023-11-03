@@ -8,6 +8,8 @@ import '@/output.css'
 import Test from '../components/Test'
 import { Analytics } from '@vercel/analytics/react'
 import AnimatedCursor from 'react-animated-cursor'
+// font
+import { GeistSans } from "geist/font"
 
 export default function RootLayout(props: {
   children: ReactNode
@@ -18,8 +20,6 @@ export default function RootLayout(props: {
   return (
     <html lang="en">
       <body>
-        <Test />
-
         {props.modal}
         {props.children}
 

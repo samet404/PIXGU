@@ -2,9 +2,9 @@
 
 import Link from 'next/link'
 import type { ComponentProps } from 'react'
-import { MuseoModerno } from 'next/font/google'
+import { MuseoModerno, Inter } from 'next/font/google'
 const museoModerno = MuseoModerno({ subsets: ['latin'] })
-
+const inter = Inter({ subsets: ['latin'] })
 type MainButtonProps = {
   className?: string
   link: string
@@ -30,12 +30,14 @@ const MainButton = ({
         <div className="flex flex-row items-center gap-2">
           {icon}
           <div
-            className={`${museoModerno.className} text-2xl text-[rgba(255,255,255,0.5)]`}
+            className={`${museoModerno.className} text-2xl font-[700] text-[rgba(255,255,255,0.5)] drop-shadow-[0_0px_8px_rgba(0,0,0,0.7)]`}
           >
             {name}
           </div>
         </div>
-        <div className="rounded-md bg-[rgba(255,255,255,0.1)] p-2 text-left leading-5 text-[rgba(255,255,255,0.5)] shadow-[0_0px_10px_0px_rgba(0,0,0,0.2)] ">
+        <div
+          className={`${inter.className} rounded-md bg-gradient-to-r from-[rgba(255,255,255,0.15)] to-[rgba(255,255,255,0.1)] p-2 text-left leading-5 text-[rgba(255,255,255,0.6)] shadow-[0_0px_10px_0px_rgba(0,0,0,0.2)]`}
+        >
           {description}
         </div>
       </button>

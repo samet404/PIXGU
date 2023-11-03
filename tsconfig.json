@@ -3,7 +3,7 @@
     "target": "es2017",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
-    "checkJs": true,
+    "checkJs": false,
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
@@ -29,7 +29,8 @@
       "@/public*": ["./public/*"],
       "@/svg*": ["public/images/svg/*"],
       "@/png*": ["public/images/png/*"],
-      "@/jpg*": ["public/images/jpg/*"]
+      "@/jpg*": ["public/images/jpg/*"],
+      "@/fonts*": ["public/fonts/*"],
     },
     "plugins": [{ "name": "next" }]
   },
@@ -41,6 +42,6 @@
     "**/*.cjs",
     "**/*.mjs",
     ".next/types/**/*.ts"
-, "scripts/seed.js"  ],
+, "scripts/seed.js", "src/app/lib/placeholder-data.js"  ],
   "exclude": ["node_modules"]
 }

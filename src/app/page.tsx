@@ -1,5 +1,5 @@
 // react
-import { CSSProperties, Fragment } from 'react'
+import { type CSSProperties, Fragment } from 'react'
 // next
 import Image from 'next/image'
 // components
@@ -50,9 +50,13 @@ const Home = () => {
           '.link',
         ]}
       />
-      
+
       <main
-        className={`flex h-full w-full flex-col items-center gap-3 overflow-y-auto bg-gray-900 py-[1rem]`}
+        style={{
+          backgroundColor: 'hsla(220,39%,10%,1)',
+          backgroundImage: 'radial-gradient(at 100% 100%, hsla(41,100%,54%,0.1) 0px, transparent 50%), radial-gradient(at 2% 0%, hsla(343,100%,76%,0.16) 0px, transparent 50%)'
+        }}
+        className={`flex h-full w-full flex-col items-center gap-3 overflow-y-auto py-[1rem]`}
       >
         <div className="flex animate-fade flex-col gap-4 p-4 animate-duration-1000">
           <div className="flex w-full flex-row justify-between gap-1">

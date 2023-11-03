@@ -31,6 +31,7 @@ const config = {
     'react/react-in-jsx-scope': 'off',
     'react/jsx-uses-react': 'off',
     'no-unused-vars': 'warn',
+    '@typescript-eslint/no-duplicate-type-constituents': 'off',
     '@typescript-eslint/no-unsafe-return': 'off',
     '@typescript-eslint/no-unsafe-member-access': 'off',
     '@typescript-eslint/no-unsafe-call': 'off',
