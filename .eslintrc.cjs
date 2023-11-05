@@ -13,6 +13,12 @@ const config = {
     'eslint:recommended',
     'plugin:react/recommended',
   ],
+  overrides: [
+    {
+      files: ['*.js'],
+      extends: ['plugin:@typescript-eslint/disable-type-checked'],
+    },
+  ],
   globals: {
     React: true,
     google: true,
@@ -30,7 +36,9 @@ const config = {
     // Feel free to reconfigure them to your own preference.
     'react/react-in-jsx-scope': 'off',
     'react/jsx-uses-react': 'off',
+    'no-empty': 'warn',
     'no-unused-vars': 'warn',
+    '@typescript-eslint/no-var-requires': 'warn',
     '@typescript-eslint/no-duplicate-type-constituents': 'off',
     '@typescript-eslint/no-unsafe-return': 'off',
     '@typescript-eslint/no-unsafe-member-access': 'off',

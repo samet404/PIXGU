@@ -2,16 +2,20 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-cliepnt-js"
+  provider = "prisma-client-js"
 }
 
-datasource db { 
+datasource db {
   provider     = "mysql"
   url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
 
-model User {
-  id Int @id @default(autoincrement())
-  nickname String @unique
+model Users {
+  id           Int     @id @default(autoincrement())
+  isAdmin      Boolean @default(false)
+  nickname     String  @unique
+  preferences  Json
+  statistics   Json
+  achievements Json
 }

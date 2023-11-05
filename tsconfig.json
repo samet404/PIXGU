@@ -30,7 +30,7 @@
       "@/svg*": ["public/images/svg/*"],
       "@/png*": ["public/images/png/*"],
       "@/jpg*": ["public/images/jpg/*"],
-      "@/fonts*": ["public/fonts/*"],
+      "@/fonts*": ["public/fonts/*"]
     },
     "plugins": [{ "name": "next" }]
   },
@@ -41,7 +41,9 @@
     "**/*.tsx",
     "**/*.cjs",
     "**/*.mjs",
-    ".next/types/**/*.ts"
-, "scripts/seed.js", "src/app/lib/placeholder-data.js"  ],
-  "exclude": ["node_modules"]
+    ".next/types/**/*.ts",
+    "scripts/seed.js",
+    "src/app/lib/placeholder-data.js"
+  ],
+  "exclude": ["node_modules","**/*.js"]
 }
