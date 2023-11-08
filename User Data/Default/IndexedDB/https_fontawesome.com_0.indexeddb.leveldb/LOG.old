@@ -1,0 +1,15 @@
+2023/10/28-22:08:53.232 21f4 Reusing MANIFEST C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_fontawesome.com_0.indexeddb.leveldb/MANIFEST-000001
+2023/10/28-22:08:53.237 21f4 Recovering log #4
+2023/10/28-22:08:53.237 21f4 Reusing old log C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_fontawesome.com_0.indexeddb.leveldb/000004.log 
+2023/10/28-22:16:59.498 3540 Level-0 table #8: started
+2023/10/28-22:16:59.500 3540 Level-0 table #8: 4265 bytes OK
+2023/10/28-22:16:59.549 3540 Delete type=0 #4
+2023/10/28-22:16:59.549 3540 Manual compaction at level-0 from (begin) .. (end); will stop at (end)
+2023/10/28-22:16:59.549 3540 Manual compaction at level-1 from (begin) .. (end); will stop at '\x00\x01\x01\x02\x01\x05\x00s\x00t\x00a\x00t\x00e' @ 429 : 1
+2023/10/28-22:16:59.550 3540 Compacting 1@1 + 1@2 files
+2023/10/28-22:16:59.551 3540 Generated table #9@1: 54 keys, 1126 bytes
+2023/10/28-22:16:59.551 3540 Compacted 1@1 + 1@2 files => 1126 bytes
+2023/10/28-22:16:59.600 3540 compacted to: files[ 0 0 1 0 0 0 0 ]
+2023/10/28-22:16:59.601 3540 Delete type=2 #5
+2023/10/28-22:16:59.601 3540 Delete type=2 #8
+2023/10/28-22:16:59.602 3540 Manual compaction at level-1 from '\x00\x01\x01\x02\x01\x05\x00s\x00t\x00a\x00t\x00e' @ 429 : 1 .. (end); will stop at (end)

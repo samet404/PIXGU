@@ -1,0 +1,15 @@
+2023/11/06-21:38:30.161 6b4 Reusing MANIFEST C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_www.twitch.tv_0.indexeddb.leveldb/MANIFEST-000001
+2023/11/06-21:38:30.164 6b4 Recovering log #4
+2023/11/06-21:38:30.165 6b4 Reusing old log C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_www.twitch.tv_0.indexeddb.leveldb/000004.log 
+2023/11/06-21:38:34.664 3a38 Level-0 table #8: started
+2023/11/06-21:38:34.666 3a38 Level-0 table #8: 190 bytes OK
+2023/11/06-21:38:34.668 3a38 Delete type=0 #4
+2023/11/06-21:38:34.669 3a38 Manual compaction at level-0 from (begin) .. (end); will stop at (end)
+2023/11/06-21:38:34.669 3a38 Manual compaction at level-1 from (begin) .. (end); will stop at '\x00\x00\x00\x00\x06' @ 46 : 1
+2023/11/06-21:38:34.669 3a38 Compacting 1@1 + 1@2 files
+2023/11/06-21:38:34.671 3a38 Generated table #9@1: 19 keys, 515 bytes
+2023/11/06-21:38:34.671 3a38 Compacted 1@1 + 1@2 files => 515 bytes
+2023/11/06-21:38:34.673 3a38 compacted to: files[ 0 0 1 0 0 0 0 ]
+2023/11/06-21:38:34.673 3a38 Delete type=2 #5
+2023/11/06-21:38:34.673 3a38 Delete type=2 #8
+2023/11/06-21:38:34.674 3a38 Manual compaction at level-1 from '\x00\x00\x00\x00\x06' @ 46 : 1 .. (end); will stop at (end)

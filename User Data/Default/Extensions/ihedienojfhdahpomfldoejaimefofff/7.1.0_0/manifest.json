@@ -1,0 +1,42 @@
+{
+   "action": {
+      "default_icon": {
+         "128": "images/AppIcon.png",
+         "256": "images/AppIcon.png"
+      },
+      "default_popup": "popup.html",
+      "default_title": "Tureng Dictionary"
+   },
+   "author": "Kerim Demirel",
+   "background": {
+      "service_worker": "scripts/background.js"
+   },
+   "commands": {
+      "_execute_action": {
+         "suggested_key": {
+            "chromeos": "Alt+V",
+            "default": "Alt+V",
+            "linux": "Alt+V",
+            "mac": "Alt+V",
+            "windows": "Alt+V"
+         }
+      }
+   },
+   "description": "Tureng English-Turkish Online Dictionary",
+   "icons": {
+      "128": "images/AppIcon.png",
+      "16": "images/AppIcon.png",
+      "256": "images/AppIcon.png"
+   },
+   "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDrDkvRdJgmNdq/JoWJO5PRVDNHNZt5FduGlemyWEN8CseTUEgaiX7SKi/9Aed+RKUksAjWSQPu+E6iJXsoFs01p+hY0KvMwORYU05OW+BPYOM2hTaNXd9TlJhxEd/f3ddb6WHCi4pVolRPQWw4AvbbsfciEDBg1FSoMgSt1J8kCQIDAQAB",
+   "manifest_version": 3,
+   "name": "Tureng Dictionary",
+   "omnibox": {
+      "keyword": "ms"
+   },
+   "options_page": "info.html",
+   "permissions": [ "activeTab", "contextMenus", "scripting", "tts" ],
+   "short_name": "Tureng",
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "7.1.0"
+}

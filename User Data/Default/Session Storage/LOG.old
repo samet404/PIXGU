@@ -1,0 +1,17 @@
+2023/11/07-20:42:39.675 36f8 Reusing MANIFEST C:\Users\404\AppData\Local\Chromium\User Data\Default\Session Storage/MANIFEST-000001
+2023/11/07-20:42:39.684 36f8 Recovering log #4586
+2023/11/07-20:42:39.686 36f8 Reusing old log C:\Users\404\AppData\Local\Chromium\User Data\Default\Session Storage/004586.log 
+2023/11/08-00:50:49.461 2ef4 Level-0 table #4590: started
+2023/11/08-00:50:49.466 2ef4 Level-0 table #4590: 18711 bytes OK
+2023/11/08-00:50:49.468 2ef4 Delete type=0 #4586
+2023/11/08-00:50:49.468 2ef4 Compacting 4@0 + 2@1 files
+2023/11/08-00:50:49.587 2ef4 Generated table #4591@0: 150571 keys, 2125626 bytes
+2023/11/08-00:50:49.626 2ef4 Generated table #4592@0: 35321 keys, 1078241 bytes
+2023/11/08-00:50:49.626 2ef4 Compacted 4@0 + 2@1 files => 3203867 bytes
+2023/11/08-00:50:49.627 2ef4 compacted to: files[ 0 2 1 0 0 0 0 ]
+2023/11/08-00:50:49.628 2ef4 Delete type=2 #4580
+2023/11/08-00:50:49.628 2ef4 Delete type=2 #4581
+2023/11/08-00:50:49.629 2ef4 Delete type=2 #4583
+2023/11/08-00:50:49.629 2ef4 Delete type=2 #4585
+2023/11/08-00:50:49.629 2ef4 Delete type=2 #4587
+2023/11/08-00:50:49.629 2ef4 Delete type=2 #4590

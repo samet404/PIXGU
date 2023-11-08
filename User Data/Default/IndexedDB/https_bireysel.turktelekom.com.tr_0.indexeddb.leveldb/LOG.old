@@ -1,0 +1,26 @@
+2023/10/30-20:37:27.529 2170 Reusing MANIFEST C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_bireysel.turktelekom.com.tr_0.indexeddb.leveldb/MANIFEST-000001
+2023/10/30-20:37:27.529 2170 Recovering log #29
+2023/10/30-20:37:27.530 2170 Reusing old log C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_bireysel.turktelekom.com.tr_0.indexeddb.leveldb/000029.log 
+2023/10/30-20:37:27.530 2170 Delete type=2 #27
+2023/10/30-20:37:27.670 3328 Level-0 table #34: started
+2023/10/30-20:37:27.672 3328 Level-0 table #34: 2695 bytes OK
+2023/10/30-20:37:27.674 3328 Delete type=0 #29
+2023/10/30-20:37:27.674 4f4c Manual compaction at level-0 from '\x00\x0b\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x0c\x00\x00\x00' @ 0 : 0; will stop at '\x00\x0b\x00\x00\x05' @ 538 : 1
+2023/10/30-20:37:27.675 4f4c Compacting 1@0 + 1@1 files
+2023/10/30-20:37:27.677 4f4c Generated table #35@0: 35 keys, 1675 bytes
+2023/10/30-20:37:27.677 4f4c Compacted 1@0 + 1@1 files => 1675 bytes
+2023/10/30-20:37:27.677 4f4c compacted to: files[ 0 1 1 0 0 0 0 ]
+2023/10/30-20:37:27.678 4f4c Delete type=2 #34
+2023/10/30-20:37:27.679 4f4c Manual compaction at level-0 from '\x00\x0b\x00\x00\x05' @ 538 : 1 .. '\x00\x0c\x00\x00\x00' @ 0 : 0; will stop at (end)
+2023/10/30-20:37:38.446 3328 Level-0 table #37: started
+2023/10/30-20:37:38.449 3328 Level-0 table #37: 2671 bytes OK
+2023/10/30-20:37:38.450 3328 Delete type=2 #31
+2023/10/30-20:37:38.450 3328 Delete type=0 #33
+2023/10/30-20:37:38.451 4f4c Manual compaction at level-0 from '\x00\x0c\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x0d\x00\x00\x00' @ 0 : 0; will stop at '\x00\x0c\x00\x00\x05' @ 593 : 1
+2023/10/30-20:37:38.451 4f4c Compacting 1@0 + 1@1 files
+2023/10/30-20:37:38.452 4f4c Generated table #38@0: 43 keys, 1756 bytes
+2023/10/30-20:37:38.452 4f4c Compacted 1@0 + 1@1 files => 1756 bytes
+2023/10/30-20:37:38.453 4f4c compacted to: files[ 0 1 1 0 0 0 0 ]
+2023/10/30-20:37:38.453 4f4c Delete type=2 #37
+2023/10/30-20:37:38.454 4f4c Manual compaction at level-0 from '\x00\x0c\x00\x00\x05' @ 593 : 1 .. '\x00\x0d\x00\x00\x00' @ 0 : 0; will stop at (end)
+2023/10/30-20:37:44.337 3328 Manual compaction at level-0 from '\x00\x0d\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x0e\x00\x00\x00' @ 0 : 0; will stop at (end)

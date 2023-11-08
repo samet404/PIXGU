@@ -1,0 +1,15 @@
+2023/11/01-22:31:55.563 2e40 Reusing MANIFEST C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_demo.arcade.software_0.indexeddb.leveldb/MANIFEST-000001
+2023/11/01-22:31:55.567 2e40 Recovering log #11
+2023/11/01-22:31:55.568 2e40 Reusing old log C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_demo.arcade.software_0.indexeddb.leveldb/000011.log 
+2023/11/01-22:32:23.829 25b0 Level-0 table #16: started
+2023/11/01-22:32:23.832 25b0 Level-0 table #16: 41255 bytes OK
+2023/11/01-22:32:23.835 25b0 Delete type=0 #11
+2023/11/01-22:32:23.835 25b0 Manual compaction at level-0 from (begin) .. (end); will stop at (end)
+2023/11/01-22:32:23.835 25b0 Manual compaction at level-1 from (begin) .. (end); will stop at '\x00\x01\x01\x02\x03\x00\x00\x00\x00\x00@^@' @ 1728 : 1
+2023/11/01-22:32:23.836 25b0 Compacting 1@1 + 1@2 files
+2023/11/01-22:32:23.838 25b0 Generated table #17@1: 55 keys, 14934 bytes
+2023/11/01-22:32:23.838 25b0 Compacted 1@1 + 1@2 files => 14934 bytes
+2023/11/01-22:32:23.840 25b0 compacted to: files[ 0 0 1 0 0 0 0 ]
+2023/11/01-22:32:23.840 25b0 Delete type=2 #13
+2023/11/01-22:32:23.841 25b0 Delete type=2 #16
+2023/11/01-22:32:23.841 25b0 Manual compaction at level-1 from '\x00\x01\x01\x02\x03\x00\x00\x00\x00\x00@^@' @ 1728 : 1 .. (end); will stop at (end)

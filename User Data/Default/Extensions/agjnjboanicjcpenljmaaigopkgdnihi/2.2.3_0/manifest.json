@@ -1,0 +1,45 @@
+{
+   "applications": {
+      "gecko": {
+         "id": "support@premid.app",
+         "strict_min_version": "53.0",
+         "update_url": "https://api.premid.app/firefox/updates"
+      }
+   },
+   "background": {
+      "scripts": [ "js/vendor.js", "js/background.js" ]
+   },
+   "browser_action": {
+      "default_popup": "html/popup/index.html"
+   },
+   "content_scripts": [ {
+      "js": [ "js/vendor.js", "js/contentScript.js", "js/devHelper.js" ],
+      "matches": [ "\u003Call_urls>" ],
+      "run_at": "document_start"
+   }, {
+      "js": [ "js/presenceManager.js" ],
+      "matches": [ "*://*.premid.app/*" ],
+      "run_at": "document_start"
+   }, {
+      "all_frames": true,
+      "js": [ "js/iFrameHandler.js", "js/lib/aes.min.js", "js/devHelper.js" ],
+      "matches": [ "\u003Call_urls>" ],
+      "run_at": "document_start"
+   } ],
+   "content_security_policy": "script-src 'self' 'unsafe-eval' https://kit.fontawesome.com/; object-src 'self'",
+   "default_locale": "en",
+   "description": "__MSG_description__",
+   "icons": {
+      "128": "assets/images/icon_128x128.png",
+      "16": "assets/images/icon_16x16.png",
+      "48": "assets/images/icon_48x48.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqIXjn6VMdNQ0dXY49ckY1sQPTrW+Syjp/w96kiwjtPRyHVKq7fPO4PYZmRJisAitT/kksj/tb/XfMh37ZmoHJuOn5gMX1RI6zkiZqVwyTct0k4zY3rIN5+TxuZfoyoEiXhwkqxxnGNL/OfexlWI3/syL2XNeu1tonJaGN6oFBHHzqir5pEFJeh1uLgY1vuyO1SfHvqZb5HL/ENNf3S0wYUhHXqf8fwS19KPJQqrOE1yU8j254um4ZZlGYWTe3WY2VnfriHdGgnB4M0B6wc5gAQ0A3oS2feoWSh0OQZBKy/aXdywOupN76VjkBBzkJ76GAwOQFPbbgAPZL9Xv886ZhQIDAQAB",
+   "manifest_version": 2,
+   "name": "PreMiD",
+   "permissions": [ "tabs", "\u003Call_urls>", "storage" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "2.2.3",
+   "version_name": "2.2.3",
+   "web_accessible_resources": [ "js/devHelper.js" ]
+}

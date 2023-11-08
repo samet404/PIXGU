@@ -1,0 +1,15 @@
+2023/11/05-22:28:21.840 26e0 Reusing MANIFEST C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_linuxhint.com_0.indexeddb.leveldb/MANIFEST-000001
+2023/11/05-22:28:21.841 26e0 Recovering log #7
+2023/11/05-22:28:21.841 26e0 Reusing old log C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_linuxhint.com_0.indexeddb.leveldb/000007.log 
+2023/11/05-22:28:25.844 c04 Level-0 table #12: started
+2023/11/05-22:28:25.846 c04 Level-0 table #12: 3098 bytes OK
+2023/11/05-22:28:25.848 c04 Delete type=0 #7
+2023/11/05-22:28:25.848 c04 Manual compaction at level-0 from (begin) .. (end); will stop at (end)
+2023/11/05-22:28:25.848 c04 Manual compaction at level-1 from (begin) .. (end); will stop at '\x00\x01\x02\x02\x01'\x00/\x00s\x00e\x00l\x00f\x00-\x00i\x00n\x00v\x00o\x00k\x00i\x00n\x00g\x00-\x00f\x00u\x00n\x00c\x00t\x00i\x00o\x00n\x00s\x00-\x00i\x00n\x00-\x00j\x00a\x00v\x00a\x00s\x00c\x00r\x00i\x00p\x00t\x00/' @ 291 : 1
+2023/11/05-22:28:25.849 c04 Compacting 1@1 + 1@2 files
+2023/11/05-22:28:25.850 c04 Generated table #13@1: 73 keys, 5982 bytes
+2023/11/05-22:28:25.850 c04 Compacted 1@1 + 1@2 files => 5982 bytes
+2023/11/05-22:28:25.852 c04 compacted to: files[ 0 0 1 0 0 0 0 ]
+2023/11/05-22:28:25.852 c04 Delete type=2 #9
+2023/11/05-22:28:25.852 c04 Delete type=2 #12
+2023/11/05-22:28:25.853 c04 Manual compaction at level-1 from '\x00\x01\x02\x02\x01'\x00/\x00s\x00e\x00l\x00f\x00-\x00i\x00n\x00v\x00o\x00k\x00i\x00n\x00g\x00-\x00f\x00u\x00n\x00c\x00t\x00i\x00o\x00n\x00s\x00-\x00i\x00n\x00-\x00j\x00a\x00v\x00a\x00s\x00c\x00r\x00i\x00p\x00t\x00/' @ 291 : 1 .. (end); will stop at (end)

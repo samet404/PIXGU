@@ -1,0 +1,33 @@
+2023/10/11-12:11:37.728 34c0 Reusing MANIFEST C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2023/10/11-12:11:37.729 34c0 Recovering log #33
+2023/10/11-12:11:37.730 34c0 Reusing old log C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000033.log 
+2023/10/11-12:11:45.391 2f34 Level-0 table #38: started
+2023/10/11-12:11:45.436 2f34 Level-0 table #38: 1334601 bytes OK
+2023/10/11-12:11:45.438 2f34 Delete type=0 #33
+2023/10/11-12:11:45.443 2f34 Compacting 1@1 + 1@2 files
+2023/10/11-12:11:45.554 2f34 Generated table #39@1: 33483 keys, 2179153 bytes
+2023/10/11-12:11:45.554 2f34 Compacted 1@1 + 1@2 files => 2179153 bytes
+2023/10/11-12:11:45.555 2f34 compacted to: files[ 0 0 1 0 0 0 0 ]
+2023/10/11-12:11:47.872 2f34 Level-0 table #41: started
+2023/10/11-12:11:47.913 2f34 Level-0 table #41: 1277339 bytes OK
+2023/10/11-12:11:47.915 2f34 Delete type=2 #35
+2023/10/11-12:11:47.915 2f34 Delete type=0 #37
+2023/10/11-12:11:47.915 2f34 Delete type=2 #38
+2023/10/11-12:11:47.925 2f34 Compacting 1@1 + 1@2 files
+2023/10/11-12:11:48.023 2f34 Generated table #42@1: 34947 keys, 2216268 bytes
+2023/10/11-12:11:48.045 2f34 Generated table #43@1: 12326 keys, 288060 bytes
+2023/10/11-12:11:48.045 2f34 Compacted 1@1 + 1@2 files => 2504328 bytes
+2023/10/11-12:11:48.046 2f34 compacted to: files[ 0 0 2 0 0 0 0 ]
+2023/10/11-13:07:13.070 2f34 Level-0 table #45: started
+2023/10/11-13:07:13.116 2f34 Level-0 table #45: 1258921 bytes OK
+2023/10/11-13:07:13.118 2f34 Delete type=2 #39
+2023/10/11-13:07:13.118 2f34 Delete type=0 #40
+2023/10/11-13:07:13.118 2f34 Delete type=2 #41
+2023/10/11-13:12:43.055 2f34 Compacting 1@1 + 2@2 files
+2023/10/11-13:12:43.149 2f34 Generated table #46@1: 32034 keys, 2218441 bytes
+2023/10/11-13:12:43.167 2f34 Generated table #47@1: 10695 keys, 305196 bytes
+2023/10/11-13:12:43.167 2f34 Compacted 1@1 + 2@2 files => 2523637 bytes
+2023/10/11-13:12:43.168 2f34 compacted to: files[ 0 0 2 0 0 0 0 ]
+2023/10/11-13:12:43.169 2f34 Delete type=2 #42
+2023/10/11-13:12:43.169 2f34 Delete type=2 #43
+2023/10/11-13:12:43.169 2f34 Delete type=2 #45

@@ -1,0 +1,6 @@
+2023/10/28-02:11:03.658 4898 Creating DB C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_stackblitz.com_0.indexeddb.leveldb since it was missing.
+2023/10/28-02:11:03.666 4898 Reusing MANIFEST C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_stackblitz.com_0.indexeddb.leveldb/MANIFEST-000001
+2023/10/28-02:11:23.929 5e40 Level-0 table #5: started
+2023/10/28-02:11:23.931 5e40 Level-0 table #5: 845 bytes OK
+2023/10/28-02:11:23.933 5e40 Delete type=0 #3
+2023/10/28-02:11:23.934 5e40 Manual compaction at level-0 from (begin) .. (end); will stop at (end)

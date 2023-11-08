@@ -1,0 +1,6 @@
+2023/10/16-19:48:00.253 3af8 Creating DB C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_tr.aliexpress.com_0.indexeddb.leveldb since it was missing.
+2023/10/16-19:48:00.258 3af8 Reusing MANIFEST C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_tr.aliexpress.com_0.indexeddb.leveldb/MANIFEST-000001
+2023/10/16-19:48:32.263 3990 Level-0 table #5: started
+2023/10/16-19:48:32.264 3990 Level-0 table #5: 838 bytes OK
+2023/10/16-19:48:32.266 3990 Delete type=0 #3
+2023/10/16-19:48:32.267 3990 Manual compaction at level-0 from (begin) .. (end); will stop at (end)

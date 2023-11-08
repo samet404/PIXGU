@@ -1,0 +1,6 @@
+2023/09/25-00:11:34.078 1a9c Reusing MANIFEST C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_kaguya.app_0.indexeddb.leveldb/MANIFEST-000001
+2023/09/25-00:11:34.079 1a9c Recovering log #3
+2023/09/25-00:11:34.083 1a9c Reusing old log C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_kaguya.app_0.indexeddb.leveldb/000003.log 
+2023/09/25-00:15:04.993 eb4 Level-0 table #5: started
+2023/09/25-00:15:05.021 eb4 Level-0 table #5: 713323 bytes OK
+2023/09/25-00:15:05.023 eb4 Delete type=0 #3

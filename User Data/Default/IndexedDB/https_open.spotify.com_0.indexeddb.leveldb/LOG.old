@@ -1,0 +1,15 @@
+2023/10/15-02:42:24.980 28ec Reusing MANIFEST C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_open.spotify.com_0.indexeddb.leveldb/MANIFEST-000001
+2023/10/15-02:42:24.985 28ec Recovering log #11
+2023/10/15-02:42:24.985 28ec Reusing old log C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_open.spotify.com_0.indexeddb.leveldb/000011.log 
+2023/10/15-02:43:18.897 1804 Level-0 table #16: started
+2023/10/15-02:43:18.901 1804 Level-0 table #16: 36396 bytes OK
+2023/10/15-02:43:18.902 1804 Delete type=0 #11
+2023/10/15-02:43:18.902 1804 Manual compaction at level-0 from (begin) .. (end); will stop at (end)
+2023/10/15-02:43:18.903 1804 Manual compaction at level-1 from (begin) .. (end); will stop at '\x00\x01\x01 \x03\x00\xb0\xed!\x09\xb3xB\x00\x01J\x00i\x00m\x00a\x00g\x00e\x00s\x00-\x00v\x001\x00|\x00h\x00t\x00t\x00p\x00s\x00:\x00/\x00/\x00i\x00.\x00s\x00c\x00d\x00n\x00.\x00c\x00o\x00/\x00i\x00m\x00a\x00g\x00e\x00/\x00a\x00b\x006\x007\x006\x001\x006\x001\x000\x000\x000\x000\x005\x001\x007\x004\x007\x00c\x007\x000\x00b\x00a\x005\x003\x009\x005\x00c\x00e\x005\x003\x002\x003\x00f\x00d\x003\x008\x00d\x00d\x004\x003' @ 1330 : 1
+2023/10/15-02:43:18.903 1804 Compacting 1@1 + 1@2 files
+2023/10/15-02:43:18.905 1804 Generated table #17@1: 263 keys, 22027 bytes
+2023/10/15-02:43:18.905 1804 Compacted 1@1 + 1@2 files => 22027 bytes
+2023/10/15-02:43:18.906 1804 compacted to: files[ 0 0 1 0 0 0 0 ]
+2023/10/15-02:43:18.907 1804 Delete type=2 #13
+2023/10/15-02:43:18.907 1804 Delete type=2 #16
+2023/10/15-02:43:18.907 1804 Manual compaction at level-1 from '\x00\x01\x01 \x03\x00\xb0\xed!\x09\xb3xB\x00\x01J\x00i\x00m\x00a\x00g\x00e\x00s\x00-\x00v\x001\x00|\x00h\x00t\x00t\x00p\x00s\x00:\x00/\x00/\x00i\x00.\x00s\x00c\x00d\x00n\x00.\x00c\x00o\x00/\x00i\x00m\x00a\x00g\x00e\x00/\x00a\x00b\x006\x007\x006\x001\x006\x001\x000\x000\x000\x000\x005\x001\x007\x004\x007\x00c\x007\x000\x00b\x00a\x005\x003\x009\x005\x00c\x00e\x005\x003\x002\x003\x00f\x00d\x003\x008\x00d\x00d\x004\x003' @ 1330 : 1 .. (end); will stop at (end)

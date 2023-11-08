@@ -1,0 +1,6 @@
+2023/11/04-22:03:36.816 5160 Creating DB C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_firebase-dot-devsite-v2-prod.appspot.com_0.indexeddb.leveldb since it was missing.
+2023/11/04-22:03:36.823 5160 Reusing MANIFEST C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_firebase-dot-devsite-v2-prod.appspot.com_0.indexeddb.leveldb/MANIFEST-000001
+2023/11/04-22:04:08.829 5160 Level-0 table #5: started
+2023/11/04-22:04:08.831 5160 Level-0 table #5: 1278 bytes OK
+2023/11/04-22:04:08.833 5160 Delete type=0 #3
+2023/11/04-22:04:08.833 5160 Manual compaction at level-0 from (begin) .. (end); will stop at (end)

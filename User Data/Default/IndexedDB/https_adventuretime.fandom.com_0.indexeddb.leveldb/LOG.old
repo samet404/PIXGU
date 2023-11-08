@@ -1,0 +1,6 @@
+2023/11/03-23:22:21.456 58a0 Creating DB C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_adventuretime.fandom.com_0.indexeddb.leveldb since it was missing.
+2023/11/03-23:22:21.463 58a0 Reusing MANIFEST C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_adventuretime.fandom.com_0.indexeddb.leveldb/MANIFEST-000001
+2023/11/03-23:22:26.740 3890 Level-0 table #5: started
+2023/11/03-23:22:26.742 3890 Level-0 table #5: 3572 bytes OK
+2023/11/03-23:22:26.745 3890 Delete type=0 #3
+2023/11/03-23:22:26.746 3890 Manual compaction at level-0 from (begin) .. (end); will stop at (end)

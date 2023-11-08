@@ -1,0 +1,6 @@
+2023/09/28-22:01:09.851 324c Creating DB C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_www.airbnb.com.tr_0.indexeddb.leveldb since it was missing.
+2023/09/28-22:01:09.858 324c Reusing MANIFEST C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_www.airbnb.com.tr_0.indexeddb.leveldb/MANIFEST-000001
+2023/09/28-22:06:33.088 324c Level-0 table #5: started
+2023/09/28-22:06:33.090 324c Level-0 table #5: 1250 bytes OK
+2023/09/28-22:06:33.092 324c Delete type=0 #3
+2023/09/28-22:06:33.092 324c Manual compaction at level-0 from (begin) .. (end); will stop at (end)
