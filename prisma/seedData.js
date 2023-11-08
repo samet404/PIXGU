@@ -1,9 +1,17 @@
-const { Prisma } = require('@prisma/client')
+// Seed data for the database
 
 const seedData = {
+  Rooms: [
+    {
+      name: 'room1',
+      password: '1234',
+      maxplayers: 4,
+      admin: 'figenId',
+      players: ['figenId'], 
+    }
+  ],
   Users: [
     {
-      id: 1,
       nickname: '404',
       preferences: {
         theme: 'default',
@@ -12,7 +20,7 @@ const seedData = {
       achievements: {},
     },
     {
-      id: 2,
+      id: 'figenId',
       nickname: 'figen',
       preferences: {
         theme: 'red',

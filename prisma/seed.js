@@ -1,33 +1,33 @@
-const { PrismaClient } = require('@prisma/client')
-const seedData = require('./seedData')
+// seeding data to the database
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { PrismaClient } = require('@prisma/client')
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { Users } = require('./seedData')
 const prisma = new PrismaClient()
 
-const setAutoIncrement = async (table) => {
-  await prisma.$queryRaw`ALTER TABLE ${table} AUTO_INCREMENT = 1`
-}
-
 const load = async () => {
-  for (const table in seedData) {
-    const tableName = seedData[table]
+  try {
+    // Delete all data from the tables
+    await prisma.user.deleteMany()
+    console.log('Users deleted successfully!')
+    
+    
 
-    try {
-      await setAutoIncrement(tableName)
+    // Add data to the tables
+    await prisma.user.createMany({
+      data: Users,
+    })
+    console.log('Users seeded successfully!')
 
-      await prisma.user.deleteMany()
-      console.log('Users deleted successfully!')
 
-      await prisma.user.createMany({
-        data: tableName,
-      })
-      console.log(tableName + `seeded successfully!`)
-    } catch (e) {
-      console.error('Error: Seeding failed at ' + tableName)
-      console.error(e)
-    }
+  } catch (e) {
+    console.error('Error: Seeding failed')
+    console.error(e)
+  } finally {
+    await prisma.$disconnect()
   }
-
-  await prisma.$disconnect()
 }
-
+ 
 load()
+  

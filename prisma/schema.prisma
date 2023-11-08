@@ -11,11 +11,27 @@ datasource db {
   relationMode = "prisma"
 }
 
-model Users {
-  id           Int     @id @default(autoincrement())
-  isAdmin      Boolean @default(false)
-  nickname     String  @unique
-  preferences  Json
-  statistics   Json
-  achievements Json
+model User {
+  id           String   @id @unique @default(uuid())
+  ipAddress    String   @unique
+  isAdmin      Boolean  @default(false)
+  nickname     String   @unique
+  preferences  Json     @default(dbgenerated("{}"))
+  statistics   Json     @default(dbgenerated("{}"))
+  achievements Json     @default(dbgenerated("{}"))
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  isBanned     Boolean  @default(false)
+  playingRoom  Room?
 }
+
+model Room {
+  id          String  @id @unique @default(uuid())
+  name        String  @unique
+  password    String?
+  maxPlayers  Int
+  playingBy   User?   @relation(fields: [playingById], references: [id])
+  playingById String @unique
+
+  @@index([playingById])
+  }

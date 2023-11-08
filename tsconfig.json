@@ -42,7 +42,7 @@
     "**/*.cjs",
     "**/*.mjs",
     ".next/types/**/*.ts",
-    "scripts/seed.js",
+    "scripts/test.ts",
     "src/app/lib/placeholder-data.js"
   ],
   "exclude": ["node_modules","**/*.js"]
