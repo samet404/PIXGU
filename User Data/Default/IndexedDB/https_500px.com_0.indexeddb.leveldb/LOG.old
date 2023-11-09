@@ -1,6 +1,0 @@
-2023/11/02-18:14:24.031 3f88 Creating DB C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_500px.com_0.indexeddb.leveldb since it was missing.
-2023/11/02-18:14:24.039 3f88 Reusing MANIFEST C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_500px.com_0.indexeddb.leveldb/MANIFEST-000001
-2023/11/02-18:15:10.032 4c40 Level-0 table #5: started
-2023/11/02-18:15:10.034 4c40 Level-0 table #5: 3563 bytes OK
-2023/11/02-18:15:10.036 4c40 Delete type=0 #3
-2023/11/02-18:15:10.036 4c40 Manual compaction at level-0 from (begin) .. (end); will stop at (end)

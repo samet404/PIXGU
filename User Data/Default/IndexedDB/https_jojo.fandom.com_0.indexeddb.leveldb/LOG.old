@@ -1,6 +1,0 @@
-2023/09/29-02:40:21.917 4518 Creating DB C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_jojo.fandom.com_0.indexeddb.leveldb since it was missing.
-2023/09/29-02:40:21.922 4518 Reusing MANIFEST C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_jojo.fandom.com_0.indexeddb.leveldb/MANIFEST-000001
-2023/09/29-02:40:24.819 5ddc Level-0 table #5: started
-2023/09/29-02:40:24.820 5ddc Level-0 table #5: 3391 bytes OK
-2023/09/29-02:40:24.822 5ddc Delete type=0 #3
-2023/09/29-02:40:24.823 5ddc Manual compaction at level-0 from (begin) .. (end); will stop at (end)

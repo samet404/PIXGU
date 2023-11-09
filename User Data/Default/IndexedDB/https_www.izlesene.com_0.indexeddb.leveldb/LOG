@@ -1,6 +1,0 @@
-2023/10/17-13:00:05.558 37bc Creating DB C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_www.izlesene.com_0.indexeddb.leveldb since it was missing.
-2023/10/17-13:00:05.563 37bc Reusing MANIFEST C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_www.izlesene.com_0.indexeddb.leveldb/MANIFEST-000001
-2023/10/17-13:00:09.923 37bc Level-0 table #5: started
-2023/10/17-13:00:09.925 37bc Level-0 table #5: 1446 bytes OK
-2023/10/17-13:00:09.928 37bc Delete type=0 #3
-2023/10/17-13:00:09.928 37bc Manual compaction at level-0 from (begin) .. (end); will stop at (end)

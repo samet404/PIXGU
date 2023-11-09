@@ -1,6 +1,0 @@
-2023/11/05-21:21:55.143 c04 Creating DB C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_community.redwoodjs.com_0.indexeddb.leveldb since it was missing.
-2023/11/05-21:21:55.150 c04 Reusing MANIFEST C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_community.redwoodjs.com_0.indexeddb.leveldb/MANIFEST-000001
-2023/11/05-21:30:04.154 c04 Level-0 table #5: started
-2023/11/05-21:30:04.157 c04 Level-0 table #5: 53176 bytes OK
-2023/11/05-21:30:04.159 c04 Delete type=0 #3
-2023/11/05-21:30:04.160 c04 Manual compaction at level-0 from (begin) .. (end); will stop at (end)

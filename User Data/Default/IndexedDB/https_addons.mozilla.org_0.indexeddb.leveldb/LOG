@@ -1,6 +1,0 @@
-2023/10/17-22:17:07.902 43e0 Creating DB C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_addons.mozilla.org_0.indexeddb.leveldb since it was missing.
-2023/10/17-22:17:07.909 43e0 Reusing MANIFEST C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_addons.mozilla.org_0.indexeddb.leveldb/MANIFEST-000001
-2023/10/17-22:17:12.591 43e4 Level-0 table #5: started
-2023/10/17-22:17:12.593 43e4 Level-0 table #5: 1292 bytes OK
-2023/10/17-22:17:12.595 43e4 Delete type=0 #3
-2023/10/17-22:17:12.596 43e4 Manual compaction at level-0 from (begin) .. (end); will stop at (end)

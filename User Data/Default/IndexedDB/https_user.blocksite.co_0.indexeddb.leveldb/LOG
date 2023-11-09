@@ -1,7 +1,0 @@
-2023/10/16-13:19:54.623 27cc Reusing MANIFEST C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_user.blocksite.co_0.indexeddb.leveldb/MANIFEST-000001
-2023/10/16-13:19:54.623 27cc Recovering log #4
-2023/10/16-13:19:54.624 27cc Reusing old log C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_user.blocksite.co_0.indexeddb.leveldb/000004.log 
-2023/10/16-13:19:54.855 3dbc Level-0 table #8: started
-2023/10/16-13:19:54.995 3dbc Level-0 table #8: 4545 bytes OK
-2023/10/16-13:19:55.033 3dbc Delete type=0 #4
-2023/10/16-13:19:55.034 3dbc Manual compaction at level-0 from '\x00\x04\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x05\x00\x00\x00' @ 0 : 0; will stop at (end)

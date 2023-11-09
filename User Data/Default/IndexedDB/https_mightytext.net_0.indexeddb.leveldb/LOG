@@ -1,7 +1,0 @@
-2023/11/03-18:31:02.056 189c Reusing MANIFEST C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_mightytext.net_0.indexeddb.leveldb/MANIFEST-000001
-2023/11/03-18:31:02.057 189c Recovering log #10
-2023/11/03-18:31:02.057 189c Reusing old log C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_mightytext.net_0.indexeddb.leveldb/000010.log 
-2023/11/03-18:31:02.083 4774 Level-0 table #16: started
-2023/11/03-18:31:02.085 4774 Level-0 table #16: 704 bytes OK
-2023/11/03-18:31:02.086 4774 Delete type=0 #10
-2023/11/03-18:31:02.087 4774 Manual compaction at level-0 from '\x00\x06\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x07\x00\x00\x00' @ 0 : 0; will stop at (end)

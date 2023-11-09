@@ -1,6 +1,0 @@
-2023/10/17-01:12:53.487 3ae8 Creating DB C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_pinegraph.com_0.indexeddb.leveldb since it was missing.
-2023/10/17-01:12:53.497 3ae8 Reusing MANIFEST C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_pinegraph.com_0.indexeddb.leveldb/MANIFEST-000001
-2023/10/17-01:13:45.638 4124 Level-0 table #5: started
-2023/10/17-01:13:45.640 4124 Level-0 table #5: 2857 bytes OK
-2023/10/17-01:13:45.642 4124 Delete type=0 #3
-2023/10/17-01:13:45.643 4124 Manual compaction at level-0 from (begin) .. (end); will stop at (end)

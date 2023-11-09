@@ -1,7 +1,0 @@
-2023/10/04-17:39:10.164 3470 Reusing MANIFEST C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_www.youtube-nocookie.com_0.indexeddb.leveldb/MANIFEST-000001
-2023/10/04-17:39:10.168 3470 Recovering log #3
-2023/10/04-17:39:10.169 3470 Reusing old log C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_www.youtube-nocookie.com_0.indexeddb.leveldb/000003.log 
-2023/10/04-18:25:37.050 3470 Level-0 table #5: started
-2023/10/04-18:25:37.052 3470 Level-0 table #5: 1196 bytes OK
-2023/10/04-18:25:37.054 3470 Delete type=0 #3
-2023/10/04-18:25:37.054 3470 Manual compaction at level-0 from (begin) .. (end); will stop at (end)

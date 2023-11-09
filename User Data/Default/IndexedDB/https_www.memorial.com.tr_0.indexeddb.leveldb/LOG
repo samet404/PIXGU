@@ -1,6 +1,0 @@
-2023/09/22-01:06:40.859 5fdc Creating DB C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_www.memorial.com.tr_0.indexeddb.leveldb since it was missing.
-2023/09/22-01:06:40.865 5fdc Reusing MANIFEST C:\Users\404\AppData\Local\Chromium\User Data\Default\IndexedDB\https_www.memorial.com.tr_0.indexeddb.leveldb/MANIFEST-000001
-2023/09/22-02:46:37.941 5fdc Level-0 table #5: started
-2023/09/22-02:46:37.942 5fdc Level-0 table #5: 1100 bytes OK
-2023/09/22-02:46:37.944 5fdc Delete type=0 #3
-2023/09/22-02:46:37.944 5fdc Manual compaction at level-0 from (begin) .. (end); will stop at (end)
