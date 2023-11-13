@@ -54,6 +54,11 @@ export default {
           "50%": { backgroundPosition: "100% 50%" },
           "100%": { backgroundPosition: "0% 50%" },
         },
+        loadingBar: {
+          "0%": { width: "10%" },
+          "50%": { width: '50%' },
+          "75%": { width: '70%' }
+        }
       },
 
       backgroundImage: {

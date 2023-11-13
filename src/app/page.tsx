@@ -14,9 +14,9 @@ import play from '@/png/play.png'
 import createroom from '@/png/createroom.png'
 import Twitter from '@/public/images/svg/Twitter'
 import AnimatedCursor from 'react-animated-cursor'
+import { mobileCheck } from '../utils/mobileCheck'
 
 const Home = () => {
-  
   const animatedCursorStyles: Record<string, CSSProperties> = {
     outerStyle: {
       backdropFilter: 'blur(5px)',
@@ -25,8 +25,12 @@ const Home = () => {
     },
   }
 
+  console.log(mobileCheck())
+
   return (
     <Fragment>
+      
+
       <AnimatedCursor
         outerStyle={animatedCursorStyles.outerStyle}
         innerSize={8}
@@ -54,7 +58,8 @@ const Home = () => {
       <main
         style={{
           backgroundColor: 'hsla(220,39%,10%,1)',
-          backgroundImage: 'radial-gradient(at 100% 100%, hsla(41,100%,54%,0.1) 0px, transparent 50%), radial-gradient(at 2% 0%, hsla(343,100%,76%,0.16) 0px, transparent 50%)'
+          backgroundImage:
+            'radial-gradient(at 100% 100%, hsla(41,100%,54%,0.1) 0px, transparent 50%), radial-gradient(at 2% 0%, hsla(343,100%,76%,0.16) 0px, transparent 50%)',
         }}
         className={`flex h-full w-full flex-col items-center gap-3 overflow-y-auto py-[1rem]`}
       >
@@ -155,3 +160,4 @@ const Home = () => {
 }
 
 export default Home
+ 

@@ -8,6 +8,7 @@
     }
   ],
   "settings": {
+    "reactSnippets.settings.importReactOnTop": false,
     "editor.cursorBlinking": "smooth",
     "editor.fontSize": 14,
     "typescript.tsdk": "painter'sCards\\node_modules\\typescript\\lib",

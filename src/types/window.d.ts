@@ -3,4 +3,5 @@
 
 interface Window {
   X: number
+  opera: string
 }

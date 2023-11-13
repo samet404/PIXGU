@@ -1,33 +1,31 @@
-// nextjs
 import Image from 'next/image'
-import { Pixelify_Sans } from 'next/font/google'
-// images
-import catPC from '@/png/catPC_.png'
-
-const pixelifySans = Pixelify_Sans({
-    subsets: ['latin'],
-    weight: '400',
-})
-
-const speechBubbleText = 'azcık bekle hallediyom'
+import Logo from '@/png/logo.png'
+import { GeistMono } from 'geist/font'
 
 const Loading = () => {
-    return (
-        <div className="flex h-screen w-screen items-center justify-center bg-gradient-to-br from-[rgb(255,235,5)] to-[rgb(54,205,247)]  text-[white]">
-            <div className="blur-4 flex flex-col rounded-lg p-2 drop-shadow-[0_0px_4px_rgba(255,255,255,0.7)]">
-                <div className="flex animate-bounce flex-col animate-normal animate-duration-[1400ms] animate-infinite animate-ease-out">
-                    <div
-                        className={`${pixelifySans.className} h-full w-full rounded-lg  bg-[rgba(255,255,255,0.7)] p-4 text-center text-[1.2rem] text-black`}
-                    >
-                        {speechBubbleText}
-                    </div>
-                    <div className="flex w-full flex-row justify-center">
-                        <div className="h-0 w-0 border-[1rem] border-solid border-[transparent] border-t-[rgba(255,255,255,0.7)] bg-transparent"></div>
-                    </div>
-                </div>
-                <Image src={catPC} alt="loading" className="w-[12rem] " />
-            </div>
+  return (
+    <div className="flex h-full w-full flex-col bg-white">
+      <div className="z-10 h-4   animate-duration-1000 bg-blue-400 shadow-[0_0px_40px_0px_#000000e6] animate-loadingBar"></div>
+      <div
+        className="z-0 flex flex-row gap-10 grow items-center justify-center"
+        style={{
+          backgroundColor: 'hsla(0,100%,50%,1)',
+          backgroundImage: 'radial-gradient(at 40% 20%, hsla(28,100%,74%,1) 0px, transparent 50%), radial-gradient(at 80% 0%, hsla(189,100%,56%,1) 0px, transparent 50%), radial-gradient(at 0% 50%, hsla(355,100%,93%,1) 0px, transparent 50%), radial-gradient(at 80% 50%, hsla(340,100%,76%,1) 0px, transparent 50%), radial-gradient(at 0% 100%, hsla(22,100%,77%,1) 0px, transparent 50%), radial-gradient(at 80% 100%, hsla(242,100%,70%,1) 0px, transparent 50%), radial-gradient(at 0% 0%, hsla(343,100%,76%,1) 0px, transparent 50%);',
+        }}
+      >
+        <Image
+          src={Logo}
+          alt="Logo"
+          className="h-[8rem] w-[8rem] drop-shadow-[0_0px_10px_rgba(0,0,0,0.5)]"
+        />
+
+        <div className='w-1 h-[8rem]  drop-shadow-[0_0px_10px_rgba(0,0,0,0.5)] rounded-sm bg-[rgba(255,255,255,0.5)]'></div>
+
+        <div className={`${GeistMono.className}  drop-shadow-[0_0px_5px_rgba(0,0,0,0.5)] font-[900] text-white text-2xl`}>
+            Thanks for waiting {'<3'}
         </div>
-    )
+      </div>
+    </div>
+  )
 }
 export default Loading
