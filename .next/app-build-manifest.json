@@ -1,10 +1,5 @@
 {
   "pages": {
-    "/@modal/default": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/@modal/default.js"
-    ],
     "/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -27,6 +22,22 @@
       "static/chunks/main-app.js",
       "static/css/app/not-found.css",
       "static/chunks/app/not-found.js"
+    ],
+    "/@modal/default": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/@modal/default.js"
+    ],
+    "/default": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/default.js"
+    ],
+    "/@modal/(.)login/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/@modal/(.)login/page.css",
+      "static/chunks/app/@modal/(.)login/page.js"
     ]
   }
 }
