@@ -30,7 +30,8 @@
       "@/svg*": ["public/images/svg/*"],
       "@/png*": ["public/images/png/*"],
       "@/jpg*": ["public/images/jpg/*"],
-      "@/fonts*": ["public/fonts/*"]
+      "@/fonts*": ["public/fonts/*"],
+      "@/lib*": ["./src/lib*"]
     },
     "plugins": [{ "name": "next" }]
   },
@@ -45,5 +46,5 @@
     "scripts/test.ts",
     "src/app/lib/placeholder-data.js"
   ],
-  "exclude": ["node_modules","**/*.js"]
+  "exclude": ["node_modules", "**/*.js"]
 }

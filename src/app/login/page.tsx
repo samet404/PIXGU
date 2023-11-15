@@ -5,7 +5,6 @@ import Image from 'next/image'
 // images
 import bgImg from '@/jpg/daniele-levis-pelusi-unsplash.jpg'
 import Logo from '@/png/logo.png'
-import dangerouslyGoogleLogo from '@/png/google-logo.png'
 
 const museoModerno = MuseoModerno({ subsets: ['latin'] })
 
@@ -53,13 +52,13 @@ const Login = () => {
                     <button
                         className={`${museoModerno.className} flex w-[90%] flex-row items-center gap-3 rounded-md border-none bg-black p-2 text-white outline-none drop-shadow-[0_0px_8px_rgba(0,0,0,0.7)] `}
                     >
-                        <Image
+                        {/* <Image
                             src={dangerouslyGoogleLogo}
                             alt="googleLogo"
                             className="w-[1.2rem]"
                             quality={40}
                             sizes="calc(0.48vw + 18px)"
-                        ></Image>
+                        ></Image> */}
                         <div className=" text-[rgba(255,255,255,0.7)]">
                             Continue with Google
                         </div>

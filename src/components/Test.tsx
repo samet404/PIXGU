@@ -2,7 +2,7 @@
 
 import clsx from 'clsx'
 import { usePathname } from 'next/navigation'
-import { useReducer, useState } from 'react'
+import { useState } from 'react'
 
 // const reducer = (state, action) => {
   
