@@ -10,9 +10,13 @@
 
 html,
 body,
-body:first-child{
+body:first-child {
   width: 100%;
   height: 100%;
+}
+
+button {
+  cursor: auto;
 }
 
 /*global font size*/
@@ -20,6 +24,30 @@ html {
   font-size: calc(15px + 0.390625vw);
 }
 
-button {
-  cursor: auto;
+h1 {
+  font-size: 2.125rem;
+}
+
+h2 {
+  font-size: 1.875rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+h4 {
+  font-size: 1.25rem;
+}
+
+h5 {
+  font-size: 1.125rem;
+}
+
+h6 {
+  font-size: 1rem;
+}
+
+p {
+  font-size: 1rem;
 }

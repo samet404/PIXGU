@@ -16,11 +16,12 @@ const Home = () => {
         }}
         className={`flex h-full w-full flex-col items-center gap-3 overflow-y-auto py-[1rem]`}
       >
-        <div className="flex animate-fade flex-col gap-4 p-4 animate-duration-1000">
+        <div className="flex animate-fade flex-col gap-10 p-4 animate-duration-1000">
           <Navbar />
           <Main />
         </div>
       </div>
+     
     </Fragment>
   )
 }

@@ -7,13 +7,6 @@ const outfit = Outfit({
   weight: ['900'],
 })
 
-const animatedCursorStyles: Record<string, CSSProperties> = {
-  outerStyle: {
-    backdropFilter: 'blur(5px)',
-    backgroundColor: 'rgba(0, 0, 0, 0.15)',
-    boxShadow: '0 0 10px 0 rgba(0, 0, 0, 0.6)',
-  },
-}
 
 const createRoom = () => {
   return (

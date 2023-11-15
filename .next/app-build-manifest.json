@@ -28,16 +28,11 @@
       "static/chunks/main-app.js",
       "static/chunks/app/@modal/default.js"
     ],
-    "/default": [
+    "/(articles)/how-to-play/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/default.js"
-    ],
-    "/@modal/(.)login/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/@modal/(.)login/page.css",
-      "static/chunks/app/@modal/(.)login/page.js"
+      "static/css/app/(articles)/how-to-play/page.css",
+      "static/chunks/app/(articles)/how-to-play/page.js"
     ]
   }
 }
