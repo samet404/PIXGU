@@ -1,12 +1,10 @@
 import Image from 'next/image'
 import pfp from '@/png/pfp2.png'
-import { getUserByName } from '../../lib/data'
 
 import { GeistSans } from 'geist/font'
 
-const User = async ({ params }: { params: { name: string } }) => {
-  const user = await getUserByName(params.name)
-
+const User =  ({ params }: { params: { name: string } }) => {
+ 
   return (
     <div
       style={{
@@ -16,8 +14,14 @@ const User = async ({ params }: { params: { name: string } }) => {
       }}
       className="h-full w-full 
       "
-    >
-      {user ? (
+      
+    ></div>
+    )
+  
+}
+export default User
+
+  {/* {user ? (
         <main className="flex h-full w-full animate-fade-down flex-col items-center pt-6 animate-duration-1000">
           <Image
             src={pfp}
@@ -45,7 +49,5 @@ const User = async ({ params }: { params: { name: string } }) => {
           </div>
         </main>
       )}
-    </div>
-  )
-}
-export default User
+    </div> */}
+  

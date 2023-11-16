@@ -2,12 +2,14 @@ import { Fragment } from 'react'
 import { mobileCheck } from '../utils/mobileCheck'
 import Navbar from './_components/Navbar'
 import Main from './_components/Main'
-
+import Shortcuts from './_components/Shortcuts'
 const Home = () => {
   console.log(mobileCheck())
+  
 
   return (
     <Fragment>
+      <Shortcuts />
       <div
         style={{
           backgroundColor: 'hsla(220,39%,10%,1)',

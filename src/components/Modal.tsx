@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import type { ReactNode } from 'react'
-import { useEventListener } from '@/hooks/useEventListener'
+import { useEventListener } from 'usehooks-ts'
 
 const Modal = ({ children }: { children: ReactNode }) => {
   const router = useRouter()

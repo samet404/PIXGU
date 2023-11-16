@@ -22,6 +22,7 @@ const Main = () => {
         }
         name="Odaya katıl"
         description="Odaya katıl ve oynamaya başla!"
+        keyName='1'
         className="hover:from-[rgba(55,255,188,0.4)] hover:to-[rgba(255,255,255,0.3)]"
       />
 
@@ -36,6 +37,7 @@ const Main = () => {
         }
         name="Oda oluştur"
         description="Oda oluştur ve arkadaşlarını davet et!"
+        keyName='2'
         className="hover:from-[rgba(255,238,53,0.4)] hover:to-[rgba(255,255,255,0.3)]"
       />
 
@@ -50,6 +52,7 @@ const Main = () => {
         }
         name="Nasıl oynanır?"
         description="Nasıl oynayacağını bilmiyor musun? Hemen öğren!"
+        keyName='3'
         className="hover:from-[rgba(53,228,255,0.4)] hover:to-[rgba(255,255,255,0.3)]"
       />
 
@@ -64,6 +67,7 @@ const Main = () => {
         }
         name="Giriş yap"
         description="Hızlı bir şekilde giriş yapın ve devam edin."
+        keyName='4'
         className="hover:from-[rgba(59,164,255,0.4)] hover:to-[rgba(255,255,255,0.3)]"
       />
     </div>

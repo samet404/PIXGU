@@ -15,15 +15,16 @@ model User {
   id String @unique @default(cuid())
 
   ipAddress    String
-  isAdmin      Boolean  @default(false)
+  isAdmin      Boolean   @default(false)
   nickname     String
-  preferences  Json     @default(dbgenerated("{}"))
-  statistics   Json     @default(dbgenerated("{}"))
-  achievements Json     @default(dbgenerated("{}"))
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  isBanned     Boolean  @default(false)
+  preferences  Json      @default(dbgenerated("{}"))
+  statistics   Json      @default(dbgenerated("{}"))
+  achievements Json      @default(dbgenerated("{}"))
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  isBanned     Boolean   @default(false)
   playingRoom  Room[]
+  articles     Article[]
 
   @@id([id])
 }
@@ -40,42 +41,29 @@ model Room {
 model Article {
   id         String                @id @default(cuid())
   categories CategoriesOnArticle[]
-  content
-}
+  headerText String
+  content    String
+  writtenBy  User?                 @relation(fields: [userId], references: [id])
+  userId     String?
 
-model ArticleContent {
-  lang string
-  text   string
-  images string[]
-  p: ArticleContentParagraph
-  ul: ul[]
-//  Array<string[]>
-}
-
-model ArticleContentHeading {
-
-}
-
-model ArticleContentParagraph {
-  text string
-  images string[]
+  @@index([userId])
 }
 
 model Category {
   id       String                @id @default(cuid())
   name     String
-  articles CategoriesOnArticle[]
+  Articles CategoriesOnArticle[]
 }
 
 model CategoriesOnArticle {
-  article    Article  @relation(fields: [articleId], references: [id])
-  articleId  String // relation scalar field (used in the `@relation` attribute above)
+  Article    Article  @relation(fields: [ArticleId], references: [id])
+  ArticleId  String // relation scalar field (used in the `@relation` attribute above)
   category   Category @relation(fields: [categoryId], references: [id])
   categoryId String // relation scalar field (used in the `@relation` attribute above)
   assignedAt DateTime @default(now())
   assignedBy String
 
-  @@id([articleId, categoryId])
-  @@index([articleId])
+  @@id([ArticleId, categoryId])
+  @@index([ArticleId])
   @@index([categoryId])
 }
