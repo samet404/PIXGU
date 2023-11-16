@@ -1,5 +1,5 @@
 1:HL["/_next/static/css/af6c95fcd48bae72.css","style",{"crossOrigin":""}]
-0:["xUSMYG7lmvKlFnWTJwY3-",[[["",{"children":["post",{"children":["how-to-play",{"children":["__PAGE__",{}]}]}],"modal":["__DEFAULT__",{}]},"$undefined","$undefined",true],"$L2",[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/af6c95fcd48bae72.css","precedence":"next","crossOrigin":""}]],"$L3"]]]]
+0:["guMOWIjB8_Os24zFkxmRb",[[["",{"children":["post",{"children":["how-to-play",{"children":["__PAGE__",{}]}]}],"modal":["__DEFAULT__",{}]},"$undefined","$undefined",true],"$L2",[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/af6c95fcd48bae72.css","precedence":"next","crossOrigin":""}]],"$L3"]]]]
 4:I[3170,[],"NotFoundBoundary"]
 5:I[413,["413","static/chunks/413-5da5ec863d1232c5.js","326","static/chunks/326-412788072b16278f.js","811","static/chunks/811-c5aabaf7044e0e46.js","439","static/chunks/439-2ec09a8328667963.js","931","static/chunks/app/page-8ea41d85e7776e4b.js"],"Image"]
 6:I[4160,["413","static/chunks/413-5da5ec863d1232c5.js","326","static/chunks/326-412788072b16278f.js","160","static/chunks/app/not-found-5360d8136c18a5f8.js"],""]

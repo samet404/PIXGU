@@ -1,5 +1,5 @@
 1:HL["/_next/static/css/af6c95fcd48bae72.css","style",{"crossOrigin":""}]
-0:["xUSMYG7lmvKlFnWTJwY3-",[[["",{"children":["create-room",{"children":["__PAGE__",{}]}],"modal":["__DEFAULT__",{}]},"$undefined","$undefined",true],"$L2",[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/af6c95fcd48bae72.css","precedence":"next","crossOrigin":""}]],"$L3"]]]]
+0:["guMOWIjB8_Os24zFkxmRb",[[["",{"children":["create-room",{"children":["__PAGE__",{}]}],"modal":["__DEFAULT__",{}]},"$undefined","$undefined",true],"$L2",[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/af6c95fcd48bae72.css","precedence":"next","crossOrigin":""}]],"$L3"]]]]
 4:HL["/_next/static/media/5034b7ad501e88ae-s.p.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 5:HL["/_next/static/css/eaa2c55c2c367c05.css","style",{"crossOrigin":""}]
 6:I[3170,[],"NotFoundBoundary"]
