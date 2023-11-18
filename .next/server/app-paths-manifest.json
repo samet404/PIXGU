@@ -1,14 +1,5 @@
 {
-  "/_not-found": "app/_not-found.js",
-  "/(Articles)/how-to-play/page": "app/(Articles)/how-to-play/page.js",
-  "/create-room/page": "app/create-room/page.js",
-  "/@modal/(.)login/page": "app/@modal/(.)login/page.js",
-  "/login/page": "app/login/page.js",
   "/page": "app/page.js",
-  "/post/how-to-play/page": "app/post/how-to-play/page.js",
-  "/room/[roomID]/page": "app/room/[roomID]/page.js",
-  "/shop/[...slug]/page": "app/shop/[...slug]/page.js",
-  "/support/[[...slug]]/page": "app/support/[[...slug]]/page.js",
-  "/test/page": "app/test/page.js",
-  "/user/[name]/page": "app/user/[name]/page.js"
+  "/(Articles)/how-to-play/page": "app/(Articles)/how-to-play/page.js",
+  "/create-room/page": "app/create-room/page.js"
 }
