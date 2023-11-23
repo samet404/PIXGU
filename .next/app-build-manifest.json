@@ -1,11 +1,5 @@
 {
   "pages": {
-    "/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/page.css",
-      "static/chunks/app/page.js"
-    ],
     "/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -23,27 +17,15 @@
       "static/css/app/not-found.css",
       "static/chunks/app/not-found.js"
     ],
-    "/@modal/default": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/@modal/default.js"
-    ],
-    "/(Articles)/how-to-play/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/(Articles)/how-to-play/page.css",
-      "static/chunks/app/(Articles)/how-to-play/page.js"
-    ],
     "/default": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/default.js"
     ],
-    "/create-room/page": [
+    "/@modal/default": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/create-room/page.css",
-      "static/chunks/app/create-room/page.js"
+      "static/chunks/app/@modal/default.js"
     ]
   }
 }

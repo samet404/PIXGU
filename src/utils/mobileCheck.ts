@@ -1,4 +1,4 @@
-const mobileCheck = () => {
+const isMobile = () => {
   let check = false
 
   ;(function (a: string) {
@@ -18,4 +18,4 @@ const mobileCheck = () => {
   return check
 }
 
-export { mobileCheck }
+export { isMobile }

@@ -3,8 +3,9 @@ const config = {
     tailwindcss: {},
     autoprefixer: {},
     cssnano: {
-      preset: ["default", { discardComments: { removeAll: true } }],
+      preset: ['default', { discardComments: { removeAll: true } }],
     },
+    'postcss-import': {},
   },
 };
 

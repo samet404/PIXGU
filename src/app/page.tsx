@@ -1,14 +1,11 @@
 import { Fragment } from 'react'
-import { mobileCheck } from '../utils/mobileCheck'
 import Navbar from './_components/Navbar'
 import Main from './_components/Main'
 import Shortcuts from './_components/Shortcuts'
-const Home = () => {
-  console.log(mobileCheck())
-  
 
+const Home = () => {
   return (
-    <Fragment>
+    <Fragment>  
       <Shortcuts />
       <div
         style={{
@@ -23,7 +20,6 @@ const Home = () => {
           <Main />
         </div>
       </div>
-     
     </Fragment>
   )
 }

@@ -15,8 +15,8 @@ body {
   overflow: hidden;
 }
 
-button {
-  cursor: auto;
+* {
+  cursor: none !important;
 }
 
 /*global font size*/

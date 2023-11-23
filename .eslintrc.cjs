@@ -35,6 +35,7 @@ const config = {
     // These opinionated rules are enabled in stylistic-type-checked above.
     // Feel free to reconfigure them to your own preference.
     'dot-notation': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/dot-notation': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/jsx-uses-react': 'off',

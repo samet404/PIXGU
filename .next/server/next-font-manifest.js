@@ -1,1 +1,1 @@
-self.__NEXT_FONT_MANIFEST="{\"pages\":{},\"app\":{\"/home/notfound404/Projects/painterscards/src/app/create-room/page\":[\"static/media/5034b7ad501e88ae-s.p.woff2\",\"static/media/5034b7ad501e88ae-s.p.woff2\"]},\"appUsingSizeAdjust\":true,\"pagesUsingSizeAdjust\":false}"
+self.__NEXT_FONT_MANIFEST="{\"pages\":{},\"app\":{\"/home/notfound404/Projects/painterscards/src/app/not-found\":[\"static/media/0b3ba4bd860abcf8.p.woff2\"]},\"appUsingSizeAdjust\":false,\"pagesUsingSizeAdjust\":false}"

@@ -1,6 +1,6 @@
 'use client'
 
-import { useLocalStorage } from '@/src/hooks/useLocalStorage'
+import { useLocalStorage } from 'usehooks-ts'
 import { useClickAway } from '@uidotdev/usehooks'
 // fonts
 import { Inter } from 'next/font/google'
