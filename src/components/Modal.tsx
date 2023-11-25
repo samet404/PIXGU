@@ -6,16 +6,16 @@ import { useEventListener } from 'usehooks-ts'
 
 const Modal = ({ children }: { children: ReactNode }) => {
   const router = useRouter()
-  const documentRef = useRef<Document>(document)
+  // const documentRef = useRef<Document>(document)
 
-  const handleKeydown = (e: KeyboardEvent) => {
-    if (e.key === 'Escape') {
-      e.preventDefault()
-      router.back()
-    }
-  }
+  // const handleKeydown = (e: KeyboardEvent) => {
+  //   if (e.key === 'Escape') {
+  //     e.preventDefault()
+  //     router.back()
+  //   }
+  // }
 
-  useEventListener('keydown', handleKeydown, documentRef)
+  // useEventListener('keydown', handleKeydown, documentRef)
 
   return (
     <div className="absolute z-50 h-full w-full bg-[rgba(0,0,0,0.7)]">
