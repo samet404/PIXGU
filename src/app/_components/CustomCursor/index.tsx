@@ -4,6 +4,14 @@ import './styles.css'
 import { useEffectOnce } from 'usehooks-ts'
 
 const CustomCursor = () => {
+  const req = new Request('https://jsonplaceholder.typicode.com/posts/', {
+    headers: {
+      From: 'www.d.com',
+    },
+  })
+  console.log(req)
+  console.log(req.headers.get('From'))
+
   const handleMouseClick = () => {
     const customCursor = document.getElementById('custom-cursor')
     const classList = customCursor?.classList

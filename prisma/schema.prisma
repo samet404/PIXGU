@@ -14,26 +14,23 @@ generator client {
 model User {
   id String @unique @default(cuid())
 
-  ipAddress          String
-  isAdmin            Boolean            @default(false)
-  nickname           String
-  preferences        Json               @default(dbgenerated("{}"))
-  statistics         Json               @default(dbgenerated("{}"))
-  achievements       Json               @default(dbgenerated("{}"))
-  createdAt          DateTime           @default(now())
-  updatedAt          DateTime           @updatedAt
-  isBanned           Boolean            @default(false)
-  playingRoom        Room[]
-  writedArticles     WritersOnArticle[]
-  writersOnArticleId String?            @unique
-
-  editedArticles    EditorsOnArticle[]
-  editedOnArticleId String?            @unique
-
-  translatedArticles    TranslatersOnArticle[]
-  translatedOnArticleId String?                @unique
+  ipAddress          String    @unique
+  isAdmin            Boolean   @default(false)
+  nickname           String    @unique
+  preferences        Json      @default(dbgenerated("{}"))
+  statistics         Json      @default(dbgenerated("{}"))
+  achievements       Json      @default(dbgenerated("{}"))
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  isBanned           Boolean   @default(false)
+  playingRoom        Room?     @relation(fields: [playingRoomId], references: [id])
+  playingRoomId      String?   @unique
+  writtenArticles    Article[] @relation("WrittenArticles")
+  editedArticles     Article[] @relation("EditedArticles")
+  translatedArticles Article[] @relation("TranslatedArticles")
 
   @@id([id])
+  @@index([playingRoomId])
 }
 
 model Room {
@@ -46,60 +43,17 @@ model Room {
 }
 
 model Article {
-  id                   String                @id @default(cuid())
-  categories           CategoriesOnArticle[]
-  headerText           String
-  content              String
-  userId               String?
-  WritersOnArticle     WritersOnArticle?
-  EditorsOnArticle     EditorsOnArticle?
-  TranslatersOnArticle TranslatersOnArticle?
-
-  @@index([userId])
+  id          String            @id @default(cuid())
+  categories  ArticleCategory[]
+  headerText  String
+  content     String            @db.Text
+  writers     User[]            @relation("WrittenArticles")
+  editors     User[]            @relation("EditedArticles")
+  translaters User[]            @relation("TranslatedArticles")
 }
 
-model WritersOnArticle {
-  id        String  @id @default(cuid())
-  writers   User[]
-  article   Article @relation(fields: [articleId], references: [id])
-  articleId String  @unique
-
-  @@index([articleId])
-}
-
-model EditorsOnArticle {
-  id        String  @id @default(cuid())
-  editors   User[]
-  article   Article @relation(fields: [articleId], references: [id])
-  articleId String  @unique
-
-  @@index([articleId])
-}
-
-model TranslatersOnArticle {
-  id          String  @id @default(cuid())
-  translaters User[]
-  article     Article @relation(fields: [articleId], references: [id])
-  articleId   String  @unique
-
-  @@index([articleId])
-}
-
-model Category {
-  id       String                @id @default(cuid())
+model ArticleCategory {
+  id       String    @id @default(cuid())
   name     String
-  Articles CategoriesOnArticle[]
-}
-
-model CategoriesOnArticle {
-  Article    Article  @relation(fields: [ArticleId], references: [id])
-  ArticleId  String // relation scalar field (used in the `@relation` attribute above)
-  category   Category @relation(fields: [categoryId], references: [id])
-  categoryId String // relation scalar field (used in the `@relation` attribute above)
-  assignedAt DateTime @default(now())
-  assignedBy String
-
-  @@id([ArticleId, categoryId])
-  @@index([ArticleId])
-  @@index([categoryId])
+  articles Article[]
 }

@@ -5,7 +5,7 @@ import Shortcuts from './_components/Shortcuts'
 
 const Home = () => {
   return (
-    <Fragment>  
+    <Fragment>
       <Shortcuts />
       <div
         style={{
@@ -19,6 +19,11 @@ const Home = () => {
           <Navbar />
           <Main />
         </div>
+        <form action="api/" method="post">
+          <button type="submit" className="text-white">
+            submit
+          </button>
+        </form>
       </div>
     </Fragment>
   )

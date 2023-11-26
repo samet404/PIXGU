@@ -17,7 +17,7 @@ const inter = Inter({
 
 polyfill()
 
-const Article = () => {
+const Article = ({ params }: { params: { headerText: string } }) => {
   const transformText = (
     node: HTMLElement,
     children: ReactNode[],
@@ -83,7 +83,6 @@ const Article = () => {
   }
 
   const articleContent = `
-    
   <h4>loreeem abcdefg</h4>
   <p>Lorem ipsum dolor sit amet consectetur <a href="a">adipisicing</a> elit. <b>Cupiditate, veniam! Aut laboriosam neque porro!</b>   Saepe minima pariatur alias, sapiente, ullam quaerat vero, hic deleniti autem aspernatur repudiandae odit tempore dolorum?</p>
   <h5>loreeem</h5>

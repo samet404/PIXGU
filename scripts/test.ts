@@ -3,19 +3,13 @@ const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 
 const run = async () => {
-
-  const rooms = await prisma.room.findMany()
-  const users = await prisma.user.findMany()
-  console.log(rooms)
-  console.log(users)
-
+  await prisma.ArticleCategory.deleteMany()
 }
 
 run()
-  .then(async () => {
-    await prisma.$disconnect()
-  })
-  .catch(async (e) => {
+  .catch((e) => {
     console.log(e)
-    await prisma.$disconnect()
+  })
+  .finally(() => {
+    prisma.$disconnect()
   })
