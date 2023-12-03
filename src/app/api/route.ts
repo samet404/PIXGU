@@ -1,6 +1,5 @@
-export function GET(request: Request) {
-  
-  return new Response(request)
+export async function GET(request: Request) {
+  return new Response('GET')
 }
 
 export function POST() {

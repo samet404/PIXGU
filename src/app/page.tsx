@@ -2,10 +2,12 @@ import { Fragment } from 'react'
 import Navbar from './_components/Navbar'
 import Main from './_components/Main'
 import Shortcuts from './_components/Shortcuts'
+import FirstStory from './_components/Cutscene'
 
 const Home = () => {
   return (
     <Fragment>
+      <FirstStory />
       <Shortcuts />
       <div
         style={{
@@ -19,11 +21,6 @@ const Home = () => {
           <Navbar />
           <Main />
         </div>
-        <form action="api/" method="post">
-          <button type="submit" className="text-white">
-            submit
-          </button>
-        </form>
       </div>
     </Fragment>
   )

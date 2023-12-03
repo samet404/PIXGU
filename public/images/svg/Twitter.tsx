@@ -20,8 +20,6 @@ const Twitter = ({
   color = 'rgba(0, 0, 0, 0.5)',
   rotation,
 }: SvgProps): JSX.Element => {
-  console.log(className)
-
   return (
     // Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc.
 

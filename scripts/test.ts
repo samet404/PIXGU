@@ -3,7 +3,30 @@ const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 
 const run = async () => {
-  await prisma.ArticleCategory.deleteMany()
+  await prisma.cutscene.create({
+    data: {
+      name: 'birth of the user',
+      language: 'TR',
+      images: {
+        create: [
+          {
+            path: '/lorem/ipsum',
+            position: 1,
+          },
+        ],
+      },
+    },
+  })
+
+  const cutscenes = await prisma.cutscene.findMany({
+    include: {
+      images: true
+    }
+
+    // kyle' ın videosunu izle komple
+  })
+  console.log(cutscenes)
+
 }
 
 run()

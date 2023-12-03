@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import type { Color } from '@/types/color'
 import type { IntRange } from '@/types/intRange'
@@ -7,7 +7,7 @@ type RotationCheck = IntRange<1, 360>
 
 type SvgProps = {
   width?: string
-  height?: string 
+  height?: string
   color?: Color
   className?: string
   rotation?: RotationCheck
@@ -20,8 +20,6 @@ const Discord = ({
   className,
   rotation,
 }: SvgProps): JSX.Element => {
-  console.log('wdıjoawdojppo')
-
   return (
     // Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc.
 

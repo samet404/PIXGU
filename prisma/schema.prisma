@@ -1,4 +1,4 @@
-// This is your Prisma schema file,
+// This is Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 datasource db {
@@ -28,6 +28,7 @@ model User {
   writtenArticles    Article[] @relation("WrittenArticles")
   editedArticles     Article[] @relation("EditedArticles")
   translatedArticles Article[] @relation("TranslatedArticles")
+  gender             String
 
   @@id([id])
   @@index([playingRoomId])
@@ -56,4 +57,47 @@ model ArticleCategory {
   id       String    @id @default(cuid())
   name     String
   articles Article[]
+}
+
+model Cutscene {
+  id       String          @id @default(cuid())
+  // the name column shouldn't be translated when translating cutscene to other languages
+  name     String
+  language String          @db.Char(2)
+  texts    CutsceneText[]
+  images   CutsceneImage[]
+  videos   CutsceneVideo[]
+}
+
+model CutsceneText {
+  id String @id @default(cuid())
+
+  text       String    @db.Text
+  Cutscene   Cutscene? @relation(fields: [cutsceneId], references: [id])
+  cutsceneId String?
+  position   Int       @db.TinyInt
+
+  @@index([cutsceneId])
+}
+
+model CutsceneImage {
+  id String @id @default(cuid())
+
+  path       String    @db.VarChar(80)
+  Cutscene   Cutscene? @relation(fields: [cutsceneId], references: [id])
+  cutsceneId String?
+  position   Int       @db.TinyInt
+
+  @@index([cutsceneId])
+}
+
+model CutsceneVideo {
+  id String @id @default(cuid())
+
+  path       String    @db.VarChar(80)
+  Cutscene   Cutscene? @relation(fields: [cutsceneId], references: [id])
+  cutsceneId String?
+  position   Int       @db.TinyInt
+
+  @@index([cutsceneId])
 }

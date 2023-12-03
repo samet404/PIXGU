@@ -44,7 +44,9 @@
     "**/*.mjs",
     ".next/types/**/*.ts",
     "scripts/test.ts",
-    "src/app/lib/placeholder-data.js"
-, "prisma/seed.js", "prisma/seedData.js"  ],
+    "src/app/lib/placeholder-data.js",
+    "prisma/seed.js",
+    "prisma/seedData.js"
+  ],
   "exclude": ["node_modules", "**/*.js"]
 }

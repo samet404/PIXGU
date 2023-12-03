@@ -32,18 +32,6 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/default.js"
-    ],
-    "/article/[headerText]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/article/[headerText]/page.css",
-      "static/chunks/app/article/[headerText]/page.js"
-    ],
-    "/create-room/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/create-room/page.css",
-      "static/chunks/app/create-room/page.js"
     ]
   }
 }

@@ -41,6 +41,7 @@ const config = {
     'react/jsx-uses-react': 'off',
     'no-empty': 'warn',
     'no-unused-vars': 'warn',
+    '@typescript-eslint/require-await': 'warn',
     '@typescript-eslint/no-var-requires': 'warn',
     '@typescript-eslint/no-duplicate-type-constituents': 'off',
     '@typescript-eslint/no-unsafe-return': 'off',
@@ -59,7 +60,7 @@ const config = {
         fixStyle: 'inline-type-imports',
       },
     ],
-    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+    '@typescript-eslint/no-unused-vars': 'off',
     '@typescript-eslint/no-misused-promises': [
       2,
       {

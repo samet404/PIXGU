@@ -44,8 +44,24 @@ const articleCategories = [
   },
 ]
 
+const cutscenes = [
+  {
+    name: 'birth of the user',
+    language: 'TR',
+    texts: {
+      create: [
+        {
+          text: 'Deserunt nisi ut mollit ad ea voluptate tempor adipisicing Lorem nostrud labore ut Lorem.',
+          position: 1
+        }
+      ],
+    },
+  },
+]
+
 module.exports = {
   users,
   articles,
   articleCategories,
+  cutscenes
 }
