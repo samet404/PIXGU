@@ -3,30 +3,36 @@ const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 
 const run = async () => {
-  await prisma.cutscene.create({
+  await prisma.Cutscene.create({
     data: {
       name: 'birth of the user',
       language: 'TR',
-      images: {
-        create: [
-          {
-            path: '/lorem/ipsum',
-            position: 1,
-          },
-        ],
+      texts: {
+        createMany: {
+          data: [
+            {
+              text: 'dasğodıaspodıjaspodjasp   nisi ut mollit ad ea voluptate tempor adipisicing Lorem nostrud labore ut Lorem.',
+              position: 1,
+            },
+            {
+              text: 'Dolor non ut minim laboris aliqua velit elit laborum Lorem esse veniam.',
+              position: 4,
+            },
+          ],
+        },
       },
     },
   })
 
   const cutscenes = await prisma.cutscene.findMany({
     include: {
-      images: true
-    }
+      texts: true,
+      images: true,
+    },
 
     // kyle' ın videosunu izle komple
   })
   console.log(cutscenes)
-
 }
 
 run()

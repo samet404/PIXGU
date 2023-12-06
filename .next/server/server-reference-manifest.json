@@ -1,5 +1,14 @@
 {
-  "node": {},
+  "node": {
+    "9c91f94c8489f19f5d2b558e5b0c4b1924941ac1": {
+      "workers": {
+        "app/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fnotfound404%2FProjects%2Fpainterscards%2Fsrc%2Fcomponents%2FCutscene%2Findex.tsx%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=!"
+      },
+      "layer": {
+        "app/page": "rsc"
+      }
+    }
+  },
   "edge": {},
-  "encryptionKey": "nf2s0VnvbvGz4yFS51Zk3P7vFzrGj09gxPJnr3J4ExU="
+  "encryptionKey": "Dq2S1mS41XvHkb5vBGKWq58q0cOy4UJ409kCTOsZhdw="
 }

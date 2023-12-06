@@ -4,7 +4,7 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { PrismaClient } = require('@prisma/client')
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const { users, articles, articleCategories, cutscenes } = require('./seedData')
+const { users, articles, articleCategories, cutscene } = require('./seedData')
 // @ts-expect-error
 const prisma = new PrismaClient()
 
@@ -47,10 +47,12 @@ const seedCutscenes = async () => {
   await prisma.Cutscene.deleteMany()
   console.log('Cutscenes deleted successfully! ✅')
 
-  await prisma.Cutscene.createMany({
-    data: cutscenes,
+  await prisma.Cutscene.create({
+    data: cutscene,
     include: {
       texts: true,
+      images: true,
+      videos: true,
     },
   })
   console.log('Cutscenes seeded successfully! ✅ \n')

@@ -4,6 +4,7 @@ const users = [
   {
     ipAddress: '192.168.1.1',
     nickname: '404',
+    gender: 'girl',
     preferences: {
       theme: 'default',
     },
@@ -44,24 +45,35 @@ const articleCategories = [
   },
 ]
 
-const cutscenes = [
-  {
-    name: 'birth of the user',
-    language: 'TR',
-    texts: {
-      create: [
+const cutscene = {
+  name: 'birth of user',
+  language: 'TR',
+  CutsceneStage: {
+    createMany: {
+      data: [
         {
-          text: 'Deserunt nisi ut mollit ad ea voluptate tempor adipisicing Lorem nostrud labore ut Lorem.',
-          position: 1
+          videoPath: '/videos/mp4/cars.mp4',
+          imagePath: '/images/jpg/cutscene/birthOfUser/mountains.jpg',
+          text: 'Synoon, biz canlıların kendini koruma içgüdüsü sayesinde vahşetiyle kendine çeken bu gezegen, işte maceran burada başlıyor. Bu gezegen kural falan tanımaz. Evrensel Televizyon yayınlarındaki yarışma programları yalnızca reytinge bakarlar. Ama günün sonunda yarışmayı kazananın eli boş dönmez. Bu yüzden bir çok canlı bu gezegende hayat mücadelesi veriyor. Açgözlü olmamak ve gerektiği anda geri çekilmek bu yarışmalara katılırkenki alınan riski anlamlı hale getirmenin tek yolu olabilir.',
+        },
+        {
+          videoPath: null,
+          imagePath: '/images/jpg/cutscene/walkingUser',
+          text: 'Bu gezegene attığın her adım seni geri dönmek, yada dönmemek ikileminde bırakıyor. Ayrıca her adım seni ölüme daha da yakınlaştırıyor gibi hissettiriyor. Karmaşık duygular içerisindesin, tıpkı her gelen gibi. Ancak duygularının seni hedefinden şaşırtmasına izin vermiyorsun. Buraya <textInput id="userReason"></textInput> için geldin. Hedefini gerçekleştirmeden gidemezsin.'
+        },
+        {
+          videoPath: null,
+          imagePath: '/images/jpg/cutscene/shop',
+          text: 'Uzun yürüyüşten sonra sonunda bir dükkan görüyorsun'
         }
       ],
     },
   },
-]
+}
 
 module.exports = {
   users,
   articles,
   articleCategories,
-  cutscenes
+  cutscene,
 }
