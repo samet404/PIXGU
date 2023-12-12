@@ -1,10 +1,11 @@
 'use server'
 
-import prisma from '@/src/lib/prisma'
+import prisma from '@/lib/prisma'
 import UpdateAtomsWithPrisma from './components/UpdateAtomsWithPrisma'
 import TextSection from './components/TextSection'
 import ButtonSection from './components/ButtonSection'
-import MediaSection from './components/MediaSection'
+import ImageSection from './components/ImageSection'
+import VideoSection from './components/VideoSection'
 
 type CutsceneProps = {
   name: string
@@ -14,60 +15,29 @@ type CutsceneProps = {
 const Cutscene = async ({ name, language }: CutsceneProps) => {
   console.log('Cutscene Rendered!')
 
-  const cutsceneImagesData = await prisma.cutscene.findFirst({
+  const cutsceneStagesData = await prisma.cutscene.findFirst({
     where: {
       name: name,
       language: language,
     },
     select: {
-      images: {
+      CutsceneStage: {
         select: {
-          path: true,
-          stage: true,
+          videoPath: true,
+          imagePath: true,
+          text: true,
         },
       },
     },
   })
-
-  const cutsceneVideosData = await prisma.cutscene.findFirst({
-    where: {
-      name: name,
-      language: language,
-    },
-    select: {
-      videos: {
-        select: {
-          path: true,
-          stage: true,
-        },
-      },
-    },
-  })
-
-  const cutsceneTextsData = await prisma.cutscene.findFirst({
-    where: {
-      name: name,
-      language: language,
-    },
-    select: {
-      texts: {
-        select: {
-          value: true,
-          stage: true,
-        },
-      },
-    },
-  })
-
   return (
-    <div className="absolute z-50 h-full w-full overflow-y-auto bg-[black] py-10">
+    <div className="absolute z-50 h-full w-full overflow-y-auto bg-[#111111] py-10">
       <UpdateAtomsWithPrisma
-        cutsceneImagesData={cutsceneImagesData}
-        cutsceneVideosData={cutsceneVideosData}
-        cutsceneTextsData={cutsceneTextsData}
+        cutsceneStagesDataPropFromPrisma={cutsceneStagesData}
       >
         <main className="flex h-full w-full flex-col items-center gap-4">
-          <MediaSection />
+          <VideoSection />
+          <ImageSection />
           <TextSection />
           <ButtonSection />
         </main>

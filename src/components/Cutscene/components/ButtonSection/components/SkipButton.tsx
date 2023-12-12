@@ -1,17 +1,18 @@
 'use client'
 
+import Forward from '@/svg/Forward'
 import { Inter } from 'next/font/google'
-const inter400 = Inter({
+const inter500 = Inter({
   subsets: ['latin'],
-  weight: ['400'],
+  weight: ['500'],
 })
 
 const SkipButton = () => {
   return (
     <button
-      className={`${inter400.className} rounded-md bg-[#ff7688] px-3 py-2`}
+      className={`${inter500.className} rounded-r-lg flex flex-row items-center gap-2 text-[rgba(0,0,0,0.5)] bg-[#ff7688] px-3 py-2`}
     >
-      Skip
+      <Forward /> Skip
     </button>
   )
 }

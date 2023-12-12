@@ -1,33 +1,15 @@
 'use client'
 
-import { useAtom, useSetAtom } from 'jotai'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { type ReactNode } from 'react'
-import {
-  cutsceneTextsDataAtom,
-  setCutsceneImagesDataAtom,
-  setCutsceneTextsDataAtom,
-  setCutsceneVideosDataAtom,
-} from '../atoms'
+import { cutsceneStagesDataAtom, setCutsceneStagesDataAtom } from '../atoms'
 
 type UpdateAtomWithPrismaProps = {
-  cutsceneImagesData: {
-    images: {
-      path: string
-      stage: number
-    }[]
-  } | null
-
-  cutsceneVideosData: {
-    videos: {
-      path: string
-      stage: number
-    }[]
-  } | null
-
-  cutsceneTextsData: {
-    texts: {
-      value: string
-      stage: number
+  cutsceneStagesDataPropFromPrisma: {
+    CutsceneStage: {
+      videoPath: string | null
+      imagePath: string | null
+      text: string | null
     }[]
   } | null
 
@@ -35,22 +17,11 @@ type UpdateAtomWithPrismaProps = {
 }
 
 const UpdateAtomsWithPrisma = ({
-  cutsceneImagesData,
-  cutsceneVideosData,
-  cutsceneTextsData,
+  cutsceneStagesDataPropFromPrisma,
   children,
 }: UpdateAtomWithPrismaProps) => {
-  const setCutsceneImagesData = useSetAtom(setCutsceneImagesDataAtom)
-  const setCutsceneVideosData = useSetAtom(setCutsceneVideosDataAtom)
-  const setCutsceneTextsData = useSetAtom(setCutsceneTextsDataAtom)
-
-  const [cutsceneTextsDataTest] = useAtom(cutsceneTextsDataAtom)
-  console.log(cutsceneTextsDataTest)
-
-  setCutsceneImagesData(cutsceneImagesData)
-  setCutsceneVideosData(cutsceneVideosData)
-  setCutsceneTextsData(cutsceneTextsData)
-
+  const setCutsceneStagesData = useSetAtom(setCutsceneStagesDataAtom)
+  setCutsceneStagesData(cutsceneStagesDataPropFromPrisma)
   return children
 }
 

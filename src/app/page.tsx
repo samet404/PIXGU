@@ -9,7 +9,7 @@ const Home = () => {
 
   return (
     <Fragment>
-      <Cutscene name='birth of the user' language='TR' />
+      <Cutscene name='birth of user' language='TR' />
       <Shortcuts />
       <div
         style={{

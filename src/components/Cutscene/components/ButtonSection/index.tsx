@@ -4,7 +4,7 @@ import SkipButton from './components/SkipButton'
 
 const ButtonSection = () => {
   return (
-    <section className="flex flex-row gap-3">
+    <section className="flex flex-row ">
       <PreviousButton />
       <NextButton />
       <SkipButton />

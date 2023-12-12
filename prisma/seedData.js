@@ -2,14 +2,12 @@
 
 const users = [
   {
-    ipAddress: '192.168.1.1',
-    nickname: '404',
+    name: '404',
     gender: 'girl',
     preferences: {
       theme: 'default',
     },
     statistics: {},
-    achievements: {},
   },
 ]
 
@@ -48,24 +46,35 @@ const articleCategories = [
 const cutscene = {
   name: 'birth of user',
   language: 'TR',
-  CutsceneStage: {
+  CutsceneStages: {
     createMany: {
       data: [
         {
-          videoPath: '/videos/mp4/cars.mp4',
+          videoPath: null,
           imagePath: '/images/jpg/cutscene/birthOfUser/mountains.jpg',
-          text: 'Synoon, biz canlıların kendini koruma içgüdüsü sayesinde vahşetiyle kendine çeken bu gezegen, işte maceran burada başlıyor. Bu gezegen kural falan tanımaz. Evrensel Televizyon yayınlarındaki yarışma programları yalnızca reytinge bakarlar. Ama günün sonunda yarışmayı kazananın eli boş dönmez. Bu yüzden bir çok canlı bu gezegende hayat mücadelesi veriyor. Açgözlü olmamak ve gerektiği anda geri çekilmek bu yarışmalara katılırkenki alınan riski anlamlı hale getirmenin tek yolu olabilir.',
+          text: 'Synoon, biz canlıların kendini koruma içgüdüsü sayesinde, vahşetiyle kendine çeken bu gezegen, işte maceran burada başlıyor. Bu gezegen kural falan tanımaz. Evrensel Televizyon yayınları için reyting mekanı desek yeridir. Yüzlerce yarışma ve program burada düzenlenir. Ama günün sonunda yarışmayı kazananın eli boş dönmez. Bu yüzden bir çok canlı bu gezegende şansını denemeye geliyor.',
         },
         {
           videoPath: null,
-          imagePath: '/images/jpg/cutscene/walkingUser',
-          text: 'Bu gezegene attığın her adım seni geri dönmek, yada dönmemek ikileminde bırakıyor. Ayrıca her adım seni ölüme daha da yakınlaştırıyor gibi hissettiriyor. Karmaşık duygular içerisindesin, tıpkı her gelen gibi. Ancak duygularının seni hedefinden şaşırtmasına izin vermiyorsun. Buraya <textInput id="userReason"></textInput> için geldin. Hedefini gerçekleştirmeden gidemezsin.'
+          imagePath: '/images/jpg/cutscene/birthOfUser/walkingUser.jpg',
+          text: 'Amacın bu yarışmalardan birine katılıp kazanmak. Gezegeninden ayrılalı 1 ışıkyılı yol yürüdün. Awttığın her adım seni geri dönmek, yada dönmemek ikileminde bırakıyor. Ayrıca her adım seni ölüme daha da yakınlaştırıyor gibi hissettiriyor. Karmaşık duygular içerisindesin, tıpkı her gelen gibi. Ancak duygularının seni hedefinden şaşırtmasına izin vermiyorsun. Buraya <textinput id={`userReason`}></textinput> için geldin. Hedefini gerçekleştirmeden gidemezsin.',
         },
         {
           videoPath: null,
-          imagePath: '/images/jpg/cutscene/shop',
-          text: 'Uzun yürüyüşten sonra sonunda bir dükkan görüyorsun'
-        }
+          imagePath: '/images/jpg/cutscene/birthOfUser/shop.jpg',
+          text: 'Uzun yürüyüşten sonra sonunda bir dükkan görüyorsun seni karşılıyor. Dükkanın önünde bir tabela var. Üzerinde "Kazanmak için önce kaybetmelisin" yazıyor. Dükkanın içerisine giriyorsun. İçeride bir çok eşya var. Ancak bunların hepsi senin için gereksiz. Çünkü senin tek ihtiyacın olanı biliyorsun. Kazanmak için <textinput id={`userItem`}></textinput>ye ihtiyacın var. Eşyanı alıp yola koyuluyorsun.',
+        },
+        {
+          videoPath: null,
+          imagePath: null,
+          text: 'Dükkanın sahibi dikkatini çekmişti. Garip gözüküyordu, sanki buradan değil gibi. Seni ilk gördüğü andan itibaren sana karşı bir ilgisi olduğu belliydi. Sebebini umursamadan uzaklaşıyorsun.',
+        },
+
+        {
+          videoPath: null,
+          imagePath: null,
+          text: `Gördüğün tabelanın üzerindeki kağıdı çıkarken almıştın. Üzerinde bir çok yarışmadan birinin ilanı vardı. Hangisine gideceğine kafa yormadın fazla zaman yoktu. Dikkatini "Painter's Cards" adında bir yarışma çekmişti. Yola koyuldun. İyi şanslar yolcu.`,
+        },
       ],
     },
   },

@@ -50,9 +50,7 @@ const seedCutscenes = async () => {
   await prisma.Cutscene.create({
     data: cutscene,
     include: {
-      texts: true,
-      images: true,
-      videos: true,
+      CutsceneStage: true,
     },
   })
   console.log('Cutscenes seeded successfully! ✅ \n')

@@ -1,15 +1,28 @@
 'use client'
 
-import { useSetAtom } from 'jotai'
-import { decreaseCutsceneStageAtom } from '../../../atoms'
+import { useAtomValue, useSetAtom } from 'jotai'
+import {
+  cutsceneStageLengthAtom,
+  cutsceneStageNumberAtom,
+  decreaseCutsceneStageNumberAtom,
+} from '../../../atoms'
 
 const PreviousButton = () => {
-  const decreaseCutsceneStage = useSetAtom(decreaseCutsceneStageAtom)
+  const decreaseCutsceneStageNumber = useSetAtom(decreaseCutsceneStageNumberAtom)
+
+  const cutsceneStageNumber = useAtomValue(cutsceneStageNumberAtom)
+
+  const isActive =  cutsceneStageNumber > 1 
 
   return (
     <button
-      className="rounded-md bg-yellow-200 px-5 py-2 font-[900]"
-      onClick={() => decreaseCutsceneStage()}
+      style={{
+        backgroundColor: isActive
+          ? 'rgba(255,255,255,0.2)'
+          : 'rgba(255,255,255,0.1)',
+      }}
+      className="rounded-l-lg px-5 py-2 text-xl font-[900] text-[rgba(255,255,255,0.4)]"
+      onClick={() => decreaseCutsceneStageNumber()}
     >
       {'<'}
     </button>

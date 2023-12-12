@@ -35,12 +35,14 @@ const config = {
     // These opinionated rules are enabled in stylistic-type-checked above.
     // Feel free to reconfigure them to your own preference.
     'dot-notation': 'off',
+    'prefer-const': 'warn',
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/dot-notation': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/jsx-uses-react': 'off',
     'no-empty': 'warn',
     'no-unused-vars': 'warn',
+    '@typescript-eslint/no-useless-empty-export': 'warn',
     '@typescript-eslint/require-await': 'warn',
     '@typescript-eslint/no-var-requires': 'warn',
     '@typescript-eslint/no-duplicate-type-constituents': 'off',

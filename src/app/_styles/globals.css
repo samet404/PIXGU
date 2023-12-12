@@ -51,3 +51,7 @@ h6 {
 p {
   font-size: 1rem;
 }
+
+input {
+  background-color: transparent !important;
+}

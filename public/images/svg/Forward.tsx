@@ -13,7 +13,7 @@ type SvgProps = {
   rotation?: RotationCheck
 }
 
-const Discord = ({
+const Forward = ({
   width = '1rem',
   height = '1rem',
   color = 'rgba(0, 0, 0, 0.5)',
@@ -36,4 +36,4 @@ const Discord = ({
   )
 }
 
-export default Discord
+export default Forward
