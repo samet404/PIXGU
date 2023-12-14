@@ -2,14 +2,11 @@ import { Fragment } from 'react'
 import Navbar from './_components/Navbar'
 import Main from './_components/Main'
 import Shortcuts from './_components/Shortcuts'
-import JotaiWithoutSSR from './_components/JotaiWithoutSSR'
 import Cutscene from '../components/Cutscene'
 
 const Home = () => {
-
   return (
     <Fragment>
-      <Cutscene name='birth of user' language='TR' />
       <Shortcuts />
       <div
         style={{

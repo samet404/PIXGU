@@ -4,7 +4,6 @@ import './styles.css'
 import { useEffectOnce } from 'usehooks-ts'
 
 const CustomCursor = () => {
-
   const handleMouseClick = () => {
     const customCursor = document.getElementById('custom-cursor')
     const classList = customCursor?.classList
@@ -42,7 +41,7 @@ const CustomCursor = () => {
   return (
     <div
       id="custom-cursor"
-      className="pointer-events-none absolute z-[100] h-5 w-5 rounded-full bg-[rgba(255,255,255,0.2)] shadow-[0_0px_30px_0px_rgba(0,0,0,0.5)] backdrop-blur-[2px]"
+      className="pointer-events-none absolute z-[100] h-4 w-4 rounded-full bg-[rgba(255,255,255,0.2)] shadow-[0_0px_20px_0px_rgba(0,0,0,0.3)] backdrop-blur-[2px]"
     ></div>
   )
 }
