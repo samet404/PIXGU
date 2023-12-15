@@ -12,15 +12,12 @@ export default function RootLayout(props: {
   modal: ReactNode
 }) {
   return (
-    <NextAuthSessionProvider>
-      <html lang="en">
-        <body>
-          <CustomCursor />
-          {props.modal}
-          {props.children}
-          <Analytics />
-        </body>
-      </html>
-    </NextAuthSessionProvider>
+    <html lang="en">
+      <body>
+        <CustomCursor />
+        <NextAuthSessionProvider>{props.children}</NextAuthSessionProvider>
+        <Analytics />
+      </body>
+    </html>
   )
 }

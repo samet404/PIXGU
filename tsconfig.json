@@ -19,6 +19,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
+      "@/api*": ["./src/app/api/*"],
       "@/functions*": ["./src/functions/*"],
       "@/components*": ["./src/components/*"],
       "@/hooks*": ["./src/hooks/*"],
