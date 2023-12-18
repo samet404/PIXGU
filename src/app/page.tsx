@@ -2,7 +2,7 @@ import { Fragment } from 'react'
 import Navbar from './_components/Navbar'
 import Main from './_components/Main'
 import Shortcuts from './_components/Shortcuts'
-import Cutscene from '../components/Cutscene'
+import HoverEffectDiv from './_components/HoverEffectDiv'
 
 const Home = () => {
   return (
@@ -16,10 +16,10 @@ const Home = () => {
         }}
         className={`flex h-full w-full flex-col items-center gap-3 overflow-y-auto py-[1rem]`}
       >
-        <div className="flex animate-fade flex-col gap-10 p-4 animate-duration-1000">
+        <HoverEffectDiv>
           <Navbar />
           <Main />
-        </div>
+        </HoverEffectDiv>
       </div>
     </Fragment>
   )

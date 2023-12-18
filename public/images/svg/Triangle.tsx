@@ -1,5 +1,3 @@
-'use client'
-
 import type { Color } from '@/types/color'
 import type { IntRange } from '@/types/intRange'
 

@@ -11,7 +11,7 @@ type SvgProps = {
   rotation?: RotationCheck
 }
 
-const Forward = ({
+const Discord = ({
   width = '1rem',
   height = '1rem',
   color = 'rgba(0, 0, 0, 0.5)',
@@ -23,15 +23,15 @@ const Forward = ({
 
     <svg
       xmlns="http://www.w3.org/2000/svg"
+      fill={color}
       height={height}
       width={width}
-      fill={color}
       className={`${className} rotate-[${rotation}deg]`}
       viewBox="0 0 512 512"
     >
-      <path d="M52.5 440.6c-9.5 7.9-22.8 9.7-34.1 4.4S0 428.4 0 416V96C0 83.6 7.2 72.3 18.4 67s24.5-3.6 34.1 4.4L224 214.3V256v41.7L52.5 440.6zM256 352V256 128 96c0-12.4 7.2-23.7 18.4-29s24.5-3.6 34.1 4.4l192 160c7.3 6.1 11.5 15.1 11.5 24.6s-4.2 18.5-11.5 24.6l-192 160c-9.5 7.9-22.8 9.7-34.1 4.4s-18.4-16.6-18.4-29V352z" />
+      <path d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z" />
     </svg>
   )
 }
 
-export default Forward
+export default Discord
