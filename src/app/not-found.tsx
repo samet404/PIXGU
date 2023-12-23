@@ -1,6 +1,5 @@
 import Image from 'next/image'
-import notFound from 'public/images/png/404.png'
-
+import notFound from '@/png/404.png'
 import BackButton from '../components/BackButton'
 import Link from 'next/link'
 

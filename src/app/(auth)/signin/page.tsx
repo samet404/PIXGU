@@ -1,3 +1,4 @@
+import { authOptions } from '@/api/auth/[...nextauth]/authOptions'
 // image
 import Image from 'next/image'
 import bgImg from '@/jpg/daniele-levis-pelusi-unsplash.jpg'
@@ -5,8 +6,13 @@ import Logo from '@/png/logo.png'
 // component
 import OAuthSection from './components/OAuthSection'
 import NavigationSection from './components/OAuthSection/NavigationSection'
+import { getServerSession } from 'next-auth'
+import { redirect } from 'next/navigation'
 
-const Login = () => {
+const Login = async () => {
+  const session = await getServerSession(authOptions)
+
+  if (session) return redirect('/')
   return (
     <div className="flex h-full w-full flex-col items-center ">
       <Image

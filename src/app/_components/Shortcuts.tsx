@@ -17,7 +17,7 @@ const Shortcuts = () => {
         router.push('/create-room')
         break
       case '3':
-        router.push('/how-to-play')
+        router.push('/article/how-to-play')
         break
       case '4':
         router.push('/login')

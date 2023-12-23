@@ -1,12 +1,12 @@
 // public
 import Logo from '@/png/logo.png'
-import Discord from '@/svg/Discord'
-import Twitter from '@/public/images/svg/Twitter'
+import Discord from '@/public/image/svg/Discord'
+import Twitter from '@/public/image/svg/Twitter'
 // components
 import Image from 'next/image'
 import Link from 'next/link'
 import LanguageDropdown from './components/LanguageDropdown'
-import UserProfile from './components/UserProfile'
+import UserProfile from './components/UserSettingsDropdown'
 
 const Navbar = () => {
   return (
@@ -15,10 +15,10 @@ const Navbar = () => {
         <Image
           src={Logo}
           alt="logo"
-          className="h-[6rem] w-[6rem] select-none "
+          className="h-[6rem] w-[6rem] select-none object-contain"
           sizes="calc(2.33vw + 90px)"
         ></Image>
-        <div className="flex w-[5rem] flex-row flex-wrap gap-2">
+        <div className="hidden flex-row flex-wrap gap-2 md:flex">
           <Link href="discord.gg/falan">
             <Discord
               width="2rem"

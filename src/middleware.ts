@@ -1,6 +1,15 @@
-export { default } from 'next-auth/middleware'
+// /middleware.ts
+import { NextResponse } from 'next/server'
 
-// https://nextjs.org/docs/app/building-your-application/routing/middleware
-export const config = {
-  matcher: '/room/:path*',
+export function middleware(request: Request) {
+  // Store current request url in a custom header, which you can read later
+  const requestHeaders = new Headers(request.headers)
+  requestHeaders.set('x-url', request.url)
+
+  return NextResponse.next({
+    request: {
+      // Apply new request headers
+      headers: requestHeaders,
+    },
+  })
 }

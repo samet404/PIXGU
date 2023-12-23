@@ -14,11 +14,16 @@ const Home = () => {
           backgroundImage:
             'radial-gradient(at 100% 100%, hsla(41,100%,54%,0.1) 0px, transparent 50%), radial-gradient(at 2% 0%, hsla(343,100%,76%,0.16) 0px, transparent 50%)',
         }}
-        className={`flex h-full w-full flex-col items-center gap-3 overflow-y-auto py-[1rem]`}
+        className={` h-full w-full `}
       >
         <HoverEffectDiv>
-          <Navbar />
-          <Main />
+          <div
+            className='animate-duration-1000" > flex animate-fade flex-col gap-10 p-4
+    duration-[100ms]'
+          >
+            <Navbar />
+            <Main />
+          </div>
         </HoverEffectDiv>
       </div>
     </Fragment>

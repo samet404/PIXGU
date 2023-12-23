@@ -11,6 +11,26 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model PageTexts {
+  id String @id @default(cuid())
+
+  route      String      @db.VarChar(20)
+  textFields TextField[]
+}
+
+model TextField {
+  id String @id @default(cuid())
+
+  name     String
+  language String @db.Char(2)
+  text     String @db.Text
+
+  PageTexts   PageTexts? @relation(fields: [pageTextsId], references: [id])
+  pageTextsId String?
+  
+  @@index([pageTextsId])
+}
+
 model Account {
   id                String  @id @default(cuid())
   userId            String

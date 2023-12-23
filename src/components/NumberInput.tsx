@@ -18,7 +18,6 @@ const NumberInput = ({
   min,
   max,
   className,
-  placeholder,
   ...rest
 }: NumberInputProps) => {
   const inputRef = useRef<HTMLInputElement>(null)
@@ -27,17 +26,19 @@ const NumberInput = ({
   if (min) if (startValue < min) console.error('Invalid start value \n')
 
   const increment = () => {
-    const inputValue = inputRef.current!.value as unknown as number
+    let inputValue: string = inputRef.current!.value
 
-    if (max) if (inputValue + 1 > max) return
-    inputValue + 1
+    if (max) if (parseInt(inputValue) + 1 > max) return ''
+
+    console.log((parseInt(inputValue) + 4).toString())
+    inputRef.current!.value = (parseInt(inputValue) + 1).toString()
   }
 
   const decrement = () => {
-    const inputValue = inputRef.current!.value as unknown as number
+    let inputValue: string = inputRef.current!.value
 
-    if (min) if (inputValue - 1 < min) return
-    inputValue - 1
+    if (min) if (parseInt(inputValue) - 1 < min) return ''
+    inputRef.current!.value = (parseInt(inputValue) - 1).toString()
   }
 
   const handleOnKeyUp = (e: any) => {

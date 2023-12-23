@@ -21,13 +21,13 @@ const MainButton = ({
   ...rest
 }: MainButtonProps) => {
   return (
-    <Link href={link} className={'select-none cursor-none'}>
+    <Link href={link} className={'cursor-none select-none'}>
       <button
         className={`${className} relative flex h-full w-full flex-col justify-between  gap-3 bg-gradient-to-tr from-[rgba(255,255,255,0.4)] to-[rgba(255,255,255,0.3)] p-2 shadow-[0_0px_5px_0px_rgba(0,0,0,0.8)]`}
         {...rest}
       >
         <div
-          className={`${outfit.className} absolute right-3 top-3 h-6 w-6 rounded-md bg-[rgba(255,255,255,0.2)] font-[500] text-[rgba(255,255,255,0.6)]`}
+          className={`${outfit.className} right-3 top-3 h-6 w-6 rounded-md bg-[rgba(255,255,255,0.2)] font-[500] text-[rgba(255,255,255,0.6)] xs:hidden lg:absolute`}
         >
           {keyName}
         </div>

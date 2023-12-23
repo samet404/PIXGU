@@ -1,6 +1,5 @@
 'use client'
 
-import './styles.css'
 import { useEffectOnce } from 'usehooks-ts'
 
 const CustomCursor = () => {

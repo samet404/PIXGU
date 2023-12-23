@@ -9,7 +9,8 @@
     "lint": "next lint",
     "start": "next start",
     "db:studio": "dotenv -e .env.development npx prisma studio",
-    "db:push": "dotenv -e .env.development npx prisma db push",
+    "db:push": "dotenv -e .env.development drizzle-kit push:mysql",
+    "db:introspect": "dotenv -e .env.development drizzle-kit introspect:mysql",
     "db:hardpush": "dotenv -e .env.development npx prisma db push --force-reset",
     "db:seed": "dotenv -e .env.development node prisma/seed.js",
     "tnest:ts": "dotenv -e .env.development node scripts/test.ts",
@@ -25,7 +26,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@next-auth/prisma-adapter": "^0.4.4-canary.81",
-    "@planetscale/database": "^1.11.0",
+    "@planetscale/database": "^1.13.0",
     "@prisma/client": "^5.7.0",
     "@t3-oss/env-nextjs": "^0.7.0",
     "@tanstack/react-query": "^4.32.6",
@@ -42,13 +43,12 @@
     "cuid": "^3.0.0",
     "dotenv": "^16.3.1",
     "dotenv-cli": "^7.3.0",
-    "drizzle-orm": "^0.29.0",
+    "drizzle-orm": "^0.29.1",
     "eslint-plugin-react": "^7.33.2",
     "geist": "^1.0.0",
     "interweave": "^13.1.0",
     "jotai": "^2.6.0",
-    "mysql2": "^3.6.5",
-    "next": "^14.0.3",
+    "next": "^13.0.3",
     "next-auth": "^4.24.5",
     "nextjs-progressbar": "^0.0.16",
     "react": "^18.2.0",
@@ -59,6 +59,7 @@
     "react-player": "^2.13.0",
     "superjson": "^1.13.1",
     "swr": "^2.2.4",
+    "tailwind-merge": "^2.1.0",
     "tailwind-scrollbar": "^3.0.5",
     "tailwindcss-animated": "^1.0.1",
     "tailwindcss-textshadow": "^2.1.3",
@@ -67,6 +68,8 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@swc/cli": "^0.1.63",
+    "@swc/core": "^1.3.101",
     "@types/bcrypt": "^5.0.1",
     "@types/eslint": "^8.44.2",
     "@types/node": "^18.18.13",
@@ -76,7 +79,7 @@
     "@typescript-eslint/parser": "^6.3.0",
     "autoprefixer": "^10.4.14",
     "cssnano": "^6.0.1",
-    "drizzle-kit": "^0.20.4",
+    "drizzle-kit": "^0.20.7",
     "eslint": "^8.47.0",
     "eslint-config-next": "^14.0.3",
     "eslint-plugin-react-hooks": "^4.6.0",
@@ -92,6 +95,11 @@
   },
   "ct3aMetadata": {
     "initVersion": "7.22.0"
+  },
+  "browser": {
+    "fs": false,
+    "os": false,
+    "path": false
   },
   "packageManager": "npm@9.8.1"
 }
