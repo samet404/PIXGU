@@ -7,5 +7,5 @@ const connection = connect({
   password: process.env['DATABASE_PASSWORD'],
 })
 
-// eslint-disable-next-line no-unused-vars
-const db = drizzle(connection)
+export const db = drizzle(connection)
+export type DbClient = typeof db

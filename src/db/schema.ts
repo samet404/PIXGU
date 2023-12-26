@@ -2,48 +2,6 @@ import { mysqlTable, mysqlSchema, AnyMySqlColumn, index, primaryKey, unique, var
 import { sql } from "drizzle-orm"
 
 
-export const account = mysqlTable("Account", {
-	id: varchar("id", { length: 191 }).notNull(),
-	userId: varchar("userId", { length: 191 }).notNull(),
-	type: varchar("type", { length: 191 }).notNull(),
-	provider: varchar("provider", { length: 191 }).notNull(),
-	providerAccountId: varchar("providerAccountId", { length: 191 }).notNull(),
-	refreshToken: text("refresh_token"),
-	accessToken: text("access_token"),
-	expiresAt: int("expires_at"),
-	tokenType: varchar("token_type", { length: 191 }),
-	scope: varchar("scope", { length: 191 }),
-	idToken: text("id_token"),
-	sessionState: varchar("session_state", { length: 191 }),
-},
-(table) => {
-	return {
-		userIdIdx: index("Account_userId_idx").on(table.userId),
-		accountId: primaryKey({ columns: [table.id], name: "Account_id"}),
-		accountProviderProviderAccountIdKey: unique("Account_provider_providerAccountId_key").on(table.provider, table.providerAccountId),
-	}
-});
-
-export const article = mysqlTable("Article", {
-	id: varchar("id", { length: 191 }).notNull(),
-	headerText: varchar("headerText", { length: 191 }).notNull(),
-	content: text("content").notNull(),
-},
-(table) => {
-	return {
-		articleId: primaryKey({ columns: [table.id], name: "Article_id"}),
-	}
-});
-
-export const articleCategory = mysqlTable("ArticleCategory", {
-	id: varchar("id", { length: 191 }).notNull(),
-	name: varchar("name", { length: 191 }).notNull(),
-},
-(table) => {
-	return {
-		articleCategoryId: primaryKey({ columns: [table.id], name: "ArticleCategory_id"}),
-	}
-});
 
 export const cutscene = mysqlTable("Cutscene", {
 	id: varchar("id", { length: 191 }).notNull(),
@@ -188,7 +146,6 @@ export const articleToArticleCategory = mysqlTable("_ArticleToArticleCategory", 
 },
 (table) => {
 	return {
-		bIdx: index().on(table.b),
 		articleToArticleCategoryAbUnique: unique("_ArticleToArticleCategory_AB_unique").on(table.a, table.b),
 	}
 });
@@ -199,7 +156,6 @@ export const editedArticles = mysqlTable("_EditedArticles", {
 },
 (table) => {
 	return {
-		bIdx: index().on(table.b),
 		editedArticlesAbUnique: unique("_EditedArticles_AB_unique").on(table.a, table.b),
 	}
 });
@@ -210,7 +166,6 @@ export const translatedArticles = mysqlTable("_TranslatedArticles", {
 },
 (table) => {
 	return {
-		bIdx: index().on(table.b),
 		translatedArticlesAbUnique: unique("_TranslatedArticles_AB_unique").on(table.a, table.b),
 	}
 });
@@ -221,7 +176,6 @@ export const writtenArticles = mysqlTable("_WrittenArticles", {
 },
 (table) => {
 	return {
-		bIdx: index().on(table.b),
 		writtenArticlesAbUnique: unique("_WrittenArticles_AB_unique").on(table.a, table.b),
 	}
 });

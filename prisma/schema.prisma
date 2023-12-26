@@ -27,7 +27,7 @@ model TextField {
 
   PageTexts   PageTexts? @relation(fields: [pageTextsId], references: [id])
   pageTextsId String?
-  
+
   @@index([pageTextsId])
 }
 
@@ -130,12 +130,12 @@ model Room {
 model Article {
   id String @id @default(cuid())
 
-  categories  ArticleCategory[]
+  ArticleCategory[]
   headerText  String
-  content     String            @db.Text
-  eriters     User[]            @relation("WrittenArticles")
-  editors     User[]            @relation("EditedArticles")
-  translaters User[]            @relation("TranslatedArticles")
+  content     String @db.Text
+  eriters     User[] @relation("WrittenArticles")
+  editors     User[] @relation("EditedArticles")
+  translaters User[] @relation("TranslatedArticles")
 }
 
 model ArticleCategory {

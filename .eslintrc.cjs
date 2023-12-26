@@ -4,8 +4,9 @@ const config = {
   parserOptions: {
     project: true,
   },
-  plugins: ['@typescript-eslint', 'react-hooks', 'react'],
+  plugins: ['@typescript-eslint', 'react-hooks', 'react', 'drizzle'],
   extends: [
+    'plugin:drizzle/recommended',
     'plugin:react-hooks/recommended',
     'next/core-web-vitals',
     'plugin:@typescript-eslint/recommended-type-checked',
@@ -34,6 +35,8 @@ const config = {
   rules: {
     // These opinionated rules are enabled in stylistic-type-checked above.
     // Feel free to reconfigure them to your own preference.
+    'drizzle/enforce-delete-with-where': 'error',
+    'drizzle/enforce-update-with-where': 'error',
     'dot-notation': 'off',
     'prefer-const': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',

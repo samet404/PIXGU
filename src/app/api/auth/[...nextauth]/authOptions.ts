@@ -5,14 +5,14 @@ import SpotifyProvider from 'next-auth/providers/spotify'
 // types
 import { type NextAuthOptions } from 'next-auth'
 // adapter
-import { PrismaAdapter } from '@auth/prisma-adapter'
-import { PrismaClient } from '@prisma/client'
+import { db } from '@/db/index'
+import { planetScaleDrizzleAdapter } from './planetscaleDrizzleAdapter'
 
-const prisma = new PrismaClient()
 const env = process.env
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(prisma),
+  // @ts-expect-error
+  adapter: planetScaleDrizzleAdapter(db),
   providers: [
     GithubProvider({
       clientId: env.GITHUB_ID!,
