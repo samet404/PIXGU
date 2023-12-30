@@ -62,6 +62,8 @@ export default {
       },
 
       backgroundImage: {
+        'google-colors':
+          'linear-gradient(to bottom right,#34A853,#4285F4,#EA4335, #FBBC04)',
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',

@@ -1,7 +1,8 @@
 import JoinRoom from './components/JoinRoom'
 import CreateRoom from './components/CreateRoom'
 import HowToPlay from './components/HowToPlay'
-import SignUp from './components/SignUp'
+import Login from './components/Login'
+import { ReactNode } from 'react'
 
 const Main = () => {
   return (
@@ -10,7 +11,7 @@ const Main = () => {
         <JoinRoom />
         <CreateRoom />
         <HowToPlay />
-        <SignUp />
+        <Login />
       </div>
     </main>
   )

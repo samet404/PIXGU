@@ -2,11 +2,12 @@ import MainButton from './MainButton'
 import Image from 'next/image'
 import questionmark from '@/png/questionmark.png'
 import clsx from 'clsx'
-import { authOptions } from '@/api/auth/[...nextauth]/authOptions'
-import { getServerSession } from 'next-auth'
+import { auth } from '@/auth/lucia'
+import * as context from 'next/headers'
 
 const HowToPlay = async () => {
-  const session = await getServerSession(authOptions)
+  const authRequest = auth.handleRequest('GET', context)
+  const session = await authRequest.validate()
 
   return (
     <div

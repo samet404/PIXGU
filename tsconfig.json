@@ -18,7 +18,9 @@
     "noUncheckedIndexedAccess": true,
     "baseUrl": ".",
     "paths": {
-      "@/db/*": ["./src/db/*"],
+      "@/schema/*": ["./src/db/schema/*"],
+      "@/db": ["./src/db"],
+      "@/auth/*": ["./src/auth/*"],
       "@/*": ["./*"],
       "@/api/*": ["./src/app/api/*"],
       "@/functions/*": ["./src/functions/*"],

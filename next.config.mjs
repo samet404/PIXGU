@@ -24,7 +24,9 @@ const config = {
 
     return config;
   },
-
+  experimental: {
+    windowHistorySupport: true,
+  },
   reactStrictMode: true,
   images: {
     remotePatterns: [

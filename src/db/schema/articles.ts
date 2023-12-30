@@ -1,22 +1,16 @@
-import { createCuid2 } from '@/db/utils/createCuid2'
+import { createCuid2 } from '../utils/createCuid2'
 import { relations } from 'drizzle-orm'
-import { mysqlTable, primaryKey, text, varchar } from 'drizzle-orm/mysql-core'
-import { articlesToCategories } from './articlesToCategories'
+import { mysqlTable, text, varchar } from 'drizzle-orm/mysql-core'
+import { articlesToArticleCategories } from './articlesToArticleCategories'
 
-export const articles = mysqlTable(
-  'articles',
-  {
-    id: createCuid2(),
-    headerText: varchar('headerText', { length: 191 }).notNull(),
-    content: text('content').notNull(),
-  },
-  (articles) => {
-    return {
-      pk: primaryKey({ columns: [articles.id] }),
-    }
-  },
-)
+export const articles = mysqlTable('articles', {
+  id: createCuid2(),
+  headerText: varchar('headerText', { length: 191 }).notNull(),
+  content: text('content').notNull(),
+})
 
 export const articlesRelations = relations(articles, ({ many }) => ({
-  articlesToCategories: many(articlesToCategories),
+  articlesToCategories: many(articlesToArticleCategories),
 }))
+
+
