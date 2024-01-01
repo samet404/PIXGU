@@ -25,6 +25,7 @@ export const GET = async (request: NextRequest) => {
       const user = await createUser({
         attributes: {
           username: spotifyUser.display_name!,
+          
           profile_picture: spotifyUser.images?.[0].url,
         },
       })

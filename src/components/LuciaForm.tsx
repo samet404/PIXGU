@@ -3,14 +3,14 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
+import { ComponentProps } from 'react'
 
-const LuciaForm = ({
-  children,
-  action,
-}: {
+type LuciaFormProps = {
   children: React.ReactNode
   action: string
-}) => {
+} & ComponentProps<'form'>
+
+const LuciaForm = ({ children, action, ...rest }: LuciaFormProps) => {
   const router = useRouter()
 
   return (
@@ -32,6 +32,7 @@ const LuciaForm = ({
           return router.refresh()
         }
       }}
+      {...rest}
     >
       {children}
     </form>

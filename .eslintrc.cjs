@@ -13,6 +13,7 @@ const config = {
     'plugin:@typescript-eslint/stylistic-type-checked',
     'eslint:recommended',
     'plugin:react/recommended',
+    'plugin:@tanstack/eslint-plugin-query/recommended',
   ],
   overrides: [
     {
@@ -35,16 +36,23 @@ const config = {
   rules: {
     // These opinionated rules are enabled in stylistic-type-checked above.
     // Feel free to reconfigure them to your own preference.
+    '@tanstack/query/exhaustive-deps': 'error',
+    '@tanstack/query/no-rest-destructuring': 'warn',
+    '@tanstack/query/stable-query-client': 'error',
+
     'drizzle/enforce-delete-with-where': 'error',
     'drizzle/enforce-update-with-where': 'error',
+
     'dot-notation': 'off',
     'prefer-const': 'off',
-    '@typescript-eslint/ban-ts-comment': 'off',
-    '@typescript-eslint/dot-notation': 'off',
-    'react/react-in-jsx-scope': 'off',
-    'react/jsx-uses-react': 'off',
     'no-empty': 'warn',
     'no-unused-vars': 'warn',
+
+    'react/react-in-jsx-scope': 'off',
+    'react/jsx-uses-react': 'off',
+
+    '@typescript-eslint/ban-ts-comment': 'off',
+    '@typescript-eslint/dot-notation': 'off',
     '@typescript-eslint/no-useless-empty-export': 'warn',
     '@typescript-eslint/require-await': 'warn',
     '@typescript-eslint/no-var-requires': 'warn',
@@ -57,7 +65,6 @@ const config = {
     '@typescript-eslint/no-empty-function': 'warn',
     '@typescript-eslint/array-type': 'off',
     '@typescript-eslint/consistent-type-definitions': 'off',
-
     '@typescript-eslint/consistent-type-imports': [
       'warn',
       {

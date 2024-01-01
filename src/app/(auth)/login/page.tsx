@@ -4,9 +4,10 @@ import * as context from 'next/headers'
 import { redirect } from 'next/navigation'
 import Image from 'next/image'
 import bgImg from '@/jpg/daniele-levis-pelusi-unsplash.jpg'
-import NavigationSection from './_components/OAuthSection/NavigationSection'
+import NavigationSection from './_components/NavigationSection'
 import OAuthSection from './_components/OAuthSection'
 import Logo from '@/png/logo.png'
+import { ReactNode } from 'react'
 
 const Page = async () => {
   const authRequest = auth.handleRequest('GET', context)

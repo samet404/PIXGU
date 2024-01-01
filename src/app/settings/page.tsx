@@ -1,14 +1,12 @@
 import { auth } from '@/auth/lucia'
 import * as context from 'next/headers'
-import Account from './(sections)/account/page'
-import Themes from './(sections)/themes/page'
+import { redirect } from 'next/navigation'
 
 const Settings = async () => {
   const authRequest = auth.handleRequest('GET', context)
   const session = await authRequest.validate()
 
-  console.log(typeof session, session)
-  return session ? <Account /> : <Themes />
+  return session ? redirect('settings/account') : redirect('settings/themes')
 }
 
 export default Settings

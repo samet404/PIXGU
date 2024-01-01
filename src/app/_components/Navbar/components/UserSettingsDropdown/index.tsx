@@ -8,6 +8,8 @@ import { switchIsDropdownOpenAtom } from './atoms'
 import DropdownContent from './components/DropdownContent'
 import { useEffectOnce } from 'usehooks-ts'
 import { Session } from 'lucia'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCaretDown, faSortDown } from '@fortawesome/free-solid-svg-icons'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -50,18 +52,23 @@ const UserSettingsDropdown = () => {
       <div className="relative">
         <div
           onClick={() => switchIsDropdownOpen()}
-          className="flex flex-row items-center gap-2 rounded-3xl bg-[rgba(255,255,255,0.5)] py-[0.2rem] pl-2 pr-[0.2rem]"
+          className="flex flex-row items-center gap-2 rounded-full bg-[rgba(255,255,255,0.5)]  py-1 pl-[0.2rem] pr-[0.4rem]"
         >
-          <div className={`${inter.className} text-[rgba(0,0,0,0.5)]`}>
-            {session.user!.username}
-          </div>
-          {/* <Image
-            src={session.user!.image!}
+          <Image
+            src={`${session.user!.profilePicture!}.webp`}
             alt="profile picture"
-            className="h-10 w-10 rounded-full"
+            className="h-12 w-12 select-none rounded-full border-[0.2rem] border-[#ffffff53]"
             width={100}
             height={100}
-          /> */}
+          />
+          <div className={`${inter.className} pr-1 text-[rgba(0,0,0,0.5)]`}>
+            {session.user!.username}
+          </div>
+          <FontAwesomeIcon
+            icon={faCaretDown}
+            fontSize={30}
+            color="rgba(0,0,0,0.5)"
+          />
         </div>
 
         <DropdownContent />
