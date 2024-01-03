@@ -4,16 +4,25 @@ import { GeistSans } from 'geist/font/sans'
 
 import { user } from '@/schema/auth'
 import { db } from '@/db'
-import { eq } from 'drizzle-orm'
+import { and, eq } from 'drizzle-orm'
+import { useTimeout } from 'usehooks-ts'
 
-const User = async ({ params }: { params: { name: string } }) => {
+const User = async ({ params }: { params: { usernameWithId: string } }) => {
+  console.log(params.usernameWithId)
+  const username = params.usernameWithId.split('%40')[0]
+  const usernameId = (() => {
+    const usernameId = params.usernameWithId.split('%40')[1]
+
+    if (!usernameId) return null
+    return parseInt(usernameId)
+  })()
+
   const userResult = await db.query.user.findFirst({
-    where: eq(user.username, params.name),
+    where: and(eq(user.username, username!), eq(user.usernameId, usernameId!)),
   })
+  console.log(params.usernameWithId)
 
-  const username = userResult?.username
-
-  if (!username)
+  if (!userResult)
     return (
       <div
         style={{
@@ -41,7 +50,7 @@ const User = async ({ params }: { params: { name: string } }) => {
         backgroundImage:
           'radial-gradient(at 50% 0%, rgb(14, 116, 144) 0, transparent 99%)',
       }}
-      className="h-full w-full 
+      className="h-full w-full
      "
     >
       <main className="flex h-full w-full animate-fade-down flex-col items-center pt-6 animate-duration-1000">
@@ -54,10 +63,7 @@ const User = async ({ params }: { params: { name: string } }) => {
         <div
           className={`${GeistSans.className} max-w-[90%] pt-5 text-center text-3xl font-[900] text-[rgba(255,255,255,0.8)] drop-shadow-[0_0px_5px_rgba(0,0,0,0.7)] selection:bg-cyan-950`}
         >
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque ex
-          animi doloremque, similique repudiandae ipsam maxime fugit omnis,
-          earum id vitae! Non iure consectetur optio quod, facilis deleniti
-          adipisci odio.{' '}
+          {username}
         </div>
         <div className="pt-20">
           <div className="flex flex-row items-center rounded-md bg-[rgba(255,255,255,0.5)] p-3 drop-shadow-[0_0px_2px_#ffea00]">

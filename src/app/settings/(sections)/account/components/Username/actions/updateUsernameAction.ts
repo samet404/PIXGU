@@ -13,10 +13,15 @@ type updateUsernameProps = {
 export const updateUsernameAction = async ({
   newUsername,
 }: updateUsernameProps) => {
+  const authRequest = auth.handleRequest('GET', context)
+  const session = await authRequest.validate()
   const usernameInputTextSchema = z
     .string()
     .max(64, "Username can't higher than 64 character")
     .min(1, 'Username must be at least 1 character')
+
+  if (!newUsername) throw new Error('You must provide new username')
+  if (newUsername === session?.user.username) throw new Error('You must provide new username')
 
   try {
     usernameInputTextSchema.parse(newUsername)
@@ -29,9 +34,6 @@ export const updateUsernameAction = async ({
       throw new Error(validationErrorMessage)
     }
   }
-
-  const authRequest = auth.handleRequest('GET', context)
-  const session = await authRequest.validate()
 
   if (!session?.user.userId) throw new Error('No user id')
 

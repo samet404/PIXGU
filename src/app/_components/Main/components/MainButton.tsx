@@ -27,7 +27,7 @@ const MainButton = ({
         {...rest}
       >
         <div
-          className={`${outfit.className} right-3 top-3 h-6 w-6 rounded-md bg-[rgba(255,255,255,0.2)] font-[500] text-[rgba(255,255,255,0.6)] xs:hidden lg:absolute`}
+          className={`${outfit.className} right-3 top-3 h-6 w-6 rounded-md bg-[rgba(255,255,255,0.2)] font-[500] text-[rgba(255,255,255,0.6)] xxs:hidden lg:absolute`}
         >
           {keyName}
         </div>

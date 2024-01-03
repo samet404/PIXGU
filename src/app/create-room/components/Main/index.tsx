@@ -21,7 +21,7 @@ const Main = () => {
 
       <div className="w-full pt-20 leading-4">
         <CreateRoomButton
-          className={`${inter600.className} h-full w-full rounded-xl border-[0.3rem] border-[rgba(0,0,0,0.3)] bg-gradient-to-tr from-[#D8F65D] to-[#f1ff2f] py-3 text-[rgba(0,0,0,0.5)] shadow-[0_0px_10px_5px_rgba(255,255,255,0.3)]`}
+          className={`${inter600.className} h-full w-full select-none rounded-xl border-[0.3rem] border-[rgba(0,0,0,0.3)] bg-gradient-to-tr from-[#D8F65D] to-[#f1ff2f] py-3 text-[rgba(0,0,0,0.5)] shadow-[0_0px_10px_5px_rgba(255,255,255,0.3)]`}
         />
       </div>
     </main>

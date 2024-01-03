@@ -1,19 +1,22 @@
-#usersContainer > ::-webkit-scrollbar {
+#usersSection::-webkit-scrollbar,
+#rootDiv::-webkit-scrollbar {
   width: 0.5rem;
 }
 
 /* Track */
-#usersContainer > ::-webkit-scrollbar-track {
+#usersSection::-webkit-scrollbar-track,
+#rootDiv::-webkit-scrollbar-track {
   border-radius: 1rem;
 }
 
 /* Handle */
-#usersContainer > ::-webkit-scrollbar-thumb {
-  background: rgb(181, 181, 181);
+#usersSection::-webkit-scrollbar-thumb,
+#rootDiv::-webkit-scrollbar-thumb {
+  background: rgba(181, 181, 181, 0.5);
   border-radius: 10px;
 }
 
-#usersContainer > ::-webkit-scrollbar-thumb:hover {
-      background: rgb(170, 170, 170);
-
+#usersSection::-webkit-scrollbar-thumb:hover,
+#rootDiv::-webkit-scrollbar-thumb:hover {
+  background: rgba(181, 181, 181, 0.5);
 }
