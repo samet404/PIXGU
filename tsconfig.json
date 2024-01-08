@@ -37,7 +37,9 @@
       "@/sound/*": ["public/sound/*"],
       "@/jpg/*": ["public/image/jpg/*"],
       "@/fonts/*": ["public/fonts/*"],
-      "@/lib/*": ["./src/lib*"]
+      "@/lib/*": ["./src/lib*"],
+      "@/actions/*": ["./src/actions/*"],
+      "@/_trpc/*": ["./src/app/_trpc/*"],
     },
     "plugins": [{ "name": "next" }]
   },

@@ -51,6 +51,7 @@ const config = {
     'react/react-in-jsx-scope': 'off',
     'react/jsx-uses-react': 'off',
 
+    '@typescript-eslint/no-unsafe-argument': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/dot-notation': 'off',
     '@typescript-eslint/no-useless-empty-export': 'warn',

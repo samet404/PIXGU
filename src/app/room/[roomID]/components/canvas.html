@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="sandwich">
+      <canvas id="main" width="600" height="600"></canvas>
+      <canvas id="draft" width="600" height="600"></canvas>
+    </div>
+  </body>
+  <style>
+    #draft {
+      cursor: crosshair;
+    }
+    .sandwich {
+      position: relative;
+    }
+    .sandwich > canvas {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  </style>
+</html>
+<script>
+  var draft = document.getElementById('draft');
+  var main = document.getElementById('main');
+  var ctx = draft.getContext('2d');
+  var mctx = main.getContext('2d');
+  var isDown = false,
+    prev,
+    alpha = 0.8;
+
+  // setup pen
+  ctx.strokeStyle = 'rgb(0,200,127)';
+  ctx.lineWidth = 16;
+  ctx.lineCap = 'round'; // important to make lines cont.
+
+  // set up alpha
+  draft.style.opacity = alpha; // CSS alpha for draft
+  mctx.globalAlpha = alpha; // context alpha for main
+
+  draft.onmousedown = function (e) {
+    isDown = true;
+    prev = getXY(e); // set prev. point as start
+  };
+
+  window.onmousemove = function (e) {
+    if (!isDown) return;
+    var point = getXY(e);
+    ctx.beginPath(); // new path
+    ctx.moveTo(prev.x, prev.y); // start at prev. point
+    ctx.lineTo(point.x, point.y); // line to new point
+    ctx.stroke(); // stroke
+    prev = point; // update prev. point
+  };
+
+  window.onmouseup = function () {
+    console.log('onmouseup');
+    isDown = false; // when up:
+    mctx.drawImage(draft, 0, 0); // copy drawing to main
+    ctx.clearRect(0, 0, draft.width, draft.height); // clear draft
+  };
+
+  function getXY(e) {
+    var r = draft.getBoundingClientRect();
+    return { x: e.clientX - r.left, y: e.clientY - r.top };
+  }
+</script>

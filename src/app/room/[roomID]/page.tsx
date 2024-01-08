@@ -1,10 +1,9 @@
 import { Fragment } from 'react'
-import CanvasSection from './_components/CanvasSection'
-import UsersSection from './_components/UsersSection'
-import { Tilt_Neon, MuseoModerno } from 'next/font/google'
+import UsersSection from './components/UsersSection'
+import CanvasTools from './components/CanvasTools'
+import Canvas from './components/Canvas'
+import './styles/scrollbars.css'
 
-const tiltNeon = Tilt_Neon({ subsets: ['latin'] })
-const museoModerno = MuseoModerno({ subsets: ['latin'], weight: '500' })
 const Game = () => {
   return (
     <Fragment>
@@ -15,15 +14,14 @@ const Game = () => {
             'radial-gradient(at 100% 100%, hsla(54, 100%, 50%, 0.215) 0px, transparent 50%), radial-gradient(at 2% 0%, hsla(50, 100%, 50%, 0.255) 0px, transparent 50%)',
         }}
         id="rootDiv"
-        className="h-full w-full overflow-y-scroll p-3"
+        className="flex h-full w-full flex-col overflow-y-scroll p-3"
       >
-        <div className="flex h-full w-full animate-fade-down flex-row gap-2">
+        <div className="flex h-full w-full animate-fade-down flex-row justify-between gap-2">
           <UsersSection />
-          <div className="flex w-full flex-col items-center gap-3 ">
-            <div className=" rounded-lg bg-[#ffffff68] p-2 shadow-[0_0px_13px_0px_rgba(0,0,0,0.4)] ">
-              <CanvasSection />
-            </div>
+          <div className="flex flex-col">
+            <Canvas />
           </div>
+          <CanvasTools />
         </div>
       </div>
 

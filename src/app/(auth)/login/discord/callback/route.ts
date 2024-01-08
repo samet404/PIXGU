@@ -25,7 +25,7 @@ export const GET = async (request: NextRequest) => {
       const user = await createUser({
         attributes: {
           username: discordUser.username,
-          profile_picture: `https://cdn.discordapp.com/avatars/${discordUser.id}/${discordUser.avatar}`,
+          profile_picture: `https://cdn.discordapp.com/avatars/${discordUser.id}/${discordUser.avatar}.webp`,
         },
       })
       return user
