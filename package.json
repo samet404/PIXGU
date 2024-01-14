@@ -11,9 +11,11 @@
     "db:studio": "dotenv -e .env.development npx drizzle-kit studio",
     "db:push": "dotenv -e .env.development drizzle-kit push:mysql",
     "db:introspect": "dotenv -e .env.development drizzle-kit introspect:mysql",
-    "db:hardpush": "dotenv -e .env.development npx prisma db push --force-reset",
+    "db:studio:prod": "dotenv -e .env.production npx drizzle-kit studio",
+    "db:push:prod": "dotenv -e .env.production drizzle-kit push:mysql",
+    "db:introspect:prod": "dotenv -e .env.production drizzle-kit introspect:mysql",
     "db:seed": "dotenv -e .env.development node prisma/seed.js",
-    "tnest:ts": "dotenv -e .env.development node scripts/test.ts",
+    "test:ts": "dotenv -e .env.development node scripts/test.ts",
     "test:js": "dotenv -e .env.development node scripts/test.js"
   },
   "author": "404",
@@ -29,7 +31,7 @@
     "@planetscale/database": "^1.13.0",
     "@prisma/client": "^5.7.0",
     "@react-spring/web": "^9.7.3",
-    "@t3-oss/env-nextjs": "^0.7.0",
+    "@t3-oss/env-nextjs": "^0.7.3",
     "@tanstack/react-query": "^4.36.1",
     "@tanstack/react-router": "^0.0.1-beta.274",
     "@trpc/client": "^10.45.0",
@@ -50,8 +52,10 @@
     "geist": "^1.0.0",
     "interweave": "^13.1.0",
     "jotai": "^2.6.0",
+    "jotai-cache": "^0.4.0",
     "lucia": "^2.7.6",
     "lucide-react": "^0.306.0",
+    "million": "^2.6.4",
     "mysql2": "^3.6.5",
     "next": "^14.0.4",
     "nextjs-progressbar": "^0.0.16",
@@ -100,8 +104,10 @@
     "prettier": "^3.0.0",
     "prettier-plugin-tailwindcss": "^0.5.1",
     "tailwindcss": "^3.3.3",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.3.3"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
   },
   "ct3aMetadata": {
     "initVersion": "7.22.0"
@@ -110,6 +116,5 @@
     "fs": false,
     "os": false,
     "path": false
-  },
-  "packageManager": "npm@9.8.1"
+  }
 }

@@ -2,8 +2,8 @@ import Image from 'next/image'
 import pfp from '@/png/pfp2.png'
 import { GeistSans } from 'geist/font/sans'
 
-import { user } from '@/schema/auth'
-import { db } from '@/db'
+import { user } from '@/src/server/db/schema/auth'
+import { db } from '@/src/server/db'
 import { and, eq } from 'drizzle-orm'
 import { useTimeout } from 'usehooks-ts'
 

@@ -8,11 +8,11 @@ import { redirect } from 'next/navigation'
 import Pfp from './components/Pfp'
 import Logout from './components/Logout'
 import Username from './components/Username'
+import { api } from '@/src/trpc/server'
 
 const Account = async () => {
-  const authRequest = auth.handleRequest('GET', context)
-  const session = await authRequest.validate()
-
+  const session = api.user.getSession.query()
+  
   if (!session) redirect('/login')
   return (
     <section className="flex h-full w-full animate-fade flex-col gap-6 p-1">

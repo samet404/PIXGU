@@ -1,8 +1,7 @@
-/**
- * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially useful
- * for Docker builds.
- */
-// await import("./src/env.mjs");
+import './src/env/client.mjs';
+import './src/env/server.mjs';
+
+import million from 'million/compiler';
 
 /** @type {import("next").NextConfig} */
 const config = {
@@ -14,12 +13,13 @@ const config = {
     // https://nextjs.org/docs/app/api-reference/next-config-js/webpack
 
     config.module.rules.push({});
+
     config.resolve.fallback = {
       // if you miss it, all the other options in fallback, specified
       // by next.js will be dropped.
       ...config.resolve.fallback,
 
-      fs: false, // the solution
+      fs: false,
     };
 
     return config;
@@ -41,9 +41,13 @@ const config = {
         hostname: 'cdn.discordapp.com',
         port: '',
         pathname: '/avatars/**',
-      }
+      },
     ],
   },
 };
 
-export default config;
+const millionConfig = {
+  auto: true, // if you're using RSC: auto: { rsc: true },
+};
+
+export default million.next(config, millionConfig);

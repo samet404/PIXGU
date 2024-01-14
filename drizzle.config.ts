@@ -3,7 +3,7 @@ import { defineConfig } from 'drizzle-kit'
 const env = process.env
 
 export default defineConfig({
-  schema: './src/db/schema',
+  schema: './src/server/db/schema',
   out: './src/db',
   driver: 'mysql2',
   dbCredentials: {

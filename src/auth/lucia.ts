@@ -3,7 +3,8 @@ import { nextjs_future } from 'lucia/middleware'
 import { planetscale } from '@lucia-auth/adapter-mysql'
 
 import { discord, github, google, spotify } from '@lucia-auth/oauth/providers'
-import { connection } from '@/db'
+import { connection } from '@/src/server/db'
+import { env } from '@/env/server.mjs'
 
 export const auth = lucia({
   env: 'DEV', // "PROD" if deployed to HTTPS
@@ -24,29 +25,27 @@ export const auth = lucia({
   },
 })
 
-const env = process.env
+// export const githubAuth = github(auth, {
+//   clientId: env.GITHUB_CLIENT_ID ?? '',
+//   clientSecret: env.GITHUB_CLIENT_SECRET ?? '',
+// })
 
-export const githubAuth = github(auth, {
-  clientId: env.GITHUB_CLIENT_ID ?? '',
-  clientSecret: env.GITHUB_CLIENT_SECRET ?? '',
-})
-
-export const spotifyAuth = spotify(auth, {
-  clientId: env.SPOTIFY_CLIENT_ID ?? '',
-  clientSecret: env.SPOTIFY_CLIENT_SECRET ?? '',
-  redirectUri: env.SPOTIFY_REDIRECT_URI ?? '',
-})
+// export const spotifyAuth = spotify(auth, {
+//   clientId: env.SPOTIFY_CLIENT_ID ?? '',
+//   clientSecret: env.SPOTIFY_CLIENT_SECRET ?? '',
+//   redirectUri: env.SPOTIFY_REDIRECT_URI ?? '',
+// })
 
 export const discordAuth = discord(auth, {
-  clientId: env.DISCORD_CLIENT_ID ?? '',
-  clientSecret: env.DISCORD_CLIENT_SECRET ?? '',
-  redirectUri: env.DISCORD_REDIRECT_URI ?? '',
+  clientId: env.DISCORD_CLIENT_ID,
+  clientSecret: env.DISCORD_CLIENT_SECRET,
+  redirectUri: env.DISCORD_REDIRECT_URI,
 })
 
-export const googleAuth = google(auth, {
-  clientId: env.GOOGLE_CLIENT_ID ?? '',
-  clientSecret: env.GOOGLE_CLIENT_SECRET ?? '',
-  redirectUri: env.GOOGLE_REDIRECT_URI ?? '',
-})
+// export const googleAuth = google(auth, {
+//   clientId: env.GOOGLE_CLIENT_ID ?? '',
+//   clientSecret: env.GOOGLE_CLIENT_SECRET ?? '',
+//   redirectUri: env.GOOGLE_REDIRECT_URI ?? '',
+// })
 
 export type Auth = typeof auth
