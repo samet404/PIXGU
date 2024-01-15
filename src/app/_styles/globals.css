@@ -5,8 +5,10 @@
 * {
   margin: 0px;
   padding: 0px;
-  min-width: 0 !important;
   box-sizing: border-box;
+
+  /* https://youtu.be/cH8VbLM1958 */
+  min-width: 0 !important;
 }
 
 html,

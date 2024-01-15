@@ -8,7 +8,7 @@ import Settings from './components/Settings'
 
 const Main = () => {
   return (
-    <main className="h-min-[20rem] flex animate-[position_15s_ease-in-out_infinite]   flex-row gap-2 rounded-md bg-gradient-to-tl  from-[rgb(189,255,185)] via-[rgb(184,244,255)] to-[rgb(242,255,187)] p-2">
+    <main className="h-min-[20rem] flex animate-[position_15s_ease-in-out_infinite]   flex-row gap-2 rounded-md bg-gradient-to-tl  from-[rgb(189,255,185)] via-[rgb(184,244,255)] to-[rgb(242,255,187)] p-2 drop-shadow-[0_0px_20px_rgba(0,0,0,0.5)]">
       <div
         id="main-content"
         className="grid h-full w-full gap-2 overflow-y-scroll rounded-md bg-[rgba(0,0,0,0.7)] p-2 xs:grid-cols-1 md:grid-cols-2 "

@@ -10,6 +10,7 @@ import MusicPlayer from './_components/BackgroundMusicPlayer'
 import Providers from './_components/Providers'
 // next
 import { cookies } from 'next/headers'
+
 // fontawesome
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
@@ -20,7 +21,7 @@ const RootLayout = (props: { children: ReactNode }) => {
   return (
     <html lang="en">
       <body className="bg-black">
-        <TRPCReactProvider cookies={cookies.toString()}>
+        <TRPCReactProvider cookies={cookies().toString()}>
           {/* <CustomCursor /> */}
           <Client />
           <Providers>

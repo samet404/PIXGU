@@ -1,7 +1,8 @@
+// https://million.dev
+// import million from 'million/compiler';
+
 import './src/env/client.mjs';
 import './src/env/server.mjs';
-
-import million from 'million/compiler';
 
 /** @type {import("next").NextConfig} */
 const config = {
@@ -24,9 +25,6 @@ const config = {
 
     return config;
   },
-  experimental: {
-    windowHistorySupport: true,
-  },
   reactStrictMode: true,
   images: {
     remotePatterns: [
@@ -46,8 +44,6 @@ const config = {
   },
 };
 
-const millionConfig = {
-  auto: true, // if you're using RSC: auto: { rsc: true },
-};
+// const millionConfig = { auto: { rsc: true } };
 
-export default million.next(config, millionConfig);
+export default config // export default million.next(config, millionConfig);

@@ -1,13 +1,10 @@
 // https://lucia-auth.com/guidebook/drizzle-orm/#mysql
 // https://lucia-auth.com/guidebook/drizzle-orm/#planetscaledatabase
 
-import { relations, sql } from 'drizzle-orm'
 import {
   mysqlTable,
   bigint,
   varchar,
-  timestamp,
-  boolean,
   primaryKey,
   int,
 } from 'drizzle-orm/mysql-core'
@@ -20,7 +17,7 @@ export const user = mysqlTable(
     }),
 
     // other user attributes
-    usernameId: int('username_id').autoincrement(),
+    usernameId: int('username_id').autoincrement().unique().notNull(),
     username: varchar('username', {
       length: 64,
     }).notNull(),
@@ -29,7 +26,7 @@ export const user = mysqlTable(
   },
   (user) => {
     return {
-      pk: primaryKey({ columns: [user.usernameId, user.id] }),
+      pk: primaryKey({ columns: [user.id] }),
     }
   },
 )
@@ -41,9 +38,9 @@ export const key = mysqlTable('user_key', {
   userId: varchar('user_id', {
     length: 15,
   }).notNull(),
-  hashedPassword: varchar('hashed_password', {
-    length: 255,
-  }),
+  // hashedPassword: varchar('hashed_password', {
+  //   length: 255,
+  // }),
 })
 
 export const session = mysqlTable('user_session', {

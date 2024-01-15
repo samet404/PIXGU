@@ -8,7 +8,7 @@ import { usePathname } from 'next/navigation'
 
 const NavItem = ({ name }: { name: string }) => {
   const pathname = usePathname()
- 
+
   const isActive = (() => {
     if (name.toLowerCase() == 'account') {
       if (pathname === '/settings') return true
@@ -56,7 +56,7 @@ const NavItem = ({ name }: { name: string }) => {
   }
 
   return (
-    <Link className="" href={`/settings/${name.toLowerCase()}`}>
+    <Link className="" href={`/settings/${name.toLowerCase()}`} replace>
       <animated.button
         onClick={handleClick}
         style={{ ...springs }}

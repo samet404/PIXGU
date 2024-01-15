@@ -9,7 +9,8 @@ import Image from 'next/image'
 import { polyfill } from 'interweave-ssr'
 import LeftSidebar from '../_components/LeftSidebar'
 import RightSidebar from '../_components/RightSidebar'
-
+import { api } from '@/src/trpc/server'
+import z from 'zod'
 const inter = Inter({
   subsets: ['latin'],
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
@@ -17,23 +18,35 @@ const inter = Inter({
 
 polyfill()
 
-const Article = ({ params }: { params: { headerText: string } }) => {
+const Article = async ({ params }: { params: { id: string } }) => {
   const transformText = (
     node: HTMLElement,
     children: ReactNode[],
   ): ReactNode => {
     switch (node.tagName.toLowerCase()) {
-      case 'img':
+      case 'img': {
+        const src = node.getAttribute('src')
+        if (!src) throw new Error('src is not defined')
+
+        const alt = node.getAttribute('alt')
+        if (!alt) throw new Error('alt is not defined')
+
+        const width = node.getAttribute('width')
+        if (!width) throw new Error('width is not defined')
+
+        const height = node.getAttribute('height')
+        if (!height) throw new Error('height is not defined')
+
         return (
           <Image
-            src={node.getAttribute('src')!}
-            alt={node.getAttribute('alt')!}
-            width={node.getAttribute('width')! as any}
-            height={node.getAttribute('height')! as any}
+            src={src}
+            alt={alt}
+            width={parseInt(width)}
+            height={parseInt(height)}
             className="rounded-md"
           />
         )
-
+      }
       case 'a':
         return (
           <Link
@@ -45,7 +58,7 @@ const Article = ({ params }: { params: { headerText: string } }) => {
         )
 
       case 'p':
-        return <p className="">{children}</p>
+        return <p>{children}</p>
 
       case 'b':
         return (
@@ -73,7 +86,11 @@ const Article = ({ params }: { params: { headerText: string } }) => {
       case 'li':
         return (
           <div
-            className={`${inter.className} flex items-center gap-3 py-1 font-[400]`}
+            className={`${
+              inter.className
+            } flex items-center gap-3 py-1 font-[400] ${node.getAttribute(
+              'class',
+            )}`}
           >
             <span className="h-[0.40rem] w-[0.40rem] rounded-full bg-black"></span>
             {children}
@@ -82,44 +99,38 @@ const Article = ({ params }: { params: { headerText: string } }) => {
     }
   }
 
-  const articleContent = `
-  <h4>loreeem abcdefg</h4>
-  <p>Lorem ipsum dolor sit amet consectetur <a href="a">adipisicing</a> elit. <b>Cupiditate, veniam! Aut laboriosam neque porro!</b>   Saepe minima pariatur alias, sapiente, ullam quaerat vero, hic deleniti autem aspernatur repudiandae odit tempore dolorum?</p>
-  <h5>loreeem</h5>
-  <p>Lorem ipsum dolor sit amet consectetur <a href="a">adipisicing</a> elit. <b>Cupiditate, veniam! Aut laboriosam neque porro!</b>   Saepe minima pariatur alias, sapiente, ullam quaerat vero, hic deleniti autem aspernatur repudiandae odit tempore dolorum?</p>
-  <h6>loreeem</h6>
-  <p>Lorem ipsum dolor sit amet consectetur <a href="a">adipisicing</a> elit. <b>Cupiditate, veniam! Aut laboriosam neque porro!</b>   Saepe minima pariatur alias, sapiente, ullam quaerat vero, hic deleniti autem aspernatur repudiandae odit tempore dolorum?</p>
+  const id = params.id
 
-  
-  <li>loerm afalan </li>
-  <li>a4</li>
-  <li>a4</li>
-  <li>a4</li>
-
-  <img src='/png/pfp.png' alt='pfp' width=200 height=200></img>
-
-    
-  `
+  const article = await api.article.getArticleById.query(id)
 
   return (
     <div className="flex h-full w-full flex-row  bg-gradient-to-tr from-[#0d0d34] via-[#0d0d34] to-[#23236f]">
       <LeftSidebar />
-      <div className="flex flex-row overflow-y-scroll">
-        <div className="flex animate-fade-up flex-col gap-36 px-4 pt-11">
-          <article className="flex grow flex-col items-center py-5">
-            <Header text="How to play" />
-            <main className="rounded-lg bg-gray-200 px-4 py-5 ">
-              <Interweave
-                content={articleContent}
-                transform={transformText}
-                className="text-black"
-              />
-            </main>
-          </article>
-          <Footer />
+      {article ? (
+        <div className="flex flex-row overflow-y-scroll">
+          <div className="flex animate-fade-up flex-col gap-36 px-4 pt-11">
+            <article className="flex grow flex-col items-center py-5">
+              <Header text="How to play" />
+              <main className="rounded-lg bg-gray-200 px-4 py-5 ">
+                <Interweave
+                  tagName="div"
+                  content={article.content}
+                  transform={transformText}
+                  className="text-black"
+                />
+              </main>
+            </article>
+            <Footer />
+          </div>
+          <RightSidebar />
         </div>
-        <RightSidebar />
-      </div>
+      ) : (
+        <div
+          className={`${inter.className} flex h-full w-full items-center justify-center text-xl text-white`}
+        >
+          Article not found
+        </div>
+      )}
     </div>
   )
 }

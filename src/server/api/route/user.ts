@@ -1,10 +1,10 @@
 import { createTRPCRouter, publicProcedure } from '@/server/api/trpc'
 import { z } from 'zod'
-import { db } from '@/db'
 
 import { user } from '@/schema/auth'
 import { eq } from 'drizzle-orm'
 import { auth } from '@/auth/lucia'
+import { loggedUserProducure } from '../procedure/loggedUser'
 
 export const userRouter = createTRPCRouter({
   getUserById: publicProcedure
@@ -13,19 +13,16 @@ export const userRouter = createTRPCRouter({
         invalid_type_error: 'Input Type Error: Expected input type is string',
       }),
     )
-    .query(async (opts) => {
-      const userResult = await db
+    .query(async ({ ctx, input }) => {
+      const userResult = await ctx.db
         .select()
         .from(user)
-        .where(eq(user.id, opts.input))
+        .where(eq(user.id, input))
 
       return userResult
     }),
 
-  getSession: publicProcedure.query(async (opts) => {
-    // @ts-ignore
-    return opts.ctx
-  }),
+  getSession: loggedUserProducure.query(async ({ ctx }) => ctx.session),
 
   //   hello: publicProcedure
   //     .input(z.object({ text: z.string() }))
