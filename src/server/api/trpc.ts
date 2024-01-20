@@ -10,8 +10,11 @@ import { initTRPC } from '@trpc/server'
 import superjson from 'superjson'
 import { ZodError } from 'zod'
 
+import { auth } from '@/auth/lucia'
 import { db } from '@/server/db'
 import * as context from 'next/headers'
+
+const getSession = async () => {}
 
 /**
  * 1. CONTEXT
@@ -27,9 +30,13 @@ import * as context from 'next/headers'
  */
 
 export const createTRPCContext = async (opts: { headers: Headers }) => {
+  const authRequest = auth.handleRequest('GET', context)
+  const session = await authRequest.validate()
+
   return {
     db,
     ...opts,
+    session,
   }
 }
 

@@ -18,12 +18,10 @@ const Home = () => {
         }}
         className={` h-full w-full `}
       >
-        <HoverEffectDiv>
-          <div className="flex animate-fade flex-col gap-10 p-4 duration-[100ms] animate-duration-1000">
-            <Navbar />
-            <Main />
-          </div>
-        </HoverEffectDiv>
+        <div className="flex animate-fade items-center flex-col gap-10 p-4 duration-[100ms] animate-duration-1000">
+          <Navbar />
+          <Main />
+        </div>
       </div>
     </Fragment>
   )

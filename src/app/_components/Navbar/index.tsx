@@ -8,7 +8,7 @@ import LanguageDropdown from './components/LanguageDropdown'
 
 const Navbar = () => {
   return (
-    <nav className="flex w-full flex-row justify-between gap-1">
+    <nav className="flex flex-row justify-between gap-1 xxs:w-full lg:w-[55rem]">
       <div className="flex flex-row  items-center gap-4">
         <Image
           src={Logo}

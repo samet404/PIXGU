@@ -11,6 +11,7 @@ import LeftSidebar from '../_components/LeftSidebar'
 import RightSidebar from '../_components/RightSidebar'
 import { api } from '@/src/trpc/server'
 import z from 'zod'
+import NotFound from '../../not-found'
 const inter = Inter({
   subsets: ['latin'],
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
@@ -103,35 +104,29 @@ const Article = async ({ params }: { params: { id: string } }) => {
 
   const article = await api.article.getArticleById.query(id)
 
-  return (
+  return article ? (
     <div className="flex h-full w-full flex-row  bg-gradient-to-tr from-[#0d0d34] via-[#0d0d34] to-[#23236f]">
       <LeftSidebar />
-      {article ? (
-        <div className="flex flex-row overflow-y-scroll">
-          <div className="flex animate-fade-up flex-col gap-36 px-4 pt-11">
-            <article className="flex grow flex-col items-center py-5">
-              <Header text="How to play" />
-              <main className="rounded-lg bg-gray-200 px-4 py-5 ">
-                <Interweave
-                  tagName="div"
-                  content={article.content}
-                  transform={transformText}
-                  className="text-black"
-                />
-              </main>
-            </article>
-            <Footer />
-          </div>
-          <RightSidebar />
+      <div className="flex flex-row overflow-y-scroll">
+        <div className="flex animate-fade-up flex-col gap-36 px-4 pt-11">
+          <article className="flex grow flex-col items-center py-5">
+            <Header text="How to play" />
+            <main className="rounded-lg bg-gray-200 px-4 py-5 ">
+              <Interweave
+                tagName="div"
+                content={article.content}
+                transform={transformText}
+                className="text-black"
+              />
+            </main>
+          </article>
+          <Footer />
         </div>
-      ) : (
-        <div
-          className={`${inter.className} flex h-full w-full items-center justify-center text-xl text-white`}
-        >
-          Article not found
-        </div>
-      )}
+        <RightSidebar />
+      </div>
     </div>
+  ) : (
+    <NotFound />
   )
 }
 

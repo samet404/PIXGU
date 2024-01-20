@@ -18,11 +18,13 @@ body {
   overflow: hidden;
 }
 
-div::selection,
-button::selection,
-a::selection,
+*::selection {
+  background-color: rgb(0, 157, 255) !important;
+  color: white;
+}
+
 img::selection {
-  background-color: rgb(0, 157, 255);
+  background-color: rgb(0, 157, 255) !important;
 }
 
 button:focus {
@@ -63,7 +65,7 @@ p {
 }
 
 input {
-  background-color: transparent !important;
+  background-color: transparent;
 }
 
 /* Chrome, Safari, Edge, Opera */
@@ -76,4 +78,8 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type='number'] {
   -moz-appearance: textfield;
+}
+
+input {
+  outline: none;
 }

@@ -2,9 +2,9 @@
 
 import { auth } from '@/auth/lucia'
 import { LuciaError } from 'lucia'
-import * as context from 'next/headers'
 import { ZodError, z } from 'zod'
 import { fromZodError } from 'zod-validation-error'
+import * as context from 'next/headers'
 
 type updateUsernameProps = {
   newUsername: string

@@ -2,10 +2,9 @@ import Image from 'next/image'
 import pfp from '@/png/pfp2.png'
 import { GeistSans } from 'geist/font/sans'
 
-import { user } from '@/src/server/db/schema/auth'
+import { user } from '@/schema/user'
 import { db } from '@/src/server/db'
 import { and, eq } from 'drizzle-orm'
-import { useTimeout } from 'usehooks-ts'
 
 const User = async ({ params }: { params: { usernameWithId: string } }) => {
   console.log(params.usernameWithId)
@@ -55,9 +54,10 @@ const User = async ({ params }: { params: { usernameWithId: string } }) => {
     >
       <main className="flex h-full w-full animate-fade-down flex-col items-center pt-6 animate-duration-1000">
         <Image
-          src={pfp}
+          width={100}
+          height={100}
+          src={userResult.profilePicture!}
           alt="pfp"
-          placeholder="blur"
           className="h-20 w-20 select-none rounded-full border-4 border-[rgba(255,255,255,0.5)] object-cover shadow-[0_0px_20px_0px_rgba(0,0,0,0.7)] "
         ></Image>
         <div

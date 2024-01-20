@@ -7,14 +7,21 @@ import Pfp from './components/Pfp'
 import Logout from './components/Logout'
 import Username from './components/Username'
 import { api } from '@/src/trpc/server'
+import { redirect } from 'next/navigation'
 
 const Account = async () => {
-  const session = await api.user.getSession.query()
-  if (!session) throw new Error('UNAUTHORIZED')
+  let session
 
+  try {
+    session = await api.user.getSession.query()
+  } catch (e) {
+    if (e instanceof Error)
+      if (e.message === 'UNAUTHORIZED') redirect('/settings')
+  }
 
-  
-  return (
+  console.log('dpoasjdsapojdpsadj')
+
+  return session ? (
     <section className="flex h-full w-full animate-fade flex-col gap-6 p-1">
       <h1
         className={`${GeistSans.className} w-full rounded-md bg-slate-300 p-2 font-[900]`}
@@ -23,12 +30,13 @@ const Account = async () => {
       </h1>
 
       <div className="flex flex-col gap-2">
-        {session}
-        {/* <Pfp profilePicture={session.user.profilePicture} />
+        <Pfp profilePicture={session.user.profilePicture} />
         <Username username={session.user.username} />
-        <Logout /> */}
+        <Logout />
       </div>
     </section>
+  ) : (
+    <></>
   )
 }
 

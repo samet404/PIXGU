@@ -2,15 +2,11 @@ import { Fragment } from 'react'
 
 import MainButton from './MainButton'
 import login from '@/png/login.png'
-
-import { auth } from '@/auth/lucia'
-import * as context from 'next/headers'
-
 import Image from 'next/image'
+import { api } from '@/src/trpc/server'
 
 const Login = async () => {
-  const authRequest = auth.handleRequest('GET', context)
-  const session = await authRequest.validate()
+  const session = await api.user.getSession.query()
 
   return !session ? (
     <MainButton

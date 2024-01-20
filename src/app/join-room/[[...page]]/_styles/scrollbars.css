@@ -1,0 +1,18 @@
+#rooms::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+/* Track */
+#rooms::-webkit-scrollbar-track {
+  border-radius: 1rem;
+}
+
+/* Handle */
+#rooms::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+}
+
+#rooms::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}

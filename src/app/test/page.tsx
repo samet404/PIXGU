@@ -1,25 +1,15 @@
-'use client'
+import { user } from '@/schema/user'
+import { db } from '@/db'
+import { article } from '@/schema/article'
 
-import spinner from '@/svg/spinner-one-third-svgrepo-com.svg'
-import Image from 'next/image'
-import { trpc } from '@/_trpc/client'
+const Test = async () => {
+  const createArticle = await db.insert(article).values({
+    content: 'dpasıhdjp',
+    headerText: 'dğasjdğsa',
+  })
 
-const loading = () => {
-  const users = trpc.getUsers.useQuery()
-  console.log(users)
-
-  if (users.error) return <div>{JSON.stringify(users.error)}</div>
-
-  if (users.isSuccess)
-    return (
-      <div className="flex h-full w-full items-center justify-center bg-black text-white">
-        <div>
-          {users.data.map((user) => {
-            return <div key={user.id}>{user.username}</div>
-          })}
-        </div>
-      </div>
-    )
+  console.log(createArticle.insertId + ' insertId')
+  return <div>page</div>
 }
 
-export default loading
+export default Test

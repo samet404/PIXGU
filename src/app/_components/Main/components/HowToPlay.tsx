@@ -10,11 +10,7 @@ const HowToPlay = async () => {
   const session = await authRequest.validate()
 
   return (
-    <div
-      className={clsx({
-        'md:col-span-2': session != null,
-      })}
-    >
+    <div>
       <MainButton
         link="/article/how-to-play"
         icon={
@@ -29,9 +25,6 @@ const HowToPlay = async () => {
         keyName="3"
         className={clsx(
           'h-full w-full rounded-bl-md hover:from-[rgba(53,228,255,0.4)] hover:to-[rgba(255,255,255,0.3)]',
-          {
-            'rounded-b-md': session != null,
-          },
         )}
       />
     </div>
