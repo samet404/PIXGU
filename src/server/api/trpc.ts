@@ -11,10 +11,10 @@ import superjson from 'superjson'
 import { ZodError } from 'zod'
 
 import { auth } from '@/auth/lucia'
-import { db } from '@/server/db'
+import { db } from '@/sqlDb'
+import { redisDb } from '@/redis'
 import * as context from 'next/headers'
-
-const getSession = async () => {}
+import { Session } from 'lucia'
 
 /**
  * 1. CONTEXT
@@ -31,9 +31,10 @@ const getSession = async () => {}
 
 export const createTRPCContext = async (opts: { headers: Headers }) => {
   const authRequest = auth.handleRequest('GET', context)
-  const session = await authRequest.validate()
+  const session: Session = await authRequest.validate()
 
   return {
+    redisDb,
     db,
     ...opts,
     session,

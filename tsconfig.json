@@ -18,9 +18,13 @@
     "noUncheckedIndexedAccess": true,
     "baseUrl": ".",
     "paths": {
-      "@/schema/*": ["src/server/db/schema/*"],
+      "@/schema/*": ["src/server/db/sqlDb/schema/*"],
       "@/env/*": ["src/env/*"],
-      "@/db": ["src/server/db"],
+      "@/db/*": ["src/server/db/*"],
+      "@/sqlDb": ["src/server/db/sqlDb"],
+      "@/sqlDb/*": ["src/server/db/sqlDb/*"],
+      "@/redis/*": ["src/server/db/redis/*"],
+      "@/redis": ["src/server/db/redis/"],
       "@/auth/*": ["./src/auth/*"],
       "@/*": ["./*"],
       "@/api/*": ["./src/app/api/*"],
@@ -41,7 +45,7 @@
       "@/lib/*": ["./src/lib*"],
       "@/actions/*": ["./src/actions/*"],
     },
-    "plugins": [{ "name": "next" }]
+    "plugins": [{ "name": "next" }],
   },
   "include": [
     ".eslintrc.cjs",
@@ -54,7 +58,7 @@
     "scripts/test.ts",
     "src/app/lib/placeholder-data.js",
     "prisma/seed.js",
-    "prisma/seedData.js"
+    "prisma/seedData.js",
   ],
-  "exclude": ["node_modules", "**/*.js"]
+  "exclude": ["node_modules", "**/*.js"],
 }

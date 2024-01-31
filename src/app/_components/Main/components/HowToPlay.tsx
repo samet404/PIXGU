@@ -6,9 +6,6 @@ import { auth } from '@/auth/lucia'
 import * as context from 'next/headers'
 
 const HowToPlay = async () => {
-  const authRequest = auth.handleRequest('GET', context)
-  const session = await authRequest.validate()
-
   return (
     <div>
       <MainButton

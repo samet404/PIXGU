@@ -3,8 +3,9 @@ import { useAtomValue } from 'jotai'
 import {
   maxPlayerNumberAtom,
   minPlayerNumberAtom,
+  nameAtom,
   passwordAtom,
-} from './Main/components/atoms'
+} from './atoms'
 import { api } from '@/src/trpc/react'
 import clsx from 'clsx'
 import { useRouter } from 'next/navigation'
@@ -21,6 +22,8 @@ const CreateRoomButton = () => {
   const maxPlayerNumber = useAtomValue(maxPlayerNumberAtom)
   const minPlayerNumber = useAtomValue(minPlayerNumberAtom)
   const password = useAtomValue(passwordAtom)
+  const name = useAtomValue(nameAtom)
+
   const router = useRouter()
 
   const {
@@ -48,6 +51,7 @@ const CreateRoomButton = () => {
         e.preventDefault()
 
         createRoom({
+          name: name,
           minPlayers: minPlayerNumber,
           maxPlayers: maxPlayerNumber,
           password: password,

@@ -20,7 +20,7 @@ config.autoAddCss = false
 const RootLayout = (props: { children: ReactNode }) => {
   return (
     <html lang="en">
-      <body className="bg-black">
+      <body className="bg-slate-900">
         <TRPCReactProvider cookies={cookies().toString()}>
           {/* <CustomCursor /> */}
           <Client />

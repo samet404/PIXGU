@@ -3,7 +3,7 @@
 import { createId } from '@paralleldrive/cuid2'
 import { useSetAtom } from 'jotai'
 import { useRef, useState } from 'react'
-import { passwordAtom } from '../../atoms'
+import { passwordAtom } from '../../../../atoms'
 
 const InputContainer = () => {
   const [isPublic, setIsPublic] = useState<boolean>(true)
@@ -34,12 +34,12 @@ const InputContainer = () => {
         spellCheck={false}
         onInput={() => handleOnInput()}
         ref={inputRef}
-        placeholder={isPublic ? 'To make private, set pass' : ''}
+        placeholder={'To make private, set pass 💧'}
         type="text"
         className="w-full rounded-md bg-[rgba(255,255,255,0.2)] p-1 text-white shadow-lg outline-none placeholder:text-[#ffffff72]"
       />
       <div className="flex flex-row gap-1">
-        <div className="flex flex-row rounded-md bg-[#0000001f] px-2 py-1 text-sm">
+        <div className="flex flex-row flex-wrap rounded-md bg-[#0000001f] px-2 py-1 text-sm">
           <div className="pr-1 text-[rgba(255,255,255,0.6)]">Status:</div>
           {isPublic ? (
             <div className="text-green-400">Public</div>
@@ -51,7 +51,7 @@ const InputContainer = () => {
           onClick={() => generatePassword()}
           className="rounded-md bg-[#0000001f] px-2 py-1 text-sm text-[rgba(255,255,255,0.6)]"
         >
-          Generate auto password 
+          Generate auto password
         </button>
       </div>
     </div>

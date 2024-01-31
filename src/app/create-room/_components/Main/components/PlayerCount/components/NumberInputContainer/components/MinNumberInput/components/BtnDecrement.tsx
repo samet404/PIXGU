@@ -1,7 +1,7 @@
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useSetAtom } from 'jotai'
-import { minPlayerNumberAtom } from '../../../../../../atoms'
+import { minPlayerNumberAtom } from '../../../../../../../../atoms'
 
 const BtnDecrement = ({
   inputRef,
@@ -23,7 +23,7 @@ const BtnDecrement = ({
   }
 
   return (
-    <button className="flex rounded-b-md px-[0.2rem] duration-300 hover:scale-[140%] hover:shadow-lg hover:bg-yellow-300 hover:text-rose-500">
+    <button className="flex rounded-b-md px-[0.2rem] duration-300 hover:scale-[140%] hover:bg-yellow-300 hover:text-rose-500 hover:shadow-lg">
       <FontAwesomeIcon
         icon={faChevronUp}
         onClick={() => decrement()}

@@ -1,11 +1,11 @@
 import { auth, discordAuth } from '@/auth/lucia'
-import { db } from '@/db'
-import { usernameId } from '@/schema/user'
+import { db } from '@/sqlDb'
 import { OAuthRequestError } from '@lucia-auth/oauth'
-import { eq } from 'drizzle-orm'
 import { cookies, headers } from 'next/headers'
-
+import { user as userSchema } from '@/schema/user'
 import type { NextRequest } from 'next/server'
+import { eq } from 'drizzle-orm'
+import { api } from '@/src/trpc/server'
 
 export const GET = async (request: NextRequest) => {
   const storedState = cookies().get('discord_oauth_state')?.value
@@ -22,35 +22,31 @@ export const GET = async (request: NextRequest) => {
     const { getExistingUser, discordUser, createUser } =
       await discordAuth.validateCallback(code)
 
-    const getUser = async () => {
+    const getCreatedUser = async () => {
       const existingUser = await getExistingUser()
       if (existingUser) return existingUser
 
-      const createUsernameId = await db.insert(usernameId).values({})
+      const generatedNewUsernameID = await api.user.generateNewUsernameID.query(
+        {
+          username: discordUser.username,
+        },
+      )
 
-      const user = await createUser({
+      const createdUser = await createUser({
         attributes: {
           username: discordUser.username,
+          username_ID: generatedNewUsernameID!,
+          username_with_username_ID: `${discordUser.username}@${generatedNewUsernameID!}`,
           profile_picture: `https://cdn.discordapp.com/avatars/${discordUser.id}/${discordUser.avatar}.webp`,
-          username_id: parseInt(createUsernameId.insertId),
         },
       })
 
-      await db
-        .update(usernameId)
-        .set({ userId: user.userId })
-        .where(eq(usernameId.id, parseInt(createUsernameId.insertId)))
-
-      await db.insert(usernameId).values({
-        userId: user.userId,
-      })
-
-      return user
+      return createdUser
     }
 
-    const user = await getUser()
+    const createdUser = await getCreatedUser()
     const session = await auth.createSession({
-      userId: user.userId,
+      userId: createdUser.userId,
       attributes: {},
     })
     const authRequest = auth.handleRequest(request.method, {

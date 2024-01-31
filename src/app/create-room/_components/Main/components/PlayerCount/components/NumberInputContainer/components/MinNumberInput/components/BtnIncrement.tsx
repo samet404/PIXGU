@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   maxPlayerNumberAtom,
   minPlayerNumberAtom,
-} from '../../../../../../atoms'
+} from '../../../../../../../../atoms'
 import { useAtomValue, useSetAtom } from 'jotai'
 
 const BtnIncrement = ({

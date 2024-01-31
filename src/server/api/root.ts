@@ -5,7 +5,6 @@ import { createTRPCRouter } from '@/server/api/trpc'
 import { userRouter } from './router/user'
 import { articleRouter } from './router/article'
 import { gameRoomRouter } from './router/gameRoom'
-import { testRouter } from './router/test'
 
 /**
  * This is the primary router for your server.
@@ -16,7 +15,6 @@ export const appRouter = createTRPCRouter({
   user: userRouter,
   article: articleRouter,
   gameRoom: gameRoomRouter,
-  test: testRouter
 })
 
 // Export only the type of a router!

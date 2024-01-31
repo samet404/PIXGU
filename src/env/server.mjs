@@ -10,12 +10,27 @@ export const env = createEnv({
    * isn't built with invalid env vars.
    */
   server: {
-    DATABASE_URL: z
+    SQL_DATABASE_URL: z
       .string()
       .url()
       .refine(
         (str) => !str.includes('YOUR_POSTGRESQL_URL_HERE'),
-        'You forgot to change the default URL',
+        'You forgot to change the default SQL_DATABASE_URL',
+      ),
+
+    UPSTASH_REDIS_REST_URL: z
+      .string()
+      .url()
+      .refine(
+        (str) => !str.includes('YOUR_UPSTASH_REDIS_REST_URL_HERE'),
+        'You forgot to change the default UPSTASH_REDIS_REST_URL',
+      ),
+
+    UPSTASH_REDIS_REST_TOKEN: z
+      .string()
+      .refine(
+        (str) => !str.includes('UPSTASH_REDIS_REST_TOKEN'),
+        'You forgot to change the default UPSTASH_REDIS_REST_TOKEN',
       ),
 
     DISCORD_CLIENT_ID: z
@@ -93,7 +108,10 @@ export const env = createEnv({
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
 
-    DATABASE_URL: process.env.DATABASE_URL,
+    SQL_DATABASE_URL: process.env.SQL_DATABASE_URL,
+
+    UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
+    UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
 
     DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,
     DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,

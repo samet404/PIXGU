@@ -1,5 +1,5 @@
 import { user } from '@/schema/user'
-import { db } from '@/db'
+import { db } from '@/sqlDb'
 import { article } from '@/schema/article'
 
 const Test = async () => {

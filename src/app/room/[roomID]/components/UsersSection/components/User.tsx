@@ -1,42 +1,47 @@
-import { Pixelify_Sans, Tilt_Neon } from 'next/font/google'
+import { Pixelify_Sans, Inter } from 'next/font/google'
 import Image from 'next/image'
 import pfp from '@/png/pfp2.png'
+import { type ComponentProps } from 'react'
 
 const pixelifySans = Pixelify_Sans({
   subsets: ['latin'],
   weight: '700',
 })
 
-const tiltNeon = Tilt_Neon({ subsets: ['latin'] })
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['700'],
+})
 
 type UserProps = {
   name: string
   score: number
   className?: string
 }
-
 const User = ({ name, score, className }: UserProps) => {
   return (
     <div
-      className={`${className} flex w-full flex-row items-center  justify-between border-b-[0.25rem] border-[#0000002e] bg-[rgba(255,255,255,0.54)] p-2`}
+      className={`${className} group group flex w-full flex-row items-center justify-between bg-[rgba(255,255,255,0.1)] p-2 hover:bg-gradient-to-r hover:from-[#ffffff79] hover:to-[#ffffff3b]`}
     >
-      <div className="flex w-full flex-row items-center gap-2 ">
+      <div className="flex w-full flex-row items-center gap-2 peer-hover:bg-red-200 ">
         <Image
           src={pfp}
           sizes="calc(1.15vw + 46px)"
           alt="profilePicture"
-          className="h-[2rem] w-[2rem] rounded-full drop-shadow-[0_0px_5px_rgba(0,0,0,0.3)] select-none"
+          className="h-[2rem] w-[2rem] select-none rounded-full opacity-50 drop-shadow-[0_0px_5px_rgba(0,0,0,0.3)] group-hover:opacity-100"
         />
         <div
-          className={`${pixelifySans.className} text-md text-[#ffffffc3] drop-shadow-[0_0px_2px_rgba(0,0,0,0.55)]`}
+          className={`${pixelifySans.className} text-sm text-[#ffffff79] drop-shadow-[0_0px_2px_rgba(0,0,0,0.55)] group-hover:text-[#ffffffd4]`}
         >
           {name}
         </div>
       </div>
       <div
-        className={`${tiltNeon.className} rounded-full  bg-gradient-to-br from-[#ffff00cb] to-[#ffa600ca] p-2 text-sm text-[#00000048] drop-shadow-[0_0px_5px_rgba(0,0,0,0.2)]`}
+        className={`${inter.className} flex  items-center justify-center rounded-full bg-gradient-to-br from-[rgba(255,255,255,0.1)] to-[rgba(255,255,255,0.2)] text-xs tracking-tighter text-[#ffffff5c] drop-shadow-[0_0px_8px_rgba(0,0,0,0.1)] group-hover:from-yellow-200 group-hover:to-yellow-400 group-hover:text-white p-2`}
       >
-        {score}
+        <div className="flex group-hover:drop-shadow-[0_0px_2px_rgba(0,0,0,0.3)]">
+          {score}
+        </div>
       </div>
     </div>
   )

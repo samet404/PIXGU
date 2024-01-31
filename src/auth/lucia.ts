@@ -1,9 +1,8 @@
 import { lucia } from 'lucia'
 import { nextjs_future } from 'lucia/middleware'
-import { planetscale } from '@lucia-auth/adapter-mysql'
-
+import { pg as pgAdapter } from '@lucia-auth/adapter-postgresql'
 import { discord, github, google, spotify } from '@lucia-auth/oauth/providers'
-import { connection } from '@/src/server/db'
+import { pool } from '@/sqlDb'
 import { env } from '@/env/server.mjs'
 
 export const auth = lucia({
@@ -12,8 +11,8 @@ export const auth = lucia({
   sessionCookie: {
     expires: false,
   },
-  adapter: planetscale(connection, {
-    user: 'auth_user',
+  adapter: pgAdapter(pool, {
+    user: 'user',
     key: 'user_key',
     session: 'user_session',
   }),
@@ -21,9 +20,8 @@ export const auth = lucia({
     return {
       profilePicture: data.profile_picture,
       username: data.username,
-      usernameId: data.username_id,
-      // playingRoomId: data.playing_room_id,
-      // playingRoomScoreId: data.playing_room_score_id,
+      usernameID: data.username_ID,
+      usernameWithUsernameID: data.username_with_username_ID,
     }
   },
 })
@@ -50,5 +48,3 @@ export const discordAuth = discord(auth, {
 //   clientSecret: env.GOOGLE_CLIENT_SECRET ?? '',
 //   redirectUri: env.GOOGLE_REDIRECT_URI ?? '',
 // })
-
-export type Auth = typeof auth

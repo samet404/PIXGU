@@ -4,7 +4,10 @@ import { faChevronUp } from '@fortawesome/free-solid-svg-icons'
 
 import { type ComponentProps, useRef } from 'react'
 import { useAtomValue, useSetAtom } from 'jotai'
-import { maxPlayerNumberAtom, minPlayerNumberAtom } from '../../../../../atoms'
+import {
+  maxPlayerNumberAtom,
+  minPlayerNumberAtom,
+} from '../../../../../../../atoms'
 import BtnIncrement from './components/BtnIncrement'
 import BtnDecrement from './components/BtnDecrement'
 

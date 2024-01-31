@@ -4,7 +4,7 @@ import { type RefObject } from 'react'
 import {
   maxPlayerNumberAtom,
   minPlayerNumberAtom,
-} from '../../../../../../atoms'
+} from '../../../../../../../../atoms'
 import { useAtomValue, useSetAtom } from 'jotai'
 
 type BtnDecrementProps = {
@@ -28,7 +28,7 @@ const BtnDecrement = ({ inputRef, min }: BtnDecrementProps) => {
   }
 
   return (
-    <button className="flex rounded-b-md px-[0.2rem] duration-300 hover:scale-[140%] hover:shadow-lg hover:bg-yellow-300 hover:text-rose-500">
+    <button className="flex rounded-b-md px-[0.2rem] duration-300 hover:scale-[140%] hover:bg-yellow-300 hover:text-rose-500 hover:shadow-lg">
       <FontAwesomeIcon
         icon={faChevronUp}
         onClick={() => decrement()}

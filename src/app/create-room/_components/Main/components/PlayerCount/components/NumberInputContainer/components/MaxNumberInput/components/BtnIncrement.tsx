@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons'
 import { type RefObject } from 'react'
 import { useSetAtom } from 'jotai'
-import { maxPlayerNumberAtom } from '../../../../../../atoms'
+import { maxPlayerNumberAtom } from '../../../../../../../../atoms'
 
 const BtnIncrement = ({
   inputRef,

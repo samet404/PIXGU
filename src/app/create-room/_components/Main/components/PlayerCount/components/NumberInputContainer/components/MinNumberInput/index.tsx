@@ -3,7 +3,7 @@
 import { useRef } from 'react'
 import BtnIncrement from './components/BtnIncrement'
 import BtnDecrement from './components/BtnDecrement'
-import { maxPlayerNumberAtom } from '../../../../../atoms'
+import { maxPlayerNumberAtom } from '../../../../../../../atoms'
 import { useAtomValue } from 'jotai'
 
 type MinNumberInputProps = {

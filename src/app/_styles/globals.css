@@ -83,3 +83,7 @@ input[type='number'] {
 input {
   outline: none;
 }
+
+img {
+  user-select: none;
+}

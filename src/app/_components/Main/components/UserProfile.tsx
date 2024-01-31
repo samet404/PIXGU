@@ -3,17 +3,15 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 const UserProfile = async () => {
-  const sessionWithUsernameId = await api.user.getSessionWithUsernameId.query()
-
-  return sessionWithUsernameId ? (
+  const session = await api.user.getSession.query()
+console.log(session.user)
+  return session ? (
     <Link
-      href={`/user/${sessionWithUsernameId.session.user.username}@${
-        sessionWithUsernameId.usernameId[0]!.usernameId
-      }`}
+      href={`/user/${session.user.usernameWithUsernameID}`}
       className="h-12 w-12 rounded-full border-[0.3rem] border-[white] drop-shadow-[0_0px_3px_rgba(0,0,0,0.2)] duration-100 hover:opacity-60"
     >
       <Image
-        src={sessionWithUsernameId.session.user.profilePicture!}
+        src={session.user.profilePicture}
         alt="Profile picture"
         width={66}
         height={66}

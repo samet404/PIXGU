@@ -5,6 +5,7 @@ import Login from './components/Login'
 import UserProfile from './components/UserProfile'
 import './styles/scrollbars.css'
 import Settings from './components/Settings'
+import Friends from './components/Friends'
 
 const Main = () => {
   return (
@@ -16,6 +17,7 @@ const Main = () => {
         <JoinRoom />
         <CreateRoom />
         <HowToPlay />
+        <Friends />
         <Login />
       </div>
       <div className="flex h-full flex-col items-center gap-1">

@@ -8,13 +8,15 @@ export const gameRoomRouter = createTRPCRouter({
   create: publicProcedure
     .input(
       z.object({
+        name: z.string().min(1).max(255),
         minPlayers: z.number().min(2).max(16),
         maxPlayers: z.number().min(2).max(16),
-        password: z.string().max(255),
+        password: z.string().max(255).nullish(),
       }),
     )
     .mutation(async ({ input, ctx }) => {
       const a = await ctx.db.insert(gameRoom).values({
+        name: input.name,
         minPlayers: input.minPlayers,
         maxPlayers: input.maxPlayers,
         password: input.password,
