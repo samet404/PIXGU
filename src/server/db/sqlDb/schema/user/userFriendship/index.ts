@@ -1,10 +1,23 @@
-import { pgTable, varchar } from 'drizzle-orm/pg-core'
+import { pgTable, timestamp, varchar } from 'drizzle-orm/pg-core'
 import { user } from '../..'
-import { createCuid2 } from '@/sqlDb/utils/createCuid2'
-import { timestampWithZoneNow } from '@/sqlDb/utils'
+import { createId } from '@paralleldrive/cuid2'
 
 export const userFriendship = pgTable('user_friendship', {
-  id: createCuid2(),
-  friendID: varchar('friend_ID', { length: 128 }).references(() => user.id),
-  createdDate: timestampWithZoneNow(),
+  ID: varchar('ID', { length: 128 })
+    .$defaultFn(() => createId())
+    .primaryKey(),
+  userID: varchar('user_ID', { length: 128 })
+    .references(() => user.id)
+    .unique()
+    .notNull(),
+  friendID: varchar('friend_ID', { length: 128 })
+    .references(() => user.id)
+    .unique()
+    .notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true })
+    .defaultNow()
+    .notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true })
+    .defaultNow()
+    .notNull(),
 })

@@ -1,15 +1,7 @@
-import { user } from '@/schema/user'
-import { db } from '@/sqlDb'
-import { article } from '@/schema/article'
+import Btn from '@/src/components/Btn'
 
 const Test = async () => {
-  const createArticle = await db.insert(article).values({
-    content: 'dpasıhdjp',
-    headerText: 'dğasjdğsa',
-  })
-
-  console.log(createArticle.insertId + ' insertId')
-  return <div>page</div>
+  return <Btn />
 }
 
 export default Test

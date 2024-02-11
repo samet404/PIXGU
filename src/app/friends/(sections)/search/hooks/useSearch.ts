@@ -1,9 +1,9 @@
 import { api } from '@/src/trpc/react'
 import { useAtomValue, useSetAtom } from 'jotai'
 import { inputValuesAtom, usersDataAtom } from '../atoms'
+import { useEffect } from 'react'
 
 export const useSearch = () => {
-  console.log('useSearch')
   const { username, usernameID } = useAtomValue(inputValuesAtom)
   const setUsersData = useSetAtom(usersDataAtom)
 
@@ -23,19 +23,19 @@ export const useSearch = () => {
     return false
   })()
 
-  const usersDataWithUsernameID = api.user.getUserByUsernameID.useQuery(
+  const usersDataWithUsernameID = api.user.getByUsernameID.useQuery(
     usernameID,
     {
       enabled: isUsernameIDEnabled,
     },
   )
 
-  const usersDataWithUsername = api.user.getUserByUsername.useQuery(username, {
+  const usersDataWithUsername = api.user.getByUsername.useQuery(username, {
     enabled: isUsernameEnabled,
   })
 
   const usersDataWithUsernameAndusernameID =
-    api.user.getUserByUsernameWithUsernameID.useQuery(
+    api.user.getByUsernameWithUsernameID.useQuery(
       {
         username: username,
         usernameID: usernameID,
@@ -45,7 +45,33 @@ export const useSearch = () => {
       },
     )
 
-  if (isUsernameEnabled) setUsersData(usersDataWithUsername.data)
-  if (isUsernameIDEnabled) setUsersData (usersDataWithUsernameID.data)
-  if (isBothEnabled) setUsersData(usersDataWithUsernameAndusernameID.data)
+  useEffect(() => {
+    if (isUsernameEnabled) setUsersData(usersDataWithUsername.data)
+    if (isUsernameIDEnabled) setUsersData(usersDataWithUsernameID.data)
+    if (isBothEnabled) setUsersData(usersDataWithUsernameAndusernameID.data)
+  }, [
+    isBothEnabled,
+    isUsernameEnabled,
+    isUsernameIDEnabled,
+    setUsersData,
+    usersDataWithUsername.data,
+    usersDataWithUsernameAndusernameID.data,
+    usersDataWithUsernameID.data,
+  ])
+
+  const isLoading = (() => {
+    if (isUsernameEnabled) return usersDataWithUsername.isLoading
+    if (isUsernameIDEnabled) return usersDataWithUsernameID.isLoading
+    if (isBothEnabled) return usersDataWithUsernameAndusernameID.isLoading
+    return false
+  })()
+
+  const error = (() => {
+    if (isUsernameEnabled) return usersDataWithUsername.error
+    if (isUsernameIDEnabled) return usersDataWithUsernameID.error
+    if (isBothEnabled) return usersDataWithUsernameAndusernameID.error
+    return null
+  })()
+
+  return { isLoading, error }
 }

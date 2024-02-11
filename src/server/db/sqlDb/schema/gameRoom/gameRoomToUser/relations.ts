@@ -5,12 +5,12 @@ import { gameRoom } from '../gameRoom'
 
 export const gameRoomToUserRelations = relations(gameRoomToUser, ({ one }) => ({
   user: one(user, {
-    fields: [gameRoomToUser.userId],
+    fields: [gameRoomToUser.userID],
     references: [user.id],
   }),
 
   gameRoom: one(gameRoom, {
-    fields: [gameRoomToUser.gameRoomId],
-    references: [gameRoom.id],
+    fields: [gameRoomToUser.gameRoomID],
+    references: [gameRoom.ID],
   }),
 }))

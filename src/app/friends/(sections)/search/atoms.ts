@@ -1,19 +1,19 @@
 import { type RouterOutputs } from '@/src/trpc/shared'
 import { atom } from 'jotai'
 
-type usersDataAtomType =
-  | RouterOutputs['user']['getUserByUsernameWithUsernameID']
+type User =
+  | RouterOutputs['user']['getByUsernameWithUsernameID']
   | undefined
   | null
 
-export const usersDataAtom = atom<usersDataAtomType>(null)
+export const usersDataAtom = atom<User>(null)
 
-type inputValuesAtomType = {
+type InputValuesAtomType = {
   username: string
   usernameID: string
 }
 
-export const inputValuesAtom = atom<inputValuesAtomType>({
+export const inputValuesAtom = atom<InputValuesAtomType>({
   username: '',
   usernameID: '',
 })

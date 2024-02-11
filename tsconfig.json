@@ -18,6 +18,7 @@
     "noUncheckedIndexedAccess": true,
     "baseUrl": ".",
     "paths": {
+      "@/procedure": ["src/server/api/procedure"],
       "@/schema/*": ["src/server/db/sqlDb/schema/*"],
       "@/env/*": ["src/env/*"],
       "@/db/*": ["src/server/db/*"],
@@ -31,6 +32,7 @@
       "@/trpc/*": ["./src/trpc/*"],
       "@/components/*": ["./src/components/*"],
       "@/hooks/*": ["./src/hooks/*"],
+      "@/pusher/*": ["./src/pusher/*"],
       "@/server/*": ["./src/server/*"],
       "@/utils/*": ["./src/utils/*"],
       "@/styles/*": ["./src/styles/*"],

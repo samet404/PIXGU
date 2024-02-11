@@ -29,8 +29,30 @@ export const env = createEnv({
     UPSTASH_REDIS_REST_TOKEN: z
       .string()
       .refine(
-        (str) => !str.includes('UPSTASH_REDIS_REST_TOKEN'),
+        (str) => !str.includes('UPSTASH_REDIS_REST_TOKEN_HERE'),
         'You forgot to change the default UPSTASH_REDIS_REST_TOKEN',
+      ),
+
+    REDIS_URL: z
+      .string()
+      .url()
+      .refine(
+        (str) => !str.includes('YOUR_REDIS_URL_HERE'),
+        'You forgot to change the default REDIS_URL',
+      ),
+
+    PUSHER_KEY: z
+      .string()
+      .refine(
+        (str) => !str.includes('YOUR_PUSHER_KEY_HERE'),
+        'You forgot to change default PUSHER_KEY',
+      ),
+
+    PUSHER_SECRET: z
+      .string()
+      .refine(
+        (str) => !str.includes('YOUR_PUSHER_SECRET_HERE'),
+        'You forgot to change default PUSHER_SECRET',
       ),
 
     DISCORD_CLIENT_ID: z
@@ -53,6 +75,19 @@ export const env = createEnv({
       .refine(
         (str) => !str.includes('YOUR_DISCORD_REDIRECT_URI_HERE'),
         'You forgot to change the default discord redirect uri',
+      ),
+
+    NEXT_PUBLIC_PUSHER_APP_ID: z
+      .string()
+      .refine(
+        (str) => !str.includes('YOUR_PUSHER_APP_ID_HERE'),
+        'You forgot to change the default PUSHER_APP_ID',
+      ),
+    NEXT_PUBLIC_PUSHER_CLUSTER: z
+      .string()
+      .refine(
+        (str) => !str.includes('YOUR_PUSHER_CLUSTER_HERE'),
+        'You forgot to change default PUSHER_CLUSTER',
       ),
     // SPOTIFY_CLIENT_ID: z
     //   .string()
@@ -112,6 +147,13 @@ export const env = createEnv({
 
     UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
     UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
+
+    REDIS_URL: process.env.REDIS_URL,
+
+    PUSHER_KEY: process.env.PUSHER_KEY,
+    PUSHER_SECRET: process.env.PUSHER_SECRET,
+    NEXT_PUBLIC_PUSHER_APP_ID: process.env.NEXT_PUBLIC_PUSHER_APP_ID,
+    NEXT_PUBLIC_PUSHER_CLUSTER: process.env.NEXT_PUBLIC_PUSHER_CLUSTER,
 
     DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,
     DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,

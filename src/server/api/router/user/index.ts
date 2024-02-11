@@ -2,22 +2,30 @@ import { createTRPCRouter } from '@/server/api/trpc'
 import {
   generateNewUsernameID,
   getFriends,
-  getSession,
   getUserByID,
   getUserByUsername,
   getUserByUsernameID,
   getUserByUsernameWithUsernameID,
-} from './subroutes'
+  getSession,
+  sendFriendRequest,
+  getFriendRequests,
+  declineIncomingFriendRequest,
+  acceptIncomingFriendRequest,
+} from './subroute'
 
 export const userRouter = createTRPCRouter({
   generateNewUsernameID: generateNewUsernameID,
-  getUserById: getUserByID,
-  getUserByUsername: getUserByUsername,
-  getUserByUsernameID: getUserByUsernameID,
+  getById: getUserByID,
+  getByUsername: getUserByUsername,
+  getByUsernameID: getUserByUsernameID,
 
-  getUserByUsernameWithUsernameID: getUserByUsernameWithUsernameID,
+  getByUsernameWithUsernameID: getUserByUsernameWithUsernameID,
 
   getSession: getSession,
-  
+
   getFriends: getFriends,
+  sendFriendRequest: sendFriendRequest,
+  declineIncomingFriendRequest: declineIncomingFriendRequest,
+  acceptIncomingFriendRequest: acceptIncomingFriendRequest,
+  getFriendRequests: getFriendRequests,
 })

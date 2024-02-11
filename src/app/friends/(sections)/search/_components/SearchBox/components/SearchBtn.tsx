@@ -5,11 +5,12 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useSetAtom } from 'jotai'
 import { useSearch } from '../../../hooks/useSearch'
+import { clsxMerge } from '@/src/utils/clsxMerge'
 
 const SearchBtn = () => {
   const setInputValues = useSetAtom(inputValuesAtom)
 
-  useSearch()
+  const { isLoading, error } = useSearch()
   console.log('Btn rendered')
 
   const handleOnClick = () => {
@@ -27,22 +28,27 @@ const SearchBtn = () => {
       username: username,
       usernameID: usernameID,
     })
-
   }
 
   return (
     <button
+      disabled={isLoading}
       onClick={() => handleOnClick()}
-      className="h-10 w-10 duration-150 lg:hover:opacity-50"
+      className={clsxMerge(
+        'h-10 w-10 drop-shadow-md duration-150 focus:rounded-md focus:p-1 lg:hover:opacity-50',
+        {
+          'animate-wiggle-more animate-infinite': isLoading,
+        },
+      )}
     >
       <FontAwesomeIcon
         style={{
           height: '100%',
           width: '100%',
         }}
-        className="drop-shadow-md"
+        className=""
         icon={faSearch}
-        color="rgba(255,255,255,0.8)"
+        color={error ? 'rgba(255,100,100,0.8)' : 'rgba(255,255,255,0.8)'}
       />
     </button>
   )

@@ -1,10 +1,10 @@
 import { TRPCError } from '@trpc/server'
-import { publicProcedure } from '../../../trpc'
 import { user } from '@/schema/user'
 import { eq } from 'drizzle-orm'
+import { loggedUserProducure } from '../../../../procedure'
 
-export const getFriends = publicProcedure.query(async ({ ctx }) => {
-  const userId = await ctx.session.user.userId
+export const getFriends = loggedUserProducure.query(async ({ ctx }) => {
+  const userID = await ctx.session.user.userId
 
   // redis
   // const redisAddedFriendsIDs = await ctx.redisDb.smembers(
@@ -28,8 +28,8 @@ export const getFriends = publicProcedure.query(async ({ ctx }) => {
   // if (redisAddedFriends) return redisAddedFriends
 
   // main db
-  const mainDbAddedFriendsIDs = await ctx.db.query.user.findFirst({
-    where: eq(user.id, ctx.session.user.userId),
+  const mainDbAddedFriendsWithIDs = await ctx.db.query.user.findFirst({
+    where: eq(user.id, userID),
     columns: {},
     with: {
       friends: {
@@ -40,30 +40,19 @@ export const getFriends = publicProcedure.query(async ({ ctx }) => {
     },
   })
 
-  if (!mainDbAddedFriendsIDs) {
-    throw new TRPCError({
-      message: 'Something went wrong :/',
-      code: 'NOT_FOUND',
-    })
-  }
-  if (!mainDbAddedFriendsIDs?.friends)
-    throw new TRPCError({
-      message: 'Something went wrong :/',
-      code: 'NOT_FOUND',
-    })
+  if (!mainDbAddedFriendsWithIDs?.friends[0]) return null
 
   const mainDbAddedFriends = await Promise.all(
-    mainDbAddedFriendsIDs.friends.map(async (friend) => {
+    mainDbAddedFriendsWithIDs.friends.map(async (friend) => {
       if (!friend.friendID)
         throw new TRPCError({
-          message: 'Something went wrong :/',
-          code: 'NOT_FOUND',
+          code: 'UNPROCESSABLE_CONTENT',
+          message: 'friendID not found',
         })
 
       const friendResult = await ctx.db
         .select({
-          id: user.id,
-          username: user.username,
+          usernameWithUsernameID: user.usernameWithUsernameID,
         })
         .from(user)
         .where(eq(user.id, friend.friendID))

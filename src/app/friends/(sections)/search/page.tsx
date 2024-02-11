@@ -10,7 +10,7 @@ const inter = Inter({
 const Search = () => {
   return (
     <section
-      className={`${inter.className} flex animate-fade flex-col`}
+      className={`${inter.className} flex animate-fade flex-col gap-10  xxs:w-full md:w-[30rem]`}
     >
       <SearchBox />
       <Users />

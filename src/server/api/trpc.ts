@@ -14,9 +14,34 @@ import { auth } from '@/auth/lucia'
 import { db } from '@/sqlDb'
 import { redisDb } from '@/redis'
 import * as context from 'next/headers'
-import { Session } from 'lucia'
+import { type Session } from 'lucia'
 
-/**
+/**import { TRPCError } from '@trpc/server'
+import { publicProcedure } from '../trpc'
+
+export const loggedUserProducure = publicProcedure.use(
+  async ({ next, ctx, path, type }) => {
+    const start = Date.now()
+
+    if (!ctx.session)
+      throw new TRPCError({
+        code: 'UNAUTHORIZED',
+        message: 'User needs to be logged in to do this',
+      })
+
+    const result = await next()
+
+    const durationMs = Date.now() - start
+    const meta = { path: path, type: type, durationMs }
+
+    result.ok
+      ? console.log('OK request timing:', meta)
+      : console.error('Non-OK request timing', meta)
+
+    return result
+  },
+)
+
  * 1. CONTEXT
  *
  * This section defines the "contexts" that are available in the backend API.
@@ -36,8 +61,8 @@ export const createTRPCContext = async (opts: { headers: Headers }) => {
   return {
     redisDb,
     db,
-    ...opts,
     session,
+    ...opts,
   }
 }
 

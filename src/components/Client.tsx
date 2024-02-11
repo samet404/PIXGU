@@ -1,12 +1,12 @@
-'use client'
+// 'use client'
 
-import { api } from '@/trpc/react'
+// import { api } from '@/trpc/react'
 
-const Client = () => {
-  const session = api.user.getSession.useQuery()
+// const Client = () => {
+//   const session = api.user.getSession.useQuery()
 
-  console.log(session)
-  return <></>
-}
+//   console.log(session)
+//   return <></>
+// }
 
-export default Client
+// export default Client

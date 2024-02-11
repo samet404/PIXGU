@@ -1,11 +1,10 @@
 import { z } from 'zod'
-import { createTRPCRouter, publicProcedure } from '../trpc'
-import { loggedUserProducure } from '../procedure/loggedUser'
+import { createTRPCRouter } from '../trpc'
+import { loggedUserProducure } from '../procedure'
 import { gameRoom } from '@/schema/gameRoom/gameRoom'
-import { eq } from 'drizzle-orm'
 
 export const gameRoomRouter = createTRPCRouter({
-  create: publicProcedure
+  create: loggedUserProducure
     .input(
       z.object({
         name: z.string().min(1).max(255),
@@ -20,23 +19,10 @@ export const gameRoomRouter = createTRPCRouter({
         minPlayers: input.minPlayers,
         maxPlayers: input.maxPlayers,
         password: input.password,
-        createdById: ctx.session?.user.userId,
       })
 
       console.log(a)
     }),
-
-  getLatestCreatedRoomId: loggedUserProducure.query(async ({ ctx }) => {
-    const room = await ctx.db
-      .select({
-        id: gameRoom.id,
-      })
-      .from(gameRoom)
-      .where(eq(gameRoom.createdById, ctx.session!.user.userId))
-      .limit(1)
-
-    return room
-  }),
 
   getRoomsByOffsetAndLimit: loggedUserProducure
     .input(
@@ -47,7 +33,7 @@ export const gameRoomRouter = createTRPCRouter({
     .query(async ({ input, ctx }) => {
       const rooms = await ctx.db
         .select({
-          id: gameRoom.id,
+          id: gameRoom.ID,
           name: gameRoom.name,
         })
         .from(gameRoom)

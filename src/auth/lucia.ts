@@ -4,6 +4,17 @@ import { pg as pgAdapter } from '@lucia-auth/adapter-postgresql'
 import { discord, github, google, spotify } from '@lucia-auth/oauth/providers'
 import { pool } from '@/sqlDb'
 import { env } from '@/env/server.mjs'
+import { redis } from '@lucia-auth/adapter-session-redis'
+import { createClient } from 'redis'
+
+const client = createClient({
+  // ...
+  url: env.REDIS_URL,
+})
+
+client.connect().catch(e => {
+  throw new Error('AuthError: Error when connecting websocket client')
+})
 
 export const auth = lucia({
   env: 'DEV', // "PROD" if deployed to HTTPS
@@ -11,11 +22,16 @@ export const auth = lucia({
   sessionCookie: {
     expires: false,
   },
-  adapter: pgAdapter(pool, {
-    user: 'user',
-    key: 'user_key',
-    session: 'user_session',
-  }),
+
+  adapter: {
+    session: redis(client),
+    user: pgAdapter(pool, {
+      user: 'user',
+      key: 'user_key',
+      session: 'user_session',
+    }),
+  },
+
   getUserAttributes: (data) => {
     return {
       profilePicture: data.profile_picture,

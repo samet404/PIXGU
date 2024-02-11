@@ -6,7 +6,7 @@ export const gameRoomPlayerScoreRelations = relations(
   gameRoomPlayerScore,
   ({ one }) => ({
     user: one(user, {
-      fields: [gameRoomPlayerScore.userId],
+      fields: [gameRoomPlayerScore.userID],
       references: [user.id],
     }),
   }),

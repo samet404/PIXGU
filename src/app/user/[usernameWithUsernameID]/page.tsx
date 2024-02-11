@@ -18,7 +18,7 @@ const User = async ({ params }: UserPageProps) => {
   if (!username) return notFound()
   if (!usernameID) return notFound()
 
-  const user = await api.user.getUserByUsernameWithUsernameID.query({
+  const user = await api.user.getByUsernameWithUsernameID.query({
     username: username,
     usernameID: usernameID,
   })

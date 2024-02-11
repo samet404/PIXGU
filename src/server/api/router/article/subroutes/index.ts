@@ -1,0 +1,1 @@
+export { getByID } from './getByID'

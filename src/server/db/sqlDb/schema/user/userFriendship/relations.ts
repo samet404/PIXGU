@@ -4,7 +4,7 @@ import { user } from '../..'
 
 export const userFriendshipRelations = relations(userFriendship, ({ one }) => ({
   friend: one(user, {
-    fields: [userFriendship.friendID],
+    fields: [userFriendship.userID],
     references: [user.id],
   }),
 }))

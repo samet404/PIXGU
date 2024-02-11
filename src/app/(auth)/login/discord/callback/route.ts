@@ -1,11 +1,9 @@
 import { auth, discordAuth } from '@/auth/lucia'
-import { db } from '@/sqlDb'
 import { OAuthRequestError } from '@lucia-auth/oauth'
 import { cookies, headers } from 'next/headers'
-import { user as userSchema } from '@/schema/user'
 import type { NextRequest } from 'next/server'
-import { eq } from 'drizzle-orm'
 import { api } from '@/src/trpc/server'
+import { createId } from '@paralleldrive/cuid2'
 
 export const GET = async (request: NextRequest) => {
   const storedState = cookies().get('discord_oauth_state')?.value
@@ -26,17 +24,16 @@ export const GET = async (request: NextRequest) => {
       const existingUser = await getExistingUser()
       if (existingUser) return existingUser
 
-      const generatedNewUsernameID = await api.user.generateNewUsernameID.query(
-        {
+      const generatedNewUsernameID =
+        (await api.user.generateNewUsernameID.query({
           username: discordUser.username,
-        },
-      )
+        })) as string
 
       const createdUser = await createUser({
         attributes: {
           username: discordUser.username,
-          username_ID: generatedNewUsernameID!,
-          username_with_username_ID: `${discordUser.username}@${generatedNewUsernameID!}`,
+          username_ID: generatedNewUsernameID,
+          username_with_username_ID: `${discordUser.username}@${generatedNewUsernameID}`,
           profile_picture: `https://cdn.discordapp.com/avatars/${discordUser.id}/${discordUser.avatar}.webp`,
         },
       })
