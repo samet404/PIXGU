@@ -14,6 +14,12 @@ export const userFriendship = pgTable('user_friendship', {
     .references(() => user.id)
     .unique()
     .notNull(),
+  friendUsernameWithUsernameID: varchar('friend_username_with_username_ID', {
+    length: 70,
+  })
+    .references(() => user.usernameWithUsernameID)
+    .unique()
+    .notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true })
     .defaultNow()
     .notNull(),

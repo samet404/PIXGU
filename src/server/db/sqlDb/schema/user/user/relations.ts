@@ -14,6 +14,6 @@ export const userRelations = relations(user, ({ one, many }) => ({
     references: [gameRoom.ID],
   }),
 
-  friends: many(userFriendship),
+  friend: many(userFriendship),
   // playingRoomScore: one(gameRoomPlayerScore),
 }))

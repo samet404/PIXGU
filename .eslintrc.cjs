@@ -42,7 +42,8 @@ const config = {
 
     'drizzle/enforce-delete-with-where': 'error',
     'drizzle/enforce-update-with-where': 'error',
-
+    
+    'no-constant-condition': 'warn',
     'dot-notation': 'off',
     'prefer-const': 'off',
     'no-empty': 'warn',

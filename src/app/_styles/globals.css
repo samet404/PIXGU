@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 * {
+  font-family: 'Courier New', Courier, monospace;
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;

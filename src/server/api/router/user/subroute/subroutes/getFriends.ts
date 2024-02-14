@@ -7,12 +7,12 @@ export const getFriends = loggedUserProducure.query(async ({ ctx }) => {
   const userID = await ctx.session.user.userId
 
   // redis
-  // const redisAddedFriendsIDs = await ctx.redisDb.smembers(
-  //   `user:${userId}:friends`,
+  // const redisAddedfriendIDs = await ctx.redisDb.smembers(
+  //   `user:${userId}:friend`,
   // )
 
-  // const redisAddedFriends = (await Promise.all(
-  //   redisAddedFriendsIDs.map(async (id) => {
+  // const redisAddedfriend = (await Promise.all(
+  //   redisAddedfriendIDs.map(async (id) => {
   //     const friend = await ctx.redisDb.get(`user:${id}`)
   //     return friend
   //   }),
@@ -24,15 +24,15 @@ export const getFriends = loggedUserProducure.query(async ({ ctx }) => {
   //   | undefined
   // )[]
 
-  // if (!redisAddedFriends) console.error('No redis results found for friends')
-  // if (redisAddedFriends) return redisAddedFriends
+  // if (!redisAddedfriend) console.error('No redis results found for friend')
+  // if (redisAddedfriend) return redisAddedfriend
 
   // main db
-  const mainDbAddedFriendsWithIDs = await ctx.db.query.user.findFirst({
+  const mainDbAddedfriendWithIDs = await ctx.db.query.user.findFirst({
     where: eq(user.id, userID),
     columns: {},
     with: {
-      friends: {
+      friend: {
         columns: {
           friendID: true,
         },
@@ -40,10 +40,10 @@ export const getFriends = loggedUserProducure.query(async ({ ctx }) => {
     },
   })
 
-  if (!mainDbAddedFriendsWithIDs?.friends[0]) return null
+  if (!mainDbAddedfriendWithIDs?.friend[0]) return null
 
-  const mainDbAddedFriends = await Promise.all(
-    mainDbAddedFriendsWithIDs.friends.map(async (friend) => {
+  const mainDbAddedfriend = await Promise.all(
+    mainDbAddedfriendWithIDs.friend.map(async (friend) => {
       if (!friend.friendID)
         throw new TRPCError({
           code: 'UNPROCESSABLE_CONTENT',
@@ -52,7 +52,9 @@ export const getFriends = loggedUserProducure.query(async ({ ctx }) => {
 
       const friendResult = await ctx.db
         .select({
+          ID: user.id,
           usernameWithUsernameID: user.usernameWithUsernameID,
+          profilePicture: user.profilePicture,
         })
         .from(user)
         .where(eq(user.id, friend.friendID))
@@ -62,5 +64,5 @@ export const getFriends = loggedUserProducure.query(async ({ ctx }) => {
     }),
   )
 
-  return mainDbAddedFriends
+  return mainDbAddedfriend
 })

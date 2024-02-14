@@ -11,6 +11,11 @@ import {
   getFriendRequests,
   declineIncomingFriendRequest,
   acceptIncomingFriendRequest,
+  getSesssionUserID,
+  isUserExitsByID,
+  isFriendExitsByID,
+  isUserExitsByUsernameWithUsernameID,
+  isFriendExitsByUsernameWithUsernameID,
 } from './subroute'
 
 export const userRouter = createTRPCRouter({
@@ -18,12 +23,18 @@ export const userRouter = createTRPCRouter({
   getById: getUserByID,
   getByUsername: getUserByUsername,
   getByUsernameID: getUserByUsernameID,
+  isExitsByID: isUserExitsByID,
+  isExitsByUsernameWithUsernameID: isUserExitsByUsernameWithUsernameID,
 
   getByUsernameWithUsernameID: getUserByUsernameWithUsernameID,
 
   getSession: getSession,
+  getSessionUserID: getSesssionUserID,
 
   getFriends: getFriends,
+  isFriendExitsByID: isFriendExitsByID,
+  isFriendExitsByUsernameWithUsernameID: isFriendExitsByUsernameWithUsernameID,
+
   sendFriendRequest: sendFriendRequest,
   declineIncomingFriendRequest: declineIncomingFriendRequest,
   acceptIncomingFriendRequest: acceptIncomingFriendRequest,
