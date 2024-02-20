@@ -15,7 +15,7 @@ import { cookies } from 'next/headers'
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 config.autoAddCss = false
-
+// https://nuqs.47ng.com/docs/seo
 const RootLayout = (props: { children: ReactNode }) => {
   return (
     <html lang="en">

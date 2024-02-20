@@ -42,7 +42,7 @@ const config = {
 
     'drizzle/enforce-delete-with-where': 'error',
     'drizzle/enforce-update-with-where': 'error',
-    
+
     'no-constant-condition': 'warn',
     'dot-notation': 'off',
     'prefer-const': 'off',
@@ -52,6 +52,7 @@ const config = {
     'react/react-in-jsx-scope': 'off',
     'react/jsx-uses-react': 'off',
 
+    '@typescript-eslint/no-floating-promises': 'off',
     '@typescript-eslint/non-nullable-type-assertion-style': 'off',
     '@typescript-eslint/no-unsafe-argument': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',

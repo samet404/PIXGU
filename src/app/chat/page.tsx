@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import bg from '@/jpg/annie-spratt-XBN773gtJm8-unsplash.jpg'
-import { Inter } from 'next/font/google'
 import { redirect } from 'next/navigation'
+import { Inter } from 'next/font/google'
 
 const inter = Inter({
   subsets: ['latin'],

@@ -36,6 +36,8 @@
       "@/server/*": ["./src/server/*"],
       "@/utils/*": ["./src/utils/*"],
       "@/styles/*": ["./src/styles/*"],
+      "@/atoms": ["./src/atoms"],
+
       "@/types/*": ["./src/types/*"],
       "@/app/*": ["./src/app/*"],
       "@/public/*": ["./public/*"],

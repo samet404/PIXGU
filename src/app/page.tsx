@@ -4,13 +4,12 @@ import Main from './_components/Main'
 import Shortcuts from './_components/Shortcuts'
 import * as context from 'next/headers'
 import { auth } from '@/auth/lucia'
+import Test from '../components/Test'
 
 const Home = async () => {
-  const authRequest = auth.handleRequest('GET', context)
-  const session = await authRequest.validate()
-
   return (
     <Fragment>
+      <Test />
       <div
         style={{
           backgroundColor: 'hsla(220,39%,10%,1)',

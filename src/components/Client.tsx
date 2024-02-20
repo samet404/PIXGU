@@ -1,12 +1,27 @@
-// 'use client'
+'use client'
 
-// import { api } from '@/trpc/react'
+import { useOnReplaceStateUpdated } from '@/hooks/useOnReplaceStateUpdated'
+import { useSetAtom } from 'jotai'
+import { historyStateAtom } from './atoms'
+import { useEffect, useState } from 'react'
+import { useInterval } from 'usehooks-ts'
 
-// const Client = () => {
-//   const session = api.user.getSession.useQuery()
+const Client = () => {
+  const setHistoryState = useSetAtom(historyStateAtom)
+  const [a, setA] = useState(0)
+  let test: any
 
-//   console.log(session)
-//   return <></>
-// }
+  useOnReplaceStateUpdated(() => {
+    console.log(history.state)
+    setA(prev => prev + 1)
+    console.log(a)
+  })
 
-// export default Client
+  useEffect(() => {
+    history.replaceState({ a: 'dadw' }, '', '?da=2')
+  }, [])
+
+  return <>{a}</>
+}
+
+export default Client
