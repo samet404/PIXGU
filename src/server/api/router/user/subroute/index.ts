@@ -9,6 +9,8 @@ export { isUserExitsByID } from './subroutes/isUserExitsByID'
 export { isUserExitsByUsernameWithUsernameID } from './subroutes/isUserExitsByUsernameWithUsernameID'
 
 export { getFriends } from './subroutes/getFriends'
+export { getFirstFriend } from './subroutes/getFirstFriend'
+export { getFirstFriendUsernameWithUsernameID } from './subroutes/getFirstFriendUsernameWithUsernameID'
 export { isFriendExitsByID } from './subroutes/isFriendExitsByID'
 export { isFriendExitsByUsernameWithUsernameID } from './subroutes/isFriendExitsByUsernameWithUsernameID'
 

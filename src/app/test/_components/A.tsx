@@ -1,19 +1,20 @@
 'use client'
 
-import { useAtom, useSetAtom } from 'jotai'
+import { useSetAtom } from 'jotai'
 import { useInterval } from 'usehooks-ts'
-import { setSearchParamsAtom } from '../atoms'
-import { replaceState } from '@/utils/replaceState'
+import { setSearchParamColorAtom } from '../atoms'
+import { useRef } from 'react'
 
 const A = () => {
-  const setSearchParams = useSetAtom(setSearchParamsAtom)
-  let count = 0
+  console.log('A rendered')
+  const count = useRef(0)
+  const setSearchParamColor = useSetAtom(setSearchParamColorAtom)
 
   useInterval(() => {
-    replaceState(`?a=${count}`, () => setSearchParams())
-    count++
+    setSearchParamColor(count.current.toString())
+    count.current++
   }, 1000)
-  
+
   return <div>{}</div>
 }
 export default A

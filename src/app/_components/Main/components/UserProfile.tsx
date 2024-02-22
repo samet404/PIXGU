@@ -15,7 +15,7 @@ const UserProfile = async () => {
         alt="Profile picture"
         width={66}
         height={66}
-        sizes="sa"
+        sizes="(min-width: 2620px) calc(0.26vw + 54px), (min-width: 1840px) calc(0.39vw + 46px), (min-width: 1020px) calc(0.5vw + 41px), 37px"
         className="select-none rounded-full bg-gray-400"
       />
     </Link>

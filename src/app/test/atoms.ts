@@ -1,3 +1,4 @@
+import { setSearchParam } from '@/utils/setSearchParam'
 import { atom } from 'jotai'
 
 export const searchParamsAtom = atom<Record<string, string> | null>(null)
@@ -8,18 +9,28 @@ export const readSearchParamsAtom = atom<Record<string, string> | null>((get) =>
 
 export const searchParamColorAtom = atom<string | null>(null)
 
+export const setSearchParamColorAtom = atom(
+  null,
+  (get, set, newColor: string) => {
+    setSearchParam('color', newColor)
+    set(setSearchParamsAtom)
+    set(searchParamColorAtom, newColor)
+  },
+)
+
 export const setSearchParamsAtom = atom(null, (get, set) => {
   const prevParams = get(readSearchParamsAtom)
   const urlSearchParams = new URLSearchParams(window.location.search)
   const newParams = Object.fromEntries(urlSearchParams.entries())
 
-  if (newParams != prevParams) set(searchParamsAtom, newParams)
+  if (newParams != prevParams) {
+    set(searchParamsAtom, newParams)
 
-  const newColorParam = newParams.color
+    const newColorParam = newParams.color
+    if (newColorParam) {
+      const colorState = get(searchParamColorAtom)
 
-  if (newColorParam) {
-    const colorState = get(searchParamColorAtom)
-
-    if (newColorParam != colorState) set(searchParamColorAtom, newColorParam)
+      if (newColorParam != colorState) set(searchParamColorAtom, newColorParam)
+    }
   }
 })

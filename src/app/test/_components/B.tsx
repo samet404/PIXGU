@@ -1,12 +1,12 @@
 'use client'
 
 import { useAtomValue } from 'jotai'
-import { readSearchParamsAtom } from '../atoms'
+import { searchParamColorAtom } from '../atoms'
 
 const B = () => {
-  const searchParams = useAtomValue(readSearchParamsAtom)
+  const searchParamColor = useAtomValue(searchParamColorAtom)
+  console.log('B rendered')
 
-  console.log(searchParams)
-  return <div></div>
+  return <div>{searchParamColor}</div>
 }
 export default B

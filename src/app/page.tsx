@@ -14,7 +14,7 @@ const Home = async () => {
         style={{
           backgroundColor: 'hsla(220,39%,10%,1)',
           backgroundImage:
-            'radial-gradient(at 100% 100%, hsla(142, 7%, 70%, 0.1) 0px, transparent 50%), radial-gradient(at 2% 0%, hsla(177, 100%, 50%, 0.1) 0px, transparent 50%)',
+            'radial-gradient(at 100% 100%, hsla(142,7%,70%,0.1) 0px, transparent 50%), radial-gradient(at 2% 0%, hsla(177, 100%, 50%, 0.1) 0px, transparent 50%)',
         }}
         className={`h-full w-full`}
       >
