@@ -1,26 +1,33 @@
-import Image from 'next/image'
-import sendIcon from '@/png/icons8-send-24.png'
 import ChatUserInfo from './_components/ChatUserInfo'
-import { Fragment } from 'react'
+import { Inter } from 'next/font/google'
+import Blur from './_components/Blur'
+import MessageBoxContent from './_components/MessageBoxContent'
+import MesssageList from './_components/MessageList'
 
-const ChatSection = () => {
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['500', '900'],
+})
+
+const ChatSection = async () => {
   return (
-    <Fragment>
+    <section
+      className={`${inter.className} relative flex h-full grow flex-col rounded-lg bg-[#00000054] shadow-[0_0px_10px_1px_rgba(0,0,0,0.3)]`}
+    >
+      <Blur />
       <ChatUserInfo />
-      <div className="flex grow flex-col gap-2 p-2">
-        <div className="grow"></div>
-        <div className="flex h-[2.5rem] flex-row rounded-lg bg-[#ffffff5e] shadow-[0_0px_10px_1px_rgba(0,0,0,0.2)]">
-          <input type="text" className="grow p-2 text-[#0000009e]" />
-          <button className="flex h-full w-[4rem] items-center justify-center rounded-r-lg bg-gradient-to-br from-[rgba(16,185,129,0.2)] to-emerald-300  duration-200 hover:shadow-[0_0px_30px_10px_rgba(5,252,170,0.3)]">
-            <Image
-              src={sendIcon}
-              className="size-5 opacity-75"
-              alt="send_icon"
-            />
-          </button>
-        </div>
+      <div
+        style={{
+          overflowAnchor: 'none',
+        }}
+        className="flex grow flex-col gap-1 overflow-y-scroll p-2"
+      >
+        <MesssageList />
       </div>
-    </Fragment>
+      <div className="flex h-[2.5rem] flex-row rounded-lg bg-[#00000039] shadow-[0_0px_30px_1px_rgba(0,0,0,0.1)]">
+        <MessageBoxContent />
+      </div>
+    </section>
   )
 }
 export default ChatSection

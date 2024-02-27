@@ -42,7 +42,7 @@ const User = ({ ID, name, pfp }: UserProps) => {
         </div>
         <div className="flex flex-row gap-1">
           <ChatLink name={name} />
-          <BtnRemove ID={ID} />
+          <BtnRemove ID={ID} usernameWithUsernameID={name} />
         </div>
       </div>
 

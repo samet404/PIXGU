@@ -4,7 +4,7 @@ import chatIcon from '@/png/icons8-chat-48.png'
 
 const ChatLink = ({ name }: { name: string }) => (
   <Link
-    href={`/chat/${name}`}
+    href={`/c?u=${name.replace('@','-')}`}
     className={
       'flex h-10 w-10 items-center justify-center rounded-full bg-[#ffffff7e] p-2 duration-150 hover:bg-[#ffffffba]'
     }

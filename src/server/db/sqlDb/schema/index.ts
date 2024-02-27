@@ -4,3 +4,4 @@ export * from './user'
 
 export * from './gameRoom'
 
+export * from './chat'

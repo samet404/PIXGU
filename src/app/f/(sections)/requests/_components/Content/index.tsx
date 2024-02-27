@@ -28,7 +28,8 @@ const Content = () => {
         toPusherKey(`incoming_friend_requests:${userID.data}`),
       )
     }
-  }, [requests, userID])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   if (!requests.data) return <NoRequest />
   return (

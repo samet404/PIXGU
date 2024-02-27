@@ -102,7 +102,7 @@ const Article = async ({ params }: { params: { id: string } }) => {
 
   const id = params.id
 
-  const article = await api.article.getArticleById.query(id)
+  const article = await api.article.getById.query(id)
 
   return article ? (
     <div className="flex h-full w-full flex-row  bg-gradient-to-tr from-[#0d0d34] via-[#0d0d34] to-[#23236f]">

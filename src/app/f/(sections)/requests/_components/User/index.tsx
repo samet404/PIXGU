@@ -43,7 +43,7 @@ const User = ({ ID, name, pfp }: UserProps) => {
           </div>
         </div>
         <div className="flex flex-row gap-1">
-          <BtnBlock ID={ID} />
+          <BtnBlock ID={ID} usernameWithUsernameID={name} />
           <BtnDecline ID={ID} />
           <BtnAccept ID={ID} usernameWithUsernameID={name} />
         </div>

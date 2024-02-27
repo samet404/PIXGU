@@ -1,47 +1,56 @@
-  import { createTRPCRouter } from '@/server/api/trpc'
-  import {
-    generateNewUsernameID,
-    getFriends,
-    getUserByID,
-    getUserByUsername,
-    getUserByUsernameID,
-    getUserByUsernameWithUsernameID,
-    getSession,
-    sendFriendRequest,
-    getFriendRequests,
-    declineIncomingFriendRequest,
-    acceptIncomingFriendRequest,
-    getSesssionUserID,
-    isUserExitsByID,
-    isFriendExitsByID,
-    isUserExitsByUsernameWithUsernameID,
-    isFriendExitsByUsernameWithUsernameID,
-    getFirstFriendUsernameWithUsernameID,
-    getFirstFriend
-  } from './subroute'
+import { createTRPCRouter } from '@/server/api/trpc'
+import {
+  generateNewUsernameID,
+  getFriends,
+  getUserByID,
+  getUserByUsername,
+  getUserByUsernameID,
+  getUserByUsernameWithUsernameID,
+  getSession,
+  sendFriendRequest,
+  getFriendRequests,
+  declineIncomingFriendRequest,
+  acceptIncomingFriendRequest,
+  getSesssionUserID,
+  isUserExitsByID,
+  isFriendExitsByID,
+  isUserExitsByUsernameWithUsernameID,
+  isFriendExitsByUsernameWithUsernameID,
+  getFirstFriendUsernameWithUsernameID,
+  getFirstFriend,
+  getFirstFriendByUsernameWithUsernameID,
+  isHaveFriend,
+  getUserByUsernameAndUsernameID,
+  getFriendByFriendID
+} from './subroute'
 
-  export const userRouter = createTRPCRouter({
-    generateNewUsernameID: generateNewUsernameID,
-    getById: getUserByID,
-    getByUsername: getUserByUsername,
-    getByUsernameID: getUserByUsernameID,
-    isExitsByID: isUserExitsByID,
-    isExitsByUsernameWithUsernameID: isUserExitsByUsernameWithUsernameID,
+export const userRouter = createTRPCRouter({
+  generateNewUsernameID: generateNewUsernameID,
+  getById: getUserByID,
+  getByUsername: getUserByUsername,
+  getByUsernameID: getUserByUsernameID,
+  isExitsByID: isUserExitsByID,
+  isExitsByUsernameWithUsernameID: isUserExitsByUsernameWithUsernameID,
 
-    getByUsernameWithUsernameID: getUserByUsernameWithUsernameID,
+  getByUsernameWithUsernameID: getUserByUsernameWithUsernameID,
+  getByUsernameAndUsernameID: getUserByUsernameAndUsernameID,
 
-    getSession: getSession,
-    getSessionUserID: getSesssionUserID,
+  getSession: getSession,
+  getSessionUserID: getSesssionUserID,
 
-    getFriends: getFriends,
-    getFirstFriend: getFirstFriend,
-    getFirstFriendUsernameWithUsernameID: getFirstFriendUsernameWithUsernameID,
+  isHaveFriend: isHaveFriend,
+  getFriends: getFriends,
+  getFirstFriend: getFirstFriend,
+  getFirstFriendUsernameWithUsernameID: getFirstFriendUsernameWithUsernameID,
+  getFirstFriendByUsernameWithUsernameID:
+    getFirstFriendByUsernameWithUsernameID,
+  getFriendByFriendID: getFriendByFriendID,
 
-    isFriendExitsByID: isFriendExitsByID,
-    isFriendExitsByUsernameWithUsernameID: isFriendExitsByUsernameWithUsernameID,
+  isFriendExitsByID: isFriendExitsByID,
+  isFriendExitsByUsernameWithUsernameID: isFriendExitsByUsernameWithUsernameID,
 
-    sendFriendRequest: sendFriendRequest,
-    declineIncomingFriendRequest: declineIncomingFriendRequest,
-    acceptIncomingFriendRequest: acceptIncomingFriendRequest,
-    getFriendRequests: getFriendRequests,
-  })
+  sendFriendRequest: sendFriendRequest,
+  declineIncomingFriendRequest: declineIncomingFriendRequest,
+  acceptIncomingFriendRequest: acceptIncomingFriendRequest,
+  getFriendRequests: getFriendRequests,
+})

@@ -2,7 +2,7 @@ import { pgTable, varchar, char, timestamp } from 'drizzle-orm/pg-core'
 
 export const user = pgTable('user', {
   id: varchar('id', {
-    length: 15, // change this when using custom user ids
+    length: 15,
   }).primaryKey(),
   username: varchar('username', {
     length: 65,

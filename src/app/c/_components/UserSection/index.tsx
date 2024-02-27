@@ -9,9 +9,9 @@ const pixelifySans = Pixelify_Sans({
 
 const UserSection = async () => {
   const friends = await api.user.getFriends.query()
-  console.log('userSection rendered!')
+
   return (
-    <section className="h-full w-[13rem] rounded-lg bg-[#ffffff57] p-2 shadow-[0_0px_10px_1px_rgba(0,0,0,0.3)]">
+    <section className="h-full w-[13rem] rounded-lg bg-[#00000057] p-2 shadow-[0_0px_10px_1px_rgba(0,0,0,0.3)]">
       {friends ? (
         friends.map((friend, index) => {
           if (friend)
@@ -25,7 +25,9 @@ const UserSection = async () => {
             )
         })
       ) : (
-        <div className={`${pixelifySans.className} flex w-full items-center justify-center bg-[#ffff006e] shadow-[0_0px_10px_3px_rgba(0,0,0,0.1)] rounded-lg p-2 text-[#ffffffdb]`}>
+        <div
+          className={`${pixelifySans.className} flex w-full items-center justify-center rounded-lg bg-[#ffff006e] p-2 text-[#ffffffdb] shadow-[0_0px_10px_3px_rgba(0,0,0,0.1)]`}
+        >
           {"Looks like you don't have any friends yet to use here"}
         </div>
       )}

@@ -6,6 +6,7 @@ import './src/env/server.mjs';
 
 /** @type {import("next").NextConfig} */
 const config = {
+  exclude: ['test'],
   webpack: (
     config,
     { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack },

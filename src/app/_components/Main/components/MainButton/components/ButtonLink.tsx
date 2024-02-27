@@ -1,7 +1,6 @@
 'use client'
 
 import { clsxMerge } from '@/src/utils/clsxMerge'
-import clsx from 'clsx'
 import Link from 'next/link'
 import { type ReactNode, useState } from 'react'
 
