@@ -5,6 +5,7 @@ import { toPusherKey } from '@/utils/toPusherKey'
 import { useAtomValue } from 'jotai'
 import { Fragment, useEffect, useState } from 'react'
 import Message from './Message'
+import { useMessageSound } from './hooks/useMessageSound'
 
 type newMessagesType = {
   time: string
@@ -17,8 +18,8 @@ type newMessagesType = {
 }
 
 const NewMessages = () => {
+  const { play, mute } = useMessageSound()
   const [messages, setMessages] = useState<newMessagesType[]>()
-
   const friendID = useAtomValue(userInfoIDAtom)
   const userID = api.user.getSessionUserID.useQuery(undefined, {
     refetchOnReconnect: false,
@@ -30,6 +31,7 @@ const NewMessages = () => {
 
     pusherClient.bind('get_new_message', async (data: newMessagesType) => {
       console.log('binded')
+      play()
       if (messages) setMessages([...messages, data])
       if (!messages) setMessages([data])
     })
@@ -41,6 +43,7 @@ const NewMessages = () => {
 
       pusherClient.unbind('get_new_message', async (data: newMessagesType) => {
         console.log('unbinded')
+        play()
         if (messages) setMessages([...messages, data])
         if (!messages) setMessages([data])
       })
