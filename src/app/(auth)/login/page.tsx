@@ -7,13 +7,13 @@ import bgImg from '@/jpg/marek-piwnicki-Uc0hRKBu3xY-unsplash.jpg'
 import NavigationSection from './_components/NavigationSection'
 import OAuthSection from './_components/OAuthSection'
 import Logo from '@/png/logo.png'
+import { api } from '@/src/trpc/server'
 
 const Page = async () => {
-  const authRequest = auth.handleRequest('GET', context)
-  const session = await authRequest.validate()
-  if (session) redirect('/logout')
+  const session = await api.user.getSession.query()
 
-  if (session) return <></>
+  if (!session) redirect('/')
+
   return (
     <div className="flex h-full w-full flex-col items-center ">
       <Image

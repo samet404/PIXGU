@@ -4,10 +4,6 @@ import Main from './_components/Main'
 import { api } from '../trpc/server'
 
 const Home = async () => {
-  console.time('query a')
-  const a = await api.user.getFirstFriend.query()
-  console.timeEnd('query a')
-  console.log(a)
   return (
     <Fragment>
       <div
