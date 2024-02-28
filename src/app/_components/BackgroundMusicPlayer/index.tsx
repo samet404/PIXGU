@@ -47,7 +47,7 @@ const BackgroundMusicPlayer = () => {
     <div
       onClick={() => handleOnClick()}
       className={clsxMerge(
-        '        rounded-ful absolute bottom-2 left-2 z-30 flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-tl from-[rgb(189,255,185)] via-[rgb(184,244,255)] to-[rgb(242,255,187)] opacity-60 duration-150 ',
+        'rounded-ful absolute bottom-2 left-2 z-30 flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-tl from-[rgb(189,255,185)] via-[rgb(184,244,255)] to-[rgb(242,255,187)] opacity-60 duration-150 ',
         { 'opacity-30': isPlaying == false },
       )}
     >

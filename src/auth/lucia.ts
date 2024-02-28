@@ -17,7 +17,7 @@ client.connect().catch(e => {
 })
 
 export const auth = lucia({
-  env: 'PROD', // "PROD" if deployed to HTTPS
+  env: 'DEV', // "PROD" if deployed to HTTPS
   middleware: nextjs_future(), // NOT nextjs()
   sessionCookie: {
     expires: false,

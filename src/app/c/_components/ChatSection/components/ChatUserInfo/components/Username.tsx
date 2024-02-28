@@ -11,6 +11,10 @@ const inter = Inter({
 
 const Username = () => {
   const username = useAtomValue(userInfoNameAtom)
-  return <div className={`${inter.className} text-[#ffffff75]`}>{username}</div>
+  return (
+    <div className={`${inter.className} animate-fade text-[#ffffff75]`}>
+      {username}
+    </div>
+  )
 }
 export default Username

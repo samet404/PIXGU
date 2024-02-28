@@ -12,7 +12,13 @@ export const chat = pgTable('chat', {
   toFriendID: varchar('to_friend_ID', { length: 128 })
     .notNull()
     .references(() => user.id),
-
+  fromUsernameWithUsernameID: varchar('from_username_with_username_ID', {
+    length: 70,
+  }).notNull(),
+  toFriendUsernameWithUsernameID: varchar(
+    'to_friend_username_with_username_ID',
+    { length: 70 },
+  ).notNull(),
   text: varchar('text', { length: 500 }).notNull(),
   time: varchar('time', { length: 30 }).notNull(),
 })
