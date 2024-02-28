@@ -12,7 +12,7 @@ import { api } from '@/src/trpc/server'
 const Page = async () => {
   const session = await api.user.getSession.query()
 
-  if (!session) redirect('/')
+  if (session) redirect('/')
 
   return (
     <div className="flex h-full w-full flex-col items-center ">
