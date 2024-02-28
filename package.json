@@ -7,6 +7,7 @@
     "build:css": "postcss src/app/_styles/globals.css -o output.css -w",
     "build": "next build",
     "dev": "next dev -p 4000",
+    "dev:prod": "dotenv -e .env.production next dev -p 4000",
     "lint": "next lint",
     "start": "next start",
     "db:studio": "dotenv -e .env.development npx drizzle-kit studio --verbose --port 6000",
