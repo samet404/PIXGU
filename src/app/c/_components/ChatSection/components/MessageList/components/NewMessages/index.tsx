@@ -4,7 +4,7 @@ import { api } from '@/src/trpc/react'
 import { toPusherKey } from '@/utils/toPusherKey'
 import { useAtomValue } from 'jotai'
 import { Fragment, useEffect, useState } from 'react'
-import Message from './Message'
+import Message from '../Message'
 import { useMessageSound } from './hooks/useMessageSound'
 
 type newMessagesType = {
