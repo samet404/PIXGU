@@ -30,10 +30,10 @@ const Message = ({
   return (
     <div>
       <div className="flex animate-fade-up flex-col items-start gap-1 rounded-md p-1">
-        <div className="flex flex-row gap-2 items-center rounded-md text-[0.8rem] text-[#ffffff8c]">
+        <div className="flex flex-row items-center gap-2 rounded-md text-[0.8rem] text-[#ffffff8c]">
           {fromUsernameWithUsernameID}
           <div className="text-[0.5rem]">
-            {`${date.getHours()}:${date.getMinutes()} ${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`}
+            {`${date.getHours()}:${date.getMinutes()} ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}
           </div>
         </div>
 
