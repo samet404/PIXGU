@@ -47,6 +47,8 @@ const NewMessages = () => {
         if (messages) setMessages([...messages, data])
         if (!messages) setMessages([data])
       })
+
+      pusherClient.disconnect()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [friendID, userID])
