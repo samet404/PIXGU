@@ -24,3 +24,11 @@ export const isUserInfoBlurredAtom = atom<boolean | undefined | null>((get) => {
   if (!get(userInfoAtom)?.isFriend) return true
   return false
 })
+
+export const user2InfoAtom = atom<{
+  pfp: string | undefined | null
+} | null>(null)
+
+export const user2InfoPfpAtom = atom<string | undefined | null>(
+  (get) => get(user2InfoAtom)?.pfp,
+)

@@ -11,7 +11,7 @@ type newMessagesType = {
   time: string
   text: string
   ID: string
-  userID: string
+  fromID: string
   friendID: string
   fromUsernameWithUsernameID: string
   toFriendUsernameWithUsernameID: string
@@ -58,7 +58,7 @@ const NewMessages = () => {
             if (message)
               return (
                 <Message
-                  fromID={message.userID}
+                  fromID={message.fromID}
                   toFriendID={message.friendID}
                   fromUsernameWithUsernameID={
                     message.fromUsernameWithUsernameID
