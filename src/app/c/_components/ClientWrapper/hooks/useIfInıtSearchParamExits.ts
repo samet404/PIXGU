@@ -1,13 +1,13 @@
 import { api } from '@/src/trpc/react'
 import { useEffect } from 'react'
-import { userInfoAtom } from '@/app/c/atoms'
+import { selectedUserInfoAtom } from '@/app/c/atoms'
 import { useSetAtom } from 'jotai'
 import { getSearchParam } from '@/utils/getSearchParam'
 
 export const useIfInıtSearchParamExits = (
   searchParamU: string | null | undefined,
 ) => {
-  const setUserInfo = useSetAtom(userInfoAtom)
+  const setSelectedUserInfo = useSetAtom(selectedUserInfoAtom)
 
   const firstFriendByName =
     api.user.getFirstFriendByUsernameWithUsernameID.useQuery(searchParamU, {
@@ -31,7 +31,7 @@ export const useIfInıtSearchParamExits = (
         const { id, profilePicture, usernameWithUsernameID } =
           firstFriendByName.data
 
-        setUserInfo({
+        setSelectedUserInfo({
           ID: id,
           name: usernameWithUsernameID,
           pfp: profilePicture,
@@ -51,7 +51,7 @@ export const useIfInıtSearchParamExits = (
         const { id, profilePicture, usernameWithUsernameID } =
           firstUserByName.data
 
-        setUserInfo({
+        setSelectedUserInfo({
           ID: id,
           name: usernameWithUsernameID,
           pfp: profilePicture,
@@ -59,5 +59,5 @@ export const useIfInıtSearchParamExits = (
         })
       }
     }
-  }, [firstFriendByName, firstUserByName, searchParamU, setUserInfo])
+  }, [firstFriendByName, firstUserByName, searchParamU, setSelectedUserInfo])
 }

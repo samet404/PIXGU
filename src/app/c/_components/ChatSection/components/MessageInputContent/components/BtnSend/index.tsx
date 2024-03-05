@@ -4,10 +4,11 @@ import Image from 'next/image'
 import sendIcon from '@/png/icons8-send-24.png'
 import { api } from '@/src/trpc/react'
 import { clsxMerge } from '@/utils/clsxMerge'
-import { useAtomValue } from 'jotai'
-import { userInfoIDAtom } from '@/src/app/c/atoms'
-import { Ref, RefObject, forwardRef } from 'react'
+import { useAtom, useAtomValue } from 'jotai'
+import { selectedUserInfoIDAtom } from '@/src/app/c/atoms'
+import { type Ref, type RefObject, forwardRef } from 'react'
 import { useMessageSound } from './hooks/useMessageSound'
+import { isBtnSendGlowingAtom } from '../../atoms'
 
 type BtnSendProps = {
   inputRef: RefObject<HTMLInputElement>
@@ -15,10 +16,10 @@ type BtnSendProps = {
 
 const BtnSend = forwardRef(
   ({ inputRef }: BtnSendProps, ref: Ref<HTMLButtonElement>) => {
-    const { play, mute } = useMessageSound()
-    const inputVal = inputRef.current?.value
-    const { mutate, isLoading } = api.chat.setNewMessage.useMutation()
-    const friendID = useAtomValue(userInfoIDAtom)
+    const { play } = useMessageSound()
+    const [isGlowing, setIsGlowing] = useAtom(isBtnSendGlowingAtom)
+    const { mutate, isLoading, isError } = api.chat.setNewMessage.useMutation()
+    const friendID = useAtomValue(selectedUserInfoIDAtom)
 
     return (
       <button
@@ -28,21 +29,26 @@ const BtnSend = forwardRef(
           play()
 
           const inputVal = inputRef.current?.value
-
           inputRef.current?.focus()
-          inputRef.current!.value = ''
 
           console.log('inputVal:', inputVal)
-          if (friendID && inputVal && inputVal != '')
+          if (friendID && inputVal && inputVal != '') {
             mutate({
               friend_ID: friendID,
               text: inputVal,
             })
+
+            setIsGlowing(false)
+          }
         }}
         className={clsxMerge(
-          'flex h-full w-[4rem] items-center justify-center rounded-r-lg bg-gradient-to-br from-[rgba(16,185,129,0.2)] to-emerald-300  duration-200 hover:shadow-[0_0px_30px_10px_rgba(5,252,170,0.3)]',
+          'flex h-full w-[4rem] items-center justify-center rounded-r-lg bg-gradient-to-br from-[rgba(16,185,129,0.2)] to-emerald-300 opacity-50  duration-200',
           {
-            'opacity-50': inputVal == '',
+            'opacity-100 shadow-[0_0px_30px_10px_rgba(5,252,170,0.3)]':
+              isGlowing,
+            'bg-gradient-to-br from-[rgba(185,16,72,0.2)] to-pink-600 opacity-50 shadow-[0_0px_30px_10px_rgba(252,5,71,0.465)]':
+              isError,
+            'hover:shadow-[0_0px_30px_10px_rgba(5,252,170,0.3)]': !isError,
             'aniamte-pulse animate-infinite': isLoading,
           },
         )}

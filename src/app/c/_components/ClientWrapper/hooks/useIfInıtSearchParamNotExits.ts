@@ -1,12 +1,12 @@
 import { useSetAtom } from 'jotai'
-import { userInfoAtom } from '../../../atoms'
+import { selectedUserInfoAtom } from '../../../atoms'
 import { useEffect } from 'react'
 import { api } from '@/src/trpc/react'
 import { setSearchParam } from '@/utils/setSearchParam'
 import { getSearchParam } from '@/utils/getSearchParam'
 
 export const useIfInıtSearchParamNotExits = () => {
-  const setUserInfo = useSetAtom(userInfoAtom)
+  const setSelectedUserInfo = useSetAtom(selectedUserInfoAtom)
 
   // get the first friend of the user
   const firstFriend = api.user.getFirstFriend.useQuery(undefined, {
@@ -31,7 +31,7 @@ export const useIfInıtSearchParamNotExits = () => {
       // fetch latestSpokenUser
       if (!latestSpokenUserID.isFetched) latestSpokenUserID.refetch()
 
-      // if latestSpokenUser searched and found then set the searchParam and userInfo to userInfoAtom
+      // if latestSpokenUser searched and found then set the searchParam and selectedUserInfo to selectedUserInfoAtom
       if (latestSpokenUserID?.data) {
         if (!getFriendByLatestSpokenUserID.isFetched)
           getFriendByLatestSpokenUserID.refetch()
@@ -40,7 +40,7 @@ export const useIfInıtSearchParamNotExits = () => {
           const { id, usernameWithUsernameID, profilePicture } =
             getFriendByLatestSpokenUserID.data
 
-          setUserInfo({
+          setSelectedUserInfo({
             ID: id,
             name: usernameWithUsernameID,
             pfp: profilePicture,
@@ -56,12 +56,12 @@ export const useIfInıtSearchParamNotExits = () => {
         // fetch the first friend of the user
         if (!firstFriend.isFetched) firstFriend.refetch()
 
-        // if firstFriend searched and found then set the searchParam and userInfo to userInfoAtom
+        // if firstFriend searched and found then set the searchParam and selectedUserInfo to selectedUserInfoAtom
         if (firstFriend?.data) {
           const { id, usernameWithUsernameID, profilePicture } =
             firstFriend.data
 
-          setUserInfo({
+          setSelectedUserInfo({
             ID: id,
             name: usernameWithUsernameID,
             pfp: profilePicture,
@@ -72,13 +72,13 @@ export const useIfInıtSearchParamNotExits = () => {
         }
 
         // if firstFriend searched and not found
-        if (!firstFriend?.data) setUserInfo(null)
+        if (!firstFriend?.data) setSelectedUserInfo(null)
       }
     }
   }, [
     firstFriend,
     getFriendByLatestSpokenUserID,
     latestSpokenUserID,
-    setUserInfo,
+    setSelectedUserInfo,
   ])
 }

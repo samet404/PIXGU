@@ -1,6 +1,7 @@
 import { pgTable, timestamp, varchar } from 'drizzle-orm/pg-core'
 import { user } from '../..'
 import { createId } from '@paralleldrive/cuid2'
+import { relations } from 'drizzle-orm'
 
 export const userFriendship = pgTable('user_friendship', {
   ID: varchar('ID', { length: 128 })
@@ -24,3 +25,10 @@ export const userFriendship = pgTable('user_friendship', {
     .defaultNow()
     .notNull(),
 })
+
+export const userFriendshipRelations = relations(userFriendship, ({ one }) => ({
+  friend: one(user, {
+    fields: [userFriendship.userID],
+    references: [user.id],
+  }),
+}))

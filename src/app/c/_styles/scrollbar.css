@@ -1,0 +1,18 @@
+#messageList::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+/* Track */
+#messageList::-webkit-scrollbar-track {
+  border-radius: 1rem;
+}
+
+/* Handle */
+#messageList::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+}
+
+#messageList::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}

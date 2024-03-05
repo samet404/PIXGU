@@ -1,18 +1,18 @@
 'use client'
 
-import {userInfoAtom } from '@/app/c/atoms'
+import { selectedUserInfoAtom } from '@/app/c/atoms'
 import { useAtomValue } from 'jotai'
 
 const Blur = () => {
-  const userInfo = useAtomValue(userInfoAtom)
+  const selectedUserInfo = useAtomValue(selectedUserInfoAtom)
 
-  if (!userInfo) return null
-  if (!userInfo.isFriend)
+  if (!selectedUserInfo) return null
+  if (!selectedUserInfo.isFriend)
     return (
       <div className="absolute z-20 flex h-full w-full items-center justify-center rounded-lg text-white backdrop-blur-xl">
-        {userInfo?.pfp ? <></> : null}
-        {userInfo?.name
-          ? `You need to be friend with ${userInfo.name} to talk`
+        {selectedUserInfo?.pfp ? <></> : null}
+        {selectedUserInfo?.name
+          ? `You need to be friend with ${selectedUserInfo.name} to talk`
           : null}
       </div>
     )

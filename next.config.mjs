@@ -6,7 +6,6 @@ import './src/env/server.mjs';
 
 /** @type {import("next").NextConfig} */
 const config = {
-  exclude: ['test'],
   webpack: (
     config,
     { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack },
@@ -45,6 +44,7 @@ const config = {
   },
 };
 
-// const millionConfig = { auto: { rsc: true } };
+// const millionConfig = { auto: { rsc: false } };
 
-export default config // export default million.next(config, millionConfig);
+export default config;
+// export default million.next(config, millionConfig);

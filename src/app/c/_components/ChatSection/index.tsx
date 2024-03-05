@@ -12,11 +12,16 @@ const inter = Inter({
 const ChatSection = () => {
   return (
     <section
-      className={`${inter.className} relative flex h-full grow flex-col rounded-lg bg-[#00000054] shadow-[0_0px_10px_1px_rgba(0,0,0,0.3)]`}
+      className={`${inter.className} relative flex h-full flex-col rounded-lg bg-[#00000054] shadow-[0_0px_10px_1px_rgba(0,0,0,0.3)] xxs:w-full lg:w-[80%]`}
     >
       <Blur />
       <ChatUserInfo />
-      <MessageList />
+      <div
+        id="messageList"
+        className="flex h-full w-full animate-fade flex-col gap-4 overflow-x-hidden overflow-y-scroll xxs:p-1 lg:p-2 "
+      >
+        <MessageList />
+      </div>
       <MessageInputContent />
     </section>
   )

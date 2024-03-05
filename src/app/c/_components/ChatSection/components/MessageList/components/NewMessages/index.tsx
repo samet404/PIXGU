@@ -1,4 +1,4 @@
-import { userInfoIDAtom } from '@/src/app/c/atoms'
+import { selectedUserInfoIDAtom } from '@/src/app/c/atoms'
 import { pusherClient } from '@/src/pusher/client'
 import { api } from '@/src/trpc/react'
 import { toPusherKey } from '@/utils/toPusherKey'
@@ -20,7 +20,7 @@ type newMessagesType = {
 const NewMessages = () => {
   const { play, mute } = useMessageSound()
   const [messages, setMessages] = useState<newMessagesType[]>()
-  const friendID = useAtomValue(userInfoIDAtom)
+  const friendID = useAtomValue(selectedUserInfoIDAtom)
   const userID = api.user.getSessionUserID.useQuery(undefined, {
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
@@ -47,8 +47,6 @@ const NewMessages = () => {
         if (messages) setMessages([...messages, data])
         if (!messages) setMessages([data])
       })
-
-      pusherClient.disconnect()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [friendID, userID])

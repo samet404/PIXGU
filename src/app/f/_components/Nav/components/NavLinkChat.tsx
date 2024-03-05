@@ -3,7 +3,7 @@ import { faMessage } from '@fortawesome/free-solid-svg-icons'
 
 const NavLinkChat = () => {
   return (
-    <NavLink href='/chat' icon={faMessage}/>
+    <NavLink href='/c' icon={faMessage}/>
   )
 }
 

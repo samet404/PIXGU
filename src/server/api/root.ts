@@ -6,6 +6,7 @@ import { userRouter } from './router/user'
 import { articleRouter } from './router/article'
 import { gameRoomRouter } from './router/gameRoom'
 import { chatRouter } from './router/chat'
+import { announcementRouter } from './router/announcement'
 
 /**
  * This is the primary router for your server.
@@ -17,6 +18,7 @@ export const appRouter = createTRPCRouter({
   chat: chatRouter,
   article: articleRouter,
   gameRoom: gameRoomRouter,
+  announcement: announcementRouter,
 })
 
 // Export only the type of a router!

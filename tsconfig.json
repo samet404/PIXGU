@@ -35,6 +35,7 @@
       "@/pusher/*": ["./src/pusher/*"],
       "@/server/*": ["./src/server/*"],
       "@/utils/*": ["./src/utils/*"],
+      "@/utils/": ["./src/utils/"],
       "@/styles/*": ["./src/styles/*"],
       "@/atoms": ["./src/atoms"],
 

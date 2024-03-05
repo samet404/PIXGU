@@ -1,6 +1,7 @@
 import { type ReactNode } from 'react'
 import { api } from '@/src/trpc/server'
 import { notFound } from 'next/navigation'
+import './_styles/scrollbar.css'
 
 const ChatLayout = async ({ children }: { children: ReactNode }) => {
   const session = await api.user.getSession.query()

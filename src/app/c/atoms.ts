@@ -1,27 +1,27 @@
 import { atom } from 'jotai'
 
-export const userInfoAtom = atom<{
+export const selectedUserInfoAtom = atom<{
   ID: string
   name: string | undefined | null
   pfp: string | undefined | null
   isFriend: boolean | undefined | null
 } | null>(null)
 
-export const userInfoPfpAtom = atom<string | undefined | null>((get) => {
-  if (get(userInfoAtom)?.isFriend) return get(userInfoAtom)?.pfp
+export const selectedUserInfoPfpAtom = atom<string | undefined | null>((get) => {
+  if (get(selectedUserInfoAtom)?.isFriend) return get(selectedUserInfoAtom)?.pfp
 })
-export const userInfoNameAtom = atom<string | undefined | null>((get) => {
-  if (get(userInfoAtom)?.isFriend) return get(userInfoAtom)?.name
+export const selectedUserInfoNameAtom = atom<string | undefined | null>((get) => {
+  if (get(selectedUserInfoAtom)?.isFriend) return get(selectedUserInfoAtom)?.name
 })
-export const userInfoIDAtom = atom<string | undefined>((get) => {
-  if (get(userInfoAtom)?.isFriend) return get(userInfoAtom)?.ID
+export const selectedUserInfoIDAtom = atom<string | undefined>((get) => {
+  if (get(selectedUserInfoAtom)?.isFriend) return get(selectedUserInfoAtom)?.ID
 })
-export const userInfoIsFriendAtom = atom<boolean | undefined | null>(
-  (get) => get(userInfoAtom)?.isFriend,
+export const selectedUserInfoIsFriendAtom = atom<boolean | undefined | null>(
+  (get) => get(selectedUserInfoAtom)?.isFriend,
 )
 export const isUserInfoBlurredAtom = atom<boolean | undefined | null>((get) => {
-  if (!get(userInfoAtom)) return true
-  if (!get(userInfoAtom)?.isFriend) return true
+  if (!get(selectedUserInfoAtom)) return true
+  if (!get(selectedUserInfoAtom)?.isFriend) return true
   return false
 })
 

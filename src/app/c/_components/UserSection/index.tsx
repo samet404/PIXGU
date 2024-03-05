@@ -11,7 +11,7 @@ const UserSection = async () => {
   const friends = await api.user.getFriends.query()
 
   return (
-    <section className="h-full w-[13rem] rounded-lg bg-[#00000057] p-2 shadow-[0_0px_10px_1px_rgba(0,0,0,0.3)]">
+    <section className="h-full flex-col rounded-lg bg-[#00000057] p-1 shadow-[0_0px_10px_1px_rgba(0,0,0,0.3)] xxs:hidden xxs:w-[90%] lg:flex lg:w-[20%]">
       {friends ? (
         friends.map((friend, index) => {
           if (friend)

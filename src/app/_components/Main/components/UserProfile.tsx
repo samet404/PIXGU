@@ -7,7 +7,7 @@ const UserProfile = async () => {
 
   return session?.user ? (
     <Link
-      href={`/user/${session.user.usernameWithUsernameID}`}
+      href={`/u/${session.user.usernameWithUsernameID}`}
       className="h-12 w-12 rounded-full border-[0.3rem] border-[white] drop-shadow-[0_0px_3px_rgba(0,0,0,0.2)] duration-100 hover:opacity-60"
     >
       <Image
