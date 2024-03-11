@@ -1,10 +1,7 @@
 import { useEffect } from 'react'
-import { canvasColorAtom, canvasPenThicknessAtom } from '../atoms'
-import { useAtomValue } from 'jotai'
+import { getSearchParam } from '@/src/utils/getSearchParam'
 
 export const useCanvasDraw = () => {
-  const canvasPenThickness = useAtomValue(canvasPenThicknessAtom)
-  const canvasColor = useAtomValue(canvasColorAtom)
   let painting = false
 
   // Draw functions
@@ -20,22 +17,25 @@ export const useCanvasDraw = () => {
   }
 
   const startPosition = (e: any) => {
-    console.log('startPosition')
-
     const mainCanvas = document.getElementById(
       'mainCanvas',
     ) as HTMLCanvasElement
+    const mctx = mainCanvas.getContext('2d')!
 
     const draftCanvas = document.getElementById(
       'draftCanvas',
     ) as HTMLCanvasElement
 
+    const canvasColor = (getSearchParam('color') ??
+      '0-0-0-1)') as `${string}-${string}-${string}-${string}`
+    const opacity = canvasColor.split('-')[3]
+
+    const canvasThickness = getSearchParam('thickness') ?? '5'
+
     if (e.target != draftCanvas) return null
 
-    const mctx = mainCanvas.getContext('2d')!
-
-    draftCanvas.style.opacity = `${canvasColor.a}`
-    mctx.globalAlpha = canvasColor.a
+    draftCanvas.style.opacity = `${opacity ?? '1'}`
+    mctx.globalAlpha = parseFloat(opacity ?? '1')
 
     const rect = draftCanvas.getBoundingClientRect()
     const x = e.clientX - rect.left
@@ -43,7 +43,7 @@ export const useCanvasDraw = () => {
     const dctx = draftCanvas.getContext('2d')!
 
     painting = true
-    dctx.lineWidth = canvasPenThickness
+    dctx.lineWidth = parseFloat(canvasThickness)
     dctx.lineCap = 'round'
     dctx.lineTo(x, y)
     dctx.stroke()
@@ -66,6 +66,10 @@ export const useCanvasDraw = () => {
 
     painting = false
 
+    const a = draftCanvas
+
+    console.log(a)
+
     mctx.drawImage(draftCanvas, 0, 0) // copy drawing to main
     dctx.clearRect(0, 0, draftCanvas.width, draftCanvas.height) // clear draft
 
@@ -74,6 +78,16 @@ export const useCanvasDraw = () => {
 
   const draw = (e: any) => {
     if (!painting) return null
+
+    const canvasColor = (getSearchParam('color') ??
+      '0-0-0-1') as `${string}-${string}-${string}-${string}`
+
+    const rgb = canvasColor.split('-')
+    const r = rgb[0] ?? '0'
+    const g = rgb[1] ?? '0'
+    const b = rgb[2] ?? '0'
+
+    const canvasThickness = getSearchParam('thickness') ?? '5'
 
     const draftCanvas = document.getElementById(
       'draftCanvas',
@@ -90,10 +104,10 @@ export const useCanvasDraw = () => {
 
     const dctx = draftCanvas.getContext('2d')!
 
-    dctx.lineWidth = canvasPenThickness
+    dctx.lineWidth = parseFloat(canvasThickness)
     dctx.lineCap = 'round'
     dctx.lineTo(x, y)
-    dctx.strokeStyle = `rgb(${canvasColor.r}, ${canvasColor.g}, ${canvasColor.b})`
+    dctx.strokeStyle = `rgb(${r}, ${g}, ${b})`
     dctx.stroke()
     dctx.beginPath() // Add this line to start a new path
     dctx.moveTo(x, y)

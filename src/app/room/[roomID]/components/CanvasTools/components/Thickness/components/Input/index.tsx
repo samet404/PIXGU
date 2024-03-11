@@ -4,14 +4,13 @@ import { useRef } from 'react'
 import Buttons from './components/Buttons'
 import { canvasPenThicknessAtom } from '@/app/room/[roomID]/atoms'
 import { useSetAtom } from 'jotai'
+import { setSearchParam } from '@/src/utils/setSearchParam'
 
 const Input = () => {
   const inputRef = useRef<HTMLInputElement | null>(null)
-  const setCanvasPenThickness = useSetAtom(canvasPenThicknessAtom)
 
-  const handleOnInput = () => {
-    setCanvasPenThickness(parseInt(inputRef.current!.value))
-  }
+  const handleOnInput = () =>
+    setSearchParam('thickness', inputRef.current!.value)
 
   return (
     <div className="flex w-full flex-col gap-2">

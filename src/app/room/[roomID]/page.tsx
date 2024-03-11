@@ -4,7 +4,14 @@ import CanvasTools from './components/CanvasTools'
 import Canvas from './components/Canvas'
 import './styles/scrollbars.css'
 
-const Game = () => {
+type RoomParams = {
+  params: {
+    roomID: string
+  }
+}
+
+const Room = (params: RoomParams) => {
+  
   return (
     <Fragment>
       <div
@@ -18,14 +25,12 @@ const Game = () => {
       >
         <div className="flex h-full w-full animate-fade-down flex-row justify-between gap-2">
           <UsersSection />
-            <Canvas />
+          <Canvas />
           <CanvasTools />
         </div>
       </div>
-
-      <div></div>
     </Fragment>
   )
 }
 
-export default Game
+export default Room

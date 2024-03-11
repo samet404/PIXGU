@@ -6,5 +6,5 @@ export const gameRoom = pgTable('game_room', {
   name: varchar('name', { length: 255 }),
   maxPlayers: smallint('max_players'),
   minPlayers: smallint('min_players'),
-  password: varchar('password', { length: 255 }),
+  password: varchar('password', { length: 128 }),
 })

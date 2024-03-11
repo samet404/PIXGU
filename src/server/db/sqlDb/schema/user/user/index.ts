@@ -1,4 +1,5 @@
-import { pgTable, varchar, char, timestamp } from 'drizzle-orm/pg-core'
+import { pgTable, varchar, char, timestamp, boolean } from 'drizzle-orm/pg-core'
+import { gameRoom } from '../..'
 
 export const user = pgTable('user', {
   id: varchar('id', {
@@ -14,10 +15,19 @@ export const user = pgTable('user', {
     .unique()
     .notNull(),
   profilePicture: varchar('profile_picture', { length: 255 }),
-  playingRoomID: varchar('playing_room_ID', { length: 128 }),
+
+  playingRoomID: varchar('playing_room_ID', { length: 128 }).references(
+    () => gameRoom.ID,
+  ),
+
+  isAdminInPlayingRoom: char('is_admin_in_playing_room', {
+    length: 1,
+  }),
+
   updatedAt: timestamp('updated_at', { withTimezone: true })
     .defaultNow()
     .notNull(),
+    
   createdAt: timestamp('created_at', { withTimezone: true })
     .defaultNow()
     .notNull(),

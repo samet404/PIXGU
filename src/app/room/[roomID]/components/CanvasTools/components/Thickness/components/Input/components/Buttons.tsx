@@ -1,5 +1,4 @@
-import { canvasPenThicknessAtom } from '@/src/app/room/[roomID]/atoms'
-import { useSetAtom } from 'jotai'
+import { setSearchParam } from '@/src/utils/setSearchParam'
 import { type MutableRefObject } from 'react'
 
 type ButtonsProps = {
@@ -7,16 +6,18 @@ type ButtonsProps = {
 }
 
 const Buttons = ({ inputRef }: ButtonsProps) => {
-  const setCanvasPenThickness = useSetAtom(canvasPenThicknessAtom)
-
   const increment = () => {
-    inputRef.current!.value = (parseInt(inputRef.current!.value) + 1).toString()
-    setCanvasPenThickness((prev) => prev + 1)
+    const value = inputRef.current!.value
+
+    inputRef.current!.value = (parseInt(value) + 1).toString()
+    setSearchParam('thickness', value)
   }
 
   const decrement = () => {
-    inputRef.current!.value = (parseInt(inputRef.current!.value) - 1).toString()
-    setCanvasPenThickness((prev) => prev - 1)
+    const value = inputRef.current!.value
+
+    inputRef.current!.value = (parseInt(value) - 1).toString()
+    setSearchParam('thickness', value)
   }
 
   return (

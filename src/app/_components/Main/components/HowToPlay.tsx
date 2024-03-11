@@ -9,7 +9,7 @@ const HowToPlay = async () => {
   return (
     <div>
       <MainButton
-        link="/article/how-to-play"
+        link="/article/howtoplay"
         icon={
           <Image
             className=" opacity-30 drop-shadow-[0_0px_8px_rgba(0,0,0,0.7)]"
