@@ -38,7 +38,7 @@
       "@/utils/": ["./src/utils/"],
       "@/styles/*": ["./src/styles/*"],
       "@/atoms": ["./src/atoms"],
-
+      "@/zustand/*": ["./src/zustand/*"],
       "@/types/*": ["./src/types/*"],
       "@/app/*": ["./src/app/*"],
       "@/public/*": ["./public/*"],

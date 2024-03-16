@@ -1,30 +1,25 @@
 import { lucia } from 'lucia'
 import { nextjs_future } from 'lucia/middleware'
 import { pg as pgAdapter } from '@lucia-auth/adapter-postgresql'
-import { discord, github, google, spotify } from '@lucia-auth/oauth/providers'
+import {
+  discord,
+  // github, google, spotify
+} from '@lucia-auth/oauth/providers'
 import { pool } from '@/sqlDb'
 import { env } from '@/env/server.mjs'
-import { redis } from '@lucia-auth/adapter-session-redis'
-import { createClient } from 'redis'
-
-const client = createClient({
-  // ...
-  url: env.REDIS_URL,
-})
-
-client.connect().catch(e => {
-  throw new Error('AuthError: Error when connecting websocket client')
-})
+import { upstash } from '@lucia-auth/adapter-session-redis'
+import { redisDb } from '@/db/redis'
 
 export const auth = lucia({
-  env: 'PROD', // "PROD" if deployed to HTTPS
+  env: 'DEV', // "PROD" if deployed to HTTPS
   middleware: nextjs_future(), // NOT nextjs()
   sessionCookie: {
     expires: false,
   },
 
   adapter: {
-    session: redis(client),
+    session: upstash(redisDb),
+
     user: pgAdapter(pool, {
       user: 'user',
       key: 'user_key',

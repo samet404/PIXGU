@@ -66,6 +66,7 @@ p {
 
 input {
   background-color: transparent;
+  outline: none !important;
 }
 
 /* Chrome, Safari, Edge, Opera */

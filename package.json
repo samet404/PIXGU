@@ -89,7 +89,8 @@
     "usehooks-ts": "^2.9.1",
     "valibot": "^0.25.0",
     "zod": "^3.22.4",
-    "zod-validation-error": "^2.1.0"
+    "zod-validation-error": "^2.1.0",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@swc/cli": "^0.1.63",

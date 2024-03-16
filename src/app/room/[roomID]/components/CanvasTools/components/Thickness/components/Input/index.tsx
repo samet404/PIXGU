@@ -2,8 +2,6 @@
 
 import { useRef } from 'react'
 import Buttons from './components/Buttons'
-import { canvasPenThicknessAtom } from '@/app/room/[roomID]/atoms'
-import { useSetAtom } from 'jotai'
 import { setSearchParam } from '@/src/utils/setSearchParam'
 
 const Input = () => {

@@ -1,6 +1,6 @@
 import MainButton from './MainButton'
 import Image from 'next/image'
-import questionmark from '@/png/questionmark.png'
+import paperAndInk from '@/png/paperAndInk.png'
 import clsx from 'clsx'
 import { auth } from '@/auth/lucia'
 import * as context from 'next/headers'
@@ -13,7 +13,7 @@ const HowToPlay = async () => {
         icon={
           <Image
             className=" opacity-30 drop-shadow-[0_0px_8px_rgba(0,0,0,0.7)]"
-            src={questionmark}
+            src={paperAndInk}
             alt="questionmark"
           />
         }

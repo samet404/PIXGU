@@ -1,7 +1,18 @@
 import { createTRPCRouter } from '../../trpc'
-import { createRoom, getRoomsByOffsetAndLimit } from './subroutes/_routes'
+import {
+  createRoom,
+  getRoomsByOffsetAndLimit,
+  isRoomHavePassword_ByID,
+  ifPassTrueJoinToRoom_ByIDAndPass,
+  getPlayingRoom,
+  setPlayingRoomIDToNull,
+} from './subroutes/_routes'
 
 export const gameRoomRouter = createTRPCRouter({
   create: createRoom,
   getRoomsByOffsetAndLimit: getRoomsByOffsetAndLimit,
+  getPlayingRoom: getPlayingRoom,
+  isHavePass_ByID: isRoomHavePassword_ByID,
+  ifPassTrueJoinToRoom_ByIDAndPass: ifPassTrueJoinToRoom_ByIDAndPass,
+  setPlayingRoomIDToNull: setPlayingRoomIDToNull,
 })
