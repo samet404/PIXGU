@@ -3,8 +3,13 @@ import { getSearchParam } from '@/src/utils/getSearchParam'
 
 export const useCanvasDraw = () => {
   let painting = false
+  let canvasColor: `${string}-${string}-${string}-${string}`
+  let opacity: string
+  let r: string
+  let g: string
+  let b: string
+  let canvasThickness: string
 
-  // Draw functions
   const mouseOut = () => {
     console.log('mouseOut')
     const draftCanvas = document.getElementById(
@@ -26,11 +31,12 @@ export const useCanvasDraw = () => {
       'draftCanvas',
     ) as HTMLCanvasElement
 
-    const canvasColor = (getSearchParam('color') ??
+    canvasColor = (getSearchParam('color') ??
       '0-0-0-1)') as `${string}-${string}-${string}-${string}`
-    const opacity = canvasColor.split('-')[3]
 
-    const canvasThickness = getSearchParam('thickness') ?? '5'
+    opacity = canvasColor.split('-')[3] ?? '1'
+
+    canvasThickness = getSearchParam('thickness') ?? '5'
 
     if (e.target != draftCanvas) return null
 
@@ -66,44 +72,33 @@ export const useCanvasDraw = () => {
 
     painting = false
 
-    const a = draftCanvas
-
-    console.log(a)
-
     mctx.drawImage(draftCanvas, 0, 0) // copy drawing to main
     dctx.clearRect(0, 0, draftCanvas.width, draftCanvas.height) // clear draft
-
+    console.log(draftCanvas)
     console.log('finishedPosition')
   }
 
   const draw = (e: any) => {
     if (!painting) return null
 
-    const canvasColor = (getSearchParam('color') ??
-      '0-0-0-1') as `${string}-${string}-${string}-${string}`
-
-    const rgb = canvasColor.split('-')
-    const r = rgb[0] ?? '0'
-    const g = rgb[1] ?? '0'
-    const b = rgb[2] ?? '0'
-
-    const canvasThickness = getSearchParam('thickness') ?? '5'
-
     const draftCanvas = document.getElementById(
       'draftCanvas',
     ) as HTMLCanvasElement
 
+    // If mouse is not on the draft canvas, stop drawing and exit
     if (e.target != draftCanvas) {
       painting = false
       return null
     }
 
+    // Get mouse position
     const rect = draftCanvas.getBoundingClientRect()
     const x = e.clientX - rect.left
     const y = e.clientY - rect.top
 
     const dctx = draftCanvas.getContext('2d')!
 
+    // Draw line
     dctx.lineWidth = parseFloat(canvasThickness)
     dctx.lineCap = 'round'
     dctx.lineTo(x, y)

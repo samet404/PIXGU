@@ -1,11 +1,10 @@
 import { useSetAtom } from 'jotai'
 import { isModalOpenAtom } from '../../atoms'
 import { useOnClickOutside } from 'usehooks-ts'
-import { type KeyboardEvent, useRef, useState, useEffect } from 'react'
+import { type KeyboardEvent, useRef } from 'react'
 import { Inter } from 'next/font/google'
-import Btn from './components/Btn'
-import { api } from '@/src/trpc/react'
-import { useRouter } from 'next/navigation'
+import BtnYes from './components/BtnYes'
+import BtnNo from './components/BtnNo'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -13,23 +12,10 @@ const inter = Inter({
 })
 
 const Modal = () => {
-  const {
-    mutate: setNullPlayingRoomID,
-    isSuccess: isSetNullPlayingRoomIDSuccess,
-  } = api.gameRoom.setPlayingRoomIDToNull.useMutation()
-
-  const router = useRouter()
-  if (isSetNullPlayingRoomIDSuccess) router.refresh()
-
   const setIsModalOpen = useSetAtom(isModalOpenAtom)
   const ref = useRef(null)
 
   useOnClickOutside(ref, () => setIsModalOpen(false))
-
-  const leaveRoom = () => {
-    setNullPlayingRoomID()
-    setIsModalOpen(false)
-  }
 
   const handleOnKeyDown = (e: KeyboardEvent) => {
     if (e.key === 'Escape') setIsModalOpen(false)
@@ -37,7 +23,7 @@ const Modal = () => {
 
   return (
     <div
-      className={`${inter.className} absolute z-10 flex h-full w-full animate-fade items-center justify-center bg-[#000000a5] backdrop-blur-md animate-duration-200`}
+      className={`${inter.className} absolute top-0 z-10 flex h-full w-full animate-fade items-center justify-center bg-[#000000a5] backdrop-blur-md animate-duration-200`}
     >
       <div
         onKeyDown={handleOnKeyDown}
@@ -48,8 +34,8 @@ const Modal = () => {
           Are you sure ?
         </div>
         <div className="flex flex-col items-center gap-2 p-2">
-          <Btn className="" text="Yes" onClick={() => leaveRoom()} />
-          <Btn className="" text="No" onClick={() => setIsModalOpen(false)} />
+          <BtnYes />
+          <BtnNo />
         </div>
       </div>
     </div>

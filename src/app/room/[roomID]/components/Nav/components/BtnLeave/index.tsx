@@ -5,11 +5,8 @@ import Modal from './components/Modal'
 import { Fragment, type KeyboardEvent } from 'react'
 import { createPortal } from 'react-dom'
 import { isModalOpenAtom } from './atoms'
-import { useRerenderWhenDomLoaded } from '@/src/hooks/useRerenderWhenDomLoaded'
 
 const BtnLeave = () => {
-  const isDomReady = useRerenderWhenDomLoaded()
-
   const [isModalOpen, setIsModalOpen] = useAtom(isModalOpenAtom)
   const handleOnKeyDown = (e: KeyboardEvent) => {
     if (e.key === 'Escape') setIsModalOpen(false)
@@ -24,14 +21,9 @@ const BtnLeave = () => {
       >
         Leave
       </button>
-      {isDomReady
+      {typeof window !== 'undefined'
         ? isModalOpen
-          ? createPortal(
-              <Modal />,
-              document.querySelector(
-                'body > div:first-child',
-              ) as HTMLDivElement,
-            )
+          ? createPortal(<Modal />, document.body)
           : null
         : null}
     </Fragment>

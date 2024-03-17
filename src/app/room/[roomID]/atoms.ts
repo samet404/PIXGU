@@ -17,3 +17,5 @@ export const canvasColorAtom = atom<Rgba>({
 export const startedDrawAtom = atom<number>(0)
 
 export const canvasPenThicknessAtom = atom<number>(5)
+
+export const roomIDAtom = atom<string | null>(null)

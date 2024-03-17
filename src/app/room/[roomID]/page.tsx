@@ -5,6 +5,7 @@ import './styles/scrollbars.css'
 import { api } from '@/src/trpc/server'
 import { PasswordSection } from './components/PasswordSection'
 import Nav from './components/Nav'
+import HydrateAtoms from './components/HydrateAtoms'
 
 type RoomParams = {
   params: {
@@ -24,24 +25,26 @@ const Room = async (params: RoomParams) => {
     throw new Error('Something went wrong. Please try again.')
 
   return (
-    <div
-      style={{
-        backgroundColor: 'hsla(204, 100%, 11%, 1)',
-        backgroundImage:
-          'radial-gradient(at 100% 100%, hsla(182, 100%, 50%, 0.215) 0px, transparent 50%), radial-gradient(at 2% 0%, hsla(193, 100%, 50%, 0.255) 0px, transparent 50%)',
-      }}
-      className="flex h-full w-full flex-col"
-    >
-      <Nav />
+    <HydrateAtoms roomID={urlRoomID}>
       <div
-        id="rootDiv"
-        className="flex h-full w-full animate-fade-down flex-row items-start justify-between gap-2 overflow-y-scroll p-2"
+        style={{
+          backgroundColor: 'hsla(204, 100%, 11%, 1)',
+          backgroundImage:
+            'radial-gradient(at 100% 100%, hsla(182, 100%, 50%, 0.215) 0px, transparent 50%), radial-gradient(at 2% 0%, hsla(193, 100%, 50%, 0.255) 0px, transparent 50%)',
+        }}
+        className="flex h-full w-full flex-col"
       >
-        <UsersSection />
-        <Canvas />
-        <CanvasTools />
+        <Nav />
+        <div
+          id="rootDiv"
+          className="flex h-full w-full animate-fade-down flex-row items-start justify-between gap-2 overflow-y-scroll p-2"
+        >
+          <UsersSection />
+          <Canvas />
+          <CanvasTools />
+        </div>
       </div>
-    </div>
+    </HydrateAtoms>
   )
 }
 
