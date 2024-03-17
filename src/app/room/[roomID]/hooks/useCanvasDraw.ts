@@ -4,10 +4,10 @@ import { getSearchParam } from '@/src/utils/getSearchParam'
 export const useCanvasDraw = () => {
   let painting = false
   let canvasColor: `${string}-${string}-${string}-${string}`
-  let opacity: string
   let r: string
   let g: string
   let b: string
+  let opacity: string
   let canvasThickness: string
 
   const mouseOut = () => {
@@ -33,10 +33,13 @@ export const useCanvasDraw = () => {
 
     canvasColor = (getSearchParam('color') ??
       '0-0-0-1)') as `${string}-${string}-${string}-${string}`
-
     opacity = canvasColor.split('-')[3] ?? '1'
-
     canvasThickness = getSearchParam('thickness') ?? '5'
+
+    const canvasColorSplit = canvasColor.split('-')
+    r = canvasColorSplit[0] ?? '0'
+    g = canvasColorSplit[1] ?? '0'
+    b = canvasColorSplit[2] ?? '0'
 
     if (e.target != draftCanvas) return null
 
@@ -47,7 +50,7 @@ export const useCanvasDraw = () => {
     const x = e.clientX - rect.left
     const y = e.clientY - rect.top
     const dctx = draftCanvas.getContext('2d')!
-
+    console.log(canvasColor)
     painting = true
     dctx.lineWidth = parseFloat(canvasThickness)
     dctx.lineCap = 'round'
