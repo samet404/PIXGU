@@ -1,7 +1,5 @@
 import { loggedUserProducure } from '../../../../../procedure'
-import { z } from 'zod'
 import { redisDb } from '@/db/redis'
-import { db } from '@/db/sqlDb'
 import { user } from '@/schema/user'
 import { eq } from 'drizzle-orm'
 

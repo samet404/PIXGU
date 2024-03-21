@@ -14,6 +14,10 @@ type RoomParams = {
 }
 
 const Room = async (params: RoomParams) => {
+  const userID = await api.user.getSessionUserID.query()
+
+  if (!userID) throw new Error('UNAUTHORIZED')
+
   const urlRoomID = params.params.roomID
 
   const isRoomHavePass = await api.gameRoom.isHavePass_ByID.query(urlRoomID)
@@ -24,8 +28,10 @@ const Room = async (params: RoomParams) => {
   if (playingRoomID !== urlRoomID && !isRoomHavePass)
     throw new Error('Something went wrong. Please try again.')
 
+  const players = await api.gameRoom.getPlayingRoomUsers.query()
+
   return (
-    <HydrateAtoms roomID={urlRoomID}>
+    <HydrateAtoms userID={userID} players={players} roomID={urlRoomID}>
       <div
         style={{
           backgroundColor: 'hsla(204, 100%, 11%, 1)',

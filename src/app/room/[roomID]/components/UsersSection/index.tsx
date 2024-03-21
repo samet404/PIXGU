@@ -1,9 +1,12 @@
+'use client'
+
 import clsx from 'clsx'
 import User from './components/User'
-import { api } from '@/src/trpc/server'
+import { useAtomValue } from 'jotai'
+import { playersAtom } from '@/app/room/[roomID]/atoms'
 
-const UsersSection = async () => {
-  const users = await api.gameRoom.getPlayingRoomUsers.query()
+const UsersSection = () => {
+  const users = useAtomValue(playersAtom)
 
   return (
     <section id="usersSection" className="h-full overflow-y-scroll pr-2">

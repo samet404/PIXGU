@@ -1,3 +1,4 @@
+import { RouterOutputs } from '@/src/trpc/shared'
 import { atom } from 'jotai'
 
 type Rgba = {
@@ -19,3 +20,9 @@ export const startedDrawAtom = atom<number>(0)
 export const canvasPenThicknessAtom = atom<number>(5)
 
 export const roomIDAtom = atom<string | null>(null)
+
+export const userIDAtom = atom<string | null>(null)
+
+export const playersAtom = atom<
+  RouterOutputs['gameRoom']['getPlayingRoomUsers']
+>([])
