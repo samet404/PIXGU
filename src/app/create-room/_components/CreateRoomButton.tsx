@@ -1,4 +1,7 @@
 'use client'
+
+// fix this component later
+
 import { useAtomValue } from 'jotai'
 import {
   maxPlayerNumberAtom,

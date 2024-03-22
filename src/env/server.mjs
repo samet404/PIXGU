@@ -89,6 +89,21 @@ export const env = createEnv({
         (str) => !str.includes('YOUR_PUSHER_CLUSTER_HERE'),
         'You forgot to change default PUSHER_CLUSTER',
       ),
+
+    ABLY_API_KEY: z
+      .string()
+      .refine(
+        (str) => !str.includes('YOUR_ABLY_API_KEY_HERE'),
+        'You forgot to change the default ABLY_API_KEY',
+      ),
+
+    ABLY_DEFAULT_CLIENT_ID: z
+      .string()
+      .refine(
+        (str) => !str.includes('YOUR_ABLY_DEFAULT_CLIENT_ID_HERE'),
+        'You forgot to change the default ABLY_DEFAULT_CLIENT_ID',
+      ),
+
     // SPOTIFY_CLIENT_ID: z
     //   .string()
     //   .refine(
@@ -158,6 +173,9 @@ export const env = createEnv({
     DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,
     DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,
     DISCORD_REDIRECT_URI: process.env.DISCORD_REDIRECT_URI,
+
+    ABLY_API_KEY: process.env.ABLY_API_KEY,
+    ABLY_DEFAULT_CLIENT_ID: process.env.ABLY_DEFAULT_CLIENT_ID,
 
     // SPOTIFY_CLIENT_ID: process.env.SPOTIFY_CLIENT_ID,
     // SPOTIFY_CLIENT_SECRET: process.env.YOUR_SPOTIFY_CLIENT_SECRET,

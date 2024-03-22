@@ -19,8 +19,6 @@ const Account = async () => {
       if (e.message === 'UNAUTHORIZED') redirect('/settings')
   }
 
-  console.log('dpoasjdsapojdpsadj')
-
   return session ? (
     <section className="flex h-full w-full animate-fade flex-col gap-6 p-1">
       <h1

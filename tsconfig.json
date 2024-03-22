@@ -18,6 +18,7 @@
     "noUncheckedIndexedAccess": true,
     "baseUrl": ".",
     "paths": {
+      "@/*": ["./*"],
       "@/procedure": ["src/server/api/procedure"],
       "@/schema/*": ["src/server/db/sqlDb/schema/*"],
       "@/env/*": ["src/env/*"],
@@ -27,7 +28,6 @@
       "@/redis/*": ["src/server/db/redis/*"],
       "@/redis": ["src/server/db/redis/"],
       "@/auth/*": ["./src/auth/*"],
-      "@/*": ["./*"],
       "@/api/*": ["./src/app/api/*"],
       "@/trpc/*": ["./src/trpc/*"],
       "@/components/*": ["./src/components/*"],

@@ -10,10 +10,10 @@ import { initTRPC } from '@trpc/server'
 import superjson from 'superjson'
 import { ZodError } from 'zod'
 
-import { auth } from '@/auth/lucia'
 import { db } from '@/sqlDb'
 import { redisDb } from '@/redis'
 import * as context from 'next/headers'
+import { auth } from '@/auth/lucia'
 import { type Session } from 'lucia'
 
 /**import { TRPCError } from '@trpc/server'

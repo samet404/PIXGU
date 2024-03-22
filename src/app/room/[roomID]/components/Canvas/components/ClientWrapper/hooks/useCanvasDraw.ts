@@ -117,37 +117,36 @@ export const useCanvasDraw = () => {
   const draw = (e: MouseEvent) => {
     if (!painting) return null
 
-    const draftCanvas = globalDraftCanvas
+    // const draftCanvas = globalDraftCanvas
 
-    // If mouse is not on the draft canvas, stop drawing and exit
-    if (e.target != draftCanvas) {
-      painting = false
-      return null
-    }
+    // // If mouse is not on the draft canvas, stop drawing and exit
+    // if (e.target != draftCanvas) {
+    //   painting = false
+    //   return null
+    // }
 
-    // Get mouse position
-    if (lineCount % 20 === 0) {
-      const rect = draftCanvas.getBoundingClientRect()
-      const x = e.clientX - rect.left
-      const y = e.clientY - rect.top
+    // // Get mouse position
+    // const rect = draftCanvas.getBoundingClientRect()
+    // const x = e.clientX - rect.left
+    // const y = e.clientY - rect.top
 
-      const dctx = draftCanvas.getContext('2d')!
+    // const dctx = draftCanvas.getContext('2d')!
 
-      // Draw line
-      dctx.lineWidth = parseFloat(canvasThickness) // Set the line thickness
-      dctx.lineCap = lineCap // Set the end of the line to be round
-      dctx.lineTo(x, y) // Set the line to be drawn to the mouse position
-      dctx.strokeStyle = `rgb(${r}, ${g}, ${b})` // Set the color of the line
-      dctx.stroke() // Draw the line
-      dctx.beginPath() // Add this line to start a new path
-      dctx.moveTo(x, y)
-    }
-    console.log(lineCount)
+    // // Draw line
+    // dctx.lineWidth = parseFloat(canvasThickness) // Set the line thickness
+    // dctx.lineCap = lineCap // Set the end of the line to be round
+    // dctx.lineTo(x, y) // Set the line to be drawn to the mouse position
+    // dctx.strokeStyle = `rgb(${r}, ${g}, ${b})` // Set the color of the line
+    // dctx.stroke() // Draw the line
+    // dctx.beginPath() // Add this line to start a new path
+    // dctx.moveTo(x, y)
+
+    // console.log(lineCount)
     // console.log(lines)
-    // test()
+    test()
 
     lines = []
-    lineCount++
+    lineCount = 0
   }
 
   // add event listeners to the draft canvas
