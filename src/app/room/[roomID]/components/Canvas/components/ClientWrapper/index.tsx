@@ -1,7 +1,7 @@
 'use client'
 
 import { type ReactNode } from 'react'
-import { useCanvasDraw } from './hooks/useCanvasDraw'
+import { useCanvasDraw } from './hooks/useCanvasDraw/func'
 
 type ClientWrapperProps = {
   children: ReactNode

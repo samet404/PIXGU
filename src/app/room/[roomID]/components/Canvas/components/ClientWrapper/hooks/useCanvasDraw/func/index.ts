@@ -5,7 +5,7 @@ import { useAtomValue, useSetAtom } from 'jotai'
 import { cellSideCountAtom, infoAtom } from '../../../../../atoms'
 import { type Color } from '@/types/color'
 import { fillOnePixel } from './fillOnePixel'
-import { addGrid } from './func/addGrid'
+import { addGrid } from './addGrid'
 
 export const useCanvasDraw = () => {
   // atoms

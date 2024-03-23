@@ -3,13 +3,13 @@ import { getSearchParam } from '@/utils/getSearchParam'
 export const fillOnePixel = (
   draftCanvas: HTMLCanvasElement,
   dctx: CanvasRenderingContext2D,
-  pixelSize: number,
+  cellPixelLength: number,
   x: number,
   y: number,
 ) => {
   // getting position of the pixel
-  const posX = pixelSize * x
-  const posY = pixelSize * y
+  const posX = cellPixelLength * x
+  const posY = cellPixelLength * y
 
   // getting color from url
   const canvasColor = getSearchParam('color') as
@@ -27,16 +27,16 @@ export const fillOnePixel = (
     return `rgba(${r}, ${g}, ${b}, 1)`
   }
 
-  const opacity = (): string => {
-    if (!canvasColor) return '1'
+  const opacity = (): number => {
+    if (!canvasColor) return 1
 
-    return canvasColor.replace('rgba/', '').split('-')[3] ?? '1'
+    return parseFloat(canvasColor.replace('rgba/', '').split('-')[3] ?? '1')
   }
 
   // drawing the pixel
   dctx.fillStyle = rgb()
-  draftCanvas.style.opacity = opacity()
-  dctx.fillRect(posX, posY, pixelSize, pixelSize)
+  dctx.globalAlpha = opacity()
+  dctx.fillRect(posX, posY, cellPixelLength, cellPixelLength)
 
   // returning the info
   const info = {
