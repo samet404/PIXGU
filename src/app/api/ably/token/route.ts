@@ -10,7 +10,12 @@ export async function POST(req: Request) {
     const authRequest = auth.handleRequest('GET', context)
     const session: Session = await authRequest.validate()
 
-    if (!session) throw new Error({ message: 'UNAUTHORIZED', code: 401 })
+    if (!session) {
+      throw {
+        code: 401,
+        message: 'UNAUTHORIZED',
+      }
+    }
 
     const clientId =
       (await req.formData()).get('clientId')?.toString() ??
@@ -25,6 +30,9 @@ export async function POST(req: Request) {
 
     return NextResponse.json(tokenRequestData)
   } catch (e) {
-    if (e instanceof Error) return NextResponse.error(e)
+    if (e instanceof Error)
+      return NextResponse.json({
+        error: e,
+      })
   }
 }

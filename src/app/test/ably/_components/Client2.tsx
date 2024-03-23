@@ -11,33 +11,52 @@ const Client2 = () => {
   const { channel, channelError, connectionError } = useChannel(
     'your-channel-name',
     (message: Types.Message) => {
+      console.log('message received', message)
+
       updateMessages((prev) => [...prev, message])
-      console.log(messages)
     },
   )
 
-  if (channelError) {
-    console.error('WS Channel error', channelError)
+  // ;(async () => {
+  //   await channel.presence.subscribe('enter', (member) => {
+  //     alert('Member ' + member.clientId + ' entered')
+  //   })
+
+  //   await channel.presence.subscribe('present', (member) => {
+  //     alert('Member ' + member.clientId + 'leaved')
+  //   })
+
+  //   await channel.presence.enter()
+  // })()
+
+  // if (channelError) {
+  //   console.error('WS Channel error', channelError)
+  // }
+
+  // if (connectionError) {
+  //   console.error('WS Connection error', connectionError)
+  // }
+
+  // channel.on('failed', (stateChange: Types.ChannelStateChange) =>
+  //   console.error('Channel state failed with error', stateChange.reason),
+  // )
+
+  // channel.on('suspended', (stateChange: Types.ChannelStateChange) =>
+  //   console.info('Channel state suspended with error', stateChange.reason),
+  // )
+
+  // channel.on('detached', (stateChange: Types.ChannelStateChange) =>
+  //   console.info('Channel state detached with error', stateChange.reason),
+  // )
+
+  const publish = async () => {
+    console.log('publishing')
+    try {
+      await channel.publish('your-event-name', 'your-message')
+    } catch (e) {
+      if (e instanceof Error) throw new Error(e.message)
+    }
   }
-
-  if (connectionError) {
-    console.error('WS Connection error', connectionError)
-  }
-
-  channel.on('failed', (stateChange: Types.ChannelStateChange) =>
-    console.error('Channel state failed with error', stateChange.reason),
-  )
-
-  channel.on('suspended', (stateChange: Types.ChannelStateChange) =>
-    console.info('Channel state suspended with error', stateChange.reason),
-  )
-
-  channel.on('detached', (stateChange: Types.ChannelStateChange) =>
-    console.info('Channel state detached with error', stateChange.reason),
-  )
-
-  const publish = async () =>
-    await channel.publish('your-event-name', 'your-message')
 
   // useInterval(() => {
   //   const countNum = count.current
@@ -48,7 +67,7 @@ const Client2 = () => {
 
   //   console.log('ably test' + countNum)
   //   publish()
-  // }, 1000)
+  // }, 10000)
 
   return (
     <button onClick={publish} className="rounded-md bg-blue-500 p-2 text-white">
