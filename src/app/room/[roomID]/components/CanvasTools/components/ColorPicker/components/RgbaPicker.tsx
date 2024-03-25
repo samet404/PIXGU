@@ -18,7 +18,7 @@ const RgbaPicker = () => {
 
   const handleOnChange = (newColor: RgbaColor) => {
     const { r, g, b, a } = newColor
-    
+
     setSearchParam('color', `${r}-${g}-${b}-${a}`)
   }
 
@@ -50,7 +50,7 @@ const RgbaPicker = () => {
         filter: 'drop-shadow(0px 0px 2px rgba(0,0,0,0.5))',
       }}
       color={initColor}
-      className="w-full"
+      className="w-full animate-fade rounded-md bg-[#ffffff7b]"
       onChange={handleOnChange}
     />
   )

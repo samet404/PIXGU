@@ -70,7 +70,10 @@ const Client2 = () => {
   // }, 10000)
 
   return (
-    <button onClick={publish} className="rounded-md bg-blue-500 p-2 text-white">
+    <button
+      onClick={publish}
+      className="rounded-md bg-blue-500 p-2 text-white active:bg-blue-300"
+    >
       Send message
     </button>
   )

@@ -1,11 +1,15 @@
-import { getSearchParam } from '@/utils/getSearchParam'
 import { useEffect } from 'react'
 import { roomIDAtom, userIDAtom } from '@/app/room/[roomID]/atoms'
-import { useAtomValue, useSetAtom } from 'jotai'
-import { cellSideCountAtom, infoAtom } from '../../../../../atoms'
-import { type Color } from '@/types/color'
-import { fillOnePixel } from './fillOnePixel'
+import { useAtomValue } from 'jotai'
+import { cellSideCountAtom } from '../../../../atoms'
+import { fillOnePixel } from './func/fillOnePixel'
 import { addGrid } from './func/addGrid'
+import { useChannel } from 'ably/react'
+import { type Types } from 'ably'
+import { isObjectEmpty } from '@/utils/isObjectEmpty'
+import { type pixelHistory } from './types'
+import { getRgbAndOpacity } from './func/getRgbAndOpacity'
+import { IntRange } from '@/src/types/intRange'
 
 export const useCanvasDraw = () => {
   // atoms
@@ -19,15 +23,6 @@ export const useCanvasDraw = () => {
   let mainCanvas: HTMLCanvasElement
   let dctx: CanvasRenderingContext2D
   let mctx: CanvasRenderingContext2D
-  let draftCanvasBoundingRect: DOMRect
-
-  // color variables
-  let canvasColor: `${string}-${string}-${string}-${string}`
-  let r: string
-  let g: string
-  let b: string
-  let opacity: string
-  let colorHistory: Color[] = []
 
   // canvas resolution
 
@@ -35,6 +30,49 @@ export const useCanvasDraw = () => {
    * Represent the pixels size in the canvas
    */
   let cellPixelLength: number
+
+  let pixelHistory: pixelHistory = {}
+
+  const { channel: wsRoomDrawChannel } = useChannel(
+    `${roomID}:draw`,
+    (message: Types.Message) => {
+      const { x, y, opacity, rgb } = message.data as {
+        x: number
+        y: number
+        rgb: `rgb(${string}, ${string}, ${string})`
+        opacity: IntRange<0, 2>
+      }
+
+      const draw = () => {
+        pixelHistory[`${x}_${y}`] = {
+          rgb: rgb,
+          opacity: opacity,
+        }
+        fillOnePixel(draftCanvas, dctx, cellPixelLength, x, y, rgb, opacity)
+        mctx.drawImage(draftCanvas, 0, 0) // copy drawing to main
+        dctx.clearRect(0, 0, draftCanvas.width, draftCanvas.height) // clear draft
+      }
+
+      const isPixelHistoryEmpty = isObjectEmpty(pixelHistory)
+
+      if (!isPixelHistoryEmpty) {
+        const isHistoryHasSameCordinate = Object.hasOwn(
+          pixelHistory,
+          `${x}_${y}`,
+        )
+
+        if (isHistoryHasSameCordinate) {
+          const history = pixelHistory[`${x}_${y}`]
+
+          if (history?.opacity == opacity && history?.rgb == rgb) return null
+
+          draw()
+        } else if (!isHistoryHasSameCordinate) draw()
+      }
+
+      if (isPixelHistoryEmpty) draw()
+    },
+  )
 
   // initializing somethings
   useEffect(() => {
@@ -48,14 +86,91 @@ export const useCanvasDraw = () => {
     dctx = draftCanvas.getContext('2d')!
     mctx = mainCanvas.getContext('2d')!
 
-    cellPixelLength = draftCanvas.width / cellSideCount
-    draftCanvasBoundingRect = draftCanvas.getBoundingClientRect()
+    const draftCanvasW = draftCanvas.width
+    const draftCanvasH = draftCanvas.height
+
+    cellPixelLength = draftCanvasW / cellSideCount
+
+    mctx.beginPath()
+    mctx.fillStyle = 'white'
+    mctx.fillRect(0, 0, draftCanvasW, draftCanvasH)
+    mctx.beginPath()
 
     addGrid(cellPixelLength)
     /* eslint-disable react-hooks/exhaustive-deps */
   }, [])
 
   let painting = false
+
+  const draw = (e: MouseEvent) => {
+    const draftCanvasBoundingRect = draftCanvas.getBoundingClientRect()
+
+    const x = e.clientX - draftCanvasBoundingRect.left
+    const y = e.clientY - draftCanvasBoundingRect.top
+
+    const newX = Math.floor(x / cellPixelLength)
+    const newY = Math.floor(y / cellPixelLength)
+
+    const { rgb, opacity } = getRgbAndOpacity()
+
+    const isPixelHistoryEmpty = isObjectEmpty(pixelHistory)
+
+    if (!isPixelHistoryEmpty) {
+      const isHistoryHasSameCordinate = Object.hasOwn(
+        pixelHistory,
+        `${newX}_${newY}`,
+      )
+
+      if (isHistoryHasSameCordinate) {
+        const history = pixelHistory[`${newX}_${newY}`]
+
+        console.log(1)
+        if (history?.opacity == opacity && history?.rgb == rgb) return null
+
+        console.log(2)
+        pixelHistory[`${newX}_${newY}`] = {
+          rgb: rgb,
+          opacity: opacity,
+        }
+        fillOnePixel(
+          draftCanvas,
+          dctx,
+          cellPixelLength,
+          newX,
+          newY,
+          rgb,
+          opacity,
+        )
+        wsRoomDrawChannel.publish('draw', { x: newX, y: newY, rgb, opacity })
+      } else if (!isHistoryHasSameCordinate) {
+        console.log(3)
+        pixelHistory[`${newX}_${newY}`] = {
+          rgb: rgb,
+          opacity: opacity,
+        }
+        fillOnePixel(
+          draftCanvas,
+          dctx,
+          cellPixelLength,
+          newX,
+          newY,
+          rgb,
+          opacity,
+        )
+        wsRoomDrawChannel.publish('draw', { x: newX, y: newY, rgb, opacity })
+      }
+    }
+
+    if (isPixelHistoryEmpty) {
+      console.log(4)
+      pixelHistory[`${newX}_${newY}`] = {
+        rgb: rgb,
+        opacity: opacity,
+      }
+      fillOnePixel(draftCanvas, dctx, cellPixelLength, newX, newY, rgb, opacity)
+      wsRoomDrawChannel.publish('draw', { x: newX, y: newY, rgb, opacity })
+    }
+  }
 
   const mouseOut = () => {
     console.log('mouseOut')
@@ -68,67 +183,40 @@ export const useCanvasDraw = () => {
 
   const startPosition = (e: MouseEvent) => {
     console.log('startPosition')
-    canvasColor = (getSearchParam('color') ??
-      '0-0-0-1)') as `${string}-${string}-${string}-${string}`
-    opacity = canvasColor.split('-')[3] ?? '1'
-
-    const canvasColorSplit = canvasColor.split('-')
-    r = canvasColorSplit[0] ?? '0'
-    g = canvasColorSplit[1] ?? '0'
-    b = canvasColorSplit[2] ?? '0'
-
-    if (e.target != draftCanvas) return null
     if (e.button !== 0) return null
+    painting = true
 
-    const x = e.clientX - draftCanvasBoundingRect.left
-    const y = e.clientY - draftCanvasBoundingRect.top
-
-    const newPixelPosX = Math.floor(x / cellPixelLength)
-    const newPixelPosY = Math.floor(y / cellPixelLength)
-    console.log({
-      newPixelPosX: newPixelPosX,
-      newPixelPosY: newPixelPosY,
-      x: x,
-      y: y,
-      cellPixelLength: cellPixelLength,
-    })
-    fillOnePixel(draftCanvas, dctx, cellPixelLength, newPixelPosX, newPixelPosY)
-
-    console.log(`${x} ${y}`)
+    draw(e)
   }
 
   const finishedPosition = () => {
+    console.log('finishedPosition')
     painting = false
 
     mctx.drawImage(draftCanvas, 0, 0) // copy drawing to main
     dctx.clearRect(0, 0, draftCanvas.width, draftCanvas.height) // clear draft
-    console.log('finishedPosition')
   }
 
-  const draw = (e: MouseEvent) => {
+  const drawing = (e: MouseEvent) => {
     if (!painting) return null
+    if (e.button !== 0) return null
+
+    draw(e)
   }
 
   // add event listeners to the draft canvas
   useEffect(() => {
-    const draftCanvas = document.getElementById(
-      `draft-canvas-${userID}`,
-    ) as HTMLCanvasElement
-
     draftCanvas.addEventListener('mousedown', startPosition)
     draftCanvas.addEventListener('mouseup', finishedPosition)
-    draftCanvas.addEventListener('mousemove', draw)
+    draftCanvas.addEventListener('mousemove', drawing)
     draftCanvas.addEventListener('mouseout', mouseOut)
 
     return () => {
       draftCanvas.removeEventListener('mousedown', startPosition)
       draftCanvas.removeEventListener('mouseup', finishedPosition)
-      draftCanvas.removeEventListener('mousemove', draw)
+      draftCanvas.removeEventListener('mousemove', drawing)
       draftCanvas.removeEventListener('mouseout', mouseOut)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userID, roomID])
-
-  // Websocket implementation
-  const setInfo = useSetAtom(infoAtom)
 }
