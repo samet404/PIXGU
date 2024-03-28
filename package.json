@@ -64,7 +64,7 @@
     "lucia": "^2.7.6",
     "lucide-react": "^0.306.0",
     "million": "latest",
-    "next": "^14.0.4",
+    "next": "canary",
     "nextjs-progressbar": "^0.0.16",
     "nuqs": "^1.17.0",
     "pusher": "^5.2.0",

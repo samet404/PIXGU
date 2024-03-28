@@ -6,6 +6,7 @@ import { api } from '@/src/trpc/server'
 import { PasswordSection } from './components/PasswordSection'
 import Nav from './components/Nav'
 import HydrateAtoms from './components/HydrateAtoms'
+import AnimatedDiv from './components/AnimatedDiv'
 
 type RoomParams = {
   params: {
@@ -32,14 +33,8 @@ const Room = async (params: RoomParams) => {
 
   return (
     <HydrateAtoms userID={userID} players={players} roomID={urlRoomID}>
-      <div
-        style={{
-          backgroundColor: 'hsla(204, 100%, 11%, 1)',
-          backgroundImage:
-            'radial-gradient(at 100% 100%, hsla(182, 100%, 50%, 0.215) 0px, transparent 50%), radial-gradient(at 2% 0%, hsla(193, 100%, 50%, 0.255) 0px, transparent 50%)',
-        }}
-        className="flex h-full w-full flex-col"
-      >
+      <div className="relative flex h-full w-full flex-col">
+        <AnimatedDiv />
         <Nav />
         <div
           id="rootDiv"

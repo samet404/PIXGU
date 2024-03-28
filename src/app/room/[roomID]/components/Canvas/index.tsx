@@ -1,14 +1,15 @@
-import dynamic from 'next/dynamic'
 import ClientWrapper from './components/ClientWrapper'
 import Download from './components/Download'
 import OtherCanvases from './components/OtherCanvases'
 import AblyProviderComponent from './components/AblyProviderComponent'
+import DrawPerSecondDisplay from './components/DrawPerSecondDisplay'
 
 const Canvas = () => {
   return (
     <AblyProviderComponent>
       <ClientWrapper>
-        <div className="flex select-none flex-col">
+        <div className="flex select-none flex-col items-center gap-[0.1rem]">
+          <DrawPerSecondDisplay />
           <div className="animate-fade rounded-lg bg-[#ffffff68] p-2 shadow-[0_0px_13px_0px_rgba(0,0,0,0.4)] ">
             <div className="relative w-full  cursor-crosshair rounded-md bg-white">
               <canvas

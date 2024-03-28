@@ -6,15 +6,17 @@ export const fillOnePixel = (
   cellPixelLength: number,
   x: number,
   y: number,
-  rgb: `rgb(${string}, ${string}, ${string})`,
-  opacity: IntRange<0, 2>,
+  r: IntRange<0, 256>,
+  g: IntRange<0, 256>,
+  b: IntRange<0, 256>,
+  a: IntRange<0, 2>,
 ) => {
   // getting position of the pixel
   const posX = cellPixelLength * x
   const posY = cellPixelLength * y
 
   // drawing the pixel
-  dctx.fillStyle = rgb
-  dctx.globalAlpha = opacity
+  dctx.fillStyle = `rgb(${r}, ${g}, ${b})`
+  dctx.globalAlpha = a
   dctx.fillRect(posX, posY, cellPixelLength, cellPixelLength)
 }

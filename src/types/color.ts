@@ -1,7 +1,7 @@
 // Color types
 
-export type RGB = `rgb(${number}, ${number}, ${number})`
-export type RGBA = `rgba(${number}, ${number}, ${number}, ${number})`
-export type HSL = `hsl(${number}, ${number}%, ${number}%)`
+export type RGB = `rgb(${string}, ${string}, ${string})`
+export type RGBA = `rgba(${string}, ${string}, ${string}, ${string})`
+export type HSL = `hsl(${string}, ${string}%, ${string}%)`
 export type HEX = `#${string}`
 export type Color = RGB | RGBA | HEX | HSL
