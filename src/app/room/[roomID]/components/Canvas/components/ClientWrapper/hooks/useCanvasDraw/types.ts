@@ -14,8 +14,3 @@ export type LastDrawedPixel = {
   x: number
   y: number
 }
-
-export type PixelPerSecond = {
-  Date: Date
-  count: number
-}[]

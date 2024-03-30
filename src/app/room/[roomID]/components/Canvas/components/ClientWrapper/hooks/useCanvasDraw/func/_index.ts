@@ -1,5 +1,4 @@
 export { addGrid } from './addGrid'
-export { setPixelPerSecond } from './setPixelPerSecond'
 export { draw } from './draw'
 export { fillOnePixel } from './fillOnePixel'
 export { getRgbaFromURL } from './getRgbaFromURL'

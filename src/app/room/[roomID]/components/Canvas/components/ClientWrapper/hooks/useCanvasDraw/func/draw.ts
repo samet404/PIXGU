@@ -1,17 +1,15 @@
 import { isObjectEmpty } from '@/utils/isObjectEmpty'
-import type { PixelPerSecond, LastDrawedPixel, PixelHistory } from '../types'
+import type { LastDrawedPixel, PixelHistory } from '../types'
 import { fillOnePixel } from './fillOnePixel'
 import { getRgbaFromURL } from './getRgbaFromURL'
 import { type IntRange } from '@/types/intRange'
 import { type MutableRefObject } from 'react'
-import { setPixelPerSecond } from './setPixelPerSecond'
 
 export const draw = (
   draftCanvas: HTMLCanvasElement,
   dctx: CanvasRenderingContext2D,
   cellPixelLength: number,
   pixelHistoryRef: MutableRefObject<PixelHistory>,
-  pixelPerSecondRef: MutableRefObject<PixelPerSecond>,
   wsRoomDrawChannel: any,
   lastDrawedPixelRef: MutableRefObject<LastDrawedPixel | undefined>,
   e: MouseEvent,
@@ -25,6 +23,7 @@ export const draw = (
   const newX = Math.floor(x / cellPixelLength)
   const newY = Math.floor(y / cellPixelLength)
   const { r, g, b, a } = getRgbaFromURL()
+  let isSuccess = false
 
   const draw = () => {
     const prevA = pixelHistory[`${newX}_${newY}`]?.a ?? 0
@@ -37,14 +36,21 @@ export const draw = (
     }
 
     fillOnePixel(draftCanvas, dctx, cellPixelLength, newX, newY, r, g, b, a)
-    wsRoomDrawChannel.publish('draw', { x: newX, y: newY, r, g, b, a })
+    wsRoomDrawChannel.publish('draw', {
+      x: newX,
+      y: newY,
+      r,
+      g,
+      b,
+      a,
+    })
 
     lastDrawedPixelRef.current = {
       x: newX,
       y: newY,
     }
 
-    setPixelPerSecond(pixelPerSecondRef)
+    isSuccess = true
   }
 
   const isPixelHistoryEmpty = isObjectEmpty(pixelHistory)
@@ -100,5 +106,9 @@ export const draw = (
   if (isPixelHistoryEmpty) {
     console.log(4)
     draw()
+  }
+
+  return {
+    isSuccess: isSuccess,
   }
 }

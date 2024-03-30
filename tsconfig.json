@@ -16,9 +16,8 @@
     "jsx": "preserve",
     "incremental": true,
     "noUncheckedIndexedAccess": true,
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
-      "@/*": ["./*"],
       "@/procedure": ["src/server/api/procedure"],
       "@/schema/*": ["src/server/db/sqlDb/schema/*"],
       "@/env/*": ["src/env/*"],
@@ -60,10 +59,6 @@
     "**/*.cjs",
     "**/*.mjs",
     ".next/types/**/*.ts",
-    "scripts/test.ts",
-    "src/app/lib/placeholder-data.js",
-    "prisma/seed.js",
-    "prisma/seedData.js",
   ],
   "exclude": ["node_modules", "**/*.js"],
 }
