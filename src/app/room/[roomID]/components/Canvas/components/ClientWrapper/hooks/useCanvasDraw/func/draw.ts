@@ -2,8 +2,8 @@ import { isObjectEmpty } from '@/utils/isObjectEmpty'
 import type { LastDrawedPixel, PixelHistory } from '../types'
 import { fillOnePixel } from './fillOnePixel'
 import { getRgbaFromURL } from './getRgbaFromURL'
-import { type IntRange } from '@/types/intRange'
 import { type MutableRefObject } from 'react'
+import { type IntRange } from '@/types/intRange'
 
 export const draw = (
   draftCanvas: HTMLCanvasElement,
