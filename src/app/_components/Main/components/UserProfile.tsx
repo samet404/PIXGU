@@ -1,17 +1,24 @@
-import { api } from '@/src/trpc/server'
+import { api } from '@/trpc/server'
 import Image from 'next/image'
 import Link from 'next/link'
 
 const UserProfile = async () => {
-  const session = await api.user.getSession.query()
+  const user = await api.auth.getUser.query()
+  console.log(user)
 
-  return session?.user ? (
+  const profilePicture = user?.profilePicture
+  const usernameWithUsernameID = user?.usernameWithUsernameID
+
+  if (!user) return null
+  if (!profilePicture) return null
+
+  return (
     <Link
-      href={`/u/${session.user.usernameWithUsernameID}`}
+      href={`/u/${usernameWithUsernameID}`}
       className="h-12 w-12 rounded-full border-[0.3rem] border-[white] drop-shadow-[0_0px_3px_rgba(0,0,0,0.2)] duration-100 hover:opacity-60"
     >
       <Image
-        src={session.user.profilePicture}
+        src={profilePicture}
         alt="Profile picture"
         width={66}
         height={66}
@@ -19,7 +26,7 @@ const UserProfile = async () => {
         className="select-none rounded-full bg-gray-400"
       />
     </Link>
-  ) : null
+  )
 }
 
 export default UserProfile

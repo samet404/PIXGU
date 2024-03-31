@@ -2,7 +2,7 @@ import UsersSection from './components/UsersSection'
 import CanvasTools from './components/CanvasTools'
 import Canvas from './components/Canvas'
 import './styles/scrollbars.css'
-import { api } from '@/src/trpc/server'
+import { api } from '@/trpc/server'
 import { PasswordSection } from './components/PasswordSection'
 import Nav from './components/Nav'
 import HydrateAtoms from './components/HydrateAtoms'
@@ -15,7 +15,7 @@ type RoomParams = {
 }
 
 const Room = async (params: RoomParams) => {
-  const userID = await api.user.getSessionUserID.query()
+  const userID = await api.auth.getUserID.query()
 
   if (!userID) throw new Error('UNAUTHORIZED')
 

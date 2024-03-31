@@ -24,6 +24,3 @@ export { sendFriendRequest } from './subroutes/set/sendFriendRequest'
 export { declineIncomingFriendRequest } from './subroutes/set/declineIncomingFriendRequest'
 export { acceptIncomingFriendRequest } from './subroutes/set/acceptIncomingFriendRequest'
 export { getFriendRequests } from './subroutes/get/getFriendRequests'
-
-export { getSession } from './subroutes/get/getSession'
-export { getSesssionUserID } from './subroutes/get/getSesssionUserID'

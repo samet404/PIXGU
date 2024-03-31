@@ -1,12 +1,12 @@
-import { publicProcedure } from '../../../../../trpc'
+import { loggedUserProducure } from '@/procedure'
 import { user } from '@/schema/user'
 import { eq } from 'drizzle-orm'
 
-export const isHaveFriend = publicProcedure.query(async ({ ctx }) => {
-  const sessionUserID = ctx.session.user.userId
+export const isHaveFriend = loggedUserProducure.query(async ({ ctx }) => {
+  const userID = ctx.user!.id
 
   const userWithFriend = await ctx.db.query.user.findFirst({
-    where: eq(user.id, sessionUserID),
+    where: eq(user.id, userID),
     columns: {},
     with: {
       friend: {

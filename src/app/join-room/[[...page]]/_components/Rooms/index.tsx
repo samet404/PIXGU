@@ -1,4 +1,4 @@
-import { api } from '@/src/trpc/server'
+import { api } from '@/trpc/server'
 import RoomItem from './components/RoomItem'
 
 const Rooms = async () => {

@@ -1,5 +1,5 @@
 import { user } from '@/schema/user'
-import { publicProcedure } from '@/src/server/api/trpc'
+import { publicProcedure } from '@/server/api/trpc'
 import { eq } from 'drizzle-orm'
 import { z } from 'zod'
 

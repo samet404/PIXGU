@@ -9,7 +9,7 @@ export const getFirstFriendByUsernameWithUsernameID = loggedUserProducure
     if (!input) return null
     console.log(input)
 
-    const userID = await ctx.session.user.userId
+    const userID = ctx.user!.id
 
     // main db
     const userWithFriendWithIDColumn = await ctx.db.query.user.findFirst({

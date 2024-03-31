@@ -1,7 +1,7 @@
 'use client'
 
-import { isGridOpenAtom } from '@/src/app/room/[roomID]/atoms'
-import { clsxMerge } from '@/src/utils/clsxMerge'
+import { isGridOpenAtom } from '@/app/room/[roomID]/atoms'
+import { clsxMerge } from '@/utils/clsxMerge'
 import { useAtom } from 'jotai'
 
 const Btn = () => {

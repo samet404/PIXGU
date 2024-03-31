@@ -9,7 +9,7 @@ import {
   cellSideCountAtom,
   isDrawingAtom,
   pixelPerDrawAtom,
-} from '../../../../atoms'
+} from '@/app/room/[roomID]/components/Canvas/atoms'
 // types
 import type { Types as AblyTypes } from 'ably'
 import type { LastDrawedPixel, PixelHistory } from './types'
@@ -17,7 +17,7 @@ import type { LastDrawedPixel, PixelHistory } from './types'
 import { addGrid, draw, wsDrawEvent } from './func/_index'
 import { useEventListener } from 'usehooks-ts'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
-import { type PixelPerDraw } from '../../../../types'
+import { type PixelPerDraw } from '@/app/room/[roomID]/components/Canvas/types'
 
 export const useCanvasDraw = () => {
   // atoms
@@ -47,7 +47,7 @@ export const useCanvasDraw = () => {
   // initializing somethings
   useEffectOnce(() => {
     draftCanvasRef.current = document.getElementById(
-      `draft-canvas-${userID}`,
+      `draft-canvas`,
     ) as HTMLCanvasElement
 
     mainCanvasRef.current = document.getElementById(

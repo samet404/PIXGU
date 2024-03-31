@@ -1,22 +1,11 @@
 import { NextResponse } from 'next/server'
 import * as Ably from 'ably/promises'
 import { env } from '@/env/server.mjs'
-import * as context from 'next/headers'
-import { auth } from '@/auth/lucia'
+
 import { type Session } from 'lucia'
 
 export async function POST(req: Request) {
   try {
-    const authRequest = auth.handleRequest('GET', context)
-    const session: Session = await authRequest.validate()
-
-    if (!session) {
-      throw {
-        code: 401,
-        message: 'UNAUTHORIZED',
-      }
-    }
-
     const clientId =
       (await req.formData()).get('clientId')?.toString() ??
       env.ABLY_DEFAULT_CLIENT_ID ??

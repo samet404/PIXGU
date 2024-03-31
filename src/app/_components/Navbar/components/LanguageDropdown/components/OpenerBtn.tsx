@@ -3,7 +3,7 @@
 import { useAtomValue, useSetAtom } from 'jotai'
 import { switchIsDropdownOpenAtom } from '../atoms'
 import { Inter } from 'next/font/google'
-import { languageAtom } from '@/src/app/_atoms/atomsWithStorage'
+import { languageAtom } from '@/app/_atoms/atomsWithStorage'
 
 const inter = Inter({
   subsets: ['latin'],

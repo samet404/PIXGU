@@ -1,5 +1,5 @@
-import BackButton from '@/src/components/BackButton'
-import ToHomeButton from '@/src/components/ToHomeButton'
+import BackButton from '@/components/BackButton'
+import ToHomeButton from '@/components/ToHomeButton'
 import { Inter } from 'next/font/google'
 
 const inter = Inter({

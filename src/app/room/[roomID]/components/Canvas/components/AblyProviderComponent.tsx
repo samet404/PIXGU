@@ -4,7 +4,7 @@ import { AblyProvider } from 'ably/react'
 import { useAtomValue } from 'jotai'
 import { userIDAtom } from '../../../atoms'
 import { type ReactNode } from 'react'
-import { useAblyRealtimeClient } from '@/src/hooks/useAblyRealtimeClient'
+import { useAblyRealtimeClient } from '@/hooks/useAblyRealtimeClient'
 
 const AblyProviderComponent = ({ children }: { children: ReactNode }) => {
   const userID = useAtomValue(userIDAtom)

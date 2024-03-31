@@ -1,66 +1,104 @@
-import { auth, discordAuth } from '@/auth/lucia'
-import { OAuthRequestError } from '@lucia-auth/oauth'
-import { cookies, headers } from 'next/headers'
-import type { NextRequest } from 'next/server'
-import { api } from '@/src/trpc/server'
+import { lucia } from '@/auth/lucia'
+import { discord } from '@/auth/lucia/providers'
+import type { DiscordUser } from '@/auth/lucia/providers/types'
+import { db } from '@/sqlDb'
+import { cookies } from 'next/headers'
+import { OAuth2RequestError } from 'arctic'
 import { createId } from '@paralleldrive/cuid2'
 
-export const GET = async (request: NextRequest) => {
-  const storedState = cookies().get('discord_oauth_state')?.value
+import type { DatabaseUser } from '@/auth/types'
+import { user } from '@/schema/user'
+import { eq } from 'drizzle-orm'
+import { api } from '@/trpc/server'
+
+type IdentifyScopeDiscordUser = Omit<DiscordUser, 'email'>
+
+export async function GET(request: Request): Promise<Response> {
   const url = new URL(request.url)
-  const state = url.searchParams.get('state')
   const code = url.searchParams.get('code')
-  // validate state
-  if (!storedState || !state || storedState !== state || !code) {
+  const state = url.searchParams.get('state')
+  const storedState = cookies().get('discord_oauth_state')?.value ?? null
+  if (!code || !state || !storedState || state !== storedState) {
     return new Response(null, {
       status: 400,
     })
   }
+
   try {
-    const { getExistingUser, discordUser, createUser } =
-      await discordAuth.validateCallback(code)
+    const tokens = await discord.validateAuthorizationCode(code)
+    const discordUserResponse = await fetch(
+      'https://discord.com/api/users/@me',
+      {
+        headers: {
+          Authorization: `Bearer ${tokens.accessToken}`,
+        },
+      },
+    )
+    const discordUser: IdentifyScopeDiscordUser =
+      await discordUserResponse.json()
+    const existingUserQuery = await db
+      .select({
+        id: user.id,
+        username: user.username,
+        username_ID: user.usernameID,
+        username_with_username_ID: user.usernameWithUsernameID,
+        profile_picture: user.profilePicture,
+      })
+      .from(user)
+      .where(eq(user.discordId, discordUser.id))
+      .limit(1)
 
-    const getCreatedUser = async () => {
-      const existingUser = await getExistingUser()
-      if (existingUser) return existingUser
+    const existingUser = existingUserQuery[0] as DatabaseUser | undefined | null
 
-      const generatedNewUsernameID =
-        (await api.user.generateNewUsernameID.query({
-          username: discordUser.username,
-        })) as string
-
-      const createdUser = await createUser({
-        attributes: {
-          username: discordUser.username,
-          username_ID: generatedNewUsernameID,
-          username_with_username_ID: `${discordUser.username}@${generatedNewUsernameID}`,
-          profile_picture: `https://cdn.discordapp.com/avatars/${discordUser.id}/${discordUser.avatar}.webp`,
+    if (existingUser) {
+      const session = await lucia.createSession(existingUser.id, {})
+      const sessionCookie = lucia.createSessionCookie(session.id)
+      cookies().set(
+        sessionCookie.name,
+        sessionCookie.value,
+        sessionCookie.attributes,
+      )
+      return new Response(null, {
+        status: 302,
+        headers: {
+          Location: '/',
         },
       })
-
-      return createdUser
     }
 
-    const createdUser = await getCreatedUser()
-    const session = await auth.createSession({
-      userId: createdUser.userId,
-      attributes: {},
+    const userId = createId()
+    const username = discordUser.username
+    const generatedNewUsernameID = (await api.user.generateNewUsernameID.query({
+      username: username,
+    })) as string
+
+    await db.insert(user).values({
+      id: userId,
+      discordId: discordUser.id,
+      username: username,
+      usernameID: generatedNewUsernameID,
+      usernameWithUsernameID: `${username}@${generatedNewUsernameID}`,
+      profilePicture: `https://cdn.discordapp.com/avatars/${discordUser.avatar}.webp`,
     })
-    const authRequest = auth.handleRequest(request.method, {
-      cookies,
-      headers,
-    })
-    authRequest.setSession(session)
+
+    const session = await lucia.createSession(userId, {})
+    const sessionCookie = lucia.createSessionCookie(session.id)
+    cookies().set(
+      sessionCookie.name,
+      sessionCookie.value,
+      sessionCookie.attributes,
+    )
     return new Response(null, {
       status: 302,
       headers: {
-        Location: '/', // redirect to profile page
+        Location: '/',
       },
     })
   } catch (e) {
-    console.error(e)
-
-    if (e instanceof OAuthRequestError) {
+    if (
+      e instanceof OAuth2RequestError &&
+      e.message === 'bad_verification_code'
+    ) {
       // invalid code
       return new Response(null, {
         status: 400,

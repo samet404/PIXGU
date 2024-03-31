@@ -1,4 +1,4 @@
-import { getSearchParam } from '@/src/utils/getSearchParam'
+import { getSearchParam } from '@/utils/getSearchParam'
 import { setSearchParam } from '@/utils/setSearchParam'
 import { useEffect, useState } from 'react'
 import { type RgbaColor, RgbaColorPicker } from 'react-colorful'

@@ -3,7 +3,7 @@ import { eq } from 'drizzle-orm'
 import { loggedUserProducure } from '../../../../../procedure'
 
 export const getFirstFriend = loggedUserProducure.query(async ({ ctx }) => {
-  const userID = await ctx.session.user.userId
+  const userID = ctx.user!.id
 
   const userFirstFriendWithIDColumn = await ctx.db.query.user.findFirst({
     where: eq(user.id, userID),

@@ -1,10 +1,15 @@
-import { pgTable, varchar, char, timestamp, boolean } from 'drizzle-orm/pg-core'
+import {
+  pgTable,
+  varchar,
+  char,
+  timestamp,
+  text,
+  bigint,
+} from 'drizzle-orm/pg-core'
 import { gameRoom } from '../..'
 
 export const user = pgTable('user', {
-  id: varchar('id', {
-    length: 15,
-  }).primaryKey(),
+  id: text('id').primaryKey(),
   username: varchar('username', {
     length: 65,
   }).notNull(),
@@ -24,10 +29,14 @@ export const user = pgTable('user', {
     length: 1,
   }),
 
+  githubId: bigint('github_id', { mode: 'number' }).unique(),
+  discordId: varchar('discord_id').unique(),
+  googleId: bigint('google_id', { mode: 'number' }).unique(),
+
   updatedAt: timestamp('updated_at', { withTimezone: true })
     .defaultNow()
     .notNull(),
-    
+
   createdAt: timestamp('created_at', { withTimezone: true })
     .defaultNow()
     .notNull(),

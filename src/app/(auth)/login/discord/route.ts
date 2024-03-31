@@ -1,22 +1,20 @@
-import { discordAuth } from '@/auth/lucia'
-import * as context from 'next/headers'
+import { generateState } from 'arctic'
+import { discord } from '@/auth/lucia/providers'
+import { cookies } from 'next/headers'
 
-import type { NextRequest } from 'next/server'
+export async function GET(): Promise<Response> {
+  const state = generateState()
+  const url = await discord.createAuthorizationURL(state, {
+    scopes: ['identify'],
+  })
 
-export const GET = async (request: NextRequest) => {
-  const [url, state] = await discordAuth.getAuthorizationUrl()
-  // store state
-
-  context.cookies().set('discord_oauth_state', state, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+  cookies().set('github_oauth_state', state, {
     path: '/',
-    maxAge: 60 * 60,
+    secure: process.env.NODE_ENV === 'production',
+    httpOnly: true,
+    maxAge: 60 * 10,
+    sameSite: 'lax',
   })
-  return new Response(null, {
-    status: 302,
-    headers: {
-      Location: url.toString(),
-    },
-  })
+
+  return Response.redirect(url)
 }

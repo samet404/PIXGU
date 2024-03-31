@@ -1,15 +1,15 @@
 import { z } from 'zod'
-import { publicProcedure } from '../../../../../trpc'
 import { user } from '@/schema/user'
 import { eq } from 'drizzle-orm'
+import { loggedUserProducure } from '@/procedure'
 
-export const isFriendExitsByUsernameWithUsernameID = publicProcedure
+export const isFriendExitsByUsernameWithUsernameID = loggedUserProducure
   .input(z.string())
   .query(async ({ ctx, input }) => {
-    const sessionUserID = ctx.session.user.userId
+    const userID = ctx.user!.id
 
     const friendResult = await ctx.db.query.user.findFirst({
-      where: eq(user.id, sessionUserID),
+      where: eq(user.id, userID),
       columns: {},
       with: {
         friend: {

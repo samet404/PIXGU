@@ -2,8 +2,6 @@ import MainButton from './MainButton'
 import Image from 'next/image'
 import paperAndInk from '@/png/paperAndInk.png'
 import clsx from 'clsx'
-import { auth } from '@/auth/lucia'
-import * as context from 'next/headers'
 
 const HowToPlay = async () => {
   return (

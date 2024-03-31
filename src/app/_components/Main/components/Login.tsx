@@ -3,10 +3,10 @@ import { Fragment } from 'react'
 import MainButton from './MainButton'
 import login from '@/png/login.png'
 import Image from 'next/image'
-import { api } from '@/src/trpc/server'
+import { api } from '@/trpc/server'
 
 const Login = async () => {
-  const session = await api.user.getSession.query()
+  const session = await api.auth.getSession.query()
 
   return !session ? (
     <MainButton

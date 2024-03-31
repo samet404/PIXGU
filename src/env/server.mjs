@@ -118,19 +118,19 @@ export const env = createEnv({
     //     'You forgot to change the default spotify client secret',
     //   ),
 
-    // GITHUB_CLIENT_ID: z
-    //   .string()
-    //   .refine(
-    //     (str) => !str.includes('YOUR_GITHUB_CLIENT_ID_HERE'),
-    //     'You forgot to change the default github client id',
-    //   ),
+    GITHUB_CLIENT_ID: z
+      .string()
+      .refine(
+        (str) => !str.includes('YOUR_GITHUB_CLIENT_ID_HERE'),
+        'You forgot to change the default github client id',
+      ),
 
-    // GITHUB_CLIENT_SECRET: z
-    //   .string()
-    //   .refine(
-    //     (str) => !str.includes('YOUR_GITHUB_CLIENT_SECRET_HERE'),
-    //     'You forgot to change the default github client secret',
-    //   ),
+    GITHUB_CLIENT_SECRET: z
+      .string()
+      .refine(
+        (str) => !str.includes('YOUR_GITHUB_CLIENT_SECRET_HERE'),
+        'You forgot to change the default github client secret',
+      ),
 
     // GOOGLE_CLIENT_ID: z
     //   .string()
@@ -180,8 +180,8 @@ export const env = createEnv({
     // SPOTIFY_CLIENT_ID: process.env.SPOTIFY_CLIENT_ID,
     // SPOTIFY_CLIENT_SECRET: process.env.YOUR_SPOTIFY_CLIENT_SECRET,
 
-    // GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
-    // GITHUB_CLIENT_SECRET: process.env.YOUR_GITHUB_CLIENT_SECRET,
+    GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
+    GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
 
     // GOOGLE_CLIENT_ID: process.env.YOUR_GOOGLE_CLIENT_ID,
     // GOOGLE_CLIENT_SECRET: process.env.YOUR_GOOGLE_CLIENT_SECRET,

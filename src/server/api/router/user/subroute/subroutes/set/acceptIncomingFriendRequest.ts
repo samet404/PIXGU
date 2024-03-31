@@ -3,8 +3,8 @@ import { z } from 'zod'
 import { redisDb } from '@/db/redis'
 import { TRPCError } from '@trpc/server'
 import { userFriendship } from '@/schema/user'
-import { pusherServer } from '@/src/pusher/server'
-import { toPusherKey } from '@/src/utils/toPusherKey'
+import { pusherServer } from '@/pusher/server'
+import { toPusherKey } from '@/utils/toPusherKey'
 
 export const acceptIncomingFriendRequest = loggedUserProducure
   .input(
@@ -14,36 +14,32 @@ export const acceptIncomingFriendRequest = loggedUserProducure
     }),
   )
   .mutation(async ({ input, ctx }) => {
-    const sessionUserID = ctx.session.user.userId
-    const sessionUsernameWithUsernameID =
-      ctx.session.user.usernameWithUsernameID
+    const userID = ctx.user!.id
+    const usernameWithUsernameID = ctx.user!.usernameWithUsernameID
 
     const isFriendExits = await redisDb.smismember(
-      `user:${sessionUserID}:incoming_friend_requests`,
+      `user:${userID}:incoming_friend_requests`,
       [input.ID],
     )
     console.log(isFriendExits)
     if (isFriendExits[0] != 1) throw new TRPCError({ code: 'NOT_FOUND' })
 
     await ctx.db.insert(userFriendship).values({
-      userID: sessionUserID,
+      userID: userID,
       friendID: input.ID,
       friendUsernameWithUsernameID: input.friendUsernameWithUsernameID,
     })
 
     await ctx.db.insert(userFriendship).values({
       userID: input.ID,
-      friendID: sessionUserID,
-      friendUsernameWithUsernameID: sessionUsernameWithUsernameID,
+      friendID: userID,
+      friendUsernameWithUsernameID: usernameWithUsernameID,
     })
 
-    await redisDb.srem(
-      `user:${sessionUserID}:incoming_friend_requests`,
-      input.ID,
-    )
+    await redisDb.srem(`user:${userID}:incoming_friend_requests`, input.ID)
 
     await pusherServer.trigger(
-      toPusherKey(`incoming_friend_requests:${sessionUserID}`),
+      toPusherKey(`incoming_friend_requests:${userID}`),
       'refetch_requests',
       null,
     )

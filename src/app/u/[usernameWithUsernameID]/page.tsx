@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { GeistSans } from 'geist/font/sans'
-import { api } from '@/src/trpc/server'
+import { api } from '@/trpc/server'
 import { notFound } from 'next/navigation'
 import pfp2 from '@/png/pfp2.png'
 

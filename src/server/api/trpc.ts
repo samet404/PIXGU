@@ -12,36 +12,9 @@ import { ZodError } from 'zod'
 
 import { db } from '@/sqlDb'
 import { redisDb } from '@/redis'
-import * as context from 'next/headers'
-import { auth } from '@/auth/lucia'
-import { type Session } from 'lucia'
+import { validateRequest } from '@/auth/lucia/validateRequest'
 
-/**import { TRPCError } from '@trpc/server'
-import { publicProcedure } from '../trpc'
-
-export const loggedUserProducure = publicProcedure.use(
-  async ({ next, ctx, path, type }) => {
-    const start = Date.now()
-
-    if (!ctx.session)
-      throw new TRPCError({
-        code: 'UNAUTHORIZED',
-        message: 'User needs to be logged in to do this',
-      })
-
-    const result = await next()
-
-    const durationMs = Date.now() - start
-    const meta = { path: path, type: type, durationMs }
-
-    result.ok
-      ? console.log('OK request timing:', meta)
-      : console.error('Non-OK request timing', meta)
-
-    return result
-  },
-)
-
+/**
  * 1. CONTEXT
  *
  * This section defines the "contexts" that are available in the backend API.
@@ -55,13 +28,12 @@ export const loggedUserProducure = publicProcedure.use(
  */
 
 export const createTRPCContext = async (opts: { headers: Headers }) => {
-  const authRequest = auth.handleRequest('GET', context)
-  const session: Session = await authRequest.validate()
-
+  const { session, user } = await validateRequest()
   return {
     redisDb,
     db,
     session,
+    user,
     ...opts,
   }
 }

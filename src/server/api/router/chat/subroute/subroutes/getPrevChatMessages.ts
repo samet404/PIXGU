@@ -6,7 +6,7 @@ import { chat } from '@/schema/chat'
 export const getPrevChatMessages = loggedUserProducure
   .input(z.string().max(128))
   .query(async ({ input, ctx }) => {
-    const userID = await ctx.session.user.userId
+    const userID = ctx.user!.id
 
     const messages = await ctx.db
       .select()

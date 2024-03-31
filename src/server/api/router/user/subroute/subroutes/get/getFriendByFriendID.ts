@@ -8,7 +8,7 @@ export const getFriendByFriendID = loggedUserProducure
   .query(async ({ input, ctx }) => {
     if (!input) return null
 
-    const userID = await ctx.session.user.userId
+    const userID = ctx.user!.id
 
     const userWithFriendColumnWithID = await ctx.db.query.user.findFirst({
       where: eq(user.id, userID),

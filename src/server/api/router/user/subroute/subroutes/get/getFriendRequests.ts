@@ -4,10 +4,10 @@ import { user } from '@/schema/user'
 import { eq } from 'drizzle-orm'
 
 export const getFriendRequests = loggedUserProducure.query(async ({ ctx }) => {
-  const sessionUserID = ctx.session.user.userId
+  const userID = ctx.user!.id
 
   const requestedUserIDs = await redisDb.smembers(
-    `user:${sessionUserID}:incoming_friend_requests`,
+    `user:${userID}:incoming_friend_requests`,
   )
 
   if (requestedUserIDs[0]) {

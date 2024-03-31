@@ -34,10 +34,8 @@ const config = {
     JSX: true,
   },
   rules: {
-    // These opinionated rules are enabled in stylistic-type-checked above.
-    // Feel free to reconfigure them to your own preference.
-    '@tanstack/query/exhaustive-deps': 'error',
     '@tanstack/query/no-rest-destructuring': 'warn',
+    '@tanstack/query/exhaustive-deps': 'error',
     '@tanstack/query/stable-query-client': 'error',
 
     'drizzle/enforce-delete-with-where': 'error',
@@ -52,23 +50,25 @@ const config = {
     'react/react-in-jsx-scope': 'off',
     'react/jsx-uses-react': 'off',
 
+    '@typescript-eslint/prefer-optional-chain': 'off',
     '@typescript-eslint/no-floating-promises': 'off',
     '@typescript-eslint/non-nullable-type-assertion-style': 'off',
     '@typescript-eslint/no-unsafe-argument': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/dot-notation': 'off',
-    '@typescript-eslint/no-useless-empty-export': 'warn',
-    '@typescript-eslint/require-await': 'warn',
     '@typescript-eslint/no-var-requires': 'warn',
-    '@typescript-eslint/no-duplicate-type-constituents': 'off',
     '@typescript-eslint/no-unsafe-return': 'off',
     '@typescript-eslint/no-unsafe-member-access': 'off',
     '@typescript-eslint/no-unsafe-call': 'off',
     '@typescript-eslint/no-unsafe-assignment': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
-    '@typescript-eslint/no-empty-function': 'warn',
+    '@typescript-eslint/no-duplicate-type-constituents': 'off',
     '@typescript-eslint/array-type': 'off',
     '@typescript-eslint/consistent-type-definitions': 'off',
+    '@typescript-eslint/no-unused-vars': 'off',
+    '@typescript-eslint/no-useless-empty-export': 'warn',
+    '@typescript-eslint/require-await': 'warn',
+    '@typescript-eslint/no-empty-function': 'warn',
     '@typescript-eslint/consistent-type-imports': [
       'warn',
       {
@@ -76,7 +76,6 @@ const config = {
         fixStyle: 'inline-type-imports',
       },
     ],
-    '@typescript-eslint/no-unused-vars': 'off',
     '@typescript-eslint/no-misused-promises': [
       2,
       {

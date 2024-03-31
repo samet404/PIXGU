@@ -15,7 +15,7 @@ export const createRoom = loggedUserProducure
   )
   .mutation(async ({ input, ctx }) => {
     const { name, minPlayers, maxPlayers, password } = input
-    const userID = ctx.session.user.userId
+    const userID = ctx.user!.id
 
     const createdRoom = await ctx.db
       .insert(gameRoom)

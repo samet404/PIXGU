@@ -1,8 +1,8 @@
 import { loggedUserProducure } from '../../../../../procedure'
 import { z } from 'zod'
 import { redisDb } from '@/db/redis'
-import { pusherServer } from '@/src/pusher/server'
-import { toPusherKey } from '@/src/utils/toPusherKey'
+import { pusherServer } from '@/pusher/server'
+import { toPusherKey } from '@/utils/toPusherKey'
 
 export const declineIncomingFriendRequest = loggedUserProducure
   .input(
@@ -11,15 +11,12 @@ export const declineIncomingFriendRequest = loggedUserProducure
     }),
   )
   .mutation(async ({ input, ctx }) => {
-    const sessionUserID = ctx.session.user.userId
+    const userID = ctx.user!.id
 
-    await redisDb.srem(
-      `user:${sessionUserID}:incoming_friend_requests`,
-      input.ID,
-    )
+    await redisDb.srem(`user:${userID}:incoming_friend_requests`, input.ID)
 
     await pusherServer.trigger(
-      toPusherKey(`incoming_friend_requests:${sessionUserID}`),
+      toPusherKey(`incoming_friend_requests:${userID}`),
       'refetch_requests',
       null,
     )

@@ -2,7 +2,7 @@
 
 import { useAtomValue } from 'jotai'
 import { isGridOpenAtom } from '@/app/room/[roomID]/atoms'
-import { clsxMerge } from '@/src/utils/clsxMerge'
+import { clsxMerge } from '@/utils/clsxMerge'
 
 const GridCanvas = () => {
   const isOpen = useAtomValue(isGridOpenAtom)

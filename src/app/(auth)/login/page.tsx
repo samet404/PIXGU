@@ -1,16 +1,13 @@
-// app/login/page.tsx
-import { auth } from '@/auth/lucia'
-import * as context from 'next/headers'
 import { redirect } from 'next/navigation'
 import Image from 'next/image'
 import bgImg from '@/jpg/marek-piwnicki-Uc0hRKBu3xY-unsplash.jpg'
 import NavigationSection from './_components/NavigationSection'
 import OAuthSection from './_components/OAuthSection'
 import Logo from '@/png/logo.png'
-import { api } from '@/src/trpc/server'
+import { api } from '@/trpc/server'
 
 const Page = async () => {
-  const session = await api.user.getSession.query()
+  const session = await api.auth.getSession.query()
 
   if (session) redirect('/')
 

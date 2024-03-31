@@ -1,6 +1,6 @@
 'use client'
 
-import { languageAtom } from '@/src/app/_atoms/atomsWithStorage'
+import { languageAtom } from '@/app/_atoms/atomsWithStorage'
 import { useSetAtom } from 'jotai'
 import { switchIsDropdownOpenAtom } from '../../../atoms'
 

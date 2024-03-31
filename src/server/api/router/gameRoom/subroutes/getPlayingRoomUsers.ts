@@ -1,11 +1,12 @@
 import { loggedUserProducure } from '@/procedure'
 import { user } from '@/schema/user'
+import { api } from '@/trpc/server'
 import { TRPCError } from '@trpc/server'
 import { eq } from 'drizzle-orm'
 
 export const getPlayingRoomUsers = loggedUserProducure.query(
   async ({ ctx }) => {
-    const userID = ctx.session.user.userId
+    const userID = (await api.auth.getUserID.query()) as string
 
     const userWithPlayingRoomID = await ctx.db
       .select({

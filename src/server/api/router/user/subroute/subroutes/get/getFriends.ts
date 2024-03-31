@@ -4,7 +4,7 @@ import { eq } from 'drizzle-orm'
 import { loggedUserProducure } from '../../../../../procedure'
 
 export const getFriends = loggedUserProducure.query(async ({ ctx }) => {
-  const userID = await ctx.session.user.userId
+  const userID = ctx.user!.id
 
   // redis
   // const redisAddedfriendIDs = await ctx.redisDb.smembers(

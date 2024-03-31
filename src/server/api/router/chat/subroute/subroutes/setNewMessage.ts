@@ -14,8 +14,8 @@ export const setNewMessage = loggedUserProducure
     }),
   )
   .mutation(async ({ input, ctx }) => {
-    const userID = await ctx.session.user.userId
-    const usernameWithUsernameID = await ctx.session.user.usernameWithUsernameID
+    const userID = ctx.user!.id
+    const usernameWithUsernameID = ctx.user!.usernameWithUsernameID
 
     const { friend_ID, text } = input
     const time = new Date().toISOString()

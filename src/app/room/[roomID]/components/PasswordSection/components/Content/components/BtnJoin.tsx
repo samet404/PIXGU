@@ -1,8 +1,8 @@
-import { api } from '@/src/trpc/react'
+import { api } from '@/trpc/react'
 import { Inter } from 'next/font/google'
 import { useEffect, type RefObject } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
-import { clsxMerge } from '@/src/utils/clsxMerge'
+import { clsxMerge } from '@/utils/clsxMerge'
 
 const inter = Inter({
   subsets: ['latin'],
