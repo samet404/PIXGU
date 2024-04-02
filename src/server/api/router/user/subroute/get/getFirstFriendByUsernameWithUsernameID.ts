@@ -1,6 +1,6 @@
 import { user, userFriendship } from '@/schema/user'
 import { eq } from 'drizzle-orm'
-import { loggedUserProducure } from '../../../../../procedure'
+import { loggedUserProducure } from '@/procedure'
 import { z } from 'zod'
 
 export const getFirstFriendByUsernameWithUsernameID = loggedUserProducure
@@ -9,7 +9,7 @@ export const getFirstFriendByUsernameWithUsernameID = loggedUserProducure
     if (!input) return null
     console.log(input)
 
-    const userID = ctx.user!.id
+    const userID = ctx.user.id
 
     // main db
     const userWithFriendWithIDColumn = await ctx.db.query.user.findFirst({

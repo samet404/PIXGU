@@ -9,7 +9,7 @@ import {
   nameAtom,
   passwordAtom,
 } from './atoms'
-import { api } from '@/src/trpc/react'
+import { api } from '@/trpc/react'
 import clsx from 'clsx'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
@@ -42,10 +42,9 @@ const CreateRoomButton = () => {
   }, [latestCreatedRoom])
 
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault()
-
+    <button
+      type="submit"
+      onClick={() => {
         createRoom({
           name: name,
           minPlayers: minPlayerNumber,
@@ -53,21 +52,16 @@ const CreateRoomButton = () => {
           password: password,
         })
       }}
-      className="w-full leading-4"
+      disabled={creatingRoom ? true : false}
+      className={clsx(
+        `${inter700.className} h-full w-full select-none rounded-b-md bg-gradient-to-tr from-[#fff459] to-[#f6ff00] py-3 text-[rgba(0,0,0,0.4)] shadow-[0_0px_10px_5px_rgba(255,255,255,0.3)]`,
+        {
+          'animate-pulse opacity-50': creatingRoom,
+        },
+      )}
     >
-      <button
-        type="submit"
-        disabled={creatingRoom ? true : false}
-        className={clsx(
-          `${inter700.className} h-full w-full select-none rounded-b-md bg-gradient-to-tr from-[#fff459] to-[#f6ff00] py-3 text-[rgba(0,0,0,0.4)] shadow-[0_0px_10px_5px_rgba(255,255,255,0.3)]`,
-          {
-            'animate-pulse opacity-50': creatingRoom,
-          },
-        )}
-      >
-        {creatingRoom ? 'Creating...' : 'Create'}
-      </button>
-    </form>
+      {creatingRoom ? 'Creating...' : 'Create'}
+    </button>
   )
 }
 

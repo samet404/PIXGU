@@ -1,4 +1,4 @@
-import { loggedUserProducure } from '../../../../../procedure'
+import { loggedUserProducure } from '@/procedure'
 import { z } from 'zod'
 import { redisDb } from '@/db/redis'
 import { TRPCError } from '@trpc/server'
@@ -14,8 +14,8 @@ export const acceptIncomingFriendRequest = loggedUserProducure
     }),
   )
   .mutation(async ({ input, ctx }) => {
-    const userID = ctx.user!.id
-    const usernameWithUsernameID = ctx.user!.usernameWithUsernameID
+    const userID = ctx.user.id
+    const usernameWithUsernameID = ctx.user.usernameWithUsernameID
 
     const isFriendExits = await redisDb.smismember(
       `user:${userID}:incoming_friend_requests`,

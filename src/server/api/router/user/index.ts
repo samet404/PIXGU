@@ -20,7 +20,7 @@ import {
   isHaveFriend,
   getUserByUsernameAndUsernameID,
   getFriendByFriendID,
-} from './subroute'
+} from './subroute/_routes'
 
 export const userRouter = createTRPCRouter({
   generateNewUsernameID: generateNewUsernameID,

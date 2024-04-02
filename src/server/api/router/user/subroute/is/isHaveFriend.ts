@@ -3,7 +3,7 @@ import { user } from '@/schema/user'
 import { eq } from 'drizzle-orm'
 
 export const isHaveFriend = loggedUserProducure.query(async ({ ctx }) => {
-  const userID = ctx.user!.id
+  const userID = ctx.user.id
 
   const userWithFriend = await ctx.db.query.user.findFirst({
     where: eq(user.id, userID),

@@ -1,6 +1,5 @@
 import Navbar from './_components/Navbar'
 import Main from './_components/Main'
-import { validateRequest } from '@/auth/lucia/validateRequest'
 
 const Home = async () => {
   return (

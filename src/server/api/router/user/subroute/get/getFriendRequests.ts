@@ -1,10 +1,10 @@
-import { loggedUserProducure } from '../../../../../procedure'
+import { loggedUserProducure } from '@/procedure'
 import { redisDb } from '@/db/redis'
 import { user } from '@/schema/user'
 import { eq } from 'drizzle-orm'
 
 export const getFriendRequests = loggedUserProducure.query(async ({ ctx }) => {
-  const userID = ctx.user!.id
+  const userID = ctx.user.id
 
   const requestedUserIDs = await redisDb.smembers(
     `user:${userID}:incoming_friend_requests`,

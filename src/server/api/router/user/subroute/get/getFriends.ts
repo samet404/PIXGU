@@ -1,10 +1,10 @@
 import { TRPCError } from '@trpc/server'
 import { user } from '@/schema/user'
 import { eq } from 'drizzle-orm'
-import { loggedUserProducure } from '../../../../../procedure'
+import { loggedUserProducure } from '@/procedure'
 
 export const getFriends = loggedUserProducure.query(async ({ ctx }) => {
-  const userID = ctx.user!.id
+  const userID = ctx.user.id
 
   // redis
   // const redisAddedfriendIDs = await ctx.redisDb.smembers(

@@ -17,7 +17,7 @@ export const ifPassTrueJoinToRoom_ByIDAndPass = loggedUserProducure
     }),
   )
   .mutation(async ({ input, ctx }) => {
-    const userID = ctx.user!.id
+    const userID = ctx.user.id
     const { roomID, password } = input
 
     // get room by ID and password

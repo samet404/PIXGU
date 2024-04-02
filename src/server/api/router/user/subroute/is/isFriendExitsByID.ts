@@ -6,7 +6,7 @@ import { loggedUserProducure } from '@/procedure'
 export const isFriendExitsByID = loggedUserProducure
   .input(z.string())
   .query(async ({ ctx, input }) => {
-    const userID = ctx.user!.id
+    const userID = ctx.user.id
 
     const friendResult = await ctx.db.query.user.findFirst({
       where: eq(user.id, userID),

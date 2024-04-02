@@ -1,9 +1,9 @@
 import { z } from 'zod'
-import { publicProcedure } from '../../../../../trpc'
+import { publicProcedure } from '@/server/api/trpc'
 import { user } from '@/schema/user'
 import { eq } from 'drizzle-orm'
 
-export const getUserByID = publicProcedure
+export const getUserByUsername = publicProcedure
   .input(
     z.string({
       invalid_type_error: 'Input Type Error: Expected input type is string',
@@ -12,14 +12,14 @@ export const getUserByID = publicProcedure
   .query(async ({ ctx, input }) => {
     const userResult = await ctx.db
       .select({
+        id: user.id,
         username: user.username,
         usernameID: user.usernameID,
         usernameWithUsernameID: user.usernameWithUsernameID,
         profilePicture: user.profilePicture,
       })
       .from(user)
-      .where(eq(user.id, input))
-      .limit(1)
+      .where(eq(user.username, input))
 
-    return userResult[0]
+    return userResult
   })

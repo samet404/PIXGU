@@ -4,7 +4,7 @@ import { api } from '@/trpc/server'
 import { eq } from 'drizzle-orm'
 
 export const getPlayingRoom = loggedUserProducure.query(async ({ ctx }) => {
-  const userID = (await api.auth.getUserID.query()) as string
+  const userID = ctx.user.id
 
   const room = await ctx.db
     .select({

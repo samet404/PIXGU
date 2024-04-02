@@ -3,7 +3,7 @@ import Dropdown from './components/DropdownContent'
 
 const LanguageDropdown = () => {
   return (
-    <div className="relative">
+    <div className="relative z-10">
       <OpenerBtn />
       <Dropdown />
     </div>
