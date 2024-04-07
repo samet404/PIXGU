@@ -1,17 +1,15 @@
 import * as Ably from 'ably'
+import type { ClientOptions, Realtime } from 'ably/ably'
 import { useEffect, useState } from 'react'
-import { type Types as AblyTypes } from 'ably'
 
-const createAblyRealtimeClient = (clientOptions: AblyTypes.ClientOptions) =>
-  new Ably.Realtime.Promise(clientOptions)
+const createAblyRealtimeClient = (clientOptions: ClientOptions) =>
+  new Ably.Realtime(clientOptions)
 
 /**
  * Creates ably client for AblyProvider with ssr enabled
  */
-export const useAblyRealtimeClient = (
-  clientOptions: AblyTypes.ClientOptions,
-) => {
-  const [client, setClient] = useState<AblyTypes.RealtimePromise | null>(null)
+export const useAblyRealtimeClient = (clientOptions: ClientOptions) => {
+  const [client, setClient] = useState<Realtime | null>(null)
 
   useEffect(() => {
     if (typeof window !== 'undefined') {

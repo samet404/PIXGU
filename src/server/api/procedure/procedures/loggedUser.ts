@@ -1,30 +1,25 @@
 import { TRPCError } from '@trpc/server'
 import { publicProcedure } from '@/server/api/trpc'
 import type { User, Session } from 'lucia'
+import type { OverrideProps } from '@/types/overrideProps'
 
 export const loggedUserProducure = publicProcedure.use(
   async ({ next, ctx, path, type }) => {
     const start = Date.now()
 
-    const user = ctx.user
-    const session = ctx.session
-
-    if (!session || !user)
-      throw new TRPCError({
+    if (!ctx.session)
+      throw new TRPCError({ 
         code: 'UNAUTHORIZED',
         message: 'User needs to be logged in to do this',
       })
 
-    type NewCtxWithSessionAndUserNotNull = {
-      [K in keyof typeof ctx]: K extends 'user'
-        ? User
-        : K extends 'session'
-          ? Session
-          : (typeof ctx)[K]
-    }
-
     const result = await next({
-      ctx: ctx as NewCtxWithSessionAndUserNotNull,
+      ctx: ctx as OverrideProps<
+        OverrideProps<typeof ctx, { session: Session }>,
+        {
+          user: User
+        }
+      >,
     })
 
     const durationMs = Date.now() - start

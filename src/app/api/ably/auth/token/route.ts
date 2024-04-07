@@ -1,8 +1,6 @@
 import { NextResponse } from 'next/server'
-import * as Ably from 'ably/promises'
+import * as Ably from 'ably'
 import { env } from '@/env/server.mjs'
-
-import { type Session } from 'lucia'
 
 export async function POST(req: Request) {
   try {
@@ -19,9 +17,6 @@ export async function POST(req: Request) {
 
     return NextResponse.json(tokenRequestData)
   } catch (e) {
-    if (e instanceof Error)
-      return NextResponse.json({
-        error: e,
-      })
+    if (e instanceof Error) throw new Error(e.message)
   }
 }

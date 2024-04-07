@@ -7,6 +7,9 @@ import {
   getPlayingRoom,
   setPlayingRoomIDToNull,
   getPlayingRoomUsers,
+  setNewPeerID,
+  remPeerID,
+  getPeerIDs
 } from './subroutes/_routes'
 
 export const gameRoomRouter = createTRPCRouter({
@@ -17,4 +20,8 @@ export const gameRoomRouter = createTRPCRouter({
   ifPassTrueJoinToRoom_ByIDAndPass: ifPassTrueJoinToRoom_ByIDAndPass,
   setPlayingRoomIDToNull: setPlayingRoomIDToNull,
   getPlayingRoomUsers: getPlayingRoomUsers,
+
+  setNewPeerID: setNewPeerID,
+  remPeerID: remPeerID,
+  getPeerIDs: getPeerIDs
 })
