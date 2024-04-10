@@ -6,6 +6,7 @@ import UserProfile from './components/UserProfile'
 import './styles/scrollbars.css'
 import Settings from './components/Settings'
 import Friends from './components/Friends'
+import FindRoom from './components/FindRoom'
 
 const Main = () => {
   return (
@@ -14,6 +15,7 @@ const Main = () => {
         id="main-content"
         className="grid h-full w-full gap-2 overflow-y-scroll rounded-md bg-[rgba(0,0,0,0.7)] p-2 xs:grid-cols-1 md:grid-cols-2 "
       >
+        <FindRoom />
         <JoinRoom />
         <CreateRoom />
         <HowToPlay />

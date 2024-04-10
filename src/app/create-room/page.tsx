@@ -12,14 +12,18 @@ const CreateRoom = () => {
   return (
     <div
       id="page-root"
-      className={`relative z-10 flex h-full w-full flex-col items-center justify-start gap-3 overflow-y-auto bg-gradient-to-tr from-[hsla(220,39%,10%,1)] via-[#1b2947] to-transparent pt-5`}
+      className={` h-full w-full overflow-y-auto bg-gradient-to-tr from-[hsla(220,39%,10%,1)] via-[#1b2947] to-transparent pt-5`}
     >
       {/* <Nav /> */}
-      <BackgroundImages />
-      <GradientContainer>
-        <Main />
-        <CreateRoomButton />
-      </GradientContainer>
+
+      <div className="relative z-10 flex h-full w-full flex-col items-center justify-start gap-3">
+        <BackgroundImages />
+        <GradientContainer>
+          <Main />
+          <CreateRoomButton />
+        </GradientContainer>
+      </div>
+      <Image className="w-full pt-24 opacity-55" src={waves} alt="waves" />
     </div>
   )
 }

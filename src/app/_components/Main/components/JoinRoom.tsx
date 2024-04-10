@@ -16,7 +16,7 @@ const JoinRoom = () => {
       name="Odaya katıl"
       description="Odaya katıl ve oynamaya başla!"
       keyName="1"
-      className="rounded-tl-md hover:from-[rgba(55,255,188,0.4)] hover:to-[rgba(255,255,255,0.3)]"
+      className="rounded-tr-md hover:from-[rgba(55,255,188,0.4)] hover:to-[rgba(255,255,255,0.3)]"
     />
   )
 }

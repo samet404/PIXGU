@@ -15,7 +15,7 @@ const Friends = async () => {
         link="/f"
         icon={
           <Image
-            className="size-12 opacity-30 drop-shadow-[0_0px_8px_rgba(0,0,0,0.7)]"
+            className=" size-12 opacity-30 drop-shadow-[0_0px_8px_rgba(0,0,0,0.7)]"
             src={friends}
             alt="friends?"
           />

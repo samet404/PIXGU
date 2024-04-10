@@ -16,7 +16,7 @@ const CreateRoom = () => {
       name="Oda oluştur"
       description="Oda oluştur ve arkadaşlarını davet et!"
       keyName="2"
-      className="rounded-tr-md hover:from-[rgba(255,238,53,0.4)] hover:to-[rgba(255,255,255,0.3)]"
+      className="hover:from-[rgba(255,238,53,0.4)] hover:to-[rgba(255,255,255,0.3)]"
     />
   )
 }

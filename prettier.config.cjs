@@ -1,3 +1,4 @@
+/** @type {import('prettier').Config & import('prettier-plugin-tailwindcss').options} */
 const config = {
   plugins: ['prettier-plugin-tailwindcss'],
   pluginSearchDirs: false,
@@ -5,6 +6,7 @@ const config = {
   singleQuote: true,
   overrides: [
     {
+      files: ['*.ts', '*.tsx', '*.js', '*.jsx'],
       options: {
         semi: false,
         singleQuote: true,
@@ -13,4 +15,4 @@ const config = {
   ],
 };
 
-export default config;
+module.exports = config;

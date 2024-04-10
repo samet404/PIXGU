@@ -19,7 +19,7 @@ const HowToPlay = async () => {
         description="Nasıl oynayacağını bilmiyor musun? Hemen öğren!"
         keyName="3"
         className={clsx(
-          'h-full w-full rounded-bl-md hover:from-[rgba(53,228,255,0.4)] hover:to-[rgba(255,255,255,0.3)]',
+          'h-full w-full  hover:from-[rgba(53,228,255,0.4)] hover:to-[rgba(255,255,255,0.3)]',
         )}
       />
     </div>

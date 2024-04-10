@@ -10,6 +10,11 @@ const config = {
     config,
     { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack },
   ) => {
+    config.externals.push({
+      'utf-8-validate': 'commonjs utf-8-validate',
+      bufferutil: 'commonjs bufferutil',
+    });
+
     // Important: return the modified config
     // https://nextjs.org/docs/app/api-reference/next-config-js/webpack
 
@@ -24,6 +29,9 @@ const config = {
     };
 
     return config;
+  },
+  experimental: {
+    serverComponentsExternalPackages: ['ably'],
   },
   reactStrictMode: false,
   images: {
