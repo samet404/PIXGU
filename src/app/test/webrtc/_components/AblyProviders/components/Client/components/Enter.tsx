@@ -1,17 +1,17 @@
+import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { type OverrideProps } from '@/types/overrideProps'
 import { subscribeAblyPresence } from '@/utils/subscribeAblyPresence'
 import { type PresenceMessage, type RealtimeChannel } from 'ably'
 import type Peer from 'peerjs'
 import { type DataConnection } from 'peerjs'
 import { type MutableRefObject, useState } from 'react'
-import { setPeerID } from '../actions/setPeerID'
-import { useTimeout } from 'usehooks-ts'
+// import { setPeerID } from '../../../actions/setPeerID'
 
 type EnterProps = {
   channel: RealtimeChannel
   connectionID: string
   conns: MutableRefObject<DataConnection[] | null>
-  myPeer: MutableRefObject<Peer>
+  myPeer: Peer
 }
 
 const Enter = ({ channel, connectionID, conns, myPeer }: EnterProps) => {
@@ -22,16 +22,20 @@ const Enter = ({ channel, connectionID, conns, myPeer }: EnterProps) => {
     }[]
   >([])
 
+  useEffectOnce(() => {
+    channel.presence.enter({
+      peerID: myPeer.id,
+    })
+  })
+
   subscribeAblyPresence(
     channel,
     'enter',
     (msg: OverrideProps<PresenceMessage, EnterChannelMessageData>) => {
-      setPeerID(msg.data.peerID)
+      // setPeerID(msg.data.peerID)s
 
-      if (msg.connectionId !== connectionID) {
+      if (msg.data.peerID !== myPeer.id) {
         console.log(`${msg.data.peerID} enter channel`)
-
-        setLogs([...logs, { peerID: msg.data.peerID }])
       }
     },
   )

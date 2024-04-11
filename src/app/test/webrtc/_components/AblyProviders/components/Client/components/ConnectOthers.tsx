@@ -9,7 +9,7 @@ import { type MutableRefObject, useRef } from 'react'
 type ConnectOthersProps = {
   channel: RealtimeChannel
   connectionID: string
-  myPeer: MutableRefObject<Peer>
+  myPeer: Peer
   conns: MutableRefObject<DataConnection[] | null>
 }
 
@@ -29,10 +29,10 @@ const ConnectOthers = ({
         console.log('onSuccess', data)
         data.forEach((peerID) => {
           console.log('forEach', data)
-          console.log(peerID, myPeer.current.id)
+          console.log(peerID, myPeer.id)
 
-          if (peerID !== myPeer.current.id) {
-            const conn = myPeer.current.connect(peerID)
+          if (peerID !== myPeer.id) {
+            const conn = myPeer.connect(peerID)
 
             conn.on('open', () => {
               console.log(`Connected to ${peerID}`)

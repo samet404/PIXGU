@@ -4,7 +4,7 @@ import { useRef, type MutableRefObject } from 'react'
 
 type InputProps = {
   conns: MutableRefObject<DataConnection[] | null>
-  myPeer: MutableRefObject<Peer>
+  myPeer: Peer
 }
 
 const Input = ({ conns, myPeer }: InputProps) => {
