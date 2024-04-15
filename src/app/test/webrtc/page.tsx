@@ -1,4 +1,8 @@
-import AblyProviders from './_components/AblyProviders'
+import dynamic from 'next/dynamic'
+
+const AblyProviders = dynamic(() => import('./_components/AblyProviders'), {
+  ssr: false,
+})
 
 const WebRTC = () => {
   return (

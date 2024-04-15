@@ -1,3 +1,4 @@
+import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { api } from '@/trpc/react'
 import { OverrideProps } from '@/types/overrideProps'
 import { subscribeAblyPresence } from '@/utils/subscribeAblyPresence'
@@ -27,6 +28,7 @@ const ConnectOthers = ({
       enabled: false,
       onSuccess: (data) => {
         console.log('onSuccess', data)
+
         data.forEach((peerID) => {
           console.log('forEach', data)
           console.log(peerID, myPeer.id)
@@ -48,15 +50,35 @@ const ConnectOthers = ({
     },
   )
 
-  // subscribeAblyPresence(
-  //   channel,
-  //   'enter',
-  //   (msg: OverrideProps<PresenceMessage, EnterChannelMessageData>) => {
-  //     console.log(peerIDs.data, msg.data.peerID, myPeer.current.id)
-  //     if (!peerIDs.data && msg.data.peerID == myPeer.current.id)
-  //       peerIDs.refetch()
-  //   },
-  // )
+  myPeer.once('open', () => {
+    peerIDs.refetch()
+  })
+
+  useEffectOnce(() => {
+    subscribeAblyPresence(
+      channel,
+      'enter',
+      (msg: OverrideProps<PresenceMessage, EnterChannelMessageData>) => {
+        const { peerID } = msg.data
+        console.log('enter presence from connectedOthers.tsx')
+
+        if (!peerIDs.data && peerID == myPeer.id) {
+          const conn = myPeer.connect(msg.data.peerID)
+
+          conn.on('open', () => {
+            console.log(`Connected to ${msg.data.peerID}`)
+            conns.current = conns.current ? [...conns.current, conn] : [conn]
+
+            conn.on('data', (data: any) => {
+              console.log(
+                `Received data from ${msg.data.peerID}: ${data.toString()}`,
+              )
+            })
+          })
+        }
+      },
+    )
+  })
 
   return <div>ConnectOthers</div>
 }

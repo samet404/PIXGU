@@ -1,11 +1,6 @@
 import { iceServers } from '@/utils/iceServers'
 import Peer, { type PeerOptions as DefaultPeerOptions } from 'peerjs'
-import {
-  type MutableRefObject,
-  useRef,
-  type EffectCallback,
-  useState,
-} from 'react'
+import { useRef, useState } from 'react'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
 
 /**
