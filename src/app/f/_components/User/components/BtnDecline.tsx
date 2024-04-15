@@ -2,7 +2,7 @@
 
 import Btn from './Btn'
 import { faMinus } from '@fortawesome/free-solid-svg-icons'
-import { api } from '@/src/trpc/react'
+import { api } from '@/trpc/react'
 import { useRouter } from 'next/navigation'
 
 const BtnDecline = ({ ID }: { ID: string }) => {

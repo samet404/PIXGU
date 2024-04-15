@@ -5,7 +5,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useSetAtom } from 'jotai'
 import { useSearch } from '../../../hooks/useSearch'
-import { clsxMerge } from '@/src/utils/clsxMerge'
+import { clsxMerge } from '@/utils/clsxMerge'
 
 const SearchBtn = () => {
   const setInputValues = useSetAtom(inputValuesAtom)

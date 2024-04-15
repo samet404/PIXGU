@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { clsxMerge } from '@/src/utils/clsxMerge'
+import { clsxMerge } from '@/utils/clsxMerge'
 import { type IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useSpring, animated } from '@react-spring/web'

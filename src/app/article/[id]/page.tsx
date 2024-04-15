@@ -9,7 +9,7 @@ import Image from 'next/image'
 import { polyfill } from 'interweave-ssr'
 import LeftSidebar from '../_components/LeftSidebar'
 import RightSidebar from '../_components/RightSidebar'
-import { api } from '@/src/trpc/server'
+import { api } from '@/trpc/server'
 import z from 'zod'
 import NotFound from '../../not-found'
 const inter = Inter({

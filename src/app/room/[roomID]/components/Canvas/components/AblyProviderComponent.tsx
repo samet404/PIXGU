@@ -4,20 +4,17 @@ import { AblyProvider } from 'ably/react'
 import { useAtomValue } from 'jotai'
 import { userIDAtom } from '../../../atoms'
 import { type ReactNode } from 'react'
-import { useAblyRealtimeClient } from '@/hooks/useAblyRealtimeClient'
+import { useAblyTokenClient } from '@/hooks/useAblyTokenClient'
 
 const AblyProviderComponent = ({ children }: { children: ReactNode }) => {
   const userID = useAtomValue(userIDAtom)
 
-  const ablyClient = useAblyRealtimeClient({
-    authUrl: '/api/ably/token',
-    authMethod: 'POST',
-    echoMessages: false,
+  const { ablyClient } = useAblyTokenClient({
     clientId: userID!,
   })
 
   if (!ablyClient) return <div className="text-white">loading...</div>
 
-  return <AblyProvider client={ablyClient}>{children}</AblyProvider>
+  return <AblyProvider client={ablyClient.current}>{children}</AblyProvider>
 }
 export default AblyProviderComponent

@@ -1,4 +1,4 @@
-import { api } from '@/src/trpc/server'
+import { api } from '@/trpc/server'
 import Link from 'next/link'
 import { type ReactNode } from 'react'
 import Image from 'next/image'

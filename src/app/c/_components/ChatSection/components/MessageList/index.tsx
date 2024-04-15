@@ -1,6 +1,6 @@
 'use client'
 
-import { selectedUserInfoIDAtom } from '@/src/app/c/atoms'
+import { selectedUserInfoIDAtom } from '@/app/c/atoms'
 import { useAtomValue } from 'jotai'
 import { Fragment } from 'react'
 import NewMessages from './components/NewMessages'

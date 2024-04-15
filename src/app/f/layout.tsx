@@ -1,11 +1,11 @@
 import { type ReactNode } from 'react'
 import Nav from './_components/Nav'
-import { api } from '@/src/trpc/server'
+import { api } from '@/trpc/server'
 import { redirect } from 'next/navigation'
 
 const FriendsLayout = async ({ children }: { children: ReactNode }) => {
   const session = await api.user.getSession.query()
-  
+
   if (!session) redirect('/login')
 
   return (
@@ -18,7 +18,6 @@ const FriendsLayout = async ({ children }: { children: ReactNode }) => {
     >
       {children}
       <Nav />
-      
     </div>
   )
 }

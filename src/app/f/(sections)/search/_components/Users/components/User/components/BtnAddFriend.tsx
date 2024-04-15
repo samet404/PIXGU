@@ -1,5 +1,5 @@
-import { api } from '@/src/trpc/react'
-import { clsxMerge } from '@/src/utils/clsxMerge'
+import { api } from '@/trpc/react'
+import { clsxMerge } from '@/utils/clsxMerge'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { isError } from '@tanstack/react-query'

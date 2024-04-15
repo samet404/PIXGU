@@ -1,4 +1,4 @@
-import { setSearchParam } from '@/src/utils/setSearchParam'
+import { setSearchParam } from '@/utils/setSearchParam'
 import { type MutableRefObject } from 'react'
 
 type ButtonsProps = {

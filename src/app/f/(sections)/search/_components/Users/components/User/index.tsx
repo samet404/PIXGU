@@ -3,7 +3,7 @@
 import { Inter } from 'next/font/google'
 import Image from 'next/image'
 import BtnAddFriend from './components/BtnAddFriend'
-import { api } from '@/src/trpc/react'
+import { api } from '@/trpc/react'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -17,7 +17,7 @@ type UserProps = {
 }
 
 const User = ({ ID, name, pfp }: UserProps) => {
-  const session = api.user.getSession.useQuery()
+  const session = api.auth.getUser.useQuery()
 
   return (
     <div
@@ -41,7 +41,7 @@ const User = ({ ID, name, pfp }: UserProps) => {
         <BtnAddFriend userID={ID} />
       </div>
 
-      {session.data?.user.usernameWithUsernameID == name ? (
+      {session.data?.usernameWithUsernameID == name ? (
         <div className="flex w-full rounded-md bg-yellow-400 p-2 text-[#fffffff5] drop-shadow-[0_0px_3px_rgba(0,0,0,0.2)]">
           <div className="cursor-text select-text text-sm text-[#ffffffee] drop-shadow-[0_0px_3px_rgba(0,0,0,0.3)]">
             Bu sensin

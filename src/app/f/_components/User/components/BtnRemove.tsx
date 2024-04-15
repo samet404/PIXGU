@@ -1,6 +1,6 @@
 'use client'
 
-import { api } from '@/src/trpc/react'
+import { api } from '@/trpc/react'
 import { faBan } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 

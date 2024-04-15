@@ -4,7 +4,7 @@ import { useSetAtom } from 'jotai'
 import { useInterval } from 'usehooks-ts'
 import { setSearchParamColorAtom } from '../atoms'
 import { useRef } from 'react'
-import { api } from '@/src/trpc/react'
+import { api } from '@/trpc/react'
 
 const A = () => {
   const firstFriendByName =

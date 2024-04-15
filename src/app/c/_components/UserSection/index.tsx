@@ -1,4 +1,4 @@
-import { api } from '@/src/trpc/server'
+import { api } from '@/trpc/server'
 import User from './_components/User'
 import { Pixelify_Sans } from 'next/font/google'
 

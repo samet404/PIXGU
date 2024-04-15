@@ -3,7 +3,7 @@
 import { Inter } from 'next/font/google'
 import Image from 'next/image'
 // import BtnAddFriend from './components/BtnAddFriend'
-import { api } from '@/src/trpc/react'
+import { api } from '@/trpc/react'
 import BtnRemove from './components/BtnRemove'
 import ChatLink from './components/ChatLink'
 

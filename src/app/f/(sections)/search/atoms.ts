@@ -1,4 +1,4 @@
-import { type RouterOutputs } from '@/src/trpc/shared'
+import { type RouterOutputs } from '@/trpc/shared'
 import { atom } from 'jotai'
 
 type User =

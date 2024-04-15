@@ -1,4 +1,4 @@
-import { type IntRange } from '@/src/types/intRange'
+import { type IntRange } from '@/types/intRange'
 import { getSearchParam } from '@/utils/getSearchParam'
 
 export const getRgbaFromURL = () => {

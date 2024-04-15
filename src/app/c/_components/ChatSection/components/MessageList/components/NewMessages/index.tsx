@@ -1,6 +1,6 @@
-import { selectedUserInfoIDAtom } from '@/src/app/c/atoms'
-import { pusherClient } from '@/src/pusher/client'
-import { api } from '@/src/trpc/react'
+import { selectedUserInfoIDAtom } from '@/app/c/atoms'
+import { pusherClient } from '@/pusher/client'
+import { api } from '@/trpc/react'
 import { toPusherKey } from '@/utils/toPusherKey'
 import { useAtomValue } from 'jotai'
 import { Fragment, useEffect, useState } from 'react'
@@ -21,7 +21,7 @@ const NewMessages = () => {
   const { play, mute } = useMessageSound()
   const [messages, setMessages] = useState<newMessagesType[]>()
   const friendID = useAtomValue(selectedUserInfoIDAtom)
-  const userID = api.user.getSessionUserID.useQuery(undefined, {
+  const userID = api.auth.getUserID.useQuery(undefined, {
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
   })

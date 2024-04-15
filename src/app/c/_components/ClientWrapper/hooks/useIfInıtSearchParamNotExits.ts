@@ -1,7 +1,7 @@
 import { useSetAtom } from 'jotai'
 import { selectedUserInfoAtom } from '../../../atoms'
 import { useEffect } from 'react'
-import { api } from '@/src/trpc/react'
+import { api } from '@/trpc/react'
 import { setSearchParam } from '@/utils/setSearchParam'
 import { getSearchParam } from '@/utils/getSearchParam'
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { api } from '@/src/trpc/react'
+import { api } from '@/trpc/react'
 import { useEffect } from 'react'
 import { pusherClient } from '@/pusher/client'
 import { toPusherKey } from '@/utils/toPusherKey'
@@ -9,7 +9,7 @@ import User from '../User'
 
 const Content = () => {
   const requests = api.user.getFriendRequests.useQuery()
-  const userID = api.user.getSessionUserID.useQuery()
+  const userID = api.auth.getUserID.useQuery()
 
   useEffect(() => {
     pusherClient.subscribe(
@@ -28,7 +28,7 @@ const Content = () => {
         toPusherKey(`incoming_friend_requests:${userID.data}`),
       )
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (!requests.data) return <NoRequest />

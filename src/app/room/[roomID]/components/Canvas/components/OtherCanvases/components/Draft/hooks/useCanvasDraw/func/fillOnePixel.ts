@@ -1,4 +1,4 @@
-import { type IntRange } from '@/src/types/intRange'
+import { type IntRange } from '@/types/intRange'
 
 export const fillOnePixel = (
   draftCanvas: HTMLCanvasElement,

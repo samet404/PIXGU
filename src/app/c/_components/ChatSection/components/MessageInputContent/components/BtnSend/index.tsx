@@ -2,10 +2,10 @@
 
 import Image from 'next/image'
 import sendIcon from '@/png/icons8-send-24.png'
-import { api } from '@/src/trpc/react'
+import { api } from '@/trpc/react'
 import { clsxMerge } from '@/utils/clsxMerge'
 import { useAtom, useAtomValue } from 'jotai'
-import { selectedUserInfoIDAtom } from '@/src/app/c/atoms'
+import { selectedUserInfoIDAtom } from '@/app/c/atoms'
 import { type Ref, type RefObject, forwardRef } from 'react'
 import { useMessageSound } from './hooks/useMessageSound'
 import { isBtnSendGlowingAtom } from '../../atoms'

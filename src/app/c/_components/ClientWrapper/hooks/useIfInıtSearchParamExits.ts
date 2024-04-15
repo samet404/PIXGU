@@ -1,4 +1,4 @@
-import { api } from '@/src/trpc/react'
+import { api } from '@/trpc/react'
 import { useEffect } from 'react'
 import { selectedUserInfoAtom } from '@/app/c/atoms'
 import { useSetAtom } from 'jotai'

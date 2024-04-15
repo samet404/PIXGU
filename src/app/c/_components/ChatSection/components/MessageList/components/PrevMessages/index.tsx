@@ -1,7 +1,7 @@
 'use client'
 
-import { selectedUserInfoIDAtom } from '@/src/app/c/atoms'
-import { api } from '@/src/trpc/react'
+import { selectedUserInfoIDAtom } from '@/app/c/atoms'
+import { api } from '@/trpc/react'
 import { useAtomValue } from 'jotai'
 import Message from '../Message'
 import { Fragment } from 'react'
@@ -16,7 +16,7 @@ const PrevMessages = () => {
       refetchOnWindowFocus: false,
     },
   )
-  
+
   return (
     <Fragment>
       {prevMessages.data?.map((message, index) => (

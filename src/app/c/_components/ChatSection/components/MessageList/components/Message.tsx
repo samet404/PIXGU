@@ -2,7 +2,7 @@ import {
   user2InfoPfpAtom,
   selectedUserInfoIDAtom,
   selectedUserInfoPfpAtom,
-} from '@/src/app/c/atoms'
+} from '@/app/c/atoms'
 import { useAtomValue } from 'jotai'
 import { useEffect, type RefObject } from 'react'
 import Image from 'next/image'

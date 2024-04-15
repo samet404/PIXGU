@@ -2,7 +2,7 @@
 
 import { useRef } from 'react'
 import Buttons from './components/Buttons'
-import { setSearchParam } from '@/src/utils/setSearchParam'
+import { setSearchParam } from '@/utils/setSearchParam'
 
 const Input = () => {
   const inputRef = useRef<HTMLInputElement | null>(null)
