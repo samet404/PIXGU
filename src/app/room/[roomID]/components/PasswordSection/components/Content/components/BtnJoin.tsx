@@ -27,8 +27,7 @@ const BtnJoin = ({ passInputRef }: BtnJoinProps) => {
   const handleOnClick = () => {
     const password = passInputRef.current?.value
 
-    if (!password) return
-
+    if (!password) return null
     mutate({
       password: password,
       roomID: pathname.replace('/room/', ''),

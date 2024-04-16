@@ -3,30 +3,23 @@ import { useRef } from 'react'
 //ably
 import { useChannel } from 'ably/react'
 // jotai
-import { useAtomValue, useSetAtom } from 'jotai'
+import { useAtomValue } from 'jotai'
 import { roomIDAtom, userIDAtom } from '@/app/room/[roomID]/atoms'
-import {
-  cellSideCountAtom,
-  isDrawingAtom,
-  pixelPerDrawAtom,
-} from '@/app/room/[roomID]/components/Canvas/atoms'
+import { cellSideCountAtom } from '../../../../atoms'
 // types
-import type { LastDrawedPixel, PixelHistory } from './types'
+import type { LastDrawedPixel, PixelHistory, pixelPerSecond } from './types'
 // funcs
 import { addGrid, draw, wsDrawEvent } from './func/_index'
 import { useEventListener } from 'usehooks-ts'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
-import { type PixelPerDraw } from '@/app/room/[roomID]/components/Canvas/types'
 import { type Message } from 'ably'
+import { finishedPosition } from './func/finishedPosition'
 
 export const useCanvasDraw = () => {
   // atoms
   const userID = useAtomValue(userIDAtom)
   const roomID = useAtomValue(roomIDAtom)
   const cellSideCount = useAtomValue(cellSideCountAtom)
-  const setPixelPerDraw = useSetAtom(pixelPerDrawAtom)
-  const setIsDrawing = useSetAtom(isDrawingAtom)
-  // global variables
 
   // canvas variables
   const draftCanvasRef = useRef<HTMLCanvasElement | null>(null)
@@ -37,12 +30,9 @@ export const useCanvasDraw = () => {
   const cellPixelLengthRef = useRef<number>()
   const paintingRef = useRef<boolean>(false)
   const pixelHistoryRef = useRef<PixelHistory>({})
-  const pixelPerDrawDataRef = useRef<PixelPerDraw>()
+  const pixelPerSecondRef = useRef<pixelPerSecond>()
   const pixelPerSecondLimitRef = useRef<number>(100)
-  let wsCount: {
-    count: number
-    date: number
-  }[] = []
+  let pixelPerSecondLimitAlert = false
 
   // initializing somethings
   useEffectOnce(() => {
@@ -74,46 +64,6 @@ export const useCanvasDraw = () => {
     addGrid(cellPixelLengthRef.current)
   })
 
-  const roughSizeOfObject = (object: object) => {
-    // @ts-ignore
-    const objectList = []
-    const stack = [object]
-    let bytes = 0
-
-    while (stack.length) {
-      const value = stack.pop()
-
-      switch (typeof value) {
-        case 'boolean':
-          bytes += 4
-          break
-        case 'string':
-          // @ts-ignore
-          bytes += value.length * 2
-          break
-        case 'number':
-          bytes += 8
-          break
-        case 'object':
-          // @ts-ignore
-          if (!objectList.includes(value)) {
-            objectList.push(value)
-            for (const prop in value) {
-              // @ts-ignore
-              // eslint-disable-next-line no-prototype-builtins
-              if (value.hasOwnProperty(prop)) {
-                // @ts-ignore
-                stack.push(value[prop])
-              }
-            }
-          }
-          break
-      }
-    }
-
-    return bytes
-  }
-
   // connecting to {roomID}:draw channel
   const { channel: wsRoomDrawChannel } = useChannel(
     `${roomID}:draw`,
@@ -127,13 +77,6 @@ export const useCanvasDraw = () => {
         cellPixelLengthRef.current!,
       )
 
-      wsCount.push({
-        count: wsCount.length + 1,
-        date: new Date().getSeconds(),
-      })
-
-      console.log(wsCount)
-      console.log(roughSizeOfObject(message))
       console.log(message)
     },
   )
@@ -143,10 +86,8 @@ export const useCanvasDraw = () => {
     paintingRef.current = false
 
     dctxRef.current!.beginPath()
-    setIsDrawing(false)
   }
 
-  let pixelPerSecondLimitAlert = false
   const startPosition = (e: MouseEvent) => {
     console.log('startPosition')
     if (e.button !== 0) return null
@@ -161,7 +102,6 @@ export const useCanvasDraw = () => {
       alert(`You can draw ${pixelPerSecondLimit} pixels per second`)
       pixelPerSecondLimitAlert = true
       paintingRef.current = false
-      setPixelPerDraw(null)
       return null
     }
 
@@ -280,23 +220,17 @@ export const useCanvasDraw = () => {
     }
   }
 
-  const finishedPosition = () => {
-    console.log('finishedPosition')
-    paintingRef.current = false
-
-    setIsDrawing(false)
-
-    const mctx = mctxRef.current!
-    const dctx = dctxRef.current!
-    const draftCanvas = draftCanvasRef.current!
-
-    mctx.drawImage(draftCanvas, 0, 0) // copy drawing to main
-    dctx.clearRect(0, 0, draftCanvas.width, draftCanvas.height) // clear draft
-  }
+  const mouseup = () =>
+    finishedPosition(
+      paintingRef,
+      mctxRef.current!,
+      dctxRef.current!,
+      draftCanvasRef.current!,
+    )
 
   // add event listeners to the draft canvas
   useEventListener('mousedown', startPosition, draftCanvasRef)
-  useEventListener('mouseup', finishedPosition, draftCanvasRef)
+  useEventListener('mouseup', mouseup, draftCanvasRef)
   useEventListener('mousemove', drawing, draftCanvasRef)
   useEventListener('mouseout', mouseOut, draftCanvasRef)
 }

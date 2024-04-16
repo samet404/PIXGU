@@ -1,6 +1,5 @@
 import ColorPicker from './components/ColorPicker'
 import GridSwitcher from './components/GridSwitcher'
-import Thickness from './components/Thickness'
 import { Pixelify_Sans } from 'next/font/google'
 
 const pixelyfySans = Pixelify_Sans({

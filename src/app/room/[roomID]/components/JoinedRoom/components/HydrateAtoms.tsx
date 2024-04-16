@@ -2,7 +2,7 @@
 
 import { useHydrateAtoms } from 'jotai/utils'
 import { type ReactNode } from 'react'
-import { roomIDAtom, userIDAtom, playersAtom } from '../atoms'
+import { roomIDAtom, userIDAtom, playersAtom } from '../../../atoms'
 import { type RouterOutputs } from '@/trpc/shared'
 
 type HydrateAtomsProps = {

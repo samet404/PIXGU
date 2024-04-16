@@ -1,12 +1,13 @@
 import GridCanvas from './components/GridCanvas'
-import OtherPlayersCanvases from './components/OtherPlayersCanvases'
-import Draft from './components/Draft'
+import dynamic from 'next/dynamic'
+
+const Draft = dynamic(() => import('./components/Draft'), { ssr: false })
 
 const OtherCanvases = () => {
   return (
     <div className="absolute bottom-0 left-0 right-0 top-0">
-      <Draft />
       <GridCanvas />
+      <Draft />
     </div>
   )
 }

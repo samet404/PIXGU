@@ -7,6 +7,4 @@ export { getPlayingRoom } from './getPlayingRoom'
 export { setPlayingRoomIDToNull } from './setPlayingRoomIDToNull'
 export { getPlayingRoomUsers } from './getPlayingRoomUsers'
 
-export { setNewPeerID } from './setNewPeerID'
-export { remPeerID } from './remPeerID'
-export { getPeerIDs } from './getPeerIDs'
+export { joinRoom } from './joinRoom'
