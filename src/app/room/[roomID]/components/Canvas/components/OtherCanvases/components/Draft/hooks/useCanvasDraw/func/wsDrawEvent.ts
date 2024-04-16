@@ -1,6 +1,8 @@
 import { isObjectEmpty } from '@/utils/isObjectEmpty'
 import { type IntRange } from '@/types/intRange'
+// @ts-ignore
 import { type Types as AblyTypes } from 'ably'
+// @ts-ignore
 import { type pixelHistory } from '../types'
 import { fillOnePixel } from './fillOnePixel'
 

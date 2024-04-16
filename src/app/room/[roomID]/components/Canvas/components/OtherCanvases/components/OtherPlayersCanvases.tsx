@@ -2,7 +2,7 @@ import { api } from '@/trpc/server'
 
 const OtherPlayersCanvases = async () => {
   const players = await api.gameRoom.getPlayingRoomUsers.query()
-  const userID = await api.user.getSessionUserID.query()
+  const userID = await api.auth.getUserID.query()
 
   return players.map((player, index) => {
     if (player.userID === userID) return null

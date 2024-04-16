@@ -1,7 +1,6 @@
 import { Outfit } from 'next/font/google'
 import NavItem from './components/NavItem'
-import { auth } from '@/auth/lucia'
-import * as context from 'next/headers'
+import { api } from '@/trpc/server'
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -9,8 +8,7 @@ const outfit = Outfit({
 })
 
 const Nav = async () => {
-  const authRequest = auth.handleRequest('GET', context)
-  const session = await authRequest.validate()
+  const isLogged = await api.auth.isLogged.query()
 
   return (
     <nav
@@ -21,7 +19,7 @@ const Nav = async () => {
       }}
       className={`${outfit.className} flex h-full w-52 flex-col items-center gap-4 overflow-y-auto pt-7  text-[rgba(255,255,255,0.8)] shadow-[0_0px_40px_10px_rgba(0,0,0,0.4)]`}
     >
-      {session ? <NavItem name="Account" /> : null}
+      {isLogged ? <NavItem name="Account" /> : null}
       <NavItem name="Themes" />
       <NavItem name="Controls" />
       <NavItem name="Sounds" />

@@ -1,4 +1,3 @@
-import ClientWrapper from './components/ClientWrapper'
 import Download from './components/Download'
 import OtherCanvases from './components/OtherCanvases'
 import AblyProviderComponent from './components/AblyProviderComponent'

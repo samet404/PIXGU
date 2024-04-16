@@ -19,7 +19,7 @@ type UserProps = {
 }
 
 const User = ({ ID, name, pfp }: UserProps) => {
-  const session = api.user.getSession.useQuery()
+  const user = api.auth.getUser.useQuery()
 
   return (
     <div
@@ -46,7 +46,7 @@ const User = ({ ID, name, pfp }: UserProps) => {
         </div>
       </div>
 
-      {session.data?.user?.usernameWithUsernameID == name ? (
+      {user.data?.usernameWithUsernameID == name ? (
         <div className="flex w-full rounded-md bg-yellow-400 p-2 text-[#fffffff5] drop-shadow-[0_0px_3px_rgba(0,0,0,0.2)]">
           <div className="cursor-text select-text text-sm text-[#ffffffee] drop-shadow-[0_0px_4px_rgba(0,0,0,0.6)]">
             {`(< O-O)>!? Bu sensin`}

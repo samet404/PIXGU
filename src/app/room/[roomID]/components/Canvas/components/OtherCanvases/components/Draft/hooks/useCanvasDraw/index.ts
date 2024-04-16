@@ -11,13 +11,13 @@ import {
   pixelPerDrawAtom,
 } from '@/app/room/[roomID]/components/Canvas/atoms'
 // types
-import type { Types as AblyTypes } from 'ably'
 import type { LastDrawedPixel, PixelHistory } from './types'
 // funcs
 import { addGrid, draw, wsDrawEvent } from './func/_index'
 import { useEventListener } from 'usehooks-ts'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { type PixelPerDraw } from '@/app/room/[roomID]/components/Canvas/types'
+import { type Message } from 'ably'
 
 export const useCanvasDraw = () => {
   // atoms
@@ -117,7 +117,7 @@ export const useCanvasDraw = () => {
   // connecting to {roomID}:draw channel
   const { channel: wsRoomDrawChannel } = useChannel(
     `${roomID}:draw`,
-    (message: AblyTypes.Message) => {
+    (message: Message) => {
       wsDrawEvent(
         message,
         draftCanvasRef.current!,
