@@ -1,9 +1,7 @@
-'use client'
-
 import { GeistSans } from 'geist/font/sans'
 import Content from './components/Content'
 
-const PasswordSection = () => {
+const PasswordSection = ({ userID }: { userID: string }) => {
   return (
     <div className="flex h-full w-full overflow-y-scroll py-10 xxs:flex-col lg:items-center lg:justify-center">
       <div className="flex xxs:w-full xxs:justify-center">
@@ -14,7 +12,7 @@ const PasswordSection = () => {
             ENTER PASSWORD
           </div>
 
-          <Content />
+          <Content userID={} />
         </div>
       </div>
     </div>

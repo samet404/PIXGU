@@ -9,9 +9,11 @@ type SpinnerProps = {
 
 const Spinner = ({ sizes, className }: SpinnerProps) => (
   <Image
-    className={clsxMerge(`animate-spin ${className}`)}
+    className={clsxMerge(
+      `h-10 w-10 animate-spin animate-infinite ${className}`,
+    )}
     src={img}
-    alt="loading..."
+    alt="pls wait..."
     sizes={sizes}
   />
 )

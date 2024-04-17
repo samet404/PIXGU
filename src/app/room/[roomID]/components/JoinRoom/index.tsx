@@ -1,3 +1,5 @@
+'use client'
+
 import Spinner from '@/components/Spinner'
 import { api } from '@/trpc/react'
 import { useRouter } from 'next/navigation'
@@ -10,11 +12,15 @@ const JoinRoom = ({ roomID }: { roomID: string }) => {
       console.log('joined room')
       router.refresh()
     },
+    onError: (error) => {
+      throw new Error(error.message)
+    },
+    retry: 3,
   })
 
-  joinRoom({
-    roomID: roomID,
-  })
+  // joinRoom({
+  //   roomID: roomID,
+  // })
 
   return <Spinner />
 }
