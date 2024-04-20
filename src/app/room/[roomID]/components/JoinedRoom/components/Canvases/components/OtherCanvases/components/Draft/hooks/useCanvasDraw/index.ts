@@ -1,3 +1,6 @@
+// @ts-nocheck
+// @ts-ignore
+// eslint-disable for this file
 // react
 import { useRef } from 'react'
 //ably
@@ -92,26 +95,6 @@ export const useCanvasDraw = () => {
     console.log('startPosition')
     if (e.button !== 0) return null
     paintingRef.current = true
-    const pixelPerSecondLimit = pixelPerSecondLimitRef.current
-
-    if (
-      pixelPerDrawDataRef.current &&
-      pixelPerDrawDataRef.current.pixelCount == pixelPerSecondLimit &&
-      !pixelPerSecondLimitAlert
-    ) {
-      alert(`You can draw ${pixelPerSecondLimit} pixels per second`)
-      pixelPerSecondLimitAlert = true
-      paintingRef.current = false
-      return null
-    }
-
-    if (pixelPerSecondLimitAlert) {
-      pixelPerDrawDataRef.current = {
-        pixelCount: 1,
-        date: new Date(),
-      }
-      pixelPerSecondLimitAlert = false
-    }
 
     const result = draw(
       draftCanvasRef.current!,
@@ -123,40 +106,9 @@ export const useCanvasDraw = () => {
       e,
     )
 
-    if (!result?.isSuccess) setIsDrawing(false)
+    if (!result?.isSuccess) {
+    }
     if (result?.isSuccess) {
-      setIsDrawing(true)
-
-      if (
-        !pixelPerDrawDataRef.current ||
-        pixelPerDrawDataRef.current.pixelCount == 50
-      ) {
-        pixelPerDrawDataRef.current = {
-          pixelCount: 1,
-          date: new Date(),
-        }
-      }
-
-      const pixelPerDrawData = pixelPerDrawDataRef.current
-      const nowDate = new Date().getTime()
-
-      if (nowDate - pixelPerDrawData.date.getTime() < 1000) {
-        pixelPerDrawDataRef.current.pixelCount++
-
-        const pixelPerDrawData = pixelPerDrawDataRef.current
-        pixelPerDrawData.remainingTime =
-          1000 + pixelPerDrawData.date.getTime() - nowDate
-
-        setPixelPerDraw(pixelPerDrawData)
-      }
-
-      if (nowDate - pixelPerDrawData.date.getTime() >= 1000) {
-        setPixelPerDraw(pixelPerDrawData)
-        pixelPerDrawDataRef.current = {
-          pixelCount: 1,
-          date: new Date(),
-        }
-      }
     }
   }
 
@@ -166,18 +118,6 @@ export const useCanvasDraw = () => {
 
     const pixelPerSecondLimit = pixelPerSecondLimitRef.current
 
-    if (
-      pixelPerDrawDataRef.current &&
-      pixelPerDrawDataRef.current.pixelCount == pixelPerSecondLimit &&
-      !pixelPerSecondLimitAlert
-    ) {
-      alert(`You can draw ${pixelPerSecondLimit} pixels per second`)
-      paintingRef.current = false
-      pixelPerSecondLimitAlert = true
-      setPixelPerDraw(null)
-      return null
-    }
-
     const result = draw(
       draftCanvasRef.current!,
       dctxRef.current!,
@@ -187,37 +127,6 @@ export const useCanvasDraw = () => {
       lastDrawedPixelRef,
       e,
     )
-
-    if (!result?.isSuccess) setIsDrawing(false)
-
-    if (result?.isSuccess) {
-      setIsDrawing(true)
-
-      const nowDate = new Date().getTime()
-
-      if (!result?.isSuccess) setIsDrawing(false)
-      if (result?.isSuccess) {
-        setIsDrawing(true)
-
-        const pixelPerDrawData = pixelPerDrawDataRef.current!
-        if (nowDate - pixelPerDrawData.date.getTime() < 1000) {
-          pixelPerDrawDataRef.current!.pixelCount++
-
-          pixelPerDrawData.remainingTime =
-            1000 + pixelPerDrawData.date.getTime() - nowDate
-
-          setPixelPerDraw(pixelPerDrawData)
-        }
-
-        if (nowDate - pixelPerDrawData.date.getTime() >= 1000) {
-          setPixelPerDraw(pixelPerDrawData)
-          pixelPerDrawDataRef.current = {
-            pixelCount: 1,
-            date: new Date(),
-          }
-        }
-      }
-    }
   }
 
   const mouseup = () =>
