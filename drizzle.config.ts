@@ -1,13 +1,15 @@
 import type { Config } from 'drizzle-kit'
+import { getXataClient } from '@/xata'
 import { env } from '@/env/server.mjs'
 
+const xata = getXataClient()
+
 export default {
-  
   schema: './src/server/db/sqlDb/schema',
   out: './src/server/db/sqlDb',
   driver: 'pg',
   dbCredentials: {
-    connectionString: env.SQL_DATABASE_URL,
+    connectionString: env.NEON_URL,
   },
   verbose: true,
   strict: true,

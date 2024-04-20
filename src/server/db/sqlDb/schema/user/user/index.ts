@@ -6,7 +6,6 @@ import {
   text,
   bigint,
 } from 'drizzle-orm/pg-core'
-import { gameRoom } from '../..'
 
 export const user = pgTable('user', {
   id: text('id').primaryKey(),
@@ -20,14 +19,6 @@ export const user = pgTable('user', {
     .unique()
     .notNull(),
   profilePicture: varchar('profile_picture', { length: 255 }),
-
-  playingRoomID: varchar('playing_room_ID', { length: 128 }).references(
-    () => gameRoom.ID,
-  ),
-
-  isAdminInPlayingRoom: char('is_admin_in_playing_room', {
-    length: 1,
-  }),
 
   githubId: bigint('github_id', { mode: 'number' }).unique(),
   discordId: varchar('discord_id').unique(),

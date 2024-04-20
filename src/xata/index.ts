@@ -3,7 +3,7 @@ import { buildClient } from '@xata.io/client'
 import type {
   BaseClientOptions,
   SchemaInference,
-  // XataRecord,
+  XataRecord,
 } from '@xata.io/client'
 
 const tables = [] as const

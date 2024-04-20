@@ -10,9 +10,10 @@ export const env = createEnv({
    * isn't built with invalid env vars.
    */
   server: {
+    NEON_URL: z.string().refine((str) => !str.includes('YOUR_NEON_URL_HERE')),
+
     XATA_BRANCH: z
       .string()
-      .url()
       .refine(
         (str) => !str.includes('YOUR_XATA_BRANCH_HERE'),
         'You forgot to change the default SQL_DATABASE_URL',
@@ -20,7 +21,6 @@ export const env = createEnv({
 
     XATA_API_KEY: z
       .string()
-      .url()
       .refine(
         (str) => !str.includes('YOUR_XATA_API_KEY_HERE'),
         'You forgot to change the default SQL_DATABASE_URL',
@@ -165,6 +165,8 @@ export const env = createEnv({
    */
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
+
+    NEON_URL: process.env.NEON_URL,
 
     XATA_BRANCH: process.env.XATA_BRANCH,
     XATA_API_KEY: process.env.XATA_API_KEY,

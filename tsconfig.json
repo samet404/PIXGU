@@ -18,7 +18,7 @@
     "noUncheckedIndexedAccess": true,
     "baseUrl": "./",
     "paths": {
-      "@/xata/*": ["src/xata/*"],
+      "@/xata": ["src/xata/"],
       "@/procedure": ["src/server/api/procedure"],
       "@/schema/*": ["src/server/db/sqlDb/schema/*"],
       "@/env/*": ["src/env/*"],
