@@ -12,7 +12,7 @@ const PasswordSection = ({ userID }: { userID: string }) => {
             ENTER PASSWORD
           </div>
 
-          <Content userID={} />
+          {/* <Content userID={} /> */}
         </div>
       </div>
     </div>
