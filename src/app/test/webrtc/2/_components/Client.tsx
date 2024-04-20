@@ -23,6 +23,7 @@ const Client = () => {
       navigator.mediaDevices
         .getDisplayMedia({ video: true, audio: true })
         .then((stream) => {
+          console.log(stream.getVideoTracks())
           addVideoStream(myScreenShareVideoRef.current!, stream)
 
           myPeer.on('call', (call) => {

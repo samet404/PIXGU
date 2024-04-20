@@ -10,11 +10,19 @@ export const env = createEnv({
    * isn't built with invalid env vars.
    */
   server: {
-    SQL_DATABASE_URL: z
+    XATA_BRANCH: z
       .string()
       .url()
       .refine(
-        (str) => !str.includes('YOUR_POSTGRESQL_URL_HERE'),
+        (str) => !str.includes('YOUR_XATA_BRANCH_HERE'),
+        'You forgot to change the default SQL_DATABASE_URL',
+      ),
+
+    XATA_API_KEY: z
+      .string()
+      .url()
+      .refine(
+        (str) => !str.includes('YOUR_XATA_API_KEY_HERE'),
         'You forgot to change the default SQL_DATABASE_URL',
       ),
 
@@ -158,7 +166,8 @@ export const env = createEnv({
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
 
-    SQL_DATABASE_URL: process.env.SQL_DATABASE_URL,
+    XATA_BRANCH: process.env.XATA_BRANCH,
+    XATA_API_KEY: process.env.XATA_API_KEY,
 
     UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
     UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,

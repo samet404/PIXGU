@@ -1,0 +1,6 @@
+{
+  "databaseURL": "https://404-s-workspace-68cmk0.eu-central-1.xata.sh/db/main-database",
+  "codegen": {
+    "output": "src/xata/xata.ts"
+  }
+}

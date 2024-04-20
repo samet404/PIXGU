@@ -1,10 +1,15 @@
 import { Pool } from '@neondatabase/serverless'
 import { drizzle } from 'drizzle-orm/neon-serverless'
-import { env } from '@/env/server.mjs'
+import { getXataClient } from '@/xata/xata'
 
 import * as schema from './schema'
 
-export const pool = new Pool({ connectionString: env.SQL_DATABASE_URL })
+const xata = getXataClient()
+
+export const pool = new Pool({
+  connectionString: xata.sql.connectionString,
+  max: 10,
+})
 
 export const db = drizzle(pool, {
   schema: {

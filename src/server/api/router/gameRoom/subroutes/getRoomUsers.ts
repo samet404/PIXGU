@@ -3,20 +3,18 @@ import { user } from '@/schema/user'
 import { api } from '@/trpc/server'
 import { TRPCError } from '@trpc/server'
 import { eq } from 'drizzle-orm'
+import { z } from 'zod'
 
-export const getPlayingRoomUsers = loggedUserProducure.query(
-  async ({ ctx }) => {
+export const getRoomUsers = loggedUserProducure
+  .input(
+    z.object({
+      roomID: z.string().max(128),
+    }),
+  )
+  .query(async ({ input, ctx }) => {
+    const { roomID } = input
     const userID = ctx.user.id
 
-    const userWithPlayingRoomID = await ctx.db
-      .select({
-        playingRoomID: user.playingRoomID,
-      })
-      .from(user)
-      .where(eq(user.id, userID))
-      .limit(1)
-
-    const playingRoomID = userWithPlayingRoomID[0]?.playingRoomID
 
     if (!playingRoomID)
       throw new TRPCError({
@@ -30,9 +28,8 @@ export const getPlayingRoomUsers = loggedUserProducure.query(
         username: user.username,
         profilePicture: user.profilePicture,
       })
-      .from(user)
+      .from(user)an
       .where(eq(user.playingRoomID, playingRoomID))
 
     return users
-  },
-)
+  })

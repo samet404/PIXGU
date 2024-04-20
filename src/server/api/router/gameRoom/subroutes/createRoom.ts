@@ -1,8 +1,7 @@
 import { z } from 'zod'
 import { gameRoom } from '@/schema/gameRoom'
 import { loggedUserProducure } from '@/procedure'
-import { eq } from 'drizzle-orm'
-import { user } from '@/schema/user'
+import { TRPCError } from '@trpc/server'
 
 export const createRoom = loggedUserProducure
   .input(
@@ -27,15 +26,16 @@ export const createRoom = loggedUserProducure
       })
       .returning({ insertedId: gameRoom.ID })
 
-    await ctx.db
-      .update(user)
-      .set({
-        playingRoomID: createdRoom[0]!.insertedId,
-        isAdminInPlayingRoom: '1',
+    if (!createdRoom[0])
+      throw new TRPCError({
+        message: 'Room connot be created all this we know is that it failed.',
+        code: 'UNPROCESSABLE_CONTENT',
       })
-      .where(eq(user.id, userID))
 
+    await ctx.redisDb.sadd(
+      `user:${userID}:playing_rooms:`,
+      createdRoom[0].insertedId,
+    )
 
-      
     return createdRoom[0]
   })

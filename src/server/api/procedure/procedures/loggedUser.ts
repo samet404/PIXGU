@@ -8,7 +8,7 @@ export const loggedUserProducure = publicProcedure.use(
     const start = Date.now()
 
     if (!ctx.session)
-      throw new TRPCError({ 
+      throw new TRPCError({
         code: 'UNAUTHORIZED',
         message: 'User needs to be logged in to do this',
       })

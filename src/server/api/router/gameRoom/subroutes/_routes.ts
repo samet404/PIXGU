@@ -3,8 +3,8 @@ export { getRoomsByOffsetAndLimit } from './getRoomsByOffsetAndLimit'
 
 export { isRoomHavePassword_ByID } from './isRoomHavePassword_ByID'
 export { ifPassTrueJoinToRoom_ByIDAndPass } from './ifPassTrueJoinToRoom_ByIDAndPass'
-export { getPlayingRoom } from './getPlayingRoom'
+export { getPlayingRooms } from './getPlayingRooms'
 export { setPlayingRoomIDToNull } from './setPlayingRoomIDToNull'
-export { getPlayingRoomUsers } from './getPlayingRoomUsers'
+export { getPlayingRoomUsers } from './getRoomUsers'
 
 export { joinRoom } from './joinRoom'
