@@ -1,17 +1,37 @@
 'use client'
 
+import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { useMyPeer } from '@/hooks/useMyPeer'
 import { type DataConnection } from 'peerjs'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 const Client = () => {
   const { myPeer } = useMyPeer({ secure: false })
 
   const conns = useRef<DataConnection[] | null>(null)
+  const peerIDs = useRef<string[]>([])
   const myIDTextAreaRef = useRef<HTMLTextAreaElement | null>(null)
   const otherIDTextAreaRef = useRef<HTMLTextAreaElement | null>(null)
   const sendTextAreaRef = useRef<HTMLTextAreaElement | null>(null)
   const sendButtonRef = useRef<HTMLButtonElement | null>(null)
+  const videoContainerRef = useRef<HTMLDivElement | null>(null)
+  const myScreenShareVideoRef = useRef<HTMLVideoElement | null>(null)
+
+  useEffect(() => {
+    if (myScreenShareVideoRef.current && myPeer) {
+      myScreenShareVideoRef.current.muted = true
+      navigator.mediaDevices
+        .getDisplayMedia({ video: true, audio: true })
+        .then((stream) => {
+          addVideoStream(myScreenShareVideoRef.current!, stream)
+
+          myPeer.on('call', (call) => {
+            call.answer(stream)
+          })
+        })
+        .catch((e) => console.error(e))
+    }
+  }, [myPeer])
 
   if (!myPeer) return <div className="text-white">Loading...</div>
 
@@ -29,6 +49,13 @@ const Client = () => {
         )
         conn.send(sendTxt)
       })
+
+      peerIDs.current.forEach((id) => {
+        connectToNewUser(
+          id,
+          myScreenShareVideoRef.current!.srcObject as MediaStream,
+        )
+      })
     } catch (e) {
       console.error(e)
     }
@@ -40,6 +67,8 @@ const Client = () => {
     if (otherIDs) {
       otherIDs.forEach((id) => {
         const conn = myPeer.connect(id)
+
+        peerIDs.current = peerIDs.current ? [...peerIDs.current, id] : [id]
 
         conn.on('open', () => {
           console.log(`Connected to ${id}`)
@@ -59,6 +88,28 @@ const Client = () => {
   })
 
   myPeer.once('open', () => (myIDTextAreaRef.current!.value = myPeer.id))
+
+  const addVideoStream = (video: HTMLVideoElement, stream: MediaStream) => {
+    video.srcObject = stream
+    video.onloadedmetadata = () => video.play()
+  }
+
+  const connectToNewUser = (peerID: string, stream: MediaStream) => {
+    const call = myPeer.call(peerID, stream)
+
+    const newVid = document.createElement('video')
+    newVid.className = 'rounded-lg border-[0.2rem] border-[yellow]'
+    videoContainerRef.current!.append(newVid)
+
+    call.on('stream', (userVideoStream) => {
+      addVideoStream(newVid, userVideoStream)
+    })
+
+    call.on('close', () => {
+      newVid.remove()
+      console.log('call closed')
+    })
+  }
 
   return (
     <div className="flex h-full flex-col gap-2 overflow-y-scroll">
@@ -88,7 +139,16 @@ const Client = () => {
           Send
         </button>
       </div>
+
+      <div className="flex flex-col gap-5 p-5" ref={videoContainerRef}>
+        <video
+          className="rounded-lg border-[0.2rem] border-[yellow]"
+          ref={myScreenShareVideoRef}
+          src=""
+        ></video>
+      </div>
     </div>
   )
 }
+
 export default Client
