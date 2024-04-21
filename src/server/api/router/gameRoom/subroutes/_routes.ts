@@ -1,10 +1,12 @@
 export { createRoom } from './createRoom'
 export { getRoomsByOffsetAndLimit } from './getRoomsByOffsetAndLimit'
 
-export { isRoomHavePassword_ByID } from './isRoomHavePassword_ByID'
-export { ifPassTrueJoinToRoom_ByIDAndPass } from './ifPassTrueJoinToRoom_ByIDAndPass'
+export { isRoomHavePassword } from './isRoomHavePassword'
+export { joinRoomWithPass } from './joinRoomWithPass'
 export { getPlayingRooms } from './getPlayingRooms'
-export { setPlayingRoomIDToNull } from './setPlayingRoomIDToNull'
-export { getPlayingRoomUsers } from './getRoomUsers'
+export { leaveRoom } from './leaveRoom'
+export { getRoomUsers } from './getRoomUsers'
 
 export { joinRoom } from './joinRoom'
+
+export { startRoomTimer } from './startRoomTimer'

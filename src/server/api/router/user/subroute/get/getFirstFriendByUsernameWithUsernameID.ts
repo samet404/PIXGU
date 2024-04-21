@@ -35,7 +35,6 @@ export const getFirstFriendByUsernameWithUsernameID = loggedUserProducure
         profilePicture: true,
       },
     })
-    console.log(typeof friend + ' dawd')
 
     return friend
   })

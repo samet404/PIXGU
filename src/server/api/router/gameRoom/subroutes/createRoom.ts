@@ -2,6 +2,7 @@ import { z } from 'zod'
 import { gameRoom } from '@/schema/gameRoom'
 import { loggedUserProducure } from '@/procedure'
 import { TRPCError } from '@trpc/server'
+import { api } from '@/trpc/server'
 
 export const createRoom = loggedUserProducure
   .input(
@@ -32,10 +33,18 @@ export const createRoom = loggedUserProducure
         code: 'UNPROCESSABLE_CONTENT',
       })
 
-    await ctx.redisDb.sadd(
-      `user:${userID}:playing_rooms:`,
-      createdRoom[0].insertedId,
-    )
+    const roomID = createdRoom[0].insertedId
 
-    return createdRoom[0]
+    await ctx.redisDb.sadd(`user:${userID}:playing_rooms`, roomID)
+
+    await ctx.redisDb.set(`room:${roomID}:name`, name)
+    await ctx.redisDb.sadd(`room:${roomID}:players`, userID)
+    await ctx.redisDb.sadd(`room:${roomID}:admins`, userID)
+    await ctx.redisDb.set(`room:${roomID}:password`, password ?? null)
+    await ctx.redisDb.set(`room:${roomID}:minPlayers`, minPlayers)
+    await ctx.redisDb.set(`room:${roomID}:maxPlayers`, maxPlayers)
+
+    await api.gameRoom.startRoomTimer.mutate({ roomID })
+
+    return roomID
   })

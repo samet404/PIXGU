@@ -1,6 +1,4 @@
-// https://v2.lucia-auth.com/guidebook/drizzle-orm/#postgress
-
-import { pgTable, bigint, varchar, text, timestamp } from 'drizzle-orm/pg-core'
+import { pgTable, varchar, text, timestamp } from 'drizzle-orm/pg-core'
 import { user } from './user'
 
 export const session = pgTable('user_session', {

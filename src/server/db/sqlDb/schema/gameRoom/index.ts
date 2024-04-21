@@ -1,2 +1,2 @@
 export * from './gameRoom'
-export * from './gameRoom/relations'
+// export * from './gameRoom/relations'

@@ -1,7 +1,5 @@
 import { loggedUserProducure } from '@/procedure'
 import { user } from '@/schema/user'
-import { api } from '@/trpc/server'
-import { TRPCError } from '@trpc/server'
 import { eq } from 'drizzle-orm'
 import { z } from 'zod'
 
@@ -13,23 +11,18 @@ export const getRoomUsers = loggedUserProducure
   )
   .query(async ({ input, ctx }) => {
     const { roomID } = input
-    const userID = ctx.user.id
 
+    const usersIDs = await ctx.redisDb.smembers(`room:${roomID}:players`)
 
-    if (!playingRoomID)
-      throw new TRPCError({
-        code: 'BAD_REQUEST',
-        message: 'User is not in a room',
-      })
-
-    const users = await ctx.db
-      .select({
-        userID: user.id,
-        username: user.username,
-        profilePicture: user.profilePicture,
-      })
-      .from(user)an
-      .where(eq(user.playingRoomID, playingRoomID))
+    const users = usersIDs.map(async (userID) => {
+      return await ctx.db
+        .select({
+          id: user.id,
+          username: user.username,
+        })
+        .from(user)
+        .where(eq(user.id, userID))
+    })
 
     return users
   })
