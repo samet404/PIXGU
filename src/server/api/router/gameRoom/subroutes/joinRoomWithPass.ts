@@ -33,4 +33,6 @@ export const joinRoomWithPass = loggedUserProducure
 
     await ctx.redisDb.sadd(`user:${userID}:playing_rooms`, roomID)
     await ctx.redisDb.sadd(`room:${roomID}:players`, userID)
+
+    return { success: true }
   })

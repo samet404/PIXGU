@@ -3,8 +3,9 @@
 import { useRef } from 'react'
 import BtnJoin from './components/BtnJoin'
 import PassInput from './components/PassInput'
+import { type User } from '@/app/room/[roomID]/_types'
 
-const Content = () => {
+const Content = ({ user, roomID }: Props) => {
   const passInputRef = useRef<HTMLInputElement>(null)
 
   return (
@@ -16,3 +17,8 @@ const Content = () => {
 }
 
 export default Content
+
+type Props = {
+  user: User
+  roomID: string
+}

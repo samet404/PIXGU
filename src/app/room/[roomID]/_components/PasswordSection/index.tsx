@@ -1,7 +1,8 @@
 import { GeistSans } from 'geist/font/sans'
 import Content from './components/Content'
+import { type User } from '../../_types'
 
-const PasswordSection = ({ userID, roomID }: Props) => {
+const PasswordSection = ({ user, roomID }: Props) => {
   return (
     <div className="flex h-full w-full overflow-y-scroll py-10 xxs:flex-col lg:items-center lg:justify-center">
       <div className="flex xxs:w-full xxs:justify-center">
@@ -12,7 +13,7 @@ const PasswordSection = ({ userID, roomID }: Props) => {
             ENTER PASSWORD
           </div>
 
-          <Content userID={userID} roomID={roomID} />
+          <Content user={user} roomID={roomID} />
         </div>
       </div>
     </div>
@@ -22,6 +23,6 @@ const PasswordSection = ({ userID, roomID }: Props) => {
 export default PasswordSection
 
 type Props = {
-  userID: string
+  user: User
   roomID: string
 }
