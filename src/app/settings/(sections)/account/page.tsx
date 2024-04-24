@@ -8,14 +8,24 @@ import Logout from './components/Logout'
 import Username from './components/Username'
 import { api } from '@/trpc/server'
 import { redirect } from 'next/navigation'
+import dynamic from 'next/dynamic'
+
+const ErrDisplay = dynamic(() => import('@/components/ErrDisplay'))
 
 const Account = async () => {
-  const user = await api.auth.getUser.query()
+  const isLogged = await api.auth.isLogged.query()
 
-  if (!user) {
-    console.error('UNAUTHORIZED')
-    redirect('/login')
-  }
+  if (!isLogged)
+    return (
+      <ErrDisplay
+        msg="UNAUTHORIZED"
+        code={401}
+        reason="You need to be logged in to access account settings"
+        redirectTo="/login"
+      />
+    )
+
+  const user = await api.auth.getUser.query()
 
   if (user)
     return (

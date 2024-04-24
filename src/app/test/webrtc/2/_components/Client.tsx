@@ -1,9 +1,13 @@
 'use client'
 
+import { redisDb } from '@/db/redis'
+import { useAblyTokenClient } from '@/hooks/useAblyTokenClient'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { useMyPeer } from '@/hooks/useMyPeer'
+import { subscribeAblyPresence } from '@/utils/subscribeAblyPresence'
 import { type DataConnection } from 'peerjs'
 import { useEffect, useRef } from 'react'
+import { test } from './actions/test'
 
 const Client = () => {
   const { myPeer } = useMyPeer({ secure: false })
@@ -16,6 +20,13 @@ const Client = () => {
   const sendButtonRef = useRef<HTMLButtonElement | null>(null)
   const videoContainerRef = useRef<HTMLDivElement | null>(null)
   const myScreenShareVideoRef = useRef<HTMLVideoElement | null>(null)
+  const { ablyClient } = useAblyTokenClient()
+
+  const ablyChannel = ablyClient.current.channels.get('test')
+
+  ablyChannel.subscribe((msg) => {
+    console.log(msg.data)
+  })
 
   useEffect(() => {
     if (myScreenShareVideoRef.current && myPeer) {
@@ -35,6 +46,13 @@ const Client = () => {
   }, [myPeer])
 
   if (!myPeer) return <div className="text-white">Loading...</div>
+
+  subscribeAblyPresence(ablyChannel, 'leave', (msg) => {
+    myPeer.disconnect()
+  })
+
+  // @ts-ignore
+  myPeer.on('disconnected', () => test() as void)
 
   const handleBtnSendClick = () => {
     try {

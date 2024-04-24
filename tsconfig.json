@@ -44,8 +44,9 @@
       "@/public/*": ["./public/*"],
       "@/svg/*": ["public/image/svg/*"],
       "@/png/*": ["public/image/png/*"],
-      "@/sound/*": ["public/sound/*"],
       "@/jpg/*": ["public/image/jpg/*"],
+      "@/gif/*": ["public/image/gif/*"],
+      "@/sound/*": ["public/sound/*"],
       "@/fonts/*": ["public/fonts/*"],
       "@/lib/*": ["./src/lib*"],
       "@/actions/*": ["./src/actions/*"]

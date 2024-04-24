@@ -5,7 +5,7 @@ import { usersToGameRoom } from '@/schema/user/usersToGameRoom'
 
 export const gameRoom = pgTable('game_room', {
   ID: createCuid2(),
-  name: varchar('name', { length: 255 }),
+  name: varchar('name', { length: 255 }).notNull(),
   maxPlayers: smallint('max_players'),
   minPlayers: smallint('min_players'),
   password: varchar('password', { length: 128 }),

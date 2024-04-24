@@ -19,7 +19,13 @@ config.autoAddCss = false
 const RootLayout = (props: { children: ReactNode }) => {
   return (
     <html lang="en">
-      <body className="bg-slate-900">
+      <body
+        style={{
+          backgroundColor: 'hsla(222,47%,11%,1)',
+          backgroundImage:
+            'radial-gradient(at 80% 100%, hsla(222,47%,16%,1) 0px, transparent 50%),radial-gradient(at 0% 0%, hsla(222,48%,19%,1) 0px, transparent 50%)',
+        }}
+      >
         <TRPCReactProvider cookies={cookies().toString()}>
           {/* <CustomCursor /> */}
           <Providers>

@@ -17,7 +17,7 @@ const BtnJoin = ({ passInputRef }: BtnJoinProps) => {
   const router = useRouter()
   const pathname = usePathname()
   const { mutate, error, isLoading, isSuccess } =
-    api.gameRoom.ifPassTrueJoinToRoom_ByIDAndPass.useMutation()
+    api.gameRoom.ifPassTrueJoinToRoom.useMutation()
 
   useEffect(() => {
     if (isSuccess) router.refresh()

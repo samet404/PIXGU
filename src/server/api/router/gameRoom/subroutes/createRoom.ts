@@ -46,5 +46,7 @@ export const createRoom = loggedUserProducure
 
     await api.gameRoom.startRoomTimer.mutate({ roomID })
 
-    return roomID
+    return {
+      createdRoomID: roomID,
+    }
   })

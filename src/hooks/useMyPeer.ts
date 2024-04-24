@@ -8,14 +8,14 @@ import { useEffectOnce } from '@/hooks/useEffectOnce'
  */
 export const useMyPeer = (
   options?: PeerOptions | undefined | null,
-  afterInit?: ((peer: Peer) => void) | undefined | null,
+  afterInit?: ((peer: Peer) => void | Promise<void>) | undefined | null,
   id?: string | undefined | null,
 ): UseMyPeerReturnType => {
   const [myPeer, setMyPeer] = useState<Peer | null>(null)
   const afterInıtCalled = useRef<boolean>(false)
 
   const newOptions: PeerOptions = {
-    debug: options?.debug ?? 2,
+    debug: options?.debug ?? process.env.NODE_ENV == 'production' ? 0 : 2,
 
     ...options,
     config: {

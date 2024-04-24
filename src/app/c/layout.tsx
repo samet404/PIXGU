@@ -1,13 +1,25 @@
 import { type ReactNode } from 'react'
 import { api } from '@/trpc/server'
-import { redirect } from 'next/navigation'
-import './_styles/scrollbar.css'
+import dynamic from 'next/dynamic'
+
+const ErrDisplay = dynamic(() => import('@/components/ErrDisplay'))
+const Fragment = dynamic(() => import('react').then((r) => r.Fragment))
 
 const ChatLayout = async ({ children }: { children: ReactNode }) => {
   const logged = await api.auth.isLogged.query()
 
-  if (!logged) return redirect('/login')
+  if (!logged)
+    return (
+      <ErrDisplay
+        msg="UNAUTHORIZED"
+        reason="You need to be logged in to chat with your friends"
+        code={401}
+        redirectTo="/login"
+      />
+    )
 
-  return <div className="h-full w-full bg-slate-900">{children}</div>
+  await require('./_styles/scrollbar.css')
+
+  return <Fragment>{children}</Fragment>
 }
 export default ChatLayout

@@ -29,6 +29,7 @@ import { validateRequest } from '@/auth/lucia/validateRequest'
 
 export const createTRPCContext = async (opts: { headers: Headers }) => {
   const { session, user } = await validateRequest()
+
   return {
     redisDb,
     db,

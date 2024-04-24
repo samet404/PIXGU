@@ -50,6 +50,7 @@ const config = {
     'react/react-in-jsx-scope': 'off',
     'react/jsx-uses-react': 'off',
 
+    '@typescript-eslint/prefer-nullish-coalescing': 'off',
     '@typescript-eslint/prefer-optional-chain': 'off',
     '@typescript-eslint/no-floating-promises': 'off',
     '@typescript-eslint/non-nullable-type-assertion-style': 'off',

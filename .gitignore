@@ -7,7 +7,9 @@
 /coverage
 
 # database
-
+/.xata
+.xatarc
+/src/xata
 
 # next.js
 /.next

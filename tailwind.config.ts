@@ -49,8 +49,14 @@ export default {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         position: 'position 15s ease-in-out infinite',
+        'animate-err-pulse-shadow': 'err-pulse-shadow 3s ease-in-out infinite',
       },
       keyframes: {
+        wiggle: {
+          '0%, 100%': { transform: 'rotate(-3deg)' },
+          '50%': { transform: 'rotate(3deg)' },
+        },
+
         'accordion-down': {
           from: { height: '0' },
           to: { height: 'var(--radix-accordion-content-height)' },
@@ -68,6 +74,14 @@ export default {
           '0%': { width: '10%' },
           '50%': { width: '50%' },
           '75%': { width: '70%' },
+        },
+        'err-pulse-shadow': {
+          '0%, 100%': {
+            boxShadow: 'none',
+          },
+          '50%': {
+            boxShadow: '0 0px 30px 1px rgba(244,63,94,0.7)',
+          },
         },
       },
 

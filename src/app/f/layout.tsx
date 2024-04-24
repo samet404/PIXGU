@@ -2,11 +2,22 @@ import { type ReactNode } from 'react'
 import Nav from './_components/Nav'
 import { api } from '@/trpc/server'
 import { redirect } from 'next/navigation'
+import dynamic from 'next/dynamic'
+
+const ErrDisplay = dynamic(() => import('@/components/ErrDisplay'))
 
 const FriendsLayout = async ({ children }: { children: ReactNode }) => {
   const isLogged = await api.auth.isLogged.query()
 
-  if (!isLogged) redirect('/login')
+  if (!isLogged)
+    return (
+      <ErrDisplay
+        msg="UNAUTHORIZED"
+        reason="You need to be logged in to interact with your friends"
+        code={401}
+        redirectTo="/login"
+      />
+    )
 
   if (isLogged)
     return (
