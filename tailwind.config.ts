@@ -52,6 +52,17 @@ export default {
         'animate-err-pulse-shadow': 'err-pulse-shadow 3s ease-in-out infinite',
       },
       keyframes: {
+        'pass-input': {
+          '0%': {
+            backgroundPosition: '0% 50%',
+          },
+          '50%': {
+            backgroundPosition: '100% 50%',
+          },
+          '100%': {
+            backgroundPosition: ' 0% 50%',
+          },
+        },
         wiggle: {
           '0%, 100%': { transform: 'rotate(-3deg)' },
           '50%': { transform: 'rotate(3deg)' },

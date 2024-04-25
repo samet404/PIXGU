@@ -2,26 +2,44 @@
 
 import Spinner from '@/components/Spinner'
 import { api } from '@/trpc/react'
-import { useRouter } from 'next/navigation'
+import { Fragment, type ReactNode } from 'react'
+import dynamic from 'next/dynamic'
+import { useAtomValue } from 'jotai'
+import { roomIDAtom } from '../../atoms'
+import { useEffectOnce } from 'usehooks-ts'
 
-const JoinRoom = ({ roomID }: { roomID: string }) => {
-  const router = useRouter()
+const ErrDisplay = dynamic(() => import('@/components/ErrDisplay'))
 
-  const { mutate: joinRoom } = api.gameRoom.joinRoom.useMutation({
-    onSuccess: () => {
-      console.log('joined room')
-      router.refresh()
-    },
-    onError: (error) => {
-      throw new Error(error.message)
-    },
-    retry: 3,
-  })
+const JoinRoom = ({ children }: Props) => {
+  const roomID = useAtomValue(roomIDAtom)
+  const {
+    mutate: joinRoom,
+    isSuccess,
+    isError,
+    error,
+    isLoading,
+  } = api.gameRoom.join.useMutation({})
 
-  // joinRoom({
-  //   roomID: roomID,
-  // })
+  useEffectOnce(() =>
+    joinRoom({
+      roomID: roomID!,
+    }),
+  )
 
-  return <Spinner />
+  return (
+    <Fragment>
+      {isSuccess ? children : null}
+
+      {isError ? (
+        <ErrDisplay msg={'UNKNOWN'} redirectTo={'/'} reason={error.message} />
+      ) : null}
+      {isLoading ? <Spinner /> : null}
+    </Fragment>
+  )
 }
+
 export default JoinRoom
+
+type Props = {
+  children: ReactNode
+}

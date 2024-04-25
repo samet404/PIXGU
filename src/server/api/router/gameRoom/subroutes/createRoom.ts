@@ -44,8 +44,6 @@ export const createRoom = loggedUserProducure
     await ctx.redisDb.set(`room:${roomID}:minPlayers`, minPlayers)
     await ctx.redisDb.set(`room:${roomID}:maxPlayers`, maxPlayers)
 
-    await api.gameRoom.startRoomTimer.mutate({ roomID })
-
     return {
       createdRoomID: roomID,
     }

@@ -1,5 +1,7 @@
-import { type RouterOutputs } from '@/trpc/shared'
 import { atom } from 'jotai'
+import type { RouterOutputs } from '@/trpc/shared'
+import type { Realtime } from 'ably'
+import type Peer from 'peerjs'
 
 type Rgba = {
   r: number
@@ -25,6 +27,5 @@ export const roomIDAtom = atom<string | null>(null)
 
 export const userIDAtom = atom<string | null>(null)
 
-export const playersAtom = atom<
-  RouterOutputs['gameRoom']['getPlayingRoomUsers']
->([])
+export const myPeerAtom = atom<Peer | null>(null)
+export const ablyClientAtom = atom<Realtime | null>(null)

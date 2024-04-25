@@ -2,7 +2,7 @@ export { createRoom } from './createRoom'
 export { getRoomsByOffsetAndLimit } from './getRoomsByOffsetAndLimit'
 
 export { isRoomHavePassword } from './isRoomHavePassword'
-export { joinRoomWithPass } from './joinRoomWithPass'
+export { isRoomPassTrue } from './isRoomPassTrue'
 export { getPlayingRooms } from './getPlayingRooms'
 export { leaveRoom } from './leaveRoom'
 export { getRoomUsers } from './getRoomUsers'

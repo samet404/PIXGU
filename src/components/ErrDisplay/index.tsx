@@ -1,8 +1,8 @@
 import errImg from '@/png/icons8-error-48.png'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
-import { Urbanist } from 'next/font/google'
 import svg from '@/svg/layered-steps-haikei.svg'
+import { Urbanist } from 'next/font/google'
 
 const urbanist = Urbanist({
   weight: ['700', '600'],
