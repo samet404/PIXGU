@@ -3,7 +3,7 @@ import type { User } from '.'
 export type WebRTCConnData = Meeting | Chat
 
 type Meeting = {
-  type: 'meeting'
+  type: 'meet'
   userInfo: User
 }
 

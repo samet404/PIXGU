@@ -1,7 +1,7 @@
 'use client'
 
 import { useMyAtomPeer } from '@/hooks/useMyAtomPeer'
-import { myPeerAtom } from '../../../../atoms'
+import { myPeerAtom } from '@/app/room/[roomID]/atoms'
 import { useState, type ReactNode } from 'react'
 
 const ToWebRTC = ({ children }: Props) => {

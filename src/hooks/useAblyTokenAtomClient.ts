@@ -11,7 +11,8 @@ export const useAblyTokenAtomClient = (
   ablyClientAtom: PrimitiveAtom<Realtime | null>,
   clientOptions?: ClientOptions,
   afterClientSet?: {
-    onSuccess: () => void
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    onSuccess: (client: Realtime) => Promise<void> | void
   },
 ) => {
   const setClient = useSetAtom(ablyClientAtom)
@@ -24,7 +25,11 @@ export const useAblyTokenAtomClient = (
   })
 
   useEffectOnce(() => {
-    setClient(ablyClient)
-    if (afterClientSet?.onSuccess) afterClientSet.onSuccess()
+    try {
+      if (afterClientSet?.onSuccess) afterClientSet.onSuccess(ablyClient)
+      setClient(ablyClient)
+    } catch (e) {
+      throw new Error(`Failed to set Ably client`)
+    }
   })
 }

@@ -17,7 +17,7 @@ const RenderUsers = () => {
     conn.on('data', (connData) => {
       const data = connData as WebRTCConnData
 
-      if (data.type === 'meeting') {
+      if (data.type === 'meet') {
         setUsers([...users, data.userInfo])
       }
     })
