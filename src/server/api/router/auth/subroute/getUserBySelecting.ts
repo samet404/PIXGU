@@ -1,4 +1,3 @@
-import { DatabaseUser } from '@/auth/types'
 import { publicProcedure } from '@/server/api/trpc'
 import { filterObj } from '@/utils/_index'
 import { z } from 'zod'
@@ -18,7 +17,7 @@ export const getUserBySelecting = publicProcedure
 
     const user = ctx.user
 
-    const filtered = filterObj(user, ([k, v]) => (input[k] ? true : false))
+    const filtered = filterObj(user, ([k]) => (input[k] ? true : false))
 
     return filtered
   })

@@ -1,9 +1,9 @@
-import { Pixelify_Sans, Inter } from 'next/font/google'
+import { Urbanist, Inter } from 'next/font/google'
 import Image from 'next/image'
 import pfp from '@/png/pfp2.png'
 import { truncateStr } from '@/utils/truncateStr'
 
-const pixelifySans = Pixelify_Sans({
+const urbanist = Urbanist({
   subsets: ['latin'],
   weight: '700',
 })
@@ -22,7 +22,7 @@ type UserProps = {
 const User = ({ name, className, profilePicture }: UserProps) => {
   return (
     <div
-      className={`${className} group group flex w-full flex-row items-center justify-between bg-[rgba(255,255,255,0.1)] p-2 hover:bg-gradient-to-r hover:from-[#ffffff79] hover:to-[#ffffff3b]`}
+      className={`${className} group group flex w-full flex-row items-center justify-between bg-[rgba(255,255,255,0.1)] p-2 first:rounded-t-lg last:rounded-b-lg hover:bg-gradient-to-r hover:from-[#ffffff79] hover:to-[#ffffff3b]`}
     >
       <div className="flex w-full flex-row items-center gap-2 peer-hover:bg-red-200 ">
         <Image
@@ -34,7 +34,7 @@ const User = ({ name, className, profilePicture }: UserProps) => {
           className="select-none rounded-full opacity-50 drop-shadow-[0_0px_5px_rgba(0,0,0,0.3)] group-hover:opacity-100"
         />
         <div
-          className={`${pixelifySans.className} text-sm tracking-wide text-[#ffffff79] drop-shadow-[0_0px_2px_rgba(0,0,0,0.55)] group-hover:text-[#ffffffd4]`}
+          className={`${urbanist.className} text-sm tracking-wide text-[#ffffff79] drop-shadow-[0_0px_2px_rgba(0,0,0,0.55)] group-hover:text-[#ffffffd4]`}
         >
           {truncateStr(name, 10)}
         </div>

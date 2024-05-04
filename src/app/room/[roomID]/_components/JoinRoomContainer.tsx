@@ -10,7 +10,9 @@ const urbanist = Urbanist({
 
 const JoinRoomContainer = () => {
   return (
-    <div className={`${urbanist.className} w-full text-white`}>
+    <div
+      className={`${urbanist.className} h-full w-full items-center justify-center text-center text-white`}
+    >
       <Connect>
         <JoinRoom>
           <JoinedRoom />

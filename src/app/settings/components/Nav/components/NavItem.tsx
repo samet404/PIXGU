@@ -38,7 +38,7 @@ const NavItem = ({ name }: { name: string }) => {
       scale: 1,
     },
     config: {
-      duration: 1000,
+      duration: 200,
     },
   }))
 

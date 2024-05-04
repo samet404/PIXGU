@@ -1,29 +1,17 @@
 'use client'
 
-import User from './User'
-import type {
-  User as UserType,
-  WebRTCConnData,
-} from '@/app/room/[roomID]/_types'
-import { myPeerAtom } from '@/app/room/[roomID]/atoms'
+import { playersAtom } from '@/app/room/[roomID]/atoms'
 import { useAtomValue } from 'jotai'
-import { useState } from 'react'
+import dynamic from 'next/dynamic'
+
+const User = dynamic(() => import('./User'))
 
 const RenderUsers = () => {
-  const myPeer = useAtomValue(myPeerAtom)!
-  const [users, setUsers] = useState<UserType[]>([])
+  const players = useAtomValue(playersAtom)
 
-  myPeer.on('connection', (conn) => {
-    conn.on('data', (connData) => {
-      const data = connData as WebRTCConnData
+  if (!players) return null
 
-      if (data.type === 'meet') {
-        setUsers([...users, data.userInfo])
-      }
-    })
-  })
-
-  return users.map((user, index) => {
+  return players.map((user, index) => {
     return (
       <User
         key={index}

@@ -1,7 +1,6 @@
 import errImg from '@/png/icons8-error-48.png'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
-import svg from '@/svg/layered-steps-haikei.svg'
 import { Urbanist } from 'next/font/google'
 
 const urbanist = Urbanist({
@@ -18,11 +17,6 @@ const ErrDisplay = ({ msg, code, reason, redirectTo, ...others }: Props) => {
         {...others}
         className={`${urbanist.className} group relative z-50 flex animate-[err-pulse-shadow_2s_ease-in-out_infinite] flex-col items-center gap-2 rounded-lg bg-rose-500 p-2 `}
       >
-        <Image
-          src={svg}
-          className="absolute left-0 top-0 z-20 h-full w-full rounded-b-lg object-center"
-          alt="svg"
-        />
         <div className="jtustify-between flex w-full flex-row gap-2">
           <p className="text-[0.9rem] font-[700] text-[rgba(255,255,255,0.8)]">
             {msg}

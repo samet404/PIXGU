@@ -1,21 +1,23 @@
 // types
 import { type ReactNode } from 'react'
+
 // styles
 import './_styles/globals.css'
+
 // components
-import { TRPCReactProvider } from '../trpc/react'
-import { Analytics } from '@vercel/analytics/react'
-// // import CustomCursor from './_components/CustomCursor'
-// import MusicPlayer from './_components/BackgroundMusicPlayer'
 import Providers from './_components/Providers'
-// // next
-import { cookies } from 'next/headers'
+import MusicPlayer from './_components/MusicPlayer'
 
 // fontawesome
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 config.autoAddCss = false
-// https://nuqs.47ng.com/docs/seo
+
+// others
+import { cookies } from 'next/headers'
+import { TRPCReactProvider } from '../trpc/react'
+import { Analytics } from '@vercel/analytics/react'
+
 const RootLayout = (props: { children: ReactNode }) => {
   return (
     <html lang="en">
@@ -29,7 +31,7 @@ const RootLayout = (props: { children: ReactNode }) => {
         <TRPCReactProvider cookies={cookies().toString()}>
           {/* <CustomCursor /> */}
           <Providers>
-            {/* <MusicPlayer /> */}
+            <MusicPlayer />
             {props.children}
             <Analytics />
           </Providers>

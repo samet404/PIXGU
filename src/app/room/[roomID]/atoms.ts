@@ -25,7 +25,7 @@ export const canvasPenThicknessAtom = atom<number>(5)
 
 export const roomIDAtom = atom<string | null>(null)
 
-export const userIDAtom = atom<string | null>(null)
+export const userAtom = atom<Player | null>(null)
 
 export const myPeerAtom = atom<Peer | null>(null)
 

@@ -2,14 +2,23 @@
 
 import { useMyAtomPeer } from '@/hooks/useMyAtomPeer'
 import { myPeerAtom } from '@/app/room/[roomID]/atoms'
-import { useState, type ReactNode } from 'react'
+import { type ReactNode } from 'react'
+import dynamic from 'next/dynamic'
+
+const ErrDisplay = dynamic(() => import('@/components/ErrDisplay'))
 
 const ToWebRTC = ({ children }: Props) => {
-  const [isSuccess, setIsSuccess] = useState<boolean | null>(null)
-  useMyAtomPeer(myPeerAtom, { secure: false }, () => setIsSuccess(true))
+  const { err, isErr, isSuccess } = useMyAtomPeer(myPeerAtom, { secure: false })
 
-  if (isSuccess == null) return 'Creating WebRTC peer...'
-  return isSuccess == true ? children : 'Failed to create WebRTC peer'
+  if (isSuccess) return children
+  if (isErr)
+    return (
+      <ErrDisplay
+        msg="Failed to create WebRTC peer"
+        reason={err ?? 'REASON NOT SPECIFIED'}
+      />
+    )
+  return <div className="pt-7">{'Creating WebRTC peer...'}</div>
 }
 
 export default ToWebRTC

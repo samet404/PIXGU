@@ -2,7 +2,8 @@ import { z } from 'zod'
 import { gameRoom } from '@/schema/gameRoom'
 import { loggedUserProducure } from '@/procedure'
 import { TRPCError } from '@trpc/server'
-import { api } from '@/trpc/server'
+import { useAblyBasicClient } from '@/hooks/useAblyBasicClient'
+import { env } from '@/env/server.mjs'
 
 export const createRoom = loggedUserProducure
   .input(
@@ -14,8 +15,12 @@ export const createRoom = loggedUserProducure
     }),
   )
   .mutation(async ({ input, ctx }) => {
+    const createdAt = new Date()
     const { name, minPlayers, maxPlayers, password } = input
     const userID = ctx.user.id
+    const { ablyClient } = useAblyBasicClient({
+      key: env.ABLY_API_KEY,
+    })
 
     const createdRoom = await ctx.db
       .insert(gameRoom)
@@ -24,6 +29,7 @@ export const createRoom = loggedUserProducure
         minPlayers: minPlayers,
         maxPlayers: maxPlayers,
         password: password,
+        createdAt: createdAt,
       })
       .returning({ insertedId: gameRoom.ID })
 
@@ -44,7 +50,12 @@ export const createRoom = loggedUserProducure
     await ctx.redisDb.set(`room:${roomID}:minPlayers`, minPlayers)
     await ctx.redisDb.set(`room:${roomID}:maxPlayers`, maxPlayers)
 
+    ablyClient.channels.get('room-creating').publish('room-created', {
+      roomID: roomID,
+    })
+
     return {
       createdRoomID: roomID,
+      createdAt: createdAt,
     }
   })

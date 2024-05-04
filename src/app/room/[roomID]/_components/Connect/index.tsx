@@ -9,11 +9,11 @@ const ToWebRTC = dynamic(() => import('./components/ToWebRTC'), {
 
 const Connect = ({ children }: Props) => {
   return (
-    <ToSocket>
-      <ToWebRTC>
+    <ToWebRTC>
+      <ToSocket>
         <MeetOthers>{children}</MeetOthers>
-      </ToWebRTC>
-    </ToSocket>
+      </ToSocket>
+    </ToWebRTC>
   )
 }
 

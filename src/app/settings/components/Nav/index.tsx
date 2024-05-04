@@ -1,6 +1,7 @@
 import { Outfit } from 'next/font/google'
 import NavItem from './components/NavItem'
 import { api } from '@/trpc/server'
+import HomeBtn from './components/HomeBtn'
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -17,12 +18,16 @@ const Nav = async () => {
         backgroundImage:
           'radial-gradient(at 0% 0%, rgba(0,170,255,0.12) 0px, transparent 50%)',
       }}
-      className={`${outfit.className} flex h-full w-52 flex-col items-center gap-4 overflow-y-auto pt-7  text-[rgba(255,255,255,0.8)] shadow-[0_0px_40px_10px_rgba(0,0,0,0.4)]`}
+      className={`${outfit.className} flex h-full w-52 flex-col items-center justify-between overflow-y-auto pb-5 pt-7 text-[rgba(255,255,255,0.8)] shadow-[0_0px_40px_10px_rgba(0,0,0,0.4)]`}
     >
-      {isLogged ? <NavItem name="Account" /> : null}
-      <NavItem name="Themes" />
-      <NavItem name="Controls" />
-      <NavItem name="Sounds" />
+      <div className="flex flex-col gap-4">
+        {isLogged ? <NavItem name="Account" /> : null}
+        <NavItem name="Themes" />
+        <NavItem name="Controls" />
+        <NavItem name="Sounds" />
+      </div>
+
+      <HomeBtn />
     </nav>
   )
 }
