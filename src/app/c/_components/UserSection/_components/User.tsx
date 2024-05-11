@@ -7,7 +7,6 @@ import { selectedUserInfoAtom } from '@/app/c/atoms'
 import { setSearchParam } from '@/utils/setSearchParam'
 import { api } from '@/trpc/react'
 import Link from 'next/link'
-import { useRef } from 'react'
 import { getSearchParam } from '@/utils/getSearchParam'
 import { truncateStr } from '@/utils/truncateStr'
 

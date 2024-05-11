@@ -18,9 +18,7 @@ export const createRoom = loggedUserProducure
     const createdAt = new Date()
     const { name, minPlayers, maxPlayers, password } = input
     const userID = ctx.user.id
-    const { ablyClient } = useAblyBasicClient({
-      key: env.ABLY_API_KEY,
-    })
+    const { ablyClient } = await useAblyBasicClient()
 
     const createdRoom = await ctx.db
       .insert(gameRoom)
@@ -43,15 +41,18 @@ export const createRoom = loggedUserProducure
 
     await ctx.redisDb.sadd(`user:${userID}:playing_rooms`, roomID)
 
+    await ctx.redisDb.sadd(`active_rooms`, roomID)
     await ctx.redisDb.set(`room:${roomID}:name`, name)
     await ctx.redisDb.sadd(`room:${roomID}:players`, userID)
     await ctx.redisDb.sadd(`room:${roomID}:admins`, userID)
     await ctx.redisDb.set(`room:${roomID}:password`, password ?? null)
     await ctx.redisDb.set(`room:${roomID}:minPlayers`, minPlayers)
     await ctx.redisDb.set(`room:${roomID}:maxPlayers`, maxPlayers)
+    await ctx.redisDb.set(`room:${roomID}:createdAt`, createdAt)
 
-    ablyClient.channels.get('room-creating').publish('room-created', {
+    await ablyClient.channels.get('room-creating').publish('room-created', {
       roomID: roomID,
+      createdAt: createdAt,
     })
 
     return {

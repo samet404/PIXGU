@@ -1,8 +1,5 @@
 import type { Config } from 'drizzle-kit'
-import { getXataClient } from '@/xata'
 import { env } from '@/env/server.mjs'
-
-const xata = getXataClient()
 
 export default {
   schema: './src/server/db/sqlDb/schema',

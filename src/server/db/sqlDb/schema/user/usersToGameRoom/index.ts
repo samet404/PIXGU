@@ -6,10 +6,12 @@ import { gameRoom } from '@/schema/gameRoom'
 export const usersToGameRoom = pgTable(
   'users_to_game_room',
   {
-    userID: varchar('user_ID', { length: 128 }).references(() => user.id),
-    gameRoomID: varchar('game_room_ID', { length: 128 }).references(
-      () => gameRoom.ID,
-    ),
+    userID: varchar('user_ID', { length: 128 })
+      .references(() => user.id)
+      .notNull(),
+    gameRoomID: varchar('game_room_ID', { length: 128 })
+      .references(() => gameRoom.ID)
+      .notNull(),
   },
   (t) => ({
     pk: primaryKey({ columns: [t.userID, t.gameRoomID] }),

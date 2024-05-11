@@ -13,6 +13,7 @@ export async function POST(req: Request) {
 
     const tokenRequestData = await client.auth.createTokenRequest({
       clientId: clientId,
+      capability: { '*': ['publish', 'subscribe', 'presence'] },
     })
 
     return NextResponse.json(tokenRequestData)

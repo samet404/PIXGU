@@ -3,26 +3,24 @@ import {
   createRoom,
   getRoomsByOffsetAndLimit,
   isRoomHavePassword,
-  isRoomPassTrue,
+  knowRoomPass,
   joinRoom,
-  leaveRoom,
   getPlayingRooms,
-  getRoomUsers,
-  startRoomTimer,
+  isExits,
+  isUserKnowRoomPass,
 } from './subroutes/_routes'
 
 export const gameRoomRouter = createTRPCRouter({
   create: createRoom,
-  startRoomTimer: startRoomTimer,
 
   getRoomsByOffsetAndLimit: getRoomsByOffsetAndLimit,
   getPlayingRooms: getPlayingRooms,
 
   isHavePass: isRoomHavePassword,
+  isUserKnowPass: isUserKnowRoomPass,
 
-  isRoomPassTrue: isRoomPassTrue,
+  knowPass: knowRoomPass,
   join: joinRoom,
-  leave: leaveRoom,
 
-  getUsers: getRoomUsers,
+  isExits: isExits,
 })

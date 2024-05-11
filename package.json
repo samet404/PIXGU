@@ -16,8 +16,7 @@
     "db:studio:prod": "dotenv -e .env.production npx drizzle-kit studio",
     "db:push:prod": "dotenv -e .env.production drizzle-kit push:pg",
     "db:introspect:prod": "dotenv -e .env.production drizzle-kit introspect:pg",
-    "test:ts": "dotenv -e .env.development node scripts/test.ts",
-    "test:js": "dotenv -e .env.development node scripts/test.js"
+    "test:bun": "dotenv -e .env.development bun run bun-test.ts"
   },
   "author": "404",
   "dependencies": {
@@ -39,6 +38,7 @@
     "@trpc/react-query": "^10.45.0",
     "@trpc/server": "^10.45.0",
     "@types/react-custom-scroll": "^5.0.2",
+    "@types/simple-peer": "^9.11.8",
     "@types/youtube-player": "^5.5.11",
     "@uidotdev/usehooks": "^2.4.1",
     "@upstash/redis": "^1.28.2",
@@ -81,6 +81,7 @@
     "react-hotkeys": "^2.0.0",
     "react-player": "^2.13.0",
     "redis": "^4.6.12",
+    "simple-peer": "^9.11.1",
     "superjson": "^1.13.1",
     "swr": "^2.2.4",
     "tailwind-merge": "^2.2.0",

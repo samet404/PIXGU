@@ -1,10 +1,29 @@
-import { pgTable, smallint, timestamp, varchar } from 'drizzle-orm/pg-core'
-import { createCuid2 } from '../../../utils/createCuid2'
+import {
+  char,
+  pgTable,
+  smallint,
+  timestamp,
+  varchar,
+} from 'drizzle-orm/pg-core'
 import { relations } from 'drizzle-orm'
 import { usersToGameRoom } from '@/schema/user/usersToGameRoom'
+import { init } from '@paralleldrive/cuid2'
+
+const createId = init({
+  // A custom random function with the same API as Math.random.
+  // You can use this to pass a cryptographically secure random function.
+  random: Math.random,
+  // the length of the id
+  length: 4,
+  // A custom fingerprint for the host environment. This is used to help
+  // prevent collisions when generating ids in a distributed system.
+  fingerprint: 'a-custom-host-fingerprint',
+})
 
 export const gameRoom = pgTable('game_room', {
-  ID: createCuid2(),
+  ID: char('ID', { length: 4 })
+    .$defaultFn(() => createId())
+    .primaryKey(),
   name: varchar('name', { length: 255 }).notNull(),
   maxPlayers: smallint('max_players'),
   minPlayers: smallint('min_players'),
