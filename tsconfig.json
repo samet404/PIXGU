@@ -18,6 +18,7 @@
     "noUncheckedIndexedAccess": true,
     "baseUrl": "./",
     "paths": {
+      "@/middlewares": ["src/middlewares/index.ts"],
       "@/xata": ["src/xata/"],
       "@/procedure": ["src/server/api/procedure"],
       "@/schema/*": ["src/server/db/sqlDb/schema/*"],
@@ -26,6 +27,7 @@
       "@/sqlDb": ["src/server/db/sqlDb"],
       "@/sqlDb/*": ["src/server/db/sqlDb/*"],
       "@/redis/*": ["src/server/db/redis/*"],
+      "@/context/*": ["src/context/*"],
       "@/redis": ["src/server/db/redis/"],
       "@/auth/*": ["./src/auth/*"],
       "@/api/*": ["./src/app/api/*"],

@@ -1,7 +1,7 @@
 import { createTRPCRouter } from '../../trpc'
 import {
   createRoom,
-  getRoomsByOffsetAndLimit,
+  getRooms,
   isRoomHavePassword,
   knowRoomPass,
   joinRoom,
@@ -13,7 +13,7 @@ import {
 export const gameRoomRouter = createTRPCRouter({
   create: createRoom,
 
-  getRoomsByOffsetAndLimit: getRoomsByOffsetAndLimit,
+  getRooms: getRooms,
   getPlayingRooms: getPlayingRooms,
 
   isHavePass: isRoomHavePassword,

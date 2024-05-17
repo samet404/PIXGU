@@ -1,13 +1,6 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+import { internationalization } from '@/middlewares'
 
-export function middleware(request: NextRequest) {
-  // https://www.propelauth.com/post/getting-url-in-next-server-components
-  // Add a new header x-current-path which passes the path to downstream components
-  const headers = new Headers(request.headers)
-  headers.set('x-current-path', request.nextUrl.pathname)
-  return NextResponse.next({ headers })
-}
+export default internationalization
 
 export const config = {
   matcher: [

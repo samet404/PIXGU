@@ -20,6 +20,7 @@ export const knowRoomPass = loggedUserProducure
     const passRoomMatch = await ctx.redisDb.get(`room:${roomID}:password`)
     const isPassTrue = passRoomMatch == pass
 
+    console.log(`knowRoomPass isPassTrue: ${isPassTrue}`)
     if (!isPassTrue) wrongPasswordErr()
 
     await ctx.redisDb.sadd(`room:${roomID}:players_know_pass`, userID)

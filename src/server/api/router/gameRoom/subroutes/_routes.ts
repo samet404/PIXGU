@@ -1,5 +1,5 @@
 export { createRoom } from './createRoom'
-export { getRoomsByOffsetAndLimit } from './getRoomsByOffsetAndLimit'
+export { getRooms } from './getRooms'
 
 export { isRoomHavePassword } from './isRoomHavePassword'
 export { getPlayingRooms } from './getPlayingRooms'

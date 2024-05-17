@@ -1,3 +1,5 @@
+import 'server-only'
+
 import { Lucia } from 'lucia'
 import { adapter } from './adapter'
 import type { DatabaseUser } from '@/auth/types'

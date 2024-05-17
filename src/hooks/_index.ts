@@ -1,2 +1,2 @@
-export * from './useAblyBasicClient'
 export * from './useLastPartOfPathname'
+export * from './useFirstPartOfPathname'

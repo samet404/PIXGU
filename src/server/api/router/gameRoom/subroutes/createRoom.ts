@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { gameRoom } from '@/schema/gameRoom'
 import { loggedUserProducure } from '@/procedure'
 import { TRPCError } from '@trpc/server'
-import { useAblyBasicClient } from '@/hooks/useAblyBasicClient'
+import { ablyBasicClient } from '@/utils/ablyBasicClient'
 import { env } from '@/env/server.mjs'
 
 export const createRoom = loggedUserProducure
@@ -18,7 +18,7 @@ export const createRoom = loggedUserProducure
     const createdAt = new Date()
     const { name, minPlayers, maxPlayers, password } = input
     const userID = ctx.user.id
-    const { ablyClient } = await useAblyBasicClient()
+    const { ablyClient } = await ablyBasicClient()
 
     const createdRoom = await ctx.db
       .insert(gameRoom)
@@ -49,6 +49,7 @@ export const createRoom = loggedUserProducure
     await ctx.redisDb.set(`room:${roomID}:minPlayers`, minPlayers)
     await ctx.redisDb.set(`room:${roomID}:maxPlayers`, maxPlayers)
     await ctx.redisDb.set(`room:${roomID}:createdAt`, createdAt)
+    await ctx.redisDb.sadd(`room:${roomID}:players_know_pass`, userID)
 
     await ablyClient.channels.get('room-creating').publish('room-created', {
       roomID: roomID,

@@ -4,9 +4,9 @@ import { env } from '@/env/server.mjs'
 export default {
   schema: './src/server/db/sqlDb/schema',
   out: './src/server/db/sqlDb',
-  driver: 'pg',
+  dialect: 'postgresql',
   dbCredentials: {
-    connectionString: env.NEON_URL,
+    url: env.NEON_URL,
   },
   verbose: true,
   strict: true,

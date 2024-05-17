@@ -21,7 +21,8 @@ import {
   getUserByUsernameAndUsernameID,
   getFriendByFriendID,
   setNewUsername,
-} from './subroute/_routes'
+  setNewLocale,
+} from './subroute'
 
 export const userRouter = createTRPCRouter({
   generateNewUsernameID: generateNewUsernameID,
@@ -48,7 +49,9 @@ export const userRouter = createTRPCRouter({
   sendFriendRequest: sendFriendRequest,
   declineIncomingFriendRequest: declineIncomingFriendRequest,
   acceptIncomingFriendRequest: acceptIncomingFriendRequest,
+
   setNewUsername: setNewUsername,
+  setNewLocale: setNewLocale,
 
   getFriendRequests: getFriendRequests,
 })

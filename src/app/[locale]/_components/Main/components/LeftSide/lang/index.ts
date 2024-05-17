@@ -1,0 +1,26 @@
+import 'server-only'
+
+import type { Locale, PartialRecord } from '@/types'
+
+const langJSONs: PartialRecord<Locale, () => Promise<LangObj>> = {
+  en: () => import('./json/en.json').then((module) => module.default),
+  tr: () => import('./json/tr.json').then((module) => module.default),
+  // esi: () => import('./json/esi.json').then((module) => module.default),
+}
+
+export const getLangObj = async (locale: Locale) => {
+  const langJson = langJSONs[locale as Locale]
+  if (!langJson) throw new Error(`No lang file for locale: ${locale}`)
+
+  return langJson()
+}
+
+type keys =
+  | 'create_room'
+  | 'quick_match'
+  | 'friends'
+  | 'how_to_play'
+  | 'login'
+  | 'join_room'
+
+type LangObj = Record<keys, { name: string; description: string }>

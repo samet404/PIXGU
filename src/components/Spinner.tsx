@@ -10,7 +10,7 @@ type SpinnerProps = {
 const Spinner = ({ sizes, className }: SpinnerProps) => (
   <Image
     className={clsxMerge(
-      `h-10 w-10 animate-spin animate-infinite ${className}`,
+      `h-10 w-10 animate-spin drop-shadow-[0_0px_2px_rgba(0,0,0,0.55)] animate-infinite ${className}`,
     )}
     src={img}
     alt="pls wait..."

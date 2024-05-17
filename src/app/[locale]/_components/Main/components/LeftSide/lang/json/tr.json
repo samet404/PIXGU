@@ -1,0 +1,30 @@
+{
+  "create_room": {
+    "name": "Oda oluştur",
+    "description": "Oluştur ve kurallarını koy"
+  },
+
+  "quick_match": {
+    "name": "Şipşak maç",
+    "description": "Hızlı bul, hızlı oyna!"
+  },
+
+  "join_room": {
+    "name": "Odaya katıl",
+    "description": "Bul ve katıl!"
+  },
+  "friends": {
+    "name": "Arkadaşlar",
+    "description": "Arkadas edinin ve daha fazlası"
+  },
+
+  "how_to_play": {
+    "name": "Nasıl oynanır",
+    "description": "Nasıl oynayacağını bilmiyor musun ?"
+  },
+
+  "login": {
+    "name": "Giriş yap",
+    "description": "Giriş yap ve profilini oluştur"
+  }
+}
