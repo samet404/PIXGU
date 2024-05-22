@@ -1,5 +1,5 @@
 export type PlayerDisplayData = {
-  id: string
+  ID: string
   name: string
   pfp: string | null
 }

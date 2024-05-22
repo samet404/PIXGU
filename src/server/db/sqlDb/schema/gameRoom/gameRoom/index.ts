@@ -14,19 +14,17 @@ const createId = init({
   // You can use this to pass a cryptographically secure random function.
   random: Math.random,
   // the length of the id
-  length: 4,
+  length: 5,
   // A custom fingerprint for the host environment. This is used to help
   // prevent collisions when generating ids in a distributed system.
   fingerprint: 'a-custom-host-fingerprint',
 })
 
 export const gameRoom = pgTable('game_room', {
-  ID: char('ID', { length: 4 })
+  ID: char('ID', { length: 5 })
     .$defaultFn(() => createId())
     .primaryKey(),
   name: varchar('name', { length: 255 }).notNull(),
-  maxPlayers: smallint('max_players'),
-  minPlayers: smallint('min_players'),
   password: varchar('password', { length: 128 }),
   createdAt: timestamp('created_at').notNull(),
 })

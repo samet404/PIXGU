@@ -1,9 +1,10 @@
 'use client'
 
+import type { DrawDataRef, PeersRef } from '@/types'
 import { useCanvasDraw } from './hooks/useCanvasDraw'
 
-const Draft = () => {
-  useCanvasDraw()
+const Draft = ({ peersRef }: Props) => {
+  useCanvasDraw(peersRef)
 
   return (
     <canvas
@@ -14,4 +15,10 @@ const Draft = () => {
     />
   )
 }
+
 export default Draft
+
+type Props = {
+  drawDataRef: DrawDataRef
+  peersRef: PeersRef
+}

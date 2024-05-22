@@ -17,7 +17,7 @@ const ErrDisplay = ({ msg, code, reason, redirectTo, ...others }: Props) => {
         {...others}
         className={`${urbanist.className} group relative z-50 flex animate-[err-pulse-shadow_2s_ease-in-out_infinite] flex-col items-center gap-2 rounded-lg bg-rose-500 p-2 `}
       >
-        <div className="jtustify-between flex w-full flex-row gap-2">
+        <div className="flex w-full flex-row justify-between gap-2">
           <p className="text-[0.9rem] font-[700] text-[rgba(255,255,255,0.8)]">
             {msg}
           </p>

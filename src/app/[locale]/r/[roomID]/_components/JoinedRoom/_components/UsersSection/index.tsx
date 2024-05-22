@@ -1,5 +1,9 @@
-import RenderUsers from './components/RenderUsers'
 import Me from './components/Me'
+import dynamic from 'next/dynamic'
+
+const RenderUsers = dynamic(() => import('./components/RenderUsers'), {
+  ssr: false,
+})
 
 const UsersSection = () => {
   return (

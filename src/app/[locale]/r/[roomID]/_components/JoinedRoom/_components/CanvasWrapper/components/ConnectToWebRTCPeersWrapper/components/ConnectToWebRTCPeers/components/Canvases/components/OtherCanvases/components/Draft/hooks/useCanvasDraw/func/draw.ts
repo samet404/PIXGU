@@ -10,7 +10,7 @@ export const draw = (
   dctx: CanvasRenderingContext2D,
   cellPixelLength: number,
   pixelHistoryRef: MutableRefObject<PixelHistory>,
-  wsRoomDrawChannel: any,
+  wsRoomDrawChannel: Peers,
   lastDrawedPixelRef: MutableRefObject<LastDrawedPixel | undefined>,
   e: MouseEvent,
 ) => {

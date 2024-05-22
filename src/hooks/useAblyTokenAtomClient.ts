@@ -9,7 +9,7 @@ import { useEffectOnce } from './useEffectOnce'
  */
 export const useAblyTokenAtomClient = (
   ablyClientAtom: PrimitiveAtom<Realtime | null>,
-  clientOptions?: ClientOptions,
+  clientOptions?: Omit<ClientOptions, 'clientId'>,
   events?: {
     // eslint-disable-next-line no-unused-vars
     onSuccess?: (client: Realtime) => Promise<void> | void

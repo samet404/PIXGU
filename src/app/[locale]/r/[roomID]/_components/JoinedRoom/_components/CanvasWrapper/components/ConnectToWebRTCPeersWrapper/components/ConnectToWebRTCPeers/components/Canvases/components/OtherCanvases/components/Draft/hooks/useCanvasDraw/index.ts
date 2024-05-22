@@ -1,27 +1,25 @@
-// @ts-nocheck
-// @ts-ignore
-// eslint-disable for this file
+// types
+import type {
+  LastDrawedPixel,
+  PixelHistory,
+  WebRTCConnData,
+  DrawDataRef,
+  PeersRef,
+} from '@/types'
 // react
 import { useRef } from 'react'
-//ably
-import { useChannel } from 'ably/react'
 // jotai
 import { useAtomValue } from 'jotai'
-import { roomIDAtom, userIDAtom } from '@/app/room/[roomID]/atoms'
 import { cellSideCountAtom } from '../../../../atoms'
-// types
-import type { LastDrawedPixel, PixelHistory, pixelPerSecond } from './types'
 // funcs
-import { addGrid, draw, wsDrawEvent } from './func/_index'
+import { addGrid, draw, rtcDrawEvent } from './func/_index'
 import { useEventListener } from 'usehooks-ts'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
-import { type Message } from 'ably'
 import { finishedPosition } from './func/finishedPosition'
+import { decodedOnPeerData } from '@/utils/decodedOnPeerData'
 
-export const useCanvasDraw = () => {
+export const useCanvasDraw = (peersRef: PeersRef) => {
   // atoms
-  const userID = useAtomValue(userIDAtom)
-  const roomID = useAtomValue(roomIDAtom)
   const cellSideCount = useAtomValue(cellSideCountAtom)
 
   // canvas variables
@@ -33,9 +31,6 @@ export const useCanvasDraw = () => {
   const cellPixelLengthRef = useRef<number>()
   const paintingRef = useRef<boolean>(false)
   const pixelHistoryRef = useRef<PixelHistory>({})
-  const pixelPerSecondRef = useRef<pixelPerSecond>()
-  const pixelPerSecondLimitRef = useRef<number>(100)
-  let pixelPerSecondLimitAlert = false
 
   // initializing somethings
   useEffectOnce(() => {
@@ -67,22 +62,29 @@ export const useCanvasDraw = () => {
     addGrid(cellPixelLengthRef.current)
   })
 
-  // connecting to {roomID}:draw channel
-  const { channel: wsRoomDrawChannel } = useChannel(
-    `${roomID}:draw`,
-    (message: Message) => {
-      wsDrawEvent(
-        message,
-        draftCanvasRef.current!,
-        dctxRef.current!,
-        mctxRef.current!,
-        pixelHistoryRef.current,
-        cellPixelLengthRef.current!,
-      )
+  for (const userID in peersRef.current) {
+    if (!peersRef.current[userID]?.peer) return null
 
-      console.log(message)
-    },
-  )
+    const cellPixelLength = cellPixelLengthRef.current!
+    const dctx = dctxRef.current!
+    const mctx = mctxRef.current!
+    const draftCanvas = draftCanvasRef.current!
+    const pixelHistory = pixelHistoryRef.current
+
+    decodedOnPeerData(
+      peersRef.current[userID]?.peer,
+      (data: WebRTCConnData) => {
+        rtcDrawEvent({
+          data,
+          draftCanvas,
+          dctx,
+          mctx,
+          pixelHistory,
+          cellPixelLength,
+        })
+      },
+    )
+  }
 
   const mouseOut = () => {
     console.log('mouseOut')
@@ -96,7 +98,7 @@ export const useCanvasDraw = () => {
     if (e.button !== 0) return null
     paintingRef.current = true
 
-    const result = draw(
+    draw(
       draftCanvasRef.current!,
       dctxRef.current!,
       cellPixelLengthRef.current!,
@@ -105,18 +107,11 @@ export const useCanvasDraw = () => {
       lastDrawedPixelRef,
       e,
     )
-
-    if (!result?.isSuccess) {
-    }
-    if (result?.isSuccess) {
-    }
   }
 
   const drawing = (e: MouseEvent) => {
     if (!paintingRef.current) return null
     if (e.button !== 0) return null
-
-    const pixelPerSecondLimit = pixelPerSecondLimitRef.current
 
     const result = draw(
       draftCanvasRef.current!,
@@ -142,4 +137,9 @@ export const useCanvasDraw = () => {
   useEventListener('mouseup', mouseup, draftCanvasRef)
   useEventListener('mousemove', drawing, draftCanvasRef)
   useEventListener('mouseout', mouseOut, draftCanvasRef)
+}
+
+type Args = {
+  drawDataRef: DrawDataRef
+  peersRef: PeersRef
 }

@@ -17,6 +17,10 @@ export const removePlayerAtom = atom(null, (get, set, playerID: string) => {
 
   set(
     playersAtom,
-    players.filter((player) => player.id !== playerID),
+    players.filter((player) => player.ID !== playerID),
   )
+})
+
+export const deleteAllPlayersAtom = atom(null, (get, set) => {
+  set(playersAtom, [])
 })

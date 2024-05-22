@@ -2,6 +2,8 @@ import UsersSection from './_components/UsersSection'
 import Nav from './_components/Nav'
 import AnimatedDiv from './_components/AnimatedDiv'
 import CanvasWrapper from './_components/CanvasWrapper'
+import './_styles/scrollbars.css'
+import CanvasTools from './_components/CanvasTools'
 
 const JoinedRoom = () => {
   return (
@@ -14,7 +16,7 @@ const JoinedRoom = () => {
       >
         <UsersSection />
         <CanvasWrapper />
-        {/* <CanvasTools /> */}
+        <CanvasTools />
       </div>
     </div>
   )

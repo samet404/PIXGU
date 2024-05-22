@@ -1,6 +1,6 @@
 'use client'
 
-import { isGridOpenAtom } from '@/app/room/[roomID]/atoms'
+import { isGridOpenAtom } from '../../../../atoms'
 import { clsxMerge } from '@/utils/clsxMerge'
 import { useAtom } from 'jotai'
 

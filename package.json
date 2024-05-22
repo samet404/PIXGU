@@ -11,7 +11,7 @@
     "lint": "next lint",
     "start": "next start",
     "db:studio": "dotenv -e .env.development npx drizzle-kit studio --verbose --port 6000",
-    "db:push": "dotenv -e .env.development drizzle-kit push:pg",
+    "db:push": "dotenv -e .env.development drizzle-kit push",
     "db:introspect": "dotenv -e .env.development drizzle-kit introspect:pg",
     "db:studio:prod": "dotenv -e .env.production npx drizzle-kit studio",
     "db:push:prod": "dotenv -e .env.production drizzle-kit push:pg",

@@ -10,6 +10,7 @@ const BtnYes = () => {
 
   const leaveRoom = () => {
     setIsModalOpen(false)
+
     router.push('/')
   }
 

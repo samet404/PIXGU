@@ -5,8 +5,15 @@ import BackgroundImages from './_components/BackgroundImages'
 import waves from '@/png/waves.png'
 import Image from 'next/image'
 import './_styles/scrollbars.css'
+import dynamic from 'next/dynamic'
+import { api } from '@/trpc/server'
 
-const CreateRoom = () => {
+const ErrDisplay = dynamic(() => import('@/components/ErrDisplay'))
+
+const CreateRoom = async () => {
+  const isLogged = await api.auth.isLogged.query()
+  if (!isLogged) return <ErrDisplay msg="UNAUTHORZIED" redirectTo="/login" />
+
   return (
     <div
       id="page-root"

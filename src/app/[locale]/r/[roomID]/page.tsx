@@ -1,57 +1,72 @@
-import './_styles/scrollbars.css'
+import type { Locale } from '@/types'
 import { api } from '@/trpc/server'
 import dynamic from 'next/dynamic'
-import type { Locale } from '@/types'
 
 const ErrDisplay = dynamic(() => import('@/components/ErrDisplay'))
-const JoinWithPassContainer = dynamic(
-  () => import('./_components/JoinWithPassContainer'),
-)
 const JoinedRoom = dynamic(() => import('./_components/JoinedRoom'))
 
 const Room = async ({ params }: Props) => {
-  const isLogged = await api.auth.isLogged.query()
-
-  if (!isLogged)
-    return (
-      <ErrDisplay
-        msg="UNAUTHORIZED"
-        reason="You need to be logged in to join a room"
-        code={401}
-        redirectTo="/login"
-      />
-    )
-
-  const user = await api.auth.getUser.query()
-
-  if (!user)
-    return (
-      <ErrDisplay
-        msg="UNAUTHORIZED"
-        reason="You need to be logged in to join a room"
-        code={401}
-        redirectTo="/login"
-      />
-    )
-
-  import('@/context/server').then((m) => m.setIsLogged(isLogged))
-  import('@/context/server').then((m) => m.setLocale(params.locale))
-  import('@/context/server').then((m) => m.setUser(user))
-  import('@/context/server').then((m) => m.setUserID(user.id))
-
   const roomID = params.roomID
-  import('@/context/server').then((m) => m.setRoomID(roomID))
 
-  const roomExists = await api.gameRoom.isExits.query({ roomID: roomID })
+  try {
+    const user = await api.auth.getUser.query()
+    if (!user) throw new Error('UNAUTHORIZED')
 
-  if (!roomExists) return (await import('next/navigation')).notFound()
+    const userID = user.id
 
-  const isRoomHavePass = await api.gameRoom.isHavePass.query({
-    roomID: roomID,
-  })
+    const { isUserHavePermToJoin } = await import('./func')
+    await isUserHavePermToJoin(userID, roomID)
 
-  if (isRoomHavePass) return <JoinWithPassContainer />
-  return <JoinedRoom />
+    const { waitServer } = await import('./func')
+    await waitServer({ userID, roomID })
+
+    const { setServerContexts } = await import('./func')
+    setServerContexts(params.locale, roomID, user)
+
+    return <JoinedRoom />
+  } catch (e) {
+    if (e instanceof Error) {
+      if (e.message === 'UNAUTHORIZED')
+        return (
+          <ErrDisplay
+            msg="UNAUTHORIZED"
+            reason="You need to be logged in to join a room"
+            code={401}
+            redirectTo="/login"
+          />
+        )
+
+      if (e.message === 'ROOM_NOT_FOUND')
+        return (
+          <ErrDisplay
+            msg="NOT FOUND"
+            reason="This room does not exist"
+            code={404}
+          />
+        )
+
+      if (e.message === 'ALREADY_IN_ROOM')
+        return (
+          <ErrDisplay
+            msg="BAD REQUEST"
+            reason="You are already in this room in another tab"
+          />
+        )
+
+      if (e.message === 'PASSWORD_REQUIRED')
+        return (await import('next/navigation')).redirect(`/r/${roomID}/p`)
+
+      if (e.message === 'BLOCKED')
+        return (
+          <ErrDisplay
+            msg="UNAUTHORIZED"
+            reason="You have blocked from this room"
+          />
+        )
+    }
+
+    return <ErrDisplay msg="UNKNOWN" />
+  }
 }
 
 export default Room

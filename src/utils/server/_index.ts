@@ -1,0 +1,1 @@
+export { killRoom } from './killRoom'

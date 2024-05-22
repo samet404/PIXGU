@@ -1,7 +1,7 @@
 'use client'
 
 import { useAtomValue } from 'jotai'
-import { isGridOpenAtom } from '@/app/room/[roomID]/atoms'
+import { isGridOpenAtom } from '../../../../../../../../../../atoms'
 import { clsxMerge } from '@/utils/clsxMerge'
 
 const GridCanvas = () => {

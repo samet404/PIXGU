@@ -35,7 +35,7 @@ const InputContainer = () => {
         ref={inputRef}
         placeholder={'Room name here ✨'}
         type="text"
-        className="w-full rounded-md bg-[rgba(255,255,255,0.2)] p-1 text-white shadow-lg outline-none placeholder:text-[#ffffff72]"
+        className="w-full rounded-md bg-[rgba(255,255,255,0.2)] px-[0.40rem] py-1 text-white shadow-lg outline-none placeholder:text-[#ffffff72]"
       />
       <InputInfo />
     </div>

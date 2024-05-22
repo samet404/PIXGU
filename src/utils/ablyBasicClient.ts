@@ -4,7 +4,9 @@ import * as Ably from 'ably'
 import { type ClientOptions } from 'ably'
 
 /**
- * This function can create a basic Ably client. Shouldn't be used in client-side code. Use 'useAblyTokenClient' instead.
+ * This function can create a basic Ably client.
+ * Shouldn't be used in client-side code. Use 'useAblyTokenClient' instead.
+ *
  * @see https://ably.com/docs/auth/basic
  */
 export const ablyBasicClient = async (clientOptions?: ClientOptions) => {
