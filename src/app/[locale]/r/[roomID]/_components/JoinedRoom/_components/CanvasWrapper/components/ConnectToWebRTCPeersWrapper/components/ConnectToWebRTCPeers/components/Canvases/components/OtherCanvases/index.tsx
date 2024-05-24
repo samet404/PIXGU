@@ -1,12 +1,12 @@
-import type { PeersRef, DrawDataRef } from '@/types'
+import type { PeersRef, CanvasDataRef } from '@/types'
 import GridCanvas from './components/GridCanvas'
 import Draft from './components/Draft'
 
-const OtherCanvases = ({ peersRef }: Props) => {
+const OtherCanvases = ({ peersRef, canvasDataRef }: Props) => {
   return (
     <div className="absolute bottom-0 left-0 right-0 top-0">
       <GridCanvas />
-      <Draft peersRef={peersRef} />
+      <Draft canvasDataRef={canvasDataRef} peersRef={peersRef} />
     </div>
   )
 }
@@ -14,6 +14,6 @@ const OtherCanvases = ({ peersRef }: Props) => {
 export default OtherCanvases
 
 type Props = {
-  drawDataRef: DrawDataRef
+  canvasDataRef: CanvasDataRef
   peersRef: PeersRef
 }

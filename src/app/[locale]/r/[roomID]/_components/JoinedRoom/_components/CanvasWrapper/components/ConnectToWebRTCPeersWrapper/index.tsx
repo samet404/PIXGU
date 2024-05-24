@@ -3,7 +3,7 @@ import ConnectToWebRTCPeers from './components/ConnectToWebRTCPeers'
 
 const ConnectToWebRTCPeersWrapper = () => {
   const user = getUser()!
-  const roomID = getRoomID()!
+  const roomID = getRoomID()
 
   return <ConnectToWebRTCPeers user={user} roomID={roomID} />
 }

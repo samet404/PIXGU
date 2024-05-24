@@ -8,9 +8,10 @@ const Canvases = dynamic(() => import('./components/Canvases'))
 const ErrDisplay = dynamic(() => import('@/components/ErrDisplay'))
 
 const ConnectToWebRTCPeers = ({ user, roomID }: Props) => {
-  const { peersRef, isSuccess } = useHandlePeers(user, roomID)
+  const { peersRef, isSuccess, canvasDataRef } = useHandlePeers(user, roomID)
 
-  if (isSuccess) return <Canvases peersRef={peersRef} />
+  if (isSuccess)
+    return <Canvases peersRef={peersRef} canvasDataRef={canvasDataRef} />
 
   return <div className="pt-7">{'Connecting to them WebRTC peers...'}</div>
 }

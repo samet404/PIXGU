@@ -1,4 +1,4 @@
-import UsersSection from './_components/UsersSection'
+import PlayersSection from './_components/PlayersSection'
 import Nav from './_components/Nav'
 import AnimatedDiv from './_components/AnimatedDiv'
 import CanvasWrapper from './_components/CanvasWrapper'
@@ -14,7 +14,7 @@ const JoinedRoom = () => {
         id="rootDiv"
         className="flex h-full w-full animate-fade-down flex-row items-start justify-between gap-2 overflow-y-scroll p-2"
       >
-        <UsersSection />
+        <PlayersSection />
         <CanvasWrapper />
         <CanvasTools />
       </div>

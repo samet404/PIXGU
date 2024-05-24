@@ -1,5 +1,0 @@
-export { addGrid } from './addGrid'
-export { draw } from './draw'
-export { fillOnePixel } from './fillOnePixel'
-export { getRgbaFromURL } from './getRgbaFromURL'
-export { rtcDrawEvent } from './rtcDrawEvent'

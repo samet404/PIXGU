@@ -1,12 +1,10 @@
 import type { Realtime, Message, RealtimeChannel } from 'ably'
-import type { PeersRef, WebRTCConnData } from '@/types'
+import type { CanvasDataRef, PeersRef } from '@/types'
 import type { User } from 'lucia'
-import { setPlayerAtom } from '@/app/[locale]/r/[roomID]/_components/JoinedRoom/_atoms'
-import { useSetAtom } from 'jotai'
 import { subscribeAblyPresence } from '@/utils/subscribeAblyPresence'
 import { simplePeer } from '@/utils/simplePeer'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
-import { handlePeerDatas } from './funcs'
+import { handlePeerDatas, addPeer } from './funcs'
 
 /**
  * This hook subscribes to the 'enter' presence event on the room channel.
@@ -19,33 +17,28 @@ import { handlePeerDatas } from './funcs'
  * @param user - The user object
  * @param roomChannel - The room channel
  */
-export const useEnters = ({
-  ablyClient,
-  peersRef,
-  myID,
-  roomID,
-  user,
-  roomChannel,
-}: Args) => {
-  const setPlayer = useSetAtom(setPlayerAtom)
-
+export const useEnters = (
+  ablyClient: Realtime,
+  peersRef: PeersRef,
+  canvasDataRef: CanvasDataRef,
+  myID: string,
+  roomID: string,
+  roomChannel: RealtimeChannel,
+) => {
   useEffectOnce(() => {
     subscribeAblyPresence(roomChannel, 'enter', (msg: Message) => {
       const userID = msg.clientId!
-
       if (userID === myID) return null
 
       console.log(`USER ${userID} ENTERED`)
-
       console.log(`INITIATING PEER CONNECTION TO ${userID}`)
-
-      const peer = simplePeer({
-        initiator: true,
-      })
 
       const themConnectChannel = ablyClient.channels.get(
         `room:${roomID}:connect:${userID}`,
       )
+      const peer = simplePeer({
+        initiator: true,
+      })
 
       peer.on('signal', (data) => {
         console.log(`SIGNALING TO ${userID}`)
@@ -55,36 +48,11 @@ export const useEnters = ({
         })
       })
 
-      peer.on('connect', () => {
-        console.log(`CONNECTED TO ${userID}`)
+      peer.on('connect', () => console.log(`CONNECTED TO ${userID}`))
 
-        const meetInfo: WebRTCConnData = {
-          event: 'meet',
-          userInfo: {
-            ID: myID,
-            name: user.usernameWithUsernameID,
-            pfp: user.profilePicture,
-          },
-        }
+      handlePeerDatas(peer, canvasDataRef, peersRef)
 
-        peer.send(JSON.stringify(meetInfo))
-      })
-
-      handlePeerDatas({ peer, setPlayer })
-
-      peersRef.current = {
-        [userID]: { peer: peer },
-        ...peersRef.current,
-      }
+      addPeer(userID, peer, peersRef)
     })
   })
-}
-
-type Args = {
-  ablyClient: Realtime
-  peersRef: PeersRef
-  myID: string
-  roomID: string
-  user: User
-  roomChannel: RealtimeChannel
 }

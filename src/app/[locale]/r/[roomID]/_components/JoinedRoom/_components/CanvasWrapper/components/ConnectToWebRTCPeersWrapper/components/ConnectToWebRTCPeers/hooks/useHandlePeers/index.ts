@@ -1,8 +1,8 @@
-import type SimplePeerType from 'simple-peer'
 import type { User } from 'lucia'
 import { useRef, useState } from 'react'
 import { useAtomValue } from 'jotai'
 import { ablyClientAtom } from '../../../../../../atoms'
+import type { CanvasData, Peers } from '@/types'
 import {
   useEnters,
   useOffers,
@@ -10,10 +10,9 @@ import {
   useLeaves,
   useMyLeave,
 } from './hooks'
-import type { DrawData } from '@/types'
 
 /**
- * This hook handles the WebRTC peer connections.
+ * This hook handles the everything about WebRTC peer connections.
  *
  * @param user - The user object
  * @param roomID - The room's ID
@@ -22,8 +21,20 @@ export const useHandlePeers = (user: User, roomID: string) => {
   console.log('CONNECTING TO PEERS...')
 
   const [isSuccess, setIsSuccess] = useState<boolean>(false)
-  const peersRef = useRef<PeersRefCurrent>()
-  const drawDataRef = useRef<DrawData>()
+  const peersRef = useRef<Peers>({})
+  const canvasDataRef = useRef<CanvasData>({
+    cellPixelLength: 0,
+    cellSideCount: 40,
+    draft: null,
+    main: null,
+    painter: {
+      isPainter: null,
+      lastDrawedPixel: null,
+      painting: null,
+      pixelHistory: {},
+    },
+  })
+
   const ablyClient = useAtomValue(ablyClientAtom)!
   const myID = user.id
   const roomChannel = ablyClient.channels.get(`room:${roomID}`)
@@ -31,22 +42,17 @@ export const useHandlePeers = (user: User, roomID: string) => {
     `room:${roomID}:connect:${myID}`,
   )
 
-  useEnters({ ablyClient, peersRef, myID, roomID, user, roomChannel })
-  useOffers({ ablyClient, myConnectChannel, peersRef, myID, roomID, user })
-  useAnswers({ myConnectChannel, peersRef })
-  useLeaves({ roomChannel, peersRef })
-  useMyLeave({ roomChannel, myConnectChannel, peersRef })
+  useEnters(ablyClient, peersRef, canvasDataRef, myID, roomID, roomChannel)
+  useOffers(ablyClient, myConnectChannel, roomID, canvasDataRef, peersRef)
+  useAnswers(myConnectChannel, peersRef)
+  useLeaves(roomChannel, peersRef)
+  useMyLeave(roomChannel, myConnectChannel, peersRef)
 
   setIsSuccess(true)
 
   return {
     peersRef,
-    drawDataRef,
+    canvasDataRef,
     isSuccess,
   }
 }
-
-type PeersRefCurrent = Partial<
-  Record<UserID, { peer: SimplePeerType.Instance }>
->
-type UserID = string

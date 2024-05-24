@@ -1,12 +1,8 @@
-import type { PeersRef, WebRTCConnData, WebRTCSignalData } from '@/types'
+import type { CanvasDataRef, PeersRef, WebRTCSignalData } from '@/types'
 import type { Message, Realtime, RealtimeChannel } from 'ably'
-import type { User } from 'lucia'
-import { setPlayerAtom } from '@/app/[locale]/r/[roomID]/_components/JoinedRoom/_atoms'
 import { simplePeer } from '@/utils'
-import { decodedOnPeerData } from '@/utils/decodedOnPeerData'
-import { useSetAtom } from 'jotai'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
-import { handlePeerDatas } from './funcs'
+import { addPeer, handlePeerDatas } from './funcs'
 
 /**
  * This hook subscribes to the 'offer' event on the user's connect channel.
@@ -17,18 +13,14 @@ import { handlePeerDatas } from './funcs'
  * @param peersRef - The ref object containing the peer connections
  * @param myID - The user's ID
  * @param roomID - The room's ID
- * @param user - The user object
  */
-export const useOffers = ({
-  ablyClient,
-  myConnectChannel,
-  peersRef,
-  myID,
-  roomID,
-  user,
-}: Args) => {
-  const setPlayer = useSetAtom(setPlayerAtom)
-
+export const useOffers = (
+  ablyClient: Realtime,
+  myConnectChannel: RealtimeChannel,
+  roomID: string,
+  canvasDataRef: CanvasDataRef,
+  peersRef: PeersRef,
+) => {
   useEffectOnce(() => {
     myConnectChannel.subscribe('offer', (msg: Message) => {
       const signal = msg.data as WebRTCSignalData
@@ -50,36 +42,10 @@ export const useOffers = ({
         throw new Error(e.message)
       })
 
-      peer.on('connect', () => {
-        console.log(`CONNECTED TO ${userID}`)
+      peer.on('connect', () => console.log(`CONNECTED TO ${userID}`))
 
-        const meetInfo: WebRTCConnData = {
-          event: 'meet',
-          userInfo: {
-            ID: myID,
-            name: user.usernameWithUsernameID,
-            pfp: user.profilePicture,
-          },
-        }
-
-        peer.send(JSON.stringify(meetInfo))
-      })
-
-      handlePeerDatas({ peer, setPlayer })
-
-      peersRef.current = {
-        [userID]: { peer: peer },
-        ...peersRef.current,
-      }
+      handlePeerDatas(peer, canvasDataRef, peersRef)
+      addPeer(userID, peer, peersRef)
     })
   })
-}
-
-type Args = {
-  ablyClient: Realtime
-  myConnectChannel: RealtimeChannel
-  peersRef: PeersRef
-  myID: string
-  roomID: string
-  user: User
 }

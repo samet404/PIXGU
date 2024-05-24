@@ -1,21 +1,28 @@
-import { type IntRange } from '@/types/intRange'
+import type { MutableRefObject } from 'react'
+import type { IntRange } from './intRange'
 
 export type CanvasData = {
-  cellSideCount: number
+  readonly cellSideCount: number
   cellPixelLength: number
-  draftCanvas: HTMLCanvasElement
-  mainCanvas: HTMLCanvasElement
-  dctx: CanvasRenderingContext2D
-  mctx: CanvasRenderingContext2D
+
+  draft: HTMLCanvasElement | null
+  main: HTMLCanvasElement | null
+
   painter: {
+    isPainter: boolean | null
     painting: boolean | null
-    pixelHistory: PixelHistory | null
-    lastDrawedPixel: LastDrawedPixel
+    pixelHistory: PixelHistory
+    lastDrawedPixel: LastDrawedPixel | null
   }
 }
 
+export type CanvasDataRef = MutableRefObject<CanvasData>
+
+type X = number
+type Y = number
+
 export type PixelHistory = Record<
-  `${string}_${string}`,
+  `${X}_${Y}`,
   {
     r: IntRange<0, 256>
     g: IntRange<0, 256>

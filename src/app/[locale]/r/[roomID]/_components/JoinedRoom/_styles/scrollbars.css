@@ -1,22 +1,22 @@
-#usersSection::-webkit-scrollbar,
+#playersSection::-webkit-scrollbar,
 #rootDiv::-webkit-scrollbar {
   width: 0.4rem;
 }
 
 /* Track */
-#usersSection::-webkit-scrollbar-track,
+#playersSection::-webkit-scrollbar-track,
 #rootDiv::-webkit-scrollbar-track {
   border-radius: 1rem;
 }
 
 /* Handle */
-#usersSection::-webkit-scrollbar-thumb,
+#playersSection::-webkit-scrollbar-thumb,
 #rootDiv::-webkit-scrollbar-thumb {
   background: rgba(181, 181, 181, 0.5);
   border-radius: 10px;
 }
 
-#usersSection::-webkit-scrollbar-thumb:hover,
+#playersSection::-webkit-scrollbar-thumb:hover,
 #rootDiv::-webkit-scrollbar-thumb:hover {
   background: rgba(181, 181, 181, 0.5);
 }

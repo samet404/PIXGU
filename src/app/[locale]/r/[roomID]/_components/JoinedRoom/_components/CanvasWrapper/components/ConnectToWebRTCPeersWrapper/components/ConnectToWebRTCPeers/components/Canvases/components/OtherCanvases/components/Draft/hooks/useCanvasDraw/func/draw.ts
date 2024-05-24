@@ -1,25 +1,30 @@
 import { isObjectEmpty } from '@/utils/isObjectEmpty'
-import type { LastDrawedPixel, PixelHistory } from '../types'
-import { fillOnePixel } from './fillOnePixel'
+import { fillOnePixel } from '../../../../../../../../../../../../../funcs/fillOnePixel'
 import { getRgbaFromURL } from './getRgbaFromURL'
-import { type MutableRefObject } from 'react'
-import { type IntRange } from '@/types/intRange'
+import type { IntRange, PeersRef, CanvasDataRef, WebRTCConnData } from '@/types'
 
-export const draw = (
-  draftCanvas: HTMLCanvasElement,
-  dctx: CanvasRenderingContext2D,
-  cellPixelLength: number,
-  pixelHistoryRef: MutableRefObject<PixelHistory>,
-  wsRoomDrawChannel: Peers,
-  lastDrawedPixelRef: MutableRefObject<LastDrawedPixel | undefined>,
-  e: MouseEvent,
-) => {
-  const lastDrawedPixel = lastDrawedPixelRef.current
-  const pixelHistory = pixelHistoryRef.current
+/**
+ * This function is responsible for drawing on the canvas when the user is drawing
+ *
+ * @param {CanvasDataRef} canvasDataRef - the reference to the canvas data
+ * @param {PeersRef} peersRef - the reference to the peers
+ */
+export const handleDraw = ({ canvasDataRef, peersRef, e }: Args) => {
+  const canvasData = canvasDataRef.current
 
-  const draftCanvasBoundingRect = draftCanvas.getBoundingClientRect()
-  const x = e.clientX - draftCanvasBoundingRect.left
-  const y = e.clientY - draftCanvasBoundingRect.top
+  const { isPainter, lastDrawedPixel, pixelHistory } = canvasData.painter
+  if (!isPainter || !lastDrawedPixel || !pixelHistory) return null
+
+  const { cellPixelLength, cellSideCount } = canvasData
+  if (!cellPixelLength || !cellSideCount) return null
+
+  const dc = canvasData.draft
+  if (!dc) return null
+
+  const dcBoundingRect = dc.getBoundingClientRect()
+
+  const x = e.clientX - dcBoundingRect.left
+  const y = e.clientY - dcBoundingRect.top
   const newX = Math.floor(x / cellPixelLength)
   const newY = Math.floor(y / cellPixelLength)
   const { r, g, b, a } = getRgbaFromURL()
@@ -35,15 +40,26 @@ export const draw = (
       a: (a + prevA) as IntRange<0, 2>,
     }
 
-    fillOnePixel(draftCanvas, dctx, cellPixelLength, newX, newY, r, g, b, a)
-    wsRoomDrawChannel.publish('draw', {
-      x: newX,
-      y: newY,
-      r,
-      g,
-      b,
-      a,
-    })
+    const rgba = { r, g, b, a }
+    fillOnePixel(cellPixelLength, dc, newX, newY, rgba)
+
+    for (const userID in peersRef.current) {
+      const peer = peersRef.current[userID]?.peer
+      if (!peer) return null
+
+      const connData: WebRTCConnData = {
+        event: 'draw',
+
+        x: newX,
+        y: newY,
+        r: r,
+        g: g,
+        b: b,
+        a: a,
+      }
+
+      peersRef.current[userID]?.peer.send(JSON.stringify(connData))
+    }
 
     lastDrawedPixelRef.current = {
       x: newX,
@@ -111,4 +127,10 @@ export const draw = (
   return {
     isSuccess: isSuccess,
   }
+}
+
+type Args = {
+  canvasDataRef: CanvasDataRef
+  peersRef: PeersRef
+  e: MouseEvent
 }

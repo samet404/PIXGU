@@ -1,6 +1,5 @@
 import type { PeersRef } from '@/types/webRTCPeersRef'
 import type { RealtimeChannel } from 'ably'
-import { deleteAllPlayersAtom } from '@/app/[locale]/r/[roomID]/_components/JoinedRoom/_atoms'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { useSetAtom } from 'jotai'
 
@@ -12,19 +11,15 @@ import { useSetAtom } from 'jotai'
  * @param myConnectChannel - The user's connect channel
  * @param peersRef - The ref object containing the peer connections
  */
-export const useMyLeave = ({
-  roomChannel,
-  myConnectChannel,
-  peersRef,
-}: Args) => {
-  const deleteAllPlayers = useSetAtom(deleteAllPlayersAtom)
-
+export const useMyLeave = (
+  roomChannel: RealtimeChannel,
+  myConnectChannel: RealtimeChannel,
+  peersRef: PeersRef,
+) => {
   useEffectOnce(() => {
     return () => {
-      for (const userID of Object.keys(peersRef.current!)) {
-        peersRef.current![
-          userID as keyof typeof peersRef.current
-        ]?.peer.destroy()
+      for (const userID of Object.keys(peersRef.current)) {
+        peersRef.current[userID]?.peer.destroy()
       }
 
       peersRef.current = {}
@@ -32,13 +27,6 @@ export const useMyLeave = ({
       roomChannel.presence.leave()
       roomChannel.unsubscribe()
       myConnectChannel.unsubscribe()
-      deleteAllPlayers()
     }
   })
-}
-
-type Args = {
-  roomChannel: RealtimeChannel
-  myConnectChannel: RealtimeChannel
-  peersRef: PeersRef
 }

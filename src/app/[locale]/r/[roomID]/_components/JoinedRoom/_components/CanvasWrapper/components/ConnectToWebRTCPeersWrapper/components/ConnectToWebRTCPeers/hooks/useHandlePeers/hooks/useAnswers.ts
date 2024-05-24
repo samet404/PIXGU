@@ -11,7 +11,10 @@ import { useEffectOnce } from '@/hooks/useEffectOnce'
  * @param myConnectChannel - The user's connect channel
  * @param peersRef - The ref object containing the peer connections
  */
-export const useAnswers = ({ myConnectChannel, peersRef }: Args) => {
+export const useAnswers = (
+  myConnectChannel: RealtimeChannel,
+  peersRef: PeersRef,
+) => {
   useEffectOnce(() => {
     myConnectChannel.subscribe('answer', (msg: Message) => {
       const userID = msg.clientId!
@@ -19,12 +22,7 @@ export const useAnswers = ({ myConnectChannel, peersRef }: Args) => {
 
       console.log(`ANSWER RECEIVED FROM ${userID}`)
 
-      peersRef.current![userID]!.peer.signal(signal)
+      peersRef.current[userID]!.peer.signal(signal)
     })
   })
-}
-
-type Args = {
-  myConnectChannel: RealtimeChannel
-  peersRef: PeersRef
 }
