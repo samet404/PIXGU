@@ -1,3 +1,5 @@
+'use client'
+
 import { useAblyTokenClient } from '@/hooks/useAblyTokenClient'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { subscribeAblyPresence } from '@/utils/subscribeAblyPresence'

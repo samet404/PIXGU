@@ -11,7 +11,7 @@ import { type ClientOptions } from 'ably'
  */
 export const ablyBasicClient = async (clientOptions?: ClientOptions) => {
   const key =
-    clientOptions?.key ?? (await import('@/env/server.mjs')).env.ABLY_API_KEY
+    clientOptions?.key ?? (await import('@/env/server')).env.ABLY_API_KEY
 
   const basicClientOptions = {
     key: key,

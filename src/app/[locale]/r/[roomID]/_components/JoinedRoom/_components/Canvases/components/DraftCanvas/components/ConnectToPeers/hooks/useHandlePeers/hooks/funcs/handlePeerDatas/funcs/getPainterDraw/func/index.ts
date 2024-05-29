@@ -1,0 +1,1 @@
+export { drawOnCanvas } from './drawOnCanvas'

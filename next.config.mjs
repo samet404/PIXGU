@@ -1,14 +1,18 @@
 // https://million.dev
 // import million from 'million/compiler';
+import { fileURLToPath } from 'node:url';
+import createJiti from 'jiti';
+const jiti = createJiti(fileURLToPath(import.meta.url));
 
-import './src/env/client.mjs';
-import './src/env/server.mjs';
+// Import env here to validate during build. Using jiti we can import .ts files :)
+jiti('./src/env/server');
+jiti('./src/env/client');
 
 /** @type {import("next").NextConfig} */
 const config = {
   webpack: (
     config,
-    { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack },
+    // { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack },
   ) => {
     config.externals.push({
       'utf-8-validate': 'commonjs utf-8-validate',

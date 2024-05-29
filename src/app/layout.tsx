@@ -6,7 +6,7 @@ import './_styles/globals.css'
 
 // components
 import Providers from './_components/Providers'
-import MusicPlayer from './_components/MusicPlayer'
+import { MusicPlayer } from './_components/MusicPlayer'
 
 // fontawesome
 import { config } from '@fortawesome/fontawesome-svg-core'

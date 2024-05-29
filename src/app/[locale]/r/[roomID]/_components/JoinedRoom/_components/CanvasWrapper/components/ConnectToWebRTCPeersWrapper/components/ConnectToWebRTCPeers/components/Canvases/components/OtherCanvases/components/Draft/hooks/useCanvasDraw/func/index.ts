@@ -1,5 +1,0 @@
-export { addGrid } from '../hooks/func/addGrid'
-export { draw } from './draw'
-export { fillOnePixel } from '../../../../../../../../../../../../../funcs/fillOnePixel'
-export { getRgbaFromURL } from './getRgbaFromURL'
-export { rtcDrawEvent } from './rtcDrawEvent'

@@ -1,5 +1,5 @@
 import { Discord } from 'arctic'
-import { env } from '@/env/server.mjs'
+import { env } from '@/env/server'
 
 export const discord = new Discord(
   env.DISCORD_CLIENT_ID,

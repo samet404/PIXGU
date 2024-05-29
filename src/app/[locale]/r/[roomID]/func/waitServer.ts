@@ -2,6 +2,8 @@ import type { Message } from 'ably'
 import { ablyBasicClient } from '@/utils/ablyBasicClient'
 
 export const waitServer = async ({ userID, roomID }: Args) => {
+  console.log('Waiting for external server')
+
   const { ablyClient } = await ablyBasicClient({
     clientId: userID,
   })
@@ -12,19 +14,29 @@ export const waitServer = async ({ userID, roomID }: Args) => {
     `room:${roomID}:first-enter:${userID}`,
   )
 
-  await new Promise<void>((res) => {
-    myFirstEnterChannel.subscribe('WAITING_FOR_DB_RECORDS', (msg: Message) => {
-      const status: Status = msg.data
-
-      if (status === 'SUCCESS') {
-        res()
-      } else {
-        throw new Error('ALREADY_IN_ROOM')
-      }
-    })
-  })
-
   firstEnterChannel.publish('WAITING_FOR_DB_RECORDS', undefined)
+
+  try {
+    await new Promise((res, rej) => {
+      myFirstEnterChannel.subscribe(
+        'WAITING_FOR_DB_RECORDS',
+        (msg: Message) => {
+          const status: Status = msg.data
+
+          if (status === 'SUCCESS') {
+            res(undefined)
+          } else {
+            myFirstEnterChannel.unsubscribe('WAITING_FOR_DB_RECORDS')
+            rej(new Error('ALREADY_IN_ROOM'))
+          }
+        },
+      )
+    })
+  } catch (e) {
+    if (e instanceof Error) throw new Error(e.message)
+  }
+
+  console.log('External server is ready')
 }
 
 type Args = {

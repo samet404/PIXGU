@@ -6,7 +6,7 @@ import './styles/sound-slider.css'
 import Image from 'next/image'
 import soundImg from '@/png/icons8-sound-48.png'
 
-const Options = ({ youtubeVidRef }: Props) => {
+export const Options = ({ youtubeVidRef }: Props) => {
   const soundSliderRef = useRef<HTMLInputElement | null>(null)
 
   const handleOnInput = () => {
@@ -33,8 +33,6 @@ const Options = ({ youtubeVidRef }: Props) => {
     </div>
   )
 }
-
-export default Options
 
 type Props = {
   youtubeVidRef: MutableRefObject<YouTubePlayer | null>

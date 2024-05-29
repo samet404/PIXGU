@@ -1,5 +1,5 @@
 import type { Config } from 'drizzle-kit'
-import { env } from '@/env/server.mjs'
+import { env } from '@/env/server'
 
 export default {
   schema: './src/server/db/sqlDb/schema',

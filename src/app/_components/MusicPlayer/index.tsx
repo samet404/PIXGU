@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import Options from './components/Options'
+import { Options } from './components/Options'
 import YouTubePlayer from 'youtube-player'
 import type { YouTubePlayer as YoutubePlayerType } from 'youtube-player/dist/types'
 import { useAtomValue } from 'jotai'
@@ -15,7 +15,7 @@ const playlist = [
   'JjT0p2z4hGgb',
 ]
 
-const MusicPlayer = () => {
+export const MusicPlayer = () => {
   const isMusicOpen = useAtomValue(musicAtom)
   const youtubeVidRef = useRef<YoutubePlayerType | null>(null)
 
@@ -53,5 +53,3 @@ const MusicPlayer = () => {
     </div>
   )
 }
-
-export default MusicPlayer

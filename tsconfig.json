@@ -39,6 +39,7 @@
       "@/server/*": ["./src/server/*"],
       "@/utils/*": ["./src/utils/*"],
       "@/utils/server": ["./src/utils/server/_index.ts"],
+      "@/utils/room": ["./src/utils/room/_index.ts"],
       "@/utils": ["./src/utils/_index.ts"],
       "@/styles/*": ["./src/styles/*"],
       "@/atoms": ["./src/atoms"],

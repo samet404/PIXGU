@@ -64,6 +64,7 @@
     "eslint-plugin-react": "^7.33.2",
     "geist": "^1.0.0",
     "interweave": "^13.1.0",
+    "jiti": "^1.21.0",
     "jotai": "^2.6.0",
     "jotai-cache": "^0.4.0",
     "js-cookie": "^3.0.5",

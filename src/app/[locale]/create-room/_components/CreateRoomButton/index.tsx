@@ -20,8 +20,6 @@ const urbanist = Urbanist({
 const CreateRoomButton = () => {
   const router = useRouter()
 
-  const maxPlayerNumber = useAtomValue(maxPlayerNumberAtom)
-  const minPlayerNumber = useAtomValue(minPlayerNumberAtom)
   const password = useAtomValue(passwordAtom)
   const name = useAtomValue(nameAtom)
 
@@ -34,14 +32,12 @@ const CreateRoomButton = () => {
       onClick={() =>
         mutate({
           name: name,
-          minPlayers: minPlayerNumber,
-          maxPlayers: maxPlayerNumber,
           password: password,
         })
       }
       disabled={isLoading}
       className={clsx(
-        `${urbanist.className} h-full w-full select-none rounded-b-md bg-gradient-to-tr from-[#fff459] to-[#f6ff00] p-1 py-3 text-[1.2rem] text-[rgba(0,0,0,0.4)] shadow-[0_0px_10px_5px_rgba(255,255,255,0.3)]`,
+        `${urbanist.className} h-full w-full select-none rounded-b-md bg-gradient-to-tr from-[#fff459] to-[#f6ff00] p-1 py-3 text-[1.2rem] text-[rgba(0,0,0,0.4)] shadow-[0_0px_10px_5px_rgba(255,255,255,0.3)] duration-200 focus:opacity-50`,
         {
           'animate-pulse opacity-50': isLoading,
           'from-[#ff7171] to-[#ff8370] text-[0.5rem] opacity-50': isError,

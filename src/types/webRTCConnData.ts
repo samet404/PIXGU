@@ -3,7 +3,7 @@ import type { IntRange } from './intRange'
 /**
  * WebRTCConnData is the type of data that is sent over the WebRTC connection.
  */
-export type WebRTCConnData = (User & (Chat | Draw)) | SecretKey
+export type WebRTCConnData = Identified & (Chat | Draw)
 
 type Chat = {
   event: 'chat'
@@ -12,7 +12,6 @@ type Chat = {
 
 type Draw = {
   event: 'draw'
-  ID: string
   x: number
   y: number
   rgba: {
@@ -26,12 +25,7 @@ type Draw = {
 /**
  * User type using for identifying the user.
  */
-type User = {
-  ID: string
-  secretKey: string
-}
-
-type SecretKey = {
-  event: 'secretKey'
+type Identified = {
+  userID: string
   secretKey: string
 }
