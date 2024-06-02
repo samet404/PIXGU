@@ -6,6 +6,7 @@ import {
   AblyClientContext,
   PeersContext,
   RoomIDContext,
+  UserIDContext,
 } from '@/context/client'
 import { goldLog } from '@/utils/goldLog'
 
@@ -18,7 +19,7 @@ import { goldLog } from '@/utils/goldLog'
 export const useAnswers = () => {
   const roomID = useContext(RoomIDContext)
   const ablyClient = useContext(AblyClientContext)!
-  const myUserID = ablyClient.clientId
+  const myUserID = useContext(UserIDContext)
   const peers = useContext(PeersContext)
 
   useEffectOnce(() => {
@@ -28,11 +29,13 @@ export const useAnswers = () => {
 
     myConnectChannel.subscribe('answer', (msg: Message) => {
       const userID = msg.clientId!
+      if (userID === myUserID) return null
+
       goldLog(`ANSWER RECEIVED FROM ${userID}`)
 
       const signal: WebRTCSignalData = msg.data
 
-      peers[userID]!.peer.signal(signal)
+      peers[userID]!.peer!.signal(signal)
     })
   })
 }

@@ -21,7 +21,12 @@ const ErrDisplay = ({ msg, code, reason, redirectTo, ...others }: Props) => {
           <p className="text-[0.9rem] font-[700] text-[rgba(255,255,255,0.8)]">
             {msg}
           </p>
-          <Image src={errImg} className="size-6 opacity-80" alt="error" />
+          <Image
+            src={errImg}
+            className="size-6 opacity-80"
+            alt="error"
+            sizes="calc(0.59vw + 22px)"
+          />
         </div>
 
         {reason || code ? (

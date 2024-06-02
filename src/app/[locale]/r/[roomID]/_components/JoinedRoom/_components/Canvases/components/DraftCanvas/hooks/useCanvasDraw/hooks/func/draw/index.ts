@@ -14,7 +14,7 @@ export const draw = (
   e: MouseEvent,
 ) => {
   const { isPainter, lastDrawedPixel, pixelHistory } = canvasData.painter
-  if (!isPainter || !lastDrawedPixel || !pixelHistory) return null
+  if (!isPainter || !pixelHistory) return null
 
   const { cellPixelLength, cellSideCount } = canvasData
   if (!cellPixelLength || !cellSideCount) return null

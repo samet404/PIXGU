@@ -1,47 +1,31 @@
-import type { Message } from 'ably'
-import { ablyBasicClient } from '@/utils/ablyBasicClient'
+import type { RealtimeChannel } from 'ably'
+import { ablySubscribeOnce } from '@/utils/ablySubscribeOnce'
+import { mToMs } from '@/utils/mToMs'
 
-export const waitServer = async ({ userID, roomID }: Args) => {
-  console.log('Waiting for external server')
-
-  const { ablyClient } = await ablyBasicClient({
-    clientId: userID,
-  })
-  const firstEnterChannel = ablyClient.channels.get(
-    `room:${roomID}:first-enter`,
-  )
-  const myFirstEnterChannel = ablyClient.channels.get(
-    `room:${roomID}:first-enter:${userID}`,
-  )
-
-  firstEnterChannel.publish('WAITING_FOR_DB_RECORDS', undefined)
-
-  try {
-    await new Promise((res, rej) => {
-      myFirstEnterChannel.subscribe(
-        'WAITING_FOR_DB_RECORDS',
-        (msg: Message) => {
-          const status: Status = msg.data
-
-          if (status === 'SUCCESS') {
-            res(undefined)
-          } else {
-            myFirstEnterChannel.unsubscribe('WAITING_FOR_DB_RECORDS')
-            rej(new Error('ALREADY_IN_ROOM'))
-          }
+export const waitServer = async (
+  userID: string,
+  roomID: string,
+  myFirstEnterChannel: RealtimeChannel,
+  firstEnterChannel: RealtimeChannel,
+) => {
+  // #region waiting for external server adds db records and answers back with status
+  await (async () => {
+    console.log('Waiting for external server for db records...')
+    const { data } = await ablySubscribeOnce<'SUCCESS' | 'ERROR'>(
+      myFirstEnterChannel,
+      'WAITING_FOR_DB_RECORDS',
+      {
+        maxLifetime: mToMs(5),
+        doAfterSubscribe: async () => {
+          await firstEnterChannel.publish('WAITING_FOR_DB_RECORDS', undefined)
         },
-      )
-    })
-  } catch (e) {
-    if (e instanceof Error) throw new Error(e.message)
-  }
+      },
+    )
 
-  console.log('External server is ready')
+    if (data === 'SUCCESS')
+      console.log('External server added db records successfully')
+    else if (data === 'ERROR') throw new Error('ALREADY_IN_ROOM')
+    else throw new Error('UNEXPECTED_ANSWER_FROM_SERVER')
+  })()
+  // #endregion
 }
-
-type Args = {
-  userID: string
-  roomID: string
-}
-
-type Status = 'SUCCESS' | 'ERROR'

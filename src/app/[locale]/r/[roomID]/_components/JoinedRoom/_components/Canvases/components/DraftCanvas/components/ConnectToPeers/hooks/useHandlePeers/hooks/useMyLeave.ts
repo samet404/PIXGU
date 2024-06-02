@@ -3,8 +3,10 @@ import {
   PeersContext,
   RoomIDContext,
 } from '@/context/client'
+import { RoomPlayersIDsContext } from '@/context/client/react/roomPlayersIDsContext'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { negativeLog } from '@/utils'
+import { useRoomPlayersIDsStore } from '@/zustand/store/useRoomPlayersIDsStore'
 import { useContext } from 'react'
 
 /**
@@ -15,26 +17,35 @@ export const useMyLeave = () => {
   const ablyClient = useContext(AblyClientContext)!
   const peers = useContext(PeersContext)
   const roomID = useContext(RoomIDContext)
+  const roomPlayersIDs = useContext(RoomPlayersIDsContext)
+  const resetRoomPlayersIDsState = useRoomPlayersIDsStore((s) => s.reset)
 
   useEffectOnce(() => {
     return () => {
-      const myUserID = ablyClient.clientId
-      const roomChannel = ablyClient.channels.get(`room:${roomID}`)
-      const myConnectChannel = ablyClient.channels.get(
-        `room:${roomID}:connect:${myUserID}`,
-      )
-
       for (const userID of Object.keys(peers)) {
-        peers[userID]?.peer.destroy()
-        delete peers[userID]
+        try {
+          if (!peers[userID])
+            negativeLog(`PEER OBJECT TO ${userID} NOT FOUND WHEN LEFT <`)
+          else if (!peers[userID].peer)
+            negativeLog(`PEER CONNECTION TO ${userID} NOT FOUND WHEN LEFT <`)
+          else if (peers[userID] && peers[userID].peer) {
+            peers[userID]!.peer!.destroy()
+            delete peers[userID]
+            negativeLog(`PEER CONNECTION TO ${userID} DESTROYED WHEN LEFT <`)
+          } else throw new Error('Peer connection not found')
+        } catch (e) {
+          negativeLog(`ERROR DESTROYING PEER CONNECTION TO ${userID}`)
+        }
       }
 
-      roomChannel.presence.leave()
-      roomChannel.unsubscribe()
-      myConnectChannel.unsubscribe()
+      roomPlayersIDs.value = []
+      resetRoomPlayersIDsState()
+
+      ablyClient.channels.get(`room:${roomID}:*`).unsubscribe()
+      ablyClient.channels.get(`server:room:${roomID}:*`).unsubscribe()
       ablyClient?.close()
 
-      negativeLog(`YOU LEFT THE ROOM ${roomID}`)
+      negativeLog(`YOU LEFT THE ROOM < ${roomID}`)
     }
   })
 }

@@ -45,7 +45,12 @@ const config = {
     'dot-notation': 'off',
     'prefer-const': 'off',
     'no-empty': 'warn',
-    'no-unused-vars': 'warn',
+    'no-unused-vars': [
+      'warn',
+      {
+        args: 'none',
+      },
+    ],
 
     'react/react-in-jsx-scope': 'off',
     'react/jsx-uses-react': 'off',

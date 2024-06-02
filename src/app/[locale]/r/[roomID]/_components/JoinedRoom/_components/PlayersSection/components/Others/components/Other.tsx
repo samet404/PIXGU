@@ -20,7 +20,7 @@ const Other = ({ ID }: Props) => {
 
   if (isLoading || !data)
     return (
-      <div className="w-full items-center justify-center">
+      <div className="flex w-full items-center justify-center py-4">
         <Spinner />
       </div>
     )

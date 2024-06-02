@@ -1,4 +1,5 @@
 import type { Locale } from '@/types'
+import type { Realtime } from 'ably'
 import { api } from '@/trpc/server'
 import dynamic from 'next/dynamic'
 
@@ -7,24 +8,44 @@ const JoinedRoom = dynamic(() => import('./_components/JoinedRoom'))
 
 const Room = async ({ params }: Props) => {
   const roomID = params.roomID
+  const user = await api.auth.getUser.query()
+  if (!user) throw new Error('UNAUTHORIZED')
+
+  const { ablyBasicClient } = await import('@/utils/ablyBasicClient')
+  const { ablyClient } = await ablyBasicClient({
+    clientId: user.id,
+  })
+
+  setInterval(
+    () => console.log(`Room page: ${ablyClient.connection.state}`),
+    4000,
+  )
 
   try {
-    const user = await api.auth.getUser.query()
-    if (!user) throw new Error('UNAUTHORIZED')
-
-    const userID = user.id
-
     const { isUserHavePermToJoin } = await import('./func')
-    await isUserHavePermToJoin(userID, roomID)
+    const roomChannel = ablyClient.channels.get(`room:${roomID}`)
+    await isUserHavePermToJoin(user.id, roomID, roomChannel)
 
     const { waitServer } = await import('./func')
-    await waitServer({ userID, roomID })
+    const firstEnterChannel = ablyClient.channels.get(
+      `room:${roomID}:first-enter`,
+    )
+    const myFirstEnterChannel = ablyClient.channels.get(
+      `room:${roomID}:first-enter:${user.id}`,
+    )
+    await waitServer(user.id, roomID, myFirstEnterChannel, firstEnterChannel)
 
     const { setServerContexts } = await import('./func')
     setServerContexts(params.locale, roomID, user)
 
+    ablyClient.channels.get('*').unsubscribe()
+    ablyClient.close()
+
     return <JoinedRoom />
   } catch (e) {
+    ablyClient.channels.get('*').unsubscribe()
+    ablyClient.close()
+
     if (e instanceof Error) {
       if (e.message === 'UNAUTHORIZED')
         return (
@@ -63,6 +84,8 @@ const Room = async ({ params }: Props) => {
             reason="You have blocked from this room"
           />
         )
+
+      return <ErrDisplay msg={e.message} />
     }
 
     return <ErrDisplay msg="UNKNOWN" />

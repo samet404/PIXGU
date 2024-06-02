@@ -4,35 +4,83 @@ import { subscribeAblyPresence } from '@/utils/subscribeAblyPresence'
 import { simplePeer } from '@/utils/simplePeer'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { handlePeerDatas, addPeer } from './funcs'
+import { useContext } from 'react'
+import { positiveLog, negativeLog } from '@/utils'
+import { useRoomPlayersIDsStore } from '@/zustand/store/useRoomPlayersIDsStore'
+import { RoomPlayersIDsContext } from '@/context/client/react/roomPlayersIDsContext'
 import {
   AblyClientContext,
   CanvasesDataContext,
   PeersContext,
   RoomIDContext,
+  UserIDContext,
 } from '@/context/client'
-import { useContext } from 'react'
 
 /**
- * This hook subscribes to the 'enter' presence event on the room channel.
- * When a user enters the room, a peer offer is created and sent to the entered user.
+ * This hook handles everything about entering room.
+ * Enters a room, subscribes to the 'enter' presence event on the room channel and updates current players states.
+ * When a other user enters the room, a peer offer is created and sent to the entered user.
  */
 export const useEnters = () => {
   const ablyClient = useContext(AblyClientContext)!
-  const myUserID = ablyClient.clientId
+  const myUserID = useContext(UserIDContext)
   const roomID = useContext(RoomIDContext)
   const peers = useContext(PeersContext)
   const canvasData = useContext(CanvasesDataContext)!
 
+  const playersIDsContext = useContext(RoomPlayersIDsContext)
+  const updatePlayerIDState = useRoomPlayersIDsStore((s) => s.update)
+
   useEffectOnce(() => {
     const roomChannel = ablyClient.channels.get(`room:${roomID}`)
 
-    subscribeAblyPresence(roomChannel, 'enter', (msg: Message) => {
+    // #region first updating playersIDs
+    ;(async () => {
+      const presenceSet = await roomChannel.presence.get()
+      console.log(myUserID)
+      console.log(presenceSet.filter((p) => p.clientId !== myUserID))
+      const newPlayersIDs = presenceSet
+        .filter(
+          (p) =>
+            p.clientId !== myUserID &&
+            !playersIDsContext.value.includes(p.clientId),
+        )
+        .map((p) => p.clientId)
+
+      playersIDsContext.value = newPlayersIDs
+      updatePlayerIDState(newPlayersIDs)
+    })()
+    // #endregion
+
+    subscribeAblyPresence(roomChannel, 'enter', async (msg: Message) => {
       const userID = msg.clientId!
-      if (userID === myUserID) return null
+      console.log(`myUserID: ${myUserID}`)
+      if (userID === myUserID) {
+        console.log('THIS IS ME!')
+        return null
+      }
 
-      console.log(`USER ${userID} ENTERED`)
-      console.log(`INITIATING PEER CONNECTION TO ${userID}`)
+      if (userID === myUserID) console.log('THIS IS STILL ME!')
+      // #region update playersIDs
+      const presenceSet = await roomChannel.presence.get()
+      console.log(myUserID)
+      console.log(presenceSet.filter((p) => p.clientId !== myUserID))
+      const newPlayersIDs = presenceSet
+        .filter(
+          (p) =>
+            p.clientId !== myUserID &&
+            !playersIDsContext.value.includes(p.clientId),
+        )
+        .map((p) => p.clientId)
 
+      playersIDsContext.value = newPlayersIDs
+      updatePlayerIDState(newPlayersIDs)
+      // #endregion
+
+      positiveLog(`USER ${userID} ENTERED >`)
+      positiveLog(`INITIATING PEER CONNECTION TO ${userID}`)
+
+      // #region simple peer
       const themConnectChannel = ablyClient.channels.get(
         `room:${roomID}:connect:${userID}`,
       )
@@ -45,10 +93,23 @@ export const useEnters = () => {
         themConnectChannel.publish('offer', data)
       })
 
-      peer.on('connect', () => console.log(`CONNECTED TO ${userID}`))
+      peer.on('error', (err) => {
+        negativeLog(`ERROR IN PEER CONNECTION TO ${userID}`)
+        console.error(err)
+      })
+      peer.on('connect', () => positiveLog(`CONNECTED TO ${userID}`))
+      // #endregion
+
+      peers[userID] = {
+        peer,
+        isPainter: false,
+      }
 
       handlePeerDatas(peer, peers, canvasData)
-      addPeer(myUserID, peers, peer)
+      addPeer(userID, peers, peer)
     })
+
+    roomChannel.presence.enter()
+    positiveLog(`YOU ENTERED THE ROOM ${roomID} >`)
   })
 }

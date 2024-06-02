@@ -17,7 +17,7 @@ export const setServerContexts = (
 ) => {
   setIsLogged(true)
   setLocale(locale)
-  setRoomID(roomID)
   setUser(user)
   setUserID(user.id)
+  setRoomID(roomID)
 }

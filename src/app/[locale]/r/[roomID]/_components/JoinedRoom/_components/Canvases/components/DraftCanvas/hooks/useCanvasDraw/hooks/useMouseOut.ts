@@ -22,7 +22,7 @@ export const useMouseOut = () => {
     canvasData.draft.addEventListener('mouseout', handler)
 
     return () => {
-      canvasData.draft.removeEventListener('mouseout', handler)
+      canvasData.draft!.removeEventListener('mouseout', handler)
     }
   })
 }

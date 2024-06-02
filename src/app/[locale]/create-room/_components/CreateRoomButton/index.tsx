@@ -23,9 +23,10 @@ const CreateRoomButton = () => {
   const password = useAtomValue(passwordAtom)
   const name = useAtomValue(nameAtom)
 
-  const { mutate, isLoading, isError } = api.gameRoom.create.useMutation({
-    onSuccess: (data) => router.push(`/r/${data.createdRoomID}`),
-  })
+  const { mutate, isLoading, isError, isSuccess } =
+    api.gameRoom.create.useMutation({
+      onSuccess: (data) => router.push(`/r/${data.createdRoomID}`),
+    })
 
   return (
     <button
@@ -41,10 +42,17 @@ const CreateRoomButton = () => {
         {
           'animate-pulse opacity-50': isLoading,
           'from-[#ff7171] to-[#ff8370] text-[0.5rem] opacity-50': isError,
+          'from-[#71ff97] to-[#8aff70] text-[0.5rem] opacity-50': isSuccess,
         },
       )}
     >
-      {isLoading ? 'Creating...' : isError ? 'Something went wrong' : 'Create'}
+      {isLoading
+        ? 'Creating...'
+        : isError
+          ? 'Something went wrong'
+          : isSuccess
+            ? 'Success'
+            : 'Create'}
     </button>
   )
 }

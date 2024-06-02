@@ -9,7 +9,7 @@ const Canvases = () => {
     <div className="relative w-full cursor-crosshair rounded-md">
       <MainCanvas />
       <GridCanvas />
-      {/* <DraftCanvas /> */}
+      <DraftCanvas />
     </div>
   )
 }

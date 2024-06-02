@@ -5,10 +5,10 @@ export type PeersRef = MutableRefObject<Peers>
 export type Peers = Record<UserID, PeerValue>
 
 type PeerValue = {
-  mySecretKey: SecretKey
-  themSecretKey: SecretKey
-  peer: SimplePeer.Instance
-  isPainter: boolean
+  mySecretKey?: SecretKey
+  themSecretKey?: SecretKey
+  peer?: SimplePeer.Instance
+  isPainter?: boolean
 }
 
 type UserID = string

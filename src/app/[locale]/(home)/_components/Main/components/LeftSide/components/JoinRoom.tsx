@@ -22,7 +22,7 @@ const JoinRoom = ({ name, description }: Props) => {
       keyName="1"
       disabled={!isLogged}
       roundedClass="rounded-tr-md"
-      className="hover:from-[#4f8e4c] hover:to-[rgba(255,255,255,0.3)]"
+      className="hover:from-[#2de57a91] hover:to-[rgba(255,255,255,0.3)]"
     />
   )
 }

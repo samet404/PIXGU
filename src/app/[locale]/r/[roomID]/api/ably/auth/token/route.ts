@@ -3,7 +3,7 @@ import { api } from '@/trpc/server'
 
 export const POST = async (
   req: NextRequest,
-  { roomID }: { roomID: string },
+  params: { params: { roomID: string } },
 ) => {
   // we are setting ably client id to prevent users behave like they are someone else
 
@@ -14,9 +14,8 @@ export const POST = async (
   }
 
   // we are getting the room id from the pathname
-
-  // we are checking if the user is trying to get token for a room
-
+  const { roomID } = params.params
+  console.log(roomID)
   if (!roomID) {
     console.error('NO ROOM ID')
     throw new Error('BAD_REQUEST')
@@ -28,33 +27,36 @@ export const POST = async (
   const isRoomExist = await redisDb.sismember('active_rooms', roomID)
   if (isRoomExist === 0) throw new Error('ROOM_NOT_FOUND')
 
-  // we are checking if the user is already in the room
+  // // we are checking if the user is already in the room
 
-  const { ablyBasicClient } = await import('@/utils/ablyBasicClient')
-  const { ablyClient } = await ablyBasicClient()
-  const roomChannel = ablyClient.channels.get(`room:${roomID}`)
-  const presenceData = await roomChannel.presence.get()
+  // const { ablyBasicClient } = await import('@/utils/ablyBasicClient')
+  // const { ablyClient } = await ablyBasicClient()
+  // const roomChannel = ablyClient.channels.get(`room:${roomID}`)
+  // const presenceData = await roomChannel.presence.get()
 
-  const isClientAlreadyInRoom = presenceData.some(
-    (member) => member.clientId === clientId,
-  )
-  if (isClientAlreadyInRoom) throw new Error('ALREADY_IN_ROOM')
+  // const isClientAlreadyInRoom = presenceData.some(
+  //   (member) => member.clientId === clientId,
+  // )
+  // if (isClientAlreadyInRoom) throw new Error('ALREADY_IN_ROOM')
 
-  // Generating the token request for the ably client
+  // // Generating the token request for the ably client
 
   const Ably = await import('ably')
   const { env } = await import('@/env/server')
-  const ablyRestClient = new Ably.Rest(env.ABLY_API_KEY)
+  const ablyRealtime = new Ably.Realtime({
+    key: env.ABLY_API_KEY,
+  })
 
-  const tokenRequestData = await ablyRestClient.auth.createTokenRequest({
+  const tokenRequestData = await ablyRealtime.auth.createTokenRequest({
     clientId: clientId,
-    // Setting the capability for the ablyClient
     capability: {
       [`room:${roomID}`]: ['publish', 'subscribe', 'presence'],
       [`room:${roomID}:connect:*`]: ['publish', 'subscribe'],
-      ['server:*']: ['subscribe'],
+      [`server:room:${roomID}:*`]: ['subscribe'],
     },
   })
+
+  ablyRealtime.close()
 
   return NextResponse.json(tokenRequestData)
 }

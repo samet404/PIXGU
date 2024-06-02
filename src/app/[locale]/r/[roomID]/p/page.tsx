@@ -1,5 +1,6 @@
-import { api } from '@/trpc/server'
+import type { Realtime } from 'ably'
 import type { Locale } from '@/types'
+import { api } from '@/trpc/server'
 import dynamic from 'next/dynamic'
 
 const ErrDisplay = dynamic(() => import('@/components/ErrDisplay'))
@@ -8,16 +9,31 @@ const PassBox = dynamic(() => import('./_components/PassBox'))
 const Password = async ({ params }: Props) => {
   const roomID = params.roomID
 
-  try {
-    const userID = await api.auth.getUserID.query()
-    if (!userID) throw new Error('UNAUTHORIZED')
+  const user = await api.auth.getUser.query()
+  if (!user) throw new Error('UNAUTHORIZED')
 
+  const { ablyBasicClient } = await import('@/utils/ablyBasicClient')
+  const { ablyClient } = await ablyBasicClient()
+
+  try {
     const { isUserHavePermToJoin } = await import('../func')
-    await isUserHavePermToJoin(userID, roomID)
+
+    const roomChannel = ablyClient.channels.get(`room:${roomID}`)
+    await isUserHavePermToJoin(user.id, roomID, roomChannel)
+
+    const { setServerContexts } = await import('../func')
+    setServerContexts(params.locale, roomID, user)
 
     const { redirect } = await import('next/navigation')
+
+    ablyClient.channels.get('*').unsubscribe()
+    ablyClient.close()
+
     redirect(`/r/${roomID}`)
   } catch (e) {
+    ablyClient.channels.get('*').unsubscribe()
+    ablyClient.close()
+
     if (e instanceof Error) {
       if (e.message === 'PASSWORD_REQUIRED') return <PassBox />
 

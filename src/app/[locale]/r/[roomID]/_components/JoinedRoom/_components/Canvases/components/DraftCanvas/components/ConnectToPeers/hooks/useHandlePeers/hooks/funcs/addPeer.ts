@@ -18,14 +18,14 @@ export const addPeer = (
 
     if (connData.event === 'secretKey') {
       peers[userID] = {
-        peer,
         mySecretKey,
         themSecretKey: connData.secretKey,
+        ...peers[userID],
       }
     }
   })
 
-  peer.on('connect', () => {
+  peer.once('connect', () => {
     const secretKeyData: WebRTCConnData = {
       event: 'secretKey',
       secretKey: mySecretKey,
