@@ -1,32 +1,16 @@
 'use client'
 
-import type { ReactNode } from 'react'
-import dynamic from 'next/dynamic'
-import CanvasesData from './components/CanvasesData'
-import Peers from './components/Peers'
-import RoomID from './components/RoomID'
-import UserID from './components/UserID'
-import { ComposedProviders } from '@/components/ComposedProviders'
-import { RoomPlayersIDs } from './components/RoomPlayersIDs'
-import * as Ably from 'ably'
-
-const AblyClient = dynamic(() => import('./components/AblyClient'), {
-  ssr: false,
-})
+import type { PropsWithChildren } from 'react'
+import { Part1 } from './components/Part1'
+import { Part2 } from './components/Part2'
 
 const Providers = ({ roomID, userID, children }: Props) => {
   return (
-    <UserID UserID={userID}>
-      <RoomID roomID={roomID}>
-        <RoomPlayersIDs>
-          <AblyClient roomID={roomID}>
-            <Peers>
-              <CanvasesData>{children}</CanvasesData>
-            </Peers>
-          </AblyClient>
-        </RoomPlayersIDs>
-      </RoomID>
-    </UserID>
+    <Part1 roomID={roomID}>
+      <Part2 roomID={roomID} userID={userID}>
+        {children}
+      </Part2>
+    </Part1>
   )
 }
 
@@ -35,5 +19,4 @@ export default Providers
 type Props = {
   roomID: string
   userID: string
-  children: ReactNode
-}
+} & PropsWithChildren

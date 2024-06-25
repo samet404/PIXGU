@@ -5,8 +5,6 @@ import smStar2Img from '@/png/smstar2.png'
 import explosionImg from '@/png/explosion.png'
 import planetImg from '@/png/planet.png'
 import octopus from '@/png/octopus.png'
-import waves from '@/png/waves.png'
-// ;<Image className="absolute bottom-0" src={waves} alt="waves" />
 
 const BackgroundImages = () => {
   return (
@@ -15,37 +13,44 @@ const BackgroundImages = () => {
         className="absolute left-[10%] top-[10%] size-10 rotate-12 opacity-30"
         src={starImg}
         alt="star"
+        sizes="calc(1vw + 37px)"
       />
 
       <Image
         className="absolute left-[20%] top-[30%] size-7  opacity-20"
         src={smStarImg}
         alt="smStar"
+        sizes="calc(0.7vw + 26px)"
       />
       <Image
         className="absolute  right-[10%] top-[18%] size-10 rotate-12 opacity-30"
         src={smStar2Img}
         alt="smStar2"
+        sizes="calc(1vw + 37px)"
       />
 
       <Image
         className="absolute  bottom-[10%] right-[10%] size-10 rotate-12 opacity-30"
         src={explosionImg}
         alt="explosion"
+        sizes="calc(1vw + 37px)"
       />
 
       <Image
         className="absolute  bottom-[14%] left-[10%] size-10 rotate-12 opacity-30"
         src={planetImg}
         alt="planet"
+        sizes="calc(1vw + 37px)"
       />
 
       <Image
         className="absolute  bottom-[10%] right-[25%] size-10 rotate-12 opacity-30"
         src={octopus}
         alt="octopus"
+        sizes="calc(1vw + 37px)"
       />
     </div>
   )
 }
+
 export default BackgroundImages

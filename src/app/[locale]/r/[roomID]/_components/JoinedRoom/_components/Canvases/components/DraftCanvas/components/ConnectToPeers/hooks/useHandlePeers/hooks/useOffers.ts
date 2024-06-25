@@ -4,14 +4,15 @@ import { negativeLog, positiveLog, simplePeer } from '@/utils'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { addPeer, handlePeerDatas } from './funcs'
 import { useContext } from 'react'
+import { useInterval } from 'usehooks-ts'
 import {
   AblyClientContext,
-  CanvasesDataContext,
+  CanvasesMainDataContext,
+  CanvasesPainterDataContext,
   PeersContext,
   RoomIDContext,
   UserIDContext,
 } from '@/context/client'
-import { useInterval } from 'usehooks-ts'
 
 /**
  * This hook subscribes to the 'offer' event on the user's connect channel.
@@ -21,7 +22,8 @@ export const useOffers = () => {
   const roomID = useContext(RoomIDContext)
   const ablyClient = useContext(AblyClientContext)!
   const peers = useContext(PeersContext)
-  const canvasData = useContext(CanvasesDataContext)!
+  const canvasesMainData = useContext(CanvasesMainDataContext)!
+  const canvasesPainterData = useContext(CanvasesPainterDataContext)!
   const myUserID = useContext(UserIDContext)
 
   useInterval(() => console.log(peers), 5000)
@@ -60,7 +62,7 @@ export const useOffers = () => {
         isPainter: false,
       }
 
-      handlePeerDatas(peer, peers, canvasData)
+      handlePeerDatas(peer, peers, canvasesMainData, canvasesPainterData)
       addPeer(userID, peers, peer)
     })
   })

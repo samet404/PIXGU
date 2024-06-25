@@ -10,7 +10,8 @@ import { useRoomPlayersIDsStore } from '@/zustand/store/useRoomPlayersIDsStore'
 import { RoomPlayersIDsContext } from '@/context/client/react/roomPlayersIDsContext'
 import {
   AblyClientContext,
-  CanvasesDataContext,
+  CanvasesMainDataContext,
+  CanvasesPainterDataContext,
   PeersContext,
   RoomIDContext,
   UserIDContext,
@@ -26,7 +27,8 @@ export const useEnters = () => {
   const myUserID = useContext(UserIDContext)
   const roomID = useContext(RoomIDContext)
   const peers = useContext(PeersContext)
-  const canvasData = useContext(CanvasesDataContext)!
+  const canvasesMainData = useContext(CanvasesMainDataContext)!
+  const canvasesPainterData = useContext(CanvasesPainterDataContext)!
 
   const playersIDsContext = useContext(RoomPlayersIDsContext)
   const updatePlayerIDState = useRoomPlayersIDsStore((s) => s.update)
@@ -105,7 +107,7 @@ export const useEnters = () => {
         isPainter: false,
       }
 
-      handlePeerDatas(peer, peers, canvasData)
+      handlePeerDatas(peer, peers, canvasesMainData, canvasesPainterData)
       addPeer(userID, peers, peer)
     })
 

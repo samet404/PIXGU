@@ -1,29 +1,36 @@
-import type { CanvasData, Peers, WebRTCConnData } from '@/types'
 import { isObjectEmpty, getElementByID } from '@/utils'
 import { drawOnCanvas } from './func'
+import type {
+  CanvasesMainData,
+  CanvasesPainterData,
+  Peers,
+  WebRTCConnData,
+} from '@/types'
 
 export const getPainterDraw = (
   rtcData: WebRTCConnData,
   peers: Peers,
-  canvasData: CanvasData,
+  canvasesMainData: CanvasesMainData,
+  canvasesPainterData: CanvasesPainterData,
 ) => {
   if (rtcData.event !== 'draw') return null
 
-  const { draft, main } = canvasData
+  const { draft, main } = canvasesMainData
   const { x, y, rgba, userID, secretKey } = rtcData
 
   if (peers[userID]?.themSecretKey !== secretKey) return null
+  if (!peers[userID]?.isPainter) return null
 
   if (!draft)
-    canvasData.draft = getElementByID<HTMLCanvasElement>('draft-canvas')
+    canvasesMainData.draft = getElementByID<HTMLCanvasElement>('draft-canvas')
   if (!main)
-    canvasData.draft = getElementByID<HTMLCanvasElement>('draft-canvas')
+    canvasesMainData.draft = getElementByID<HTMLCanvasElement>('draft-canvas')
 
-  const dctx = canvasData.draft?.getContext('2d')
-  const mctx = canvasData.main?.getContext('2d')
+  const dctx = canvasesMainData.draft?.getContext('2d')
+  const mctx = canvasesMainData.main?.getContext('2d')
   if (!dctx || !mctx) return null
 
-  const pixelHistory = canvasData.painter.pixelHistory
+  const { pixelHistory } = canvasesPainterData.data
   const isPixelHistoryEmpty = isObjectEmpty(pixelHistory)
 
   if (!isPixelHistoryEmpty) {
@@ -42,10 +49,11 @@ export const getPainterDraw = (
       )
         return null
 
-      drawOnCanvas(rgba, canvasData, { x, y })
+      drawOnCanvas(rgba, canvasesMainData, canvasesPainterData, { x, y })
     } else if (!isHistoryHasSameCordinate)
-      drawOnCanvas(rgba, canvasData, { x, y })
+      drawOnCanvas(rgba, canvasesMainData, canvasesPainterData, { x, y })
   }
 
-  if (isPixelHistoryEmpty) drawOnCanvas(rgba, canvasData, { x, y })
+  if (isPixelHistoryEmpty)
+    drawOnCanvas(rgba, canvasesMainData, canvasesPainterData, { x, y })
 }

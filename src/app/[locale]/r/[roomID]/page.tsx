@@ -16,11 +16,6 @@ const Room = async ({ params }: Props) => {
     clientId: user.id,
   })
 
-  setInterval(
-    () => console.log(`Room page: ${ablyClient.connection.state}`),
-    4000,
-  )
-
   try {
     const { isUserHavePermToJoin } = await import('./func')
     const roomChannel = ablyClient.channels.get(`room:${roomID}`)
@@ -38,7 +33,6 @@ const Room = async ({ params }: Props) => {
     const { setServerContexts } = await import('./func')
     setServerContexts(params.locale, roomID, user)
 
-    ablyClient.channels.get('*').unsubscribe()
     ablyClient.close()
 
     return <JoinedRoom />

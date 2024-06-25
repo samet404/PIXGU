@@ -1,16 +1,17 @@
-import type { CanvasData, RGBAObj } from '@/types'
+import type { CanvasesMainData, CanvasesPainterData, RGBAObj } from '@/types'
 import { fillOnePixel } from '@/utils/room'
 
 export const drawOnCanvas = (
   rgba: RGBAObj,
-  canvasData: CanvasData,
+  canvasesMainData: CanvasesMainData,
+  canvasesPainterData: CanvasesPainterData,
   cordinates: { x: number; y: number },
 ) => {
   const { x, y } = cordinates
   const { r, g, b, a } = rgba
-  const { draft, main, cellPixelLength } = canvasData
+  const { draft, main, cellPixelLength } = canvasesMainData
 
-  canvasData.painter.pixelHistory[`${x}_${y}`] = {
+  canvasesPainterData.data.pixelHistory[`${x}_${y}`] = {
     r: r,
     g: g,
     b: b,

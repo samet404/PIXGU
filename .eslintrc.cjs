@@ -76,7 +76,7 @@ const config = {
     '@typescript-eslint/require-await': 'warn',
     '@typescript-eslint/no-empty-function': 'warn',
     '@typescript-eslint/consistent-type-imports': [
-      'warn',
+      'error',
       {
         prefer: 'type-imports',
         fixStyle: 'inline-type-imports',
