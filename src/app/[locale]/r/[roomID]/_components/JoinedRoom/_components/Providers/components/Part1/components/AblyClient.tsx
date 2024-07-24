@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react'
 import { AblyClientContext } from '@/context/client'
 import * as Ably from 'ably'
-import { useInterval } from 'usehooks-ts'
 
 const AblyClient = ({ children, roomID }: Props) => {
   const ablyClient = new Ably.Realtime({
@@ -9,8 +8,6 @@ const AblyClient = ({ children, roomID }: Props) => {
     authMethod: 'POST',
     echoMessages: false,
   })
-
-  useInterval(() => console.log(ablyClient.connection.state), 4000)
 
   return (
     <AblyClientContext.Provider value={ablyClient}>

@@ -46,6 +46,8 @@ export default {
     },
     extend: {
       animation: {
+        'animate-hosting-room-gradient':
+          'hosting-room-gradient 3s ease-in-out infinite',
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         position: 'position 15s ease-in-out infinite',
@@ -92,6 +94,17 @@ export default {
           },
           '50%': {
             boxShadow: '0 0px 30px 1px rgba(244,63,94,0.7)',
+          },
+        },
+
+        'hosting-room-gradient': {
+          '0%, 100%': {
+            backgroundImage:
+              'radial-gradient(20rem at center,#ffffff21, transparent)',
+          },
+          '50%': {
+            backgroundImage:
+              'radial-gradient(20rem at center,#ffffff66, transparent)',
           },
         },
       },

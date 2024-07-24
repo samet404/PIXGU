@@ -52,6 +52,7 @@
     "ably": "^2.0.1",
     "arctic": "^1.5.0",
     "bcrypt": "^5.1.1",
+    "caniuse-lite": "^1.0.30001640",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "cuid": "^3.0.0",

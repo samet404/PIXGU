@@ -4,8 +4,8 @@ import type { IntRange } from './intRange'
  * Main canvases data.
  */
 export type CanvasesMainData = {
-  readonly cellSideCount: number
-  cellPixelLength: number
+  readonly cellSideCount: number | null
+  cellPixelLength: number | null
 
   draft: HTMLCanvasElement | null
   main: HTMLCanvasElement | null
@@ -14,13 +14,29 @@ export type CanvasesMainData = {
 /**
  * Painter data.
  */
-export type CanvasesPainterData = {
-  isPainter: boolean | null
-  data: {
-    painting: boolean | null
-    pixelHistory: PixelHistory
-    lastDrawedPixel: LastDrawedPixel | null
-  }
+
+type MyPainterData = {
+  theme: string | null
+  amIPainter: true
+  amIpainting: boolean
+}
+
+type OtherPaintersData = {
+  amIPainter: false
+}
+
+type DefaultPainterData = {
+  painters: Record<
+    string,
+    {
+      pixelHistory: PixelHistory
+      lastDrawedPixel: LastDrawedPixel
+    }
+  >
+}
+
+export type PainterData = {
+  value: ((MyPainterData | OtherPaintersData) & DefaultPainterData) | null
 }
 
 type X = number
@@ -39,4 +55,4 @@ export type PixelHistory = Record<
 export type LastDrawedPixel = {
   x: number
   y: number
-}
+} | null

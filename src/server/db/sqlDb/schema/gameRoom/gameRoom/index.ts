@@ -15,9 +15,6 @@ const createId = init({
   random: Math.random,
   // the length of the id
   length: 5,
-  // A custom fingerprint for the host environment. This is used to help
-  // prevent collisions when generating ids in a distributed system.
-  fingerprint: 'a-custom-host-fingerprint',
 })
 
 export const gameRoom = pgTable('game_room', {

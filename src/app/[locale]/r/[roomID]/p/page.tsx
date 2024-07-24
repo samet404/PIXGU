@@ -1,4 +1,3 @@
-import type { Realtime } from 'ably'
 import type { Locale } from '@/types'
 import { api } from '@/trpc/server'
 import dynamic from 'next/dynamic'

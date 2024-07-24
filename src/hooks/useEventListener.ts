@@ -1,4 +1,3 @@
-import type { SyntheticEvent } from 'react'
 import { useEffectOnce } from './useEffectOnce'
 
 /**
@@ -6,7 +5,11 @@ import { useEffectOnce } from './useEffectOnce'
  */
 export const useEventListener = (
   element: HTMLElement | Document | Window,
-  eventName: keyof HTMLElementEventMap,
+  eventName:
+    | keyof MediaQueryListEvent
+    | keyof WindowEventMap
+    | keyof HTMLElementEventMap
+    | keyof DocumentEventMap,
   // eslint-disable-next-line no-unused-vars
   handler: (e?: any) => void,
   options?: boolean | AddEventListenerOptions,

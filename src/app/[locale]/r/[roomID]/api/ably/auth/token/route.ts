@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from 'next/server'
 import { api } from '@/trpc/server'
+import type { capabilityOp } from 'ably'
 
 export const POST = async (
   req: NextRequest,
@@ -29,17 +30,22 @@ export const POST = async (
 
   // // we are checking if the user is already in the room
 
-  // const { ablyBasicClient } = await import('@/utils/ablyBasicClient')
-  // const { ablyClient } = await ablyBasicClient()
-  // const roomChannel = ablyClient.channels.get(`room:${roomID}`)
-  // const presenceData = await roomChannel.presence.get()
+  const { ablyBasicClient } = await import('@/utils/ablyBasicClient')
+  const { ablyClient } = await ablyBasicClient()
+  const roomChannel = ablyClient.channels.get(`room:${roomID}`)
+  const presenceData = await roomChannel.presence.get()
 
-  // const isClientAlreadyInRoom = presenceData.some(
-  //   (member) => member.clientId === clientId,
-  // )
-  // if (isClientAlreadyInRoom) throw new Error('ALREADY_IN_ROOM')
+  const isClientAlreadyInRoom = presenceData.some(
+    (member) => member.clientId === clientId,
+  )
+  if (isClientAlreadyInRoom) throw new Error('ALREADY_IN_ROOM')
 
-  // // Generating the token request for the ably client
+  // Checking if the user is host of the room
+
+  const hostID = await redisDb.get(`room:${roomID}:hostID`)
+  const isHost = hostID === clientId
+
+  // Generating the token request for the ably client
 
   const Ably = await import('ably')
   const { env } = await import('@/env/server')
@@ -47,13 +53,15 @@ export const POST = async (
     key: env.ABLY_API_KEY,
   })
 
+  const capability: Record<string, capabilityOp[]> = {
+    [`room:${roomID}`]: ['publish', 'subscribe', 'presence'],
+    [`room:${roomID}:connect:*`]: ['subscribe', 'publish'],
+    [`server:room:${roomID}:*`]: ['subscribe'],
+  }
+
   const tokenRequestData = await ablyRealtime.auth.createTokenRequest({
     clientId: clientId,
-    capability: {
-      [`room:${roomID}`]: ['publish', 'subscribe', 'presence'],
-      [`room:${roomID}:connect:*`]: ['publish', 'subscribe'],
-      [`server:room:${roomID}:*`]: ['subscribe'],
-    },
+    capability: capability,
   })
 
   ablyRealtime.close()

@@ -19,11 +19,15 @@ export const isUserHavePermToJoin = async (
     throw new Error('ALREADY_IN_ROOM')
   }
 
-  const isUserKnowPass = await redisDb.sismember(
-    `room:${roomID}:players_known_pass`,
-    userID,
-  )
-  if (isUserKnowPass === 0) throw new Error('PASSWORD_REQUIRED')
+  const isRoomHavePassword = await redisDb.exists(`room:${roomID}:password`)
+
+  if (isRoomHavePassword === 1) {
+    const isUserKnowPass = await redisDb.sismember(
+      `room:${roomID}:players_known_pass`,
+      userID,
+    )
+    if (isUserKnowPass === 0) throw new Error('PASSWORD_REQUIRED')
+  }
 
   const isUserBlocked = await redisDb.sismember(
     `room:${roomID}:blocked_players`,

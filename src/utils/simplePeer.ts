@@ -2,14 +2,12 @@ import SimplePeer from 'simple-peer'
 
 export const iceServers: RTCIceServer[] = [
   {
-    urls: 'turn:freestun.net:3479',
-    credential: 'free',
-    username: 'free',
+    urls: 'stun:stun.relay.metered.ca:80',
   },
   {
-    urls: 'STUN:freestun.net:5350',
-    credential: '',
-    username: '',
+    urls: 'turn:global.relay.metered.ca:80?transport=tcp',
+    username: 'deb044f685ce32c4b6566f9c',
+    credential: 'gDy3Pgf3ErAAju6v',
   },
 ]
 

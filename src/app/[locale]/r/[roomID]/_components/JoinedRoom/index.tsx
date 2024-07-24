@@ -1,36 +1,32 @@
 import './_styles/scrollbars.css'
-import PlayersSection from './_components/PlayersSection'
-import Nav from './_components/Nav'
-import AnimatedDiv from './_components/AnimatedDiv'
-import CanvasTools from './_components/CanvasTools'
 import Providers from './_components/Providers'
-import Canvases from './_components/Canvases'
-import { getRoomID, getUserID } from '@/context/server'
-import { CanvasesBottom } from './_components/CanvasesBottom'
+import {
+  getHostID,
+  getIsHostPlayer,
+  getRoomID,
+  getUserID,
+} from '@/context/server'
+import { JustHosting } from './_components/JustHosting'
+import { NotJustForHosting } from './_components/NotJustHosting'
 
 const JoinedRoom = () => {
   const userID = getUserID()
   const roomID = getRoomID()
+  const hostID = getHostID()
+  const isHostPlayer = getIsHostPlayer()!
 
   return (
-    <Providers userID={userID} roomID={roomID}>
-      <div className="relative flex h-full w-full flex-col">
-        <AnimatedDiv />
-        <Nav />
-
-        <div
-          id="rootDiv"
-          className="flex h-full w-full animate-fade-down flex-row items-start justify-between gap-2 overflow-y-scroll p-2"
-        >
-          <PlayersSection />
-          <div className="flex select-none flex-col items-center gap-[0.1rem]">
-            <Canvases />
-            <CanvasesBottom />
-          </div>
-
-          <CanvasTools />
-        </div>
-      </div>
+    <Providers
+      userID={userID}
+      roomID={roomID}
+      hostID={hostID}
+      isHostPlayer={isHostPlayer}
+    >
+      {!isHostPlayer && hostID === userID ? (
+        <JustHosting />
+      ) : (
+        <NotJustForHosting />
+      )}
     </Providers>
   )
 }

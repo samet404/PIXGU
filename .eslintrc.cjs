@@ -25,6 +25,7 @@ const config = {
     React: true,
     google: true,
     mount: true,
+    NodeJS: true,
     mountWithRouter: true,
     shallow: true,
     shallowWithRouter: true,

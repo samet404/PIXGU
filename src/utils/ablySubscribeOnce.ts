@@ -22,11 +22,11 @@ export const ablySubscribeOnce = <
           value: number
           throwErr: boolean
         }
-    /** A function to run after subscribing to the channel*/
+    /** A function to run after subscribing to the channel */
     doAfterSubscribe?: () => void
   },
 ): Promise<
-  OverrideMessage<{
+  OverridenMessage<{
     data: DT
   }>
 > =>
@@ -54,7 +54,7 @@ export const ablySubscribeOnce = <
         channel.unsubscribe(event)
         if (extras?.maxLifetime) clearTimeout(maxLifetimeTimeout)
         res(
-          msg as OverrideMessage<{
+          msg as OverridenMessage<{
             data: DT
           }>,
         )
@@ -64,4 +64,4 @@ export const ablySubscribeOnce = <
       })
   })
 
-type OverrideMessage<T> = OverrideProps<Message, T>
+type OverridenMessage<T> = OverrideProps<Message, T>

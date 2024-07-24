@@ -12,13 +12,27 @@ import { mToMs } from '@/utils/mToMs'
 export const createRoom = loggedUserProducure
   .input(
     z.object({
-      name: z.string().min(1).max(255),
-      password: z.string().min(1).max(255).nullish(),
+      name: z
+        .string()
+        .min(1)
+        .max(255)
+        .refine((v) => v.trim() !== '', {
+          message: 'Name cannot be empty string',
+        }),
+      password: z
+        .string()
+        .min(1)
+        .max(255)
+        .refine((v) => v.trim() !== '', {
+          message: 'Name cannot be empty string',
+        })
+        .nullish(),
+      isHostPlayer: z.boolean(),
     }),
   )
   .mutation(async ({ input, ctx }) => {
     const createdAt = new Date()
-    const { name, password } = input
+    const { name, password, isHostPlayer } = input
     const userID = ctx.user.id
     const { ablyClient } = await ablyBasicClient()
 
@@ -45,9 +59,14 @@ export const createRoom = loggedUserProducure
     await ctx.redisDb.sadd(`active_rooms`, roomID)
     await ctx.redisDb.set(`room:${roomID}:name`, name)
     await ctx.redisDb.sadd(`room:${roomID}:admins`, userID)
-    await ctx.redisDb.set(`room:${roomID}:password`, password ?? null)
     await ctx.redisDb.set(`room:${roomID}:created_at`, createdAt)
-    await ctx.redisDb.sadd(`room:${roomID}:players_known_pass`, userID)
+    await ctx.redisDb.set(`room:${roomID}:host_ID`, userID)
+    await ctx.redisDb.set(`room:${roomID}:is_host_player`, isHostPlayer)
+
+    if (password) {
+      await ctx.redisDb.set(`room:${roomID}:password`, password)
+      await ctx.redisDb.sadd(`room:${roomID}:players_known_pass`, userID)
+    }
     // #endregion
     // #region external server communication
 
@@ -102,10 +121,7 @@ export const createRoom = loggedUserProducure
     }
     // #endregion
 
-    ablyClient.channels.get('*').unsubscribe()
     ablyClient.close()
-
-    setInterval(() => console.log(ablyClient.connection.state), 4000)
 
     return {
       createdRoomID: roomID,

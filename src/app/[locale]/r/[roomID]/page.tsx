@@ -1,7 +1,7 @@
 import type { Locale } from '@/types'
-import type { Realtime } from 'ably'
 import { api } from '@/trpc/server'
 import dynamic from 'next/dynamic'
+import { redisDb } from '@/db/redis'
 
 const ErrDisplay = dynamic(() => import('@/components/ErrDisplay'))
 const JoinedRoom = dynamic(() => import('./_components/JoinedRoom'))
@@ -28,10 +28,20 @@ const Room = async ({ params }: Props) => {
     const myFirstEnterChannel = ablyClient.channels.get(
       `room:${roomID}:first-enter:${user.id}`,
     )
+
     await waitServer(user.id, roomID, myFirstEnterChannel, firstEnterChannel)
 
+    const hostID = await redisDb.get<string>(`room:${roomID}:host_ID`)
+    if (!hostID) throw new Error('NO_HOST_ID')
+
+    const isHostPlayer = await redisDb.get<boolean>(
+      `room:${roomID}:is_host_player`,
+    )
+    if (isHostPlayer === null || isHostPlayer === undefined)
+      throw new Error('NO_PLAYER_HOST')
+
     const { setServerContexts } = await import('./func')
-    setServerContexts(params.locale, roomID, user)
+    setServerContexts(params.locale, roomID, user, hostID, isHostPlayer)
 
     ablyClient.close()
 

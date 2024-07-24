@@ -1,16 +1,13 @@
 'use client'
 
-import {
-  maxPlayerNumberAtom,
-  minPlayerNumberAtom,
-  nameAtom,
-  passwordAtom,
-} from '../atoms'
-import { useAtomValue } from 'jotai'
+import { CreateRoomInputsCtx } from '@/context/client'
 import { useRouter } from 'next/navigation'
 import { api } from '@/trpc/react'
 import clsx from 'clsx'
 import { Urbanist } from 'next/font/google'
+import { useContext, useState } from 'react'
+import { z } from 'zod'
+import type { RouterInputs } from '@/trpc/shared'
 
 const urbanist = Urbanist({
   subsets: ['latin'],
@@ -19,9 +16,8 @@ const urbanist = Urbanist({
 
 const CreateRoomButton = () => {
   const router = useRouter()
-
-  const password = useAtomValue(passwordAtom)
-  const name = useAtomValue(nameAtom)
+  const inputs = useContext(CreateRoomInputsCtx)
+  const [isClientErr, setIsClientErr] = useState(false)
 
   const { mutate, isLoading, isError, isSuccess } =
     api.gameRoom.create.useMutation({
@@ -30,12 +26,19 @@ const CreateRoomButton = () => {
 
   return (
     <button
-      onClick={() =>
-        mutate({
-          name: name,
-          password: password,
-        })
-      }
+      onClick={() => {
+        try {
+          z.object({
+            name: z.string(),
+            password: z.string().optional(),
+            isHostPlayer: z.boolean(),
+          }).parse(inputs)
+        } catch (e) {
+          setIsClientErr(true)
+        }
+
+        mutate(inputs as RouterInputs['gameRoom']['create'])
+      }}
       disabled={isLoading}
       className={clsx(
         `${urbanist.className} h-full w-full select-none rounded-b-md bg-gradient-to-tr from-[#fff459] to-[#f6ff00] p-1 py-3 text-[1.2rem] text-[rgba(0,0,0,0.4)] shadow-[0_0px_10px_5px_rgba(255,255,255,0.3)] duration-200 focus:opacity-50`,
@@ -48,7 +51,7 @@ const CreateRoomButton = () => {
     >
       {isLoading
         ? 'Creating...'
-        : isError
+        : isError || isClientErr
           ? 'Something went wrong'
           : isSuccess
             ? 'Success'

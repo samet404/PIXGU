@@ -1,18 +1,18 @@
 'use client'
 
+import { CreateRoomInputsCtx } from '@/context/client'
 import { createId } from '@paralleldrive/cuid2'
 import { useSetAtom } from 'jotai'
-import { useRef, useState } from 'react'
-import { passwordAtom } from '../../../../atoms'
+import { useContext, useRef, useState } from 'react'
 
 const InputContainer = () => {
   const [isPublic, setIsPublic] = useState<boolean>(true)
   const inputRef = useRef<HTMLInputElement | null>(null)
-  const setPassword = useSetAtom(passwordAtom)
+  const inputs = useContext(CreateRoomInputsCtx)
 
   const handleOnInput = () => {
     if (inputRef.current?.value != undefined) {
-      setPassword(inputRef.current?.value)
+      inputs.password = inputRef.current.value
       if (inputRef.current?.value == '') setIsPublic(true)
       if (inputRef.current.value != '') setIsPublic(false)
     }
@@ -22,7 +22,7 @@ const InputContainer = () => {
     if (inputRef.current?.value != undefined) {
       const pass = createId()
 
-      setPassword(pass)
+      inputs.password = inputRef.current.value
       setIsPublic(false)
       inputRef.current.value = pass
     }

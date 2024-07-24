@@ -13,3 +13,7 @@ export const [getUserID, setUserID] = serverContext<string>('')
 export const [getAblyClient, setAblyClient] = serverContext<Realtime | null>(
   null,
 )
+export const [getHostID, setHostID] = serverContext<string>('')
+export const [getIsHostPlayer, setIsHostPlayer] = serverContext<boolean | null>(
+  null,
+)

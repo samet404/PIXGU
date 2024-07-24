@@ -12,7 +12,6 @@ type Entry<T> = {
  */
 export const filterObj = <T extends object | Record<any, any>>(
   obj: T,
-  // eslint-disable-next-line no-unused-vars
   fn: (entry: Entry<T>, i: number, arr: Entry<T>[]) => boolean,
 ) =>
   Object.fromEntries(
