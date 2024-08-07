@@ -1,12 +1,13 @@
 import type { PropsWithChildren } from 'react'
 import dynamic from 'next/dynamic'
 import { CanvasesMainDataProvider } from './components/CanvasesMainData'
+import type { User } from 'lucia'
 
 const AblyClient = dynamic(() => import('./components/AblyClient'), {
   ssr: false,
 })
 
-export const Part1 = ({ roomID, children }: Props) => {
+export const Part1 = ({ myUserInfo, roomID, children }: Props) => {
   return (
     <CanvasesMainDataProvider>
       <AblyClient roomID={roomID}>{children} </AblyClient>
@@ -15,5 +16,6 @@ export const Part1 = ({ roomID, children }: Props) => {
 }
 
 type Props = {
+  myUserInfo: User
   roomID: string
 } & PropsWithChildren

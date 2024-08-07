@@ -1,5 +1,5 @@
 import type { OtherRoomStatues, PainterData, Peers } from '@/types'
-import { mToMs } from '@/utils'
+import { grayLog, mToMs } from '@/utils'
 import { createMatch } from './createMatch'
 
 export const createMatchTimeout = (
@@ -9,9 +9,15 @@ export const createMatchTimeout = (
     value: string[]
   },
   peers: Peers,
-): NodeJS.Timeout =>
-  setTimeout(() => {
-    createMatch(otherRoomStatues, playersIDsOrderedByTimestamp, peers)
+): NodeJS.Timeout => {
+  grayLog('CREATED MATCH TIMEOUT')
+  return setTimeout(() => {
+    createMatch(
+      otherRoomStatues,
+      playersIDsOrderedByTimestamp,
+      painterData,
+      peers,
+    )
 
     otherRoomStatues.matchTimeout = createMatchTimeout(
       painterData,
@@ -20,3 +26,4 @@ export const createMatchTimeout = (
       peers,
     )
   }, mToMs(10))
+}

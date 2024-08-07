@@ -14,7 +14,7 @@ export const useMouseDown = () => {
   const canvasesMainData = useContext(CanvasesMainDataContext)!
   const painterData = useContext(PainterDataContext)
   const userID = useContext(UserIDContext)
-  const hostPeer = useContext(HostPeerCtx)!
+  const hostPeer = useContext(HostPeerCtx)
 
   const handler = (e: MouseEvent) => {
     console.log('startPosition')

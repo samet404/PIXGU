@@ -14,11 +14,14 @@ export const lucia = new Lucia(adapter, {
     },
   },
   getUserAttributes: (attributes) => {
+    const { profilePicture, username, usernameID, usernameWithUsernameID } =
+      attributes
+
     return {
-      username: attributes.username,
-      usernameID: attributes.usernameID,
-      usernameWithUsernameID: attributes.usernameWithUsernameID,
-      profilePicture: attributes.profilePicture,
+      username: username,
+      usernameID: usernameID,
+      usernameWithUsernameID: usernameWithUsernameID,
+      profilePicture: profilePicture,
     }
   },
 })

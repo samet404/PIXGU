@@ -21,7 +21,7 @@ import type { Locale } from '@/types'
 import { type Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'PIXAWAI',
+  title: 'PIXGU',
 }
 
 const RootLayout = (props: {

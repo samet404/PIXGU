@@ -11,5 +11,5 @@ type PeerValue = {
 type UserID = string
 
 export type HostPeer = {
-  peer: SimplePeer.Instance
+  peer?: SimplePeer.Instance
 }

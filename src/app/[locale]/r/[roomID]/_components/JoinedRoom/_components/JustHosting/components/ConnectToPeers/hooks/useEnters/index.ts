@@ -4,11 +4,15 @@ import { subscribeAblyPresence } from '@/utils/subscribeAblyPresence'
 import { simplePeer } from '@/utils/simplePeer'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { useContext } from 'react'
-import { positiveLog, negativeLog, sendToPeer, goldLog } from '@/utils'
-import { RoomPlayersIDsOrderedByTimestampCtx } from '@/context/client'
-import { updatePlayersIDs } from './funcs'
+import { positiveLog, negativeLog, goldLog } from '@/utils'
 import { createMatchTimeout } from './funcs/createMatchTimeout'
+import { updatePaintersToPlayers } from './funcs/updatePaintersToPlayers'
+import { sendAllPlayerDbInfos } from './funcs'
+import { sendEveryoneNewPlayerDbInfo } from './funcs/sendEveryoneNewPlayerDbInfo'
+import { sendEveryonePlayerLeaved } from './funcs/sendEveryonePlayerLeaved'
 import {
+  RoomPlayersDbInfoOrderedByJoinTimeCtx,
+  RoomPlayersIDsOrderedByTimestampCtx,
   AblyClientContext,
   OtherHostRoomStatuesCtx,
   PainterDataContext,
@@ -16,8 +20,7 @@ import {
   RoomIDContext,
   UserIDContext,
 } from '@/context/client'
-import { updatePaintersToPlayers } from './funcs/updatePaintersToPlayers'
-import { useInterval } from 'usehooks-ts'
+import { handlePeerDatas } from './funcs/handlePeerDatas'
 
 /**
  * This hook handles everything about entering room.
@@ -31,6 +34,9 @@ export const useEnters = () => {
   const peers = useContext(PeersContext)
   const playersIDsOrderedByTimestamp = useContext(
     RoomPlayersIDsOrderedByTimestampCtx,
+  )
+  const roomPlayersDbInfoOrderedByJoinTime = useContext(
+    RoomPlayersDbInfoOrderedByJoinTimeCtx,
   )
   const painterData = useContext(PainterDataContext)
   const otherStatues = useContext(OtherHostRoomStatuesCtx)
@@ -55,11 +61,9 @@ export const useEnters = () => {
       peers[userID] = { peer }
 
       peers[userID]!.peer.on('signal', (data: WebRTCSignalData) => {
-        if (data.type === 'offer') {
-          console.log(data)
-          goldLog(`OFFER SENT TO ${userID}`)
-          themConnectChannel.publish('offer', data)
-        }
+        console.log(data)
+        goldLog(`${data.type.toUpperCase()} SENT TO ${userID}`)
+        themConnectChannel.publish('signal', data)
       })
 
       peers[userID]!.peer.on('error', (err) => {
@@ -69,11 +73,12 @@ export const useEnters = () => {
 
       // #region connection successfull
       peers[userID]!.peer.on('connect', () => {
-        peers[userID] = { peer }
+        otherStatues.players.count++
 
-        if (otherStatues.players.count === 1 && otherStatues.isFirstMatch) {
+        if (otherStatues.players.count === 2 && otherStatues.isFirstMatch) {
           otherStatues.players.info[userID] = {
-            isPainter: true,
+            isPainter: false,
+            isGuessed: false,
           }
 
           otherStatues.isFirstMatch = false
@@ -97,21 +102,29 @@ export const useEnters = () => {
           }
         }
 
-        updatePlayersIDs(playersIDsOrderedByTimestamp, peers)
-        otherStatues.players.count++
-
+        handlePeerDatas(peers[userID]!.peer, peers, userID)
+        sendAllPlayerDbInfos(
+          roomPlayersDbInfoOrderedByJoinTime,
+          peers[userID]!.peer,
+        )
+        sendEveryoneNewPlayerDbInfo(
+          roomPlayersDbInfoOrderedByJoinTime,
+          userID,
+          peers,
+        )
         positiveLog(`CONNECTED TO ${userID}`)
       })
       // #endregion
 
-      // #region connection close
+      // #region conneçction close
       peers[userID]!.peer.on('close', () => {
         delete peers[userID]
-        updatePlayersIDs(playersIDsOrderedByTimestamp, peers)
+        sendEveryonePlayerLeaved(userID, peers)
         otherStatues.players.count--
 
         if (otherStatues.players.info[userID]!.isPainter) {
           otherStatues.players.secondPainterIndex = 0
+          clearTimeout(otherStatues.matchTimeout!)
         }
 
         negativeLog(`CONNECTION TO ${userID} CLOSED`)
@@ -120,6 +133,6 @@ export const useEnters = () => {
     })
 
     roomChannel.presence.enter()
-    positiveLog(`YOU ENTERED THE ROOM ${roomID} >`)
+    positiveLog(`YOU ENTERED THE ABLY ROOM CHANNEL ${roomID} >`)
   })
 }

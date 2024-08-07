@@ -70,6 +70,8 @@ const Password = async ({ params }: Props) => {
             reason="You have blocked from this room"
           />
         )
+
+      throw new Error(e.message)
     }
   }
 }

@@ -17,9 +17,9 @@ const BtnLeave = () => {
       <button
         onKeyDown={handleOnKeyDown}
         onClick={() => setIsModalOpen(true)}
-        className="rounded-md bg-[#ffffff42] px-2 py-1 text-sm text-[#ffffff7f]"
+        className="rounded-md bg-[#ffffff42] px-2 py-1 text-sm text-[#ffffff7f] shadow-[0_0px_10px_1px_rgba(0,0,0,0.5)]"
       >
-        Leave
+        EXIT
       </button>
       {typeof window !== 'undefined'
         ? isModalOpen

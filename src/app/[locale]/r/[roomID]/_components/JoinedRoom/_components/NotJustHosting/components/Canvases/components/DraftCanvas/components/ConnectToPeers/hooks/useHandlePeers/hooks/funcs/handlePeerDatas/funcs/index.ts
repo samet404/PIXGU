@@ -1,1 +1,0 @@
-export { getPainterDraw } from './getPainterDraw'

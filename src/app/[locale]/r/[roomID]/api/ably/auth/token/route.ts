@@ -1,4 +1,4 @@
-import { type NextRequest, NextResponse } from 'next/server'
+import { NextResponse, type NextRequest } from 'next/server'
 import { api } from '@/trpc/server'
 import type { capabilityOp } from 'ably'
 
@@ -28,7 +28,7 @@ export const POST = async (
   const isRoomExist = await redisDb.sismember('active_rooms', roomID)
   if (isRoomExist === 0) throw new Error('ROOM_NOT_FOUND')
 
-  // // we are checking if the user is already in the room
+  // we are checking if the user is already in the room
 
   const { ablyBasicClient } = await import('@/utils/ablyBasicClient')
   const { ablyClient } = await ablyBasicClient()
@@ -42,7 +42,7 @@ export const POST = async (
 
   // Checking if the user is host of the room
 
-  const hostID = await redisDb.get(`room:${roomID}:hostID`)
+  const hostID = await redisDb.get(`room:${roomID}:host_ID`)
   const isHost = hostID === clientId
 
   // Generating the token request for the ably client
@@ -53,15 +53,21 @@ export const POST = async (
     key: env.ABLY_API_KEY,
   })
 
-  const capability: Record<string, capabilityOp[]> = {
+  const clientCapability: Record<string, capabilityOp[]> = {
     [`room:${roomID}`]: ['publish', 'subscribe', 'presence'],
-    [`room:${roomID}:connect:*`]: ['subscribe', 'publish'],
-    [`server:room:${roomID}:*`]: ['subscribe'],
+    [`room:${roomID}:connect:host`]: ['publish'],
+    [`room:${roomID}:connect:${clientId}`]: ['subscribe'],
+  }
+
+  const hostCapability: Record<string, capabilityOp[]> = {
+    [`room:${roomID}`]: ['publish', 'subscribe', 'presence'],
+    [`room:${roomID}:connect:host`]: ['subscribe'],
+    [`room:${roomID}:connect:*`]: ['publish'],
   }
 
   const tokenRequestData = await ablyRealtime.auth.createTokenRequest({
     clientId: clientId,
-    capability: capability,
+    capability: isHost ? hostCapability : clientCapability,
   })
 
   ablyRealtime.close()

@@ -6,19 +6,18 @@ import { useContext, useRef } from 'react'
 
 export const MainCanvas = () => {
   const canvasesMainData = useContext(CanvasesMainDataContext)!
-  const mainCanvas = useRef<HTMLCanvasElement>(null)
+  const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffectOnce(() => {
-    canvasesMainData.main = mainCanvas.current
+    canvasRef.current!.height = canvasRef.current!.width * 1
+    canvasesMainData.main = canvasRef.current
+
+    window.addEventListener('resize', () => {
+      canvasRef.current!.height = canvasRef.current!.width * 1
+    })
   })
 
   return (
-    <canvas
-      ref={mainCanvas}
-      id="main-canvas"
-      width={600}
-      height={600}
-      className="rounded-lg"
-    />
+    <canvas ref={canvasRef} id="main-canvas" className="w-full rounded-lg" />
   )
 }

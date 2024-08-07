@@ -3,6 +3,7 @@ import { getNext2ArrElmI } from '@/utils/getNext2ArrElmI'
 import { updatePaintersToPlayers } from './updatePaintersToPlayers'
 import type { Peers } from '@/types/webRTCPeers'
 import type { PainterData } from '@/types/canvasData'
+import { grayLog } from '@/utils/grayLog'
 
 export const createMatch = (
   otherRoomStatues: OtherRoomStatues,
@@ -61,5 +62,7 @@ export const createMatch = (
     }
 
     updatePaintersToPlayers(firstPainterID, secondPainterID, peers)
+
+    grayLog('MATCH CREATED')
   }
 }

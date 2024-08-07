@@ -1,7 +1,7 @@
 'use client'
 
 import { useSetAtom } from 'jotai'
-import { useAnswers, useEnters, useMyLeave } from './hooks'
+import { useSignals, useEnters, useMyLeave } from './hooks'
 import { hostingHealth } from '../../atoms'
 
 const ConnectToPeers = () => {
@@ -12,13 +12,13 @@ const ConnectToPeers = () => {
     1- New user enters the room (useEnters)
     2- Host sends an offer to the user (useEnters)
     3- New user gets the offer and sends an answer to host (useOffers)
-    4- Host gets answer (useAnswers)
+    4- Host gets signals (useSignals)
     5- Connection is established or failed
       If failed, the user is removed from the peers list  
     6- if other user leaves the room, the user is removed from the peers list
   */
 
-  useAnswers()
+  useSignals()
   useEnters()
   useMyLeave()
   setHostingHealth({

@@ -9,6 +9,9 @@ export type CanvasesMainData = {
 
   draft: HTMLCanvasElement | null
   main: HTMLCanvasElement | null
+
+  draft2: HTMLCanvasElement | null
+  main2: HTMLCanvasElement | null
 }
 
 /**

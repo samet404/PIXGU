@@ -8,7 +8,7 @@ export const updatePaintersToPlayers = (
   for (const peer in peers) {
     if (peers[peer]?.peer) {
       const playersIDs: WebRTCConnData = {
-        type: 'directlyFromHost',
+        from: 'host',
         event: 'currentPainters',
         data: {
           painter1ID: firstPainterID,

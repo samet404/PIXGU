@@ -3,23 +3,39 @@ import type { IntRange } from './intRange'
 /**
  * WebRTCConnData is the type of data that is sent over the WebRTC connection.
  */
-export type WebRTCConnData = DirectlyFromHost
+export type WebRTCConnData = DirectlyFromHost | DirectlyFromClient
 
-type GuessChat = {
+export type GuessChatFromHost = {
+  event: 'guessChat'
+  data: {
+    from: string
+    msg: string
+  }
+}
+
+type GuessChatFromClient = {
   event: 'guessChat'
   data: {
     msg: string
   }
 }
 
-type WinnersChat = {
+export type WinnersChatFromHost = {
+  event: 'winnersChat'
+  data: {
+    from: string
+    msg: string
+  }
+}
+
+type WinnersChatFromClient = {
   event: 'winnersChat'
   data: {
     msg: string
   }
 }
 
-type PainterDraw = {
+type PainterDrawFromHostAndClient = {
   event: 'painterDraw'
   data: {
     painterID: string
@@ -34,10 +50,16 @@ type PainterDraw = {
   }
 }
 
-type PlayersIDsOrderedByTimestamp = {
-  event: 'playersIDsOrderedByTimestamp'
+type PlayersDbInfoOrderedByJoinTime = {
+  event: 'PlayersDbInfoOrderedByJoinTime'
   data: {
-    playersIDs: string[]
+    players: Record<
+      string,
+      {
+        usernameWithUsernameID: string
+        profilePicture: string | null
+      }
+    >
   }
 }
 
@@ -50,16 +72,18 @@ type CurrentPainters = {
 }
 
 export type UserLeft = {
-  event: 'userLeft'
+  event: 'playerLeft'
   data: {
-    userID: string
+    ID: string
   }
 }
 
 export type UserJoined = {
-  event: 'userJoined'
+  event: 'playerJoined'
   data: {
-    userID: string
+    ID: string
+    usernameWithUsernameID: string
+    profilePicture: string | null
   }
 }
 
@@ -67,11 +91,19 @@ export type UserJoined = {
 export type DirectlyFromHost = (
   | UserLeft
   | UserJoined
-  | PainterDraw
-  | PlayersIDsOrderedByTimestamp
-  | GuessChat
-  | WinnersChat
+  | PainterDrawFromHostAndClient
+  | PlayersDbInfoOrderedByJoinTime
+  | GuessChatFromHost
+  | WinnersChatFromHost
   | CurrentPainters
 ) & {
-  type: 'directlyFromHost'
+  from: 'host'
+}
+
+export type DirectlyFromClient = (
+  | WinnersChatFromClient
+  | GuessChatFromClient
+  | PainterDrawFromHostAndClient
+) & {
+  from: 'client'
 }

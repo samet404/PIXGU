@@ -4,6 +4,7 @@ import {
   getHostID,
   getIsHostPlayer,
   getRoomID,
+  getUser,
   getUserID,
 } from '@/context/server'
 import { JustHosting } from './_components/JustHosting'
@@ -14,12 +15,14 @@ const JoinedRoom = () => {
   const roomID = getRoomID()
   const hostID = getHostID()
   const isHostPlayer = getIsHostPlayer()!
+  const myUserInfo = getUser()!
 
   return (
     <Providers
       userID={userID}
       roomID={roomID}
       hostID={hostID}
+      myUserInfo={myUserInfo}
       isHostPlayer={isHostPlayer}
     >
       {!isHostPlayer && hostID === userID ? (

@@ -5,8 +5,8 @@ import type {
   IntRange,
   PainterData,
   RGBAObj,
-  WebRTCConnData,
 } from '@/types'
+import { sendToPeer } from '@/utils'
 
 export const drawOnCanvas = (
   myUserID: string,
@@ -17,10 +17,13 @@ export const drawOnCanvas = (
   rgba: RGBAObj,
   hostPeer: HostPeer,
 ) => {
-  const prevA = painterData.value.pixelHistory[`${newX}_${newY}`]?.a ?? 0
+  if (!painterData.value?.amIPainter || !painterData.value.painters[myUserID])
+    return null
+  const prevA =
+    painterData.value.painters[myUserID].pixelHistory[`${newX}_${newY}`]?.a ?? 0
 
   const { r, g, b, a } = rgba
-  painterData.value.pixelHistory[`${newX}_${newY}`] = {
+  painterData.value.painters[myUserID].pixelHistory[`${newX}_${newY}`] = {
     r: r,
 
     g: g,
@@ -36,17 +39,18 @@ export const drawOnCanvas = (
     rgba,
   )
 
-  const connData: WebRTCConnData = {
-    userID: myUserID,
-    event: 'draw',
-    x: newX,
-    y: newY,
-    rgba: { r, g, b, a },
-  }
+  sendToPeer(hostPeer.peer!, {
+    from: 'client',
+    event: 'painterDraw',
+    data: {
+      painterID: myUserID,
+      x: newX,
+      y: newY,
+      rgba,
+    },
+  })
 
-  hostPeer.peer.send(JSON.stringify(connData))
-
-  painterData.value.lastDrawedPixel = {
+  painterData.value.painters[myUserID].lastDrawedPixel = {
     x: newX,
     y: newY,
   }

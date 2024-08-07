@@ -1,1 +1,1 @@
-export * from './updatePlayersIDs'
+export * from './sendAllPlayerDbInfos'

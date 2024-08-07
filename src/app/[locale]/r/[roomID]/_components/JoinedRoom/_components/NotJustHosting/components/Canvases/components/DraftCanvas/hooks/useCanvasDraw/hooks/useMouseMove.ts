@@ -13,7 +13,7 @@ import { HostPeerCtx } from '@/context/client/react/hostPeerCtx'
 export const useMouseMove = () => {
   const canvasesMainData = useContext(CanvasesMainDataContext)!
   const painterData = useContext(PainterDataContext)
-  const hostPeer = useContext(HostPeerCtx)!
+  const hostPeer = useContext(HostPeerCtx)
   const userID = useContext(UserIDContext)
 
   const handler = (e: MouseEvent) => {
