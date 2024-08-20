@@ -8,7 +8,7 @@ export async function GET(): Promise<Response> {
     scopes: ['identify'],
   })
 
-  cookies().set('github_oauth_state', state, {
+  cookies().set('discord_oauth_state', state, {
     path: '/',
     secure: process.env.NODE_ENV === 'production',
     httpOnly: true,

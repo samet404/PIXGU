@@ -8,10 +8,12 @@ type Action = {
   reset: () => void
 }
 
-export const useCountStore = create<State & Action>((set) => ({
+export const useCountStore = create<State & Action>((set, get) => ({
   count: 0,
 
   increment: () => set((state) => ({ count: state.count + 1 })),
-  decrement: () => set((state) => ({ count: state.count - 1 })),
+  decrement: () => {
+    get().count = get().count - 1
+  },
   reset: () => set({ count: 0 }),
 }))

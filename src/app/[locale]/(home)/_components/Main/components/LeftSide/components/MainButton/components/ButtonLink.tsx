@@ -19,7 +19,6 @@ const ButtonLink = ({ href, children }: ButtonLinkProps) => {
         'animate-pulse': isLoading == true,
       })}
       onClick={() => {
-        console.log('dsajdp')
         console.log(isLoading)
         setisLoading(true)
       }}

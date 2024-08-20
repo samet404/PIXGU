@@ -5,6 +5,7 @@ import {
   getUserBySelecting,
   getUserID,
   isLogged,
+  pusherGameRoom,
 } from './subroute/_index'
 
 export const authRouter = createTRPCRouter({
@@ -13,4 +14,5 @@ export const authRouter = createTRPCRouter({
   getUserID: getUserID,
   isLogged: isLogged,
   getUserBySelecting: getUserBySelecting,
+  pusherGameRoom: pusherGameRoom,
 })

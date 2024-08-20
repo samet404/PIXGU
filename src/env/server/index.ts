@@ -85,19 +85,19 @@ export const env = createEnv({
         'You forgot to change the default discord redirect uri',
       ),
 
-    // SPOTIFY_CLIENT_ID: z
-    //   .string()
-    //   .refine(
-    //     (str) => !str.includes('YOUR_SPOTIFY_CLIENT_ID_HERE'),
-    //     'You forgot to change the default spotify client id',
-    //   ),
+    SPOTIFY_CLIENT_ID: z
+      .string()
+      .refine(
+        (str) => !str.includes('YOUR_SPOTIFY_CLIENT_ID_HERE'),
+        'You forgot to change the default spotify client id',
+      ),
 
-    // SPOTIFY_CLIENT_SECRET: z
-    //   .string()
-    //   .refine(
-    //     (str) => !str.includes('YOUR_SPOTIFY_CLIENT_SECRET_HERE'),
-    //     'You forgot to change the default spotify client secret',
-    //   ),
+    SPOTIFY_CLIENT_SECRET: z
+      .string()
+      .refine(
+        (str) => !str.includes('YOUR_SPOTIFY_CLIENT_SECRET_HERE'),
+        'You forgot to change the default spotify client secret',
+      ),
 
     GITHUB_CLIENT_ID: z
       .string()
@@ -113,19 +113,48 @@ export const env = createEnv({
         'You forgot to change the default github client secret',
       ),
 
-    // GOOGLE_CLIENT_ID: z
-    //   .string()
-    //   .refine(
-    //     (str) => !str.includes('YOUR_GOOGLE_CLIENT_ID_HERE'),
-    //     'You forgot to change the default google client id',
-    //   ),
+    GOOGLE_CLIENT_ID: z
+      .string()
+      .refine(
+        (str) => !str.includes('YOUR_GOOGLE_CLIENT_ID_HERE'),
+        'You forgot to change the default google client id',
+      ),
 
-    // GOOGLE_CLIENT_SECRET: z
-    //   .string()
-    //   .refine(
-    //     (str) => !str.includes('YOUR_GOOGLE_CLIENT_SECRET_HERE'),
-    //     'You forgot to change the default google client secret',
-    //   ),
+    GOOGLE_CLIENT_SECRET: z
+      .string()
+      .refine(
+        (str) => !str.includes('YOUR_GOOGLE_CLIENT_SECRET_HERE'),
+        'You forgot to change the default google client secret',
+      ),
+
+    GOOGLE_REDIRECT_URI: z
+      .string()
+      .url()
+      .refine(
+        (str) => !str.includes('YOUR_GOOGLE_REDIRECT_URI_HERE'),
+        'You forgot to change the default google redirect uri',
+      ),
+
+    PUSHER_APP_ID: z
+      .string()
+      .cuid2()
+      .refine(
+        (str) => !str.includes('YOUR_PUSHER_APP_ID_HERE'),
+        'You forgot to change the default pusher app id',
+      ),
+    PUSHER_KEY: z
+      .string()
+      .cuid2()
+      .refine(
+        (str) => !str.includes('YOUR_PUSHER_KEY_HERE'),
+        'You forgot to change the default pusher key',
+      ),
+    PUSHER_SECRET: z
+      .string()
+      .refine(
+        (str) => !str.includes('YOUR_PUSHER_SECRET_HERE'),
+        'You forgot to change the default pusher secret',
+      ),
 
     NODE_ENV: z
       .enum(['development', 'test', 'production'])
@@ -156,14 +185,19 @@ export const env = createEnv({
     ABLY_API_KEY: process.env.ABLY_API_KEY,
     ABLY_DEFAULT_CLIENT_ID: process.env.ABLY_DEFAULT_CLIENT_ID,
 
-    // SPOTIFY_CLIENT_ID: process.env.SPOTIFY_CLIENT_ID,
-    // SPOTIFY_CLIENT_SECRET: process.env.YOUR_SPOTIFY_CLIENT_SECRET,
+    SPOTIFY_CLIENT_ID: process.env.SPOTIFY_CLIENT_ID,
+    SPOTIFY_CLIENT_SECRET: process.env.SPOTIFY_CLIENT_SECRET,
 
     GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
     GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
 
-    // GOOGLE_CLIENT_ID: process.env.YOUR_GOOGLE_CLIENT_ID,
-    // GOOGLE_CLIENT_SECRET: process.env.YOUR_GOOGLE_CLIENT_SECRET,
+    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+    GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+    GOOGLE_REDIRECT_URI: process.env.GOOGLE_REDIRECT_URI,
+
+    PUSHER_APP_ID: process.env.PUSHER_APP_ID,
+    PUSHER_KEY: process.env.PUSHER_KEY,
+    PUSHER_SECRET: process.env.PUSHER_SECRET,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

@@ -22,7 +22,7 @@ export const user = pgTable('user', {
 
   githubId: bigint('github_id', { mode: 'number' }).unique(),
   discordId: varchar('discord_id').unique(),
-  googleId: bigint('google_id', { mode: 'number' }).unique(),
+  googleId: varchar('google_id').unique(),
 
   updatedAt: timestamp('updated_at', { withTimezone: true })
     .defaultNow()

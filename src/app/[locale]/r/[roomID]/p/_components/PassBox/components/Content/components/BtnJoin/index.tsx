@@ -1,7 +1,7 @@
 'use client'
 
 import { api } from '@/trpc/react'
-import { useRef, type RefObject } from 'react'
+import { type RefObject } from 'react'
 import { clsxMerge } from '@/utils/clsxMerge'
 import { Urbanist } from 'next/font/google'
 import { usePathname, useRouter } from 'next/navigation'
@@ -24,12 +24,10 @@ const BtnJoin = ({ passInputRef }: BtnJoinProps) => {
     api.gameRoom.knowPass.useMutation({
       onSuccess: () => {
         console.log('PASSWORD IS CORRECT')
-        router.push(pathname.replace('/p', ''))
+        router.refresh()
       },
       onError: async (e) => {
-        if (e.message === 'ROOM_NOT_FOUND') {
-          router.push('/404')
-        }
+        console.error('ERROR:', e)
       },
     })
 

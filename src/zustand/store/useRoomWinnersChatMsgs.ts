@@ -1,20 +1,33 @@
-import type { GuessChatFromHost } from '@/types'
+import type { WinnersChatFromHost, YourWinnersChatFromHost } from '@/types'
 import { create } from 'zustand'
 
-type State = { msgs: Pick<GuessChatFromHost, 'data'>[] }
+type State = {
+  msgs: Msg[]
+}
 
 type Action = {
-  add: (data: Pick<GuessChatFromHost, 'data'>) => void
+  add: (data: Msg) => void
   reset: () => void
 }
 
 export const useRoomWinnersChatMsgsStore = create<State & Action>((set) => ({
   msgs: [],
 
-  add: (data) =>
-    set((state) => ({
-      msgs: [...state.msgs, data],
-    })),
+  add: (data) => {
+    set((state) => {
+      const prev = (() => {
+        const msgs = state.msgs
+        if (msgs.length === 30) return msgs.slice(1, 30)
+        return msgs
+      })()
+
+      return { msgs: [...prev, data] }
+    })
+  },
 
   reset: () => set({ msgs: [] }),
 }))
+
+export type Msg =
+  | ({ myMsg: false } & Pick<WinnersChatFromHost, 'data'>)
+  | ({ myMsg: true } & Pick<YourWinnersChatFromHost, 'data'>)

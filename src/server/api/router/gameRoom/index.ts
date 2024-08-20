@@ -7,6 +7,8 @@ import {
   joinRoom,
   getPlayingRooms,
   isExits,
+  sendSignalDataToHost,
+  sendSignalDataToPlayer,
 } from './subroutes'
 
 export const gameRoomRouter = createTRPCRouter({
@@ -21,4 +23,7 @@ export const gameRoomRouter = createTRPCRouter({
   join: joinRoom,
 
   isExits: isExits,
+
+  sendSignalDataToHost: sendSignalDataToHost,
+  sendSignalDataToPlayer: sendSignalDataToPlayer,
 })

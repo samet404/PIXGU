@@ -44,6 +44,7 @@
       "@/styles/*": ["./src/styles/*"],
       "@/atoms": ["./src/atoms"],
       "@/zustand/*": ["./src/zustand/*"],
+      "@/zod/*": ["./src/zod/*"],
       "@/types/*": ["./src/types/*"],
       "@/types": ["./src/types/_index.ts"],
       "@/app/*": ["./src/app/*"],

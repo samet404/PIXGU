@@ -2,11 +2,12 @@ import Main from './_components/Main'
 import CreateRoomButton from './_components/CreateRoomButton'
 import GradientContainer from './_components/GradientContainer'
 import BackgroundImages from './_components/BackgroundImages'
-import waves from '@/png/waves.png'
-import Image from 'next/image'
+
 import './_styles/scrollbars.css'
 import dynamic from 'next/dynamic'
 import { api } from '@/trpc/server'
+import { Suspense } from 'react'
+import { Waves } from './_components/Waves'
 
 const ErrDisplay = dynamic(() => import('@/components/ErrDisplay'))
 
@@ -22,13 +23,17 @@ const CreateRoom = async () => {
       {/* <Nav /> */}
 
       <div className="relative z-10 flex h-full w-full flex-col items-center justify-start gap-3">
-        <BackgroundImages />
+        <Suspense>
+          <BackgroundImages />
+        </Suspense>
         <GradientContainer>
           <Main />
           <CreateRoomButton />
         </GradientContainer>
+        <Suspense>
+          <Waves />
+        </Suspense>
       </div>
-      <Image className="w-full pt-24 opacity-55" src={waves} alt="waves" />
     </div>
   )
 }

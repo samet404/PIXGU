@@ -1,12 +1,7 @@
 export type OtherRoomStatues = {
-  matchTimeout: NodeJS.Timeout | null
+  matchTimeout: ReturnType<typeof setTimeout> | null
   isFirstMatch: boolean
   theme: string | null
-  players: {
-    info: Record<string, Player>
-    count: number
-    secondPainterIndex: number | null
-  }
 } & MatchPaused
 
 type MatchPaused =
@@ -18,14 +13,3 @@ type MatchPaused =
         | 'BREAK_WITH_VOTES'
     }
   | { isMatchPaused: false }
-
-type GuessingPlayer = {
-  isPainter: false
-  isGuessed: boolean
-}
-
-type PainterPlayer = {
-  isPainter: true
-}
-
-type Player = GuessingPlayer | PainterPlayer

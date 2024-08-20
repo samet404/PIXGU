@@ -11,7 +11,7 @@ const inter500 = Inter({
 const Main = () => {
   return (
     <main
-      className={`${inter500.className} flex h-full w-full flex-col gap-2 p-2`}
+      className={`${inter500.className} z-20 flex h-full w-full flex-col gap-2 p-2`}
     >
       <Name />
       <IsHostPlayer />

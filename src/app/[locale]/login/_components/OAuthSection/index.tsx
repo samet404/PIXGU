@@ -1,8 +1,11 @@
 import { getLocale } from '@/context/server'
-import ProviderButton from './components/ProviderButton'
 import { Inter } from 'next/font/google'
 import Link from 'next/link'
 import { getLangObj } from './lang'
+import { Discord } from './components/discord'
+import { Google } from './components/google'
+import { Spotify } from './components/spotify'
+import { Github } from './components/github'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -19,10 +22,10 @@ const OAuthSection = async () => {
     >
       <div className="pl-1 font-[500]">{langObj.oauthDesc}</div>
       <div className="grid w-full grid-cols-5 gap-3 rounded-md bg-[rgba(0,0,0,0.1)] p-[0.40rem] shadow-[0_0px_20px_5px_rgba(255,255,255,0.3)]">
-        <ProviderButton providerName="google" />
-        <ProviderButton providerName="discord" />
-        <ProviderButton providerName="spotify" />
-        <ProviderButton providerName="github" />
+        <Discord />
+        <Google />
+        <Spotify />
+        <Github />
       </div>
       <Link
         href={'/articles/oeu90qdjAS)'}

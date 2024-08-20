@@ -1,21 +1,23 @@
 'use client'
 
 import { useSetAtom } from 'jotai'
-import { useContext, useRef } from 'react'
+import { useRef } from 'react'
 import InputInfo from './components/InputInfo'
 import { inputInfoTextAtom } from './atoms'
-import { CreateRoomInputsCtx } from '@/context/client'
+import { useCreateRoomInputs } from '@/zustand/store'
 
 const InputContainer = () => {
   const inputRef = useRef<HTMLInputElement | null>(null)
   const setInputInfoText = useSetAtom(inputInfoTextAtom)
-  const inputs = useContext(CreateRoomInputsCtx)
 
   const handleOnInput = () => {
     if (inputRef.current) {
       if (inputRef.current?.value) {
         if (inputRef.current.value.length !== 0) {
-          inputs.name = inputRef.current.value
+          useCreateRoomInputs.getState().add({
+            ...useCreateRoomInputs.getState().value,
+            name: inputRef.current.value,
+          })
           setInputInfoText('Ready to go!')
         }
       }

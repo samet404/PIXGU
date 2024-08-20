@@ -11,28 +11,14 @@ const Password = async ({ params }: Props) => {
   const user = await api.auth.getUser.query()
   if (!user) throw new Error('UNAUTHORIZED')
 
-  const { ablyBasicClient } = await import('@/utils/ablyBasicClient')
-  const { ablyClient } = await ablyBasicClient()
-
   try {
-    const { isUserHavePermToJoin } = await import('../func')
+    const { isUserHavePermToJoin } = await import('./func')
 
-    const roomChannel = ablyClient.channels.get(`room:${roomID}`)
-    await isUserHavePermToJoin(user.id, roomID, roomChannel)
+    await isUserHavePermToJoin(user.id, roomID)
 
-    const { setServerContexts } = await import('../func')
+    const { setServerContexts } = await import('./func')
     setServerContexts(params.locale, roomID, user)
-
-    const { redirect } = await import('next/navigation')
-
-    ablyClient.channels.get('*').unsubscribe()
-    ablyClient.close()
-
-    redirect(`/r/${roomID}`)
   } catch (e) {
-    ablyClient.channels.get('*').unsubscribe()
-    ablyClient.close()
-
     if (e instanceof Error) {
       if (e.message === 'PASSWORD_REQUIRED') return <PassBox />
 
@@ -74,6 +60,10 @@ const Password = async ({ params }: Props) => {
       throw new Error(e.message)
     }
   }
+
+  const { redirect } = await import('next/navigation')
+
+  redirect(`/r/${roomID}`)
 }
 
 export default Password

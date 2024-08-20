@@ -1,13 +1,14 @@
-'use client'
-
+import { getIsLogged } from '@/context/server'
 import { faGear } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 
 const Settings = () => {
+  const isLogged = getIsLogged()
+
   return (
     <Link
-      href="/settings"
+      href={isLogged ? '/settings/account' : '/settings/themes'}
       className="flex h-10 w-10 items-center justify-center rounded-full"
     >
       <FontAwesomeIcon

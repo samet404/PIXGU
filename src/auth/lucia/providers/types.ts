@@ -60,3 +60,10 @@ export type DiscordUser = {
   premium_type: number
   public_flags: number
 }
+
+export type GoogleUser = {
+  sub: number
+  name: string
+  given_name: string
+  picture: string
+}

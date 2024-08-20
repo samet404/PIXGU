@@ -14,11 +14,12 @@ export const useWindowEventListener = (
   options?: boolean | AddEventListenerOptions,
 ) => {
   useEffect(() => {
-    window.addEventListener(eventName, handler, options)
+    if (window) window.addEventListener(eventName, handler, options)
 
-    return () => {
-      window.removeEventListener(eventName, handler, options)
-    }
+    if (window)
+      return () => {
+        window.removeEventListener(eventName, handler, options)
+      }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 }
