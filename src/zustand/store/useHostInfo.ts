@@ -10,7 +10,6 @@ export type HostInfoStoreState = HostInfo
 
 export type HostInfoStoreAction = {
   get: () => HostInfo
-  set: (input: HostInfo) => void
 }
 
 export type HostInfoStore = HostInfoStoreState & HostInfoStoreAction
@@ -20,8 +19,4 @@ export const createHostInfoStore = (initValue: HostInfo) =>
     ...initValue,
 
     get: () => get(),
-    set: (input) =>
-      set({
-        ...input,
-      }),
   }))

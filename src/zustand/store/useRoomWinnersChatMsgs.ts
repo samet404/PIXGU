@@ -28,6 +28,6 @@ export const useRoomWinnersChatMsgsStore = create<State & Action>((set) => ({
   reset: () => set({ msgs: [] }),
 }))
 
-export type Msg =
+type Msg =
   | ({ myMsg: false } & Pick<WinnersChatFromHost, 'data'>)
   | ({ myMsg: true } & Pick<YourWinnersChatFromHost, 'data'>)

@@ -10,14 +10,19 @@ type Action = {
   addNewPainter: (painter: Painter) => void
   getPainterIDs: () => string | undefined
   get: () => PainterData
+  reset: () => void
 }
 
-export const usePainterData = create<State & Action>((set, get) => ({
+const initValue = {
   painter: null,
-  secondPainterI: 1,
+  nextPainterI: 1,
   amIPainter: false,
   amIPainting: false,
   theme: null,
+} as const
+
+export const usePainterData = create<State & Action>((set, get) => ({
+  ...initValue,
 
   add: (input) =>
     set({
@@ -40,6 +45,7 @@ export const usePainterData = create<State & Action>((set, get) => ({
   isPainter: (userID: string) => get().painter?.ID === userID,
   getPainterIDs: () => get().painter?.ID,
   get: () => get(),
+  reset: () => set({ ...initValue }),
 }))
 
 export type PainterData = (MyPainterData | OtherPaintersData) &
@@ -63,7 +69,7 @@ type Painter = {
 
 type DefaultPainterData = {
   painter: Painter
-  secondPainterI: number
+  nextPainterI: number
 }
 
 type X = number

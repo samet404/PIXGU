@@ -1,10 +1,25 @@
 'use client'
 
-import { useSetAtom } from 'jotai'
-import { isPlayersOpenAtom } from '../../PlayersSection/atoms'
 import { Button } from './Button'
+import { openPanelAtom } from '../../atoms'
+import { useAtom } from 'jotai'
 
 export const Players = () => {
-  const setIsPlayersOpen = useSetAtom(isPlayersOpenAtom)
-  return <Button text="Players" onClick={() => setIsPlayersOpen(true)} />
+  const [openPanel, setOpenPanel] = useAtom(openPanelAtom)
+
+  return (
+    <Button
+      text="Players"
+      keyName="P"
+      onKeyDown={(e) => {
+        if (e.key !== 'p' || (e.target as HTMLElement).tagName === 'INPUT')
+          return
+
+        if (openPanel === 'players') setOpenPanel(null)
+        else setOpenPanel('players')
+      }}
+      className="hover:from-[#07cf86]"
+      onClick={() => setOpenPanel('marketplace')}
+    />
+  )
 }

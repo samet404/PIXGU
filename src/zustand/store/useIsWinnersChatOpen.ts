@@ -8,7 +8,7 @@ type Action = {
 }
 
 export const useIsWinnersChatOpen = create<State & Action>((set, get) => ({
-  value: true,
+  value: false,
 
   close: () =>
     set({

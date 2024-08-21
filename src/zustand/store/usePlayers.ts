@@ -1,6 +1,7 @@
 import type { User } from 'lucia'
 import { filterObj } from '@/utils/filterObj'
 import { create } from 'zustand'
+import { goldLog } from '@/utils/goldLog'
 
 export type Player = (
   | {
@@ -16,6 +17,7 @@ export type Player = (
 
 type Players = {
   players: Record<string, Player>
+  playersArrWithDBInfo: (Player & User)[]
   playersDbInfos: Record<string, User>
   count: number
 }
@@ -24,7 +26,6 @@ type State = { value: Players }
 
 type Action = {
   mutate: (input: Partial<Players>) => void
-  mutateAndRender: (input: Partial<Players>) => void
   addPlayer: (userID: string, player: Player) => void
   changePlayer: (userID: string, player: Partial<Player>) => void
   removePlayer: (userID: string) => void
@@ -50,24 +51,27 @@ type Action = {
   }[]
 
   get: () => Players
+  reset: () => void
 }
 
-export const usePlayers = create<State & Action>((set, get) => ({
+const initValue: State = {
   value: {
     players: {},
     playersDbInfos: {},
+    playersArrWithDBInfo: [],
     count: 0,
   },
+} as const
+
+export const usePlayers = create<State & Action>((set, get) => ({
+  ...initValue,
 
   mutate: (input) => {
-    get().value = {
-      ...get().value,
-      ...input,
-    }
-  },
-  mutateAndRender: (input) => {
     set({
-      value: { ...get().value, ...input },
+      value: {
+        ...get().value,
+        ...input,
+      },
     })
   },
   resetAndSetPlayers: (input) => {
@@ -114,7 +118,7 @@ export const usePlayers = create<State & Action>((set, get) => ({
   addPlayer: (userID, player) => {
     const { profilePicture, id, username, usernameID, usernameWithUsernameID } =
       player
-    const next = {
+    const next: State = {
       value: {
         ...get().value,
         count: get().value.count + 1,
@@ -122,6 +126,20 @@ export const usePlayers = create<State & Action>((set, get) => ({
           ...get().value.players,
           [userID]: player,
         },
+
+        playersArrWithDBInfo: [
+          ...get().value.playersArrWithDBInfo,
+          {
+            coin: 0,
+            isGuessed: false,
+            isPainter: false,
+            profilePicture,
+            id,
+            username,
+            usernameID,
+            usernameWithUsernameID,
+          },
+        ],
 
         playersDbInfos: {
           ...get().value.playersDbInfos,
@@ -146,4 +164,9 @@ export const usePlayers = create<State & Action>((set, get) => ({
     })),
   getPlayersIDs: () => Object.keys(get().value.players),
   get: () => get().value,
+  reset: () => {
+    set({
+      ...initValue,
+    })
+  },
 }))

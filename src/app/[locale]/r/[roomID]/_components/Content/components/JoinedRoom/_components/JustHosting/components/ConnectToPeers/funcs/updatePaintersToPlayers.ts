@@ -6,7 +6,7 @@ export const updatePaintersToPlayers = () => {
 
   sendToAllPeers({
     from: 'host',
-    event: 'currentPainters',
+    event: 'currentPainter',
     data: painterData!.ID,
   })
 }

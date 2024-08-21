@@ -11,8 +11,9 @@ export const IsOpenWrapper = ({ children }: PropsWithChildren) => {
   if (isOpen && isOpenInUI === 'guessChat') return children
   if (isOpenInUI === 'guessChat')
     return (
-      <div>
+      <div className="flex w-full animate-fade flex-col gap-2 rounded-lg bg-gradient-to-r from-[#69c366] to-[#65D6C0] p-2">
         <Change to="winnersChat" />
+        <div className="text-xl"> Guess chat is not available right now</div>
       </div>
     )
 }

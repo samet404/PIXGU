@@ -18,12 +18,17 @@ type State = CanvasesMainData
 type Action = {
   add: (data: Partial<CanvasesMainData>) => void
   get: () => CanvasesMainData
+  reset: () => void
 }
 
-export const useCanvasesMainData = create<State & Action>((set, get) => ({
+const initValue = {
   cellSideCount: 40,
   isGridsInitialized: false,
   isMainAndDraftInitialized: false,
+} as const
+
+export const useCanvasesMainData = create<State & Action>((set, get) => ({
+  ...initValue,
 
   get: () => get(),
   add: (newInput) => {
@@ -51,7 +56,7 @@ export const useCanvasesMainData = create<State & Action>((set, get) => ({
       const mctx = main.getContext('2d')!
 
       mctx.beginPath()
-      mctx.fillStyle = 'white'
+      mctx.fillStyle = '#ffffff'
       mctx.fillRect(0, 0, draftCanvasW, draftCanvasH)
       mctx.beginPath()
 
@@ -82,4 +87,6 @@ export const useCanvasesMainData = create<State & Action>((set, get) => ({
       })
     }
   },
+
+  reset: () => set({ ...initValue }),
 }))

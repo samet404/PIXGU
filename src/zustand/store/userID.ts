@@ -3,7 +3,6 @@ import { createStore } from 'zustand'
 export type UserIDStoreState = { userID: string }
 
 export type UserIDStoreAction = {
-  set: (input: string) => void
   get: () => string
 }
 
@@ -14,7 +13,4 @@ export const createUserIDStore = (initState: UserIDStoreState) =>
     ...initState,
 
     get: () => get().userID,
-    set: (input) => {
-      set({ userID: input })
-    },
   }))

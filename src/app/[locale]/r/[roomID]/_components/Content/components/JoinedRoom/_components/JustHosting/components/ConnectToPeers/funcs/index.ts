@@ -1,5 +1,4 @@
 export * from './createMatch'
-export * from './createMatchTimeout'
 export * from './handlePeerDatas'
 export * from './onPeerClose'
 export * from './onPeerConnect'

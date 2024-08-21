@@ -28,6 +28,6 @@ export const useDarkZoneChatMsgsStore = create<State & Action>((set) => ({
   reset: () => set({ msgs: [] }),
 }))
 
-export type Msg =
+type Msg =
   | ({ myMsg: false } & Pick<DarkZoneChatFromHost, 'data'>)
   | ({ myMsg: true } & Pick<YourDarkZoneChatFromHost, 'data'>)

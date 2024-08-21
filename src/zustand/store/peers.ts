@@ -9,6 +9,7 @@ type Action = {
   add: (input: { ID: string; peer: SimplePeer.Instance }) => void
   removePeer: (ID: string) => void
   get: () => Peers
+  reset: () => void
 }
 
 export const usePeers = create<State & Action>((set, get) => ({
@@ -30,4 +31,5 @@ export const usePeers = create<State & Action>((set, get) => ({
       },
     })
   },
+  reset: () => set({ peers: {} }),
 }))

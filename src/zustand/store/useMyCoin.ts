@@ -5,10 +5,13 @@ type State = { coin: number }
 type Action = {
   set: (input: number) => void
   get: () => number
+  reset: () => void
 }
 
+const initValue = 0
+
 export const useMyCoin = create<State & Action>((set, get) => ({
-  coin: 0,
+  coin: initValue,
 
   set: (input) =>
     set({
@@ -16,4 +19,5 @@ export const useMyCoin = create<State & Action>((set, get) => ({
     }),
 
   get: () => get().coin,
+  reset: () => set({ coin: initValue }),
 }))

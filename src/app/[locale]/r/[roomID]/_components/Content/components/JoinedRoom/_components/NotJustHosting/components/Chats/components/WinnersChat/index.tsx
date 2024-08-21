@@ -3,19 +3,11 @@ import { Help } from '../Help'
 import { Input } from './components/Input'
 import { IsOpenWrapper } from './components/IsOpenWrapper'
 import { Messages } from './components/Messages'
-import { Urbanist } from 'next/font/google'
-
-const urbanist = Urbanist({
-  subsets: ['latin'],
-  weight: '700',
-})
 
 export const WinnersChat = () => {
   return (
     <IsOpenWrapper>
-      <div
-        className={`${urbanist.className} sticky top-0 flex w-[20rem]  animate-fade flex-col  rounded-lg bg-gradient-to-r from-[#65D6C0] to-[rgb(255,229,135)]`}
-      >
+      <div className="flex h-full w-full  animate-fade flex-col  rounded-lg bg-gradient-to-r from-[#65D6C0] to-[rgb(255,229,135)]">
         <div className="relative flex h-[90vh] w-full flex-col gap-2 rounded-xl bg-[#ffd90026] p-2 shadow-[0_0px_20px_20px_rgba(0,0,0,0.1)]">
           <div className="flex flex-row items-center justify-between">
             <div className="text-[0.9rem] leading-3 text-white drop-shadow-[0_0px_2px_rgba(0,0,0,0.2)]">

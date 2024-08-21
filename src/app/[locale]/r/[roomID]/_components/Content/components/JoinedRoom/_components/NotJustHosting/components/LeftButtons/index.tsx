@@ -1,6 +1,6 @@
 import { Outfit } from 'next/font/google'
-import { Button } from './components/Button'
 import { Players } from './components/Players'
+import { Marketplace } from './components/Marketplace'
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -9,8 +9,10 @@ const outfit = Outfit({
 
 export const LeftButtons = () => {
   return (
-    <div className={`${outfit.className} flex w-[10rem] flex-col gap-2`}>
-      <Button text="Marketplace" />
+    <div
+      className={`${outfit.className} flex w-[25%] flex-col items-start gap-2`}
+    >
+      <Marketplace />
       <Players />
     </div>
   )

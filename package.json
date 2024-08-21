@@ -10,6 +10,7 @@
     "dev:prod": "dotenv -e .env.production next dev -p 4000",
     "lint": "next lint",
     "start": "next start",
+    "db:seed": "bun run ./src/server/db/seed/index.ts",
     "db:studio": "dotenv -e .env.development npx drizzle-kit studio --verbose --port 6000",
     "db:push": "dotenv -e .env.development drizzle-kit push",
     "db:introspect": "dotenv -e .env.development drizzle-kit introspect:pg",

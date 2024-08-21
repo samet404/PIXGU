@@ -1,27 +1,40 @@
 'use client'
 
 import { useSpring, animated } from '@react-spring/web'
+import { useEventListener } from 'usehooks-ts'
+import { useRef } from 'react'
 
-export const Button = ({ text, onClick }: Props) => {
+export const Button = ({
+  text,
+  keyName,
+  onKeyDown,
+  className,
+  onClick,
+}: Props) => {
+  const documentRef = useRef(document)
   const [springs, api] = useSpring(() => ({
     from: {
-      scale: 1,
+      opacity: 1,
     },
     config: {
       duration: 400,
     },
   }))
 
-  const handleClick = () => {
+  const clickAnimation = () =>
     api.start({
       from: {
-        scale: 0.9,
+        opacity: 0.6,
       },
       to: {
-        scale: 1,
+        opacity: 1,
       },
     })
 
+  useEventListener('keydown', (e) => onKeyDown(e), documentRef)
+
+  const handleClick = () => {
+    clickAnimation()
     onClick?.()
   }
 
@@ -29,14 +42,20 @@ export const Button = ({ text, onClick }: Props) => {
     <animated.button
       style={springs}
       onClick={handleClick}
-      className="rounded-lg border-[0.18rem] border-[#ffffff3f] bg-[#ffffff35] from-[#24cb9c] to-[#0072b3] px-2 py-1 text-[1.1rem] text-[#ffffff76] hover:bg-gradient-to-tr hover:text-[#ffffffc0]"
+      className={`flex flex-row items-center gap-2 rounded-lg bg-gradient-to-r from-[#ffffff35] to-transparent p-1  pr-28 text-[#ffffff76] hover:text-[#ffffffc0] ${className}`}
     >
-      {text}
+      <div className="w-[3rem] rounded-md bg-[#ffffff29] text-[1rem]">
+        {keyName}
+      </div>
+      <div className="text-[1.1rem]">{text}</div>
     </animated.button>
   )
 }
 
 type Props = {
   text: string
+  keyName: string
+  onKeyDown: (e: KeyboardEvent) => void
+  className?: string
   onClick?: () => void
 }

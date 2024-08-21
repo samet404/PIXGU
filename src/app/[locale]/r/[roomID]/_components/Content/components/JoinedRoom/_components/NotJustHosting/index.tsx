@@ -9,15 +9,19 @@ import { DarkZone } from './components/DarkZone'
 import Nav from './components/Nav'
 import PlayersSection from './components/PlayersSection'
 import { LeftButtons } from './components/LeftButtons'
+import { Marketplace } from './components/Marketplace'
+import { ResetStates } from './components/ResetStates'
 
 export const NotJustForHosting = () => {
   return (
     <div className="relative flex h-full w-full flex-col">
+      <ResetStates />
       <AnimatedDiv />
       <Nav />
       <Blur>
         <div id="rootDiv" className="h-full w-full">
           <DarkZone />
+          <Marketplace />
           <Suspense>
             <PlayersSection />
           </Suspense>

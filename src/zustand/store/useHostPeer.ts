@@ -8,13 +8,17 @@ type State = {
 
 type Action = {
   set: (input: Partial<State>) => void
-
   get: () => SimplePeer.Instance | null
+  reset: () => void
 }
 
-export const useHostPeer = create<State & Action>((set, get) => ({
+const initValue = {
   peer: null,
   status: 'connecting',
+} as const
+
+export const useHostPeer = create<State & Action>((set, get) => ({
+  ...initValue,
 
   set: (input) => {
     set({
@@ -23,4 +27,5 @@ export const useHostPeer = create<State & Action>((set, get) => ({
     })
   },
   get: () => get().peer,
+  reset: () => set({ ...initValue }),
 }))

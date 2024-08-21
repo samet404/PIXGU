@@ -2,21 +2,13 @@ import { Help } from '../Help'
 import { Input } from './components/Input'
 import { Messages } from './components/Messages'
 import { IsOpenWrapper } from './components/IsOpenWrapper'
-import { Urbanist } from 'next/font/google'
 import { Change } from '../Change'
-
-const urbanist = Urbanist({
-  subsets: ['latin'],
-  weight: '700',
-})
 
 export const GuessChat = () => {
   return (
     <IsOpenWrapper>
-      <div
-        className={`${urbanist.className} sticky top-0 flex h-[90vh]  w-[20rem] animate-fade flex-col rounded-lg bg-gradient-to-r from-[#69c366] to-[#65D6C0]`}
-      >
-        <div className="relative flex w-full flex-col gap-2 rounded-lg p-2">
+      <div className=" flex h-full w-full animate-fade flex-col rounded-lg bg-gradient-to-r from-[#69c366] to-[#65D6C0]">
+        <div className="relative flex h-full w-full flex-col gap-2 rounded-lg p-2">
           <div className="flex flex-row items-center justify-between">
             <div className="text-[0.9rem] leading-3 text-white drop-shadow-[0_0px_2px_rgba(0,0,0,0.2)]">
               Guess Chat

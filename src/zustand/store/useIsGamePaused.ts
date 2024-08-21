@@ -32,6 +32,7 @@ type State = {
 type Action = {
   set: (input: State) => void
   get: () => State
+  reset: () => void
 }
 
 export const useIsGamePaused = create<State & Action>((set, get) => ({
@@ -46,5 +47,14 @@ export const useIsGamePaused = create<State & Action>((set, get) => ({
   set: (input) =>
     set({
       ...input,
+    }),
+
+  reset: () =>
+    set({
+      isPaused: true,
+      reason: {
+        code: 'connectingHost',
+        description: 'Connecting to host',
+      },
     }),
 }))

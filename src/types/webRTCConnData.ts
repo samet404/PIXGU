@@ -166,8 +166,8 @@ type PrevPlayers = {
  * The CurrentPainters event is sent from the host to the client to tell
  * the client who is currently painter.
  */
-type CurrentPainters = {
-  event: 'currentPainters'
+type CurrentPainter = {
+  event: 'currentPainter'
   data: string
 }
 
@@ -218,7 +218,7 @@ export type DirectlyFromHost = (
   | UserJoined
   | PainterDrawFromHostAndClient
   | PrevPlayers
-  | CurrentPainters
+  | CurrentPainter
   | GuessChatFromHost
   | WinnersChatFromHost
   | DarkZoneChatFromHost

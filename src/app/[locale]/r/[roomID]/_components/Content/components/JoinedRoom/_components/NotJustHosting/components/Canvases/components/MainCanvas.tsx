@@ -9,7 +9,7 @@ export const MainCanvas = () => {
 
   useEffectOnce(() => {
     if (!canvasRef.current) return
-    canvasRef.current.width = canvasRef.current.height
+    canvasRef.current.height = canvasRef.current.width
 
     useCanvasesMainData.getState().add({
       main: canvasRef.current,
@@ -17,18 +17,22 @@ export const MainCanvas = () => {
 
     window.addEventListener('resize', () => {
       if (!canvasRef.current) return
-      canvasRef.current.width = canvasRef.current.height
+      canvasRef.current.height = canvasRef.current.width
     })
 
     return () => {
       window.removeEventListener('resize', () => {
         if (!canvasRef.current) return
-        canvasRef.current.width = canvasRef.current.height
+        canvasRef.current.height = canvasRef.current.width
       })
     }
   })
 
   return (
-    <canvas ref={canvasRef} id="main-canvas" className="h-full rounded-lg" />
+    <canvas
+      ref={canvasRef}
+      id="main-canvas"
+      className="h-full rounded-lg bg-white"
+    />
   )
 }

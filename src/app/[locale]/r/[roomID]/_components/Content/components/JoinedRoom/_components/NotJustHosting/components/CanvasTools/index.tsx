@@ -12,7 +12,7 @@ const CanvasTools = () => {
   return (
     <Wrapper>
       <div
-        className={`${pixelyfySans.className} flex w-[20rem] animate-fade flex-col gap-1 overflow-y-auto rounded-md bg-[rgba(255,255,255,0.4)] p-2 duration-700`}
+        className={`${pixelyfySans.className} flex w-[25%] animate-fade flex-col gap-1 overflow-y-auto rounded-md bg-[rgba(255,255,255,0.4)] p-2 duration-700`}
       >
         <ColorPicker />
         <GridSwitcher />

@@ -18,13 +18,13 @@ export const DraftCanvas = () => {
 
     window.addEventListener('resize', () => {
       if (!canvasRef.current) return
-      canvasRef.current.width = canvasRef.current.height
+      canvasRef.current.height = canvasRef.current.width
     })
 
     return () => {
       window.removeEventListener('resize', () => {
         if (!canvasRef.current) return
-        canvasRef.current.width = canvasRef.current.height
+        canvasRef.current.height = canvasRef.current.width
       })
     }
   })

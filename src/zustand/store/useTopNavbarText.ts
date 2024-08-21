@@ -1,14 +1,15 @@
 import { create } from 'zustand'
 
-type State = { text: string }
+type State = { text: string | null }
 
 type Action = {
   set: (input: string) => void
-  get: () => string
+  get: () => string | null
+  reset: () => void
 }
 
 export const useTopNavbarText = create<State & Action>((set, get) => ({
-  text: 'Connecting to host...',
+  text: null,
 
   set: (input) =>
     set({
@@ -16,4 +17,5 @@ export const useTopNavbarText = create<State & Action>((set, get) => ({
     }),
 
   get: () => get().text,
+  reset: () => set({ text: null }),
 }))

@@ -5,6 +5,7 @@ type State = { ping: number }
 type Action = {
   set: (input: number) => void
   get: () => number
+  reset: () => void
 }
 
 export const usePing = create<State & Action>((set, get) => ({
@@ -16,4 +17,5 @@ export const usePing = create<State & Action>((set, get) => ({
     }),
 
   get: () => get().ping,
+  reset: () => set({ ping: 0 }),
 }))

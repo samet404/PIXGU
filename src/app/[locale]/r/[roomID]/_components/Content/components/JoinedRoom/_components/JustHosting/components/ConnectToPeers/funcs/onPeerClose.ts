@@ -7,6 +7,7 @@ import {
 import type SimplePeer from 'simple-peer'
 import { sendEveryonePlayerLeaved } from './sendEveryonePlayerLeaved'
 import { negativeLog } from '@/utils/negativeLog'
+import { createMatch } from './createMatch'
 
 export const onPeerClose = (peer: SimplePeer.Instance, userID: string) =>
   peer.on('close', () => {
@@ -17,8 +18,13 @@ export const onPeerClose = (peer: SimplePeer.Instance, userID: string) =>
 
     sendEveryonePlayerLeaved(userID)
 
-    if (usePainterData.getState().isPainter(userID)) {
-      clearTimeout(otherHostRoomStatues.matchTimeout!)
+    if (usePlayers.getState().get().count <= 1) {
+      if (otherHostRoomStatues.matchInterval)
+        clearInterval(otherHostRoomStatues.matchInterval)
+    } else if (usePainterData.getState().isPainter(userID)) {
+      if (otherHostRoomStatues.matchInterval)
+        clearInterval(otherHostRoomStatues.matchInterval)
+      createMatch()
     }
 
     negativeLog(`CONNECTION TO ${userID} CLOSED`)

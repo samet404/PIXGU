@@ -5,6 +5,7 @@ import { GridCanvas } from './components/GridCanvas'
 import { MainCanvas } from './components/MainCanvas'
 import { Fragment, Suspense } from 'react'
 import { ConnectToHost } from './components/ConnectToHost'
+import { CanvasesWrapper } from './components/CanvasesWrapper'
 
 const Canvases = () => {
   return (
@@ -12,11 +13,11 @@ const Canvases = () => {
       <Suspense>
         <ConnectToHost />
       </Suspense>
-      <div className="relative flex size-[32rem] cursor-crosshair rounded-md bg-white">
+      <CanvasesWrapper>
         <MainCanvas />
         <GridCanvas />
         <DraftCanvas />
-      </div>
+      </CanvasesWrapper>
     </Fragment>
   )
 }

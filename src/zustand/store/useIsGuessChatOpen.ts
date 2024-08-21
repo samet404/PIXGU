@@ -5,10 +5,13 @@ type State = { value: boolean }
 type Action = {
   close: () => void
   open: () => void
+  reset: () => void
 }
 
+const initValue = true
+
 export const useIsGuessChatOpen = create<State & Action>((set, get) => ({
-  value: true,
+  value: initValue,
 
   close: () =>
     set({
@@ -19,4 +22,6 @@ export const useIsGuessChatOpen = create<State & Action>((set, get) => ({
     set({
       value: true,
     }),
+
+  reset: () => set({ value: initValue }),
 }))
