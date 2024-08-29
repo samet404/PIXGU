@@ -17,9 +17,7 @@ export const usePeers = create<State & Action>((set, get) => ({
 
   get: () => get().peers,
   removePeer: (ID) => {
-    set({
-      peers: filterObj(get().peers, ([k]) => k !== ID) as Peers,
-    })
+    delete get().peers[ID]
   },
   add: (input) => {
     const { ID, peer } = input

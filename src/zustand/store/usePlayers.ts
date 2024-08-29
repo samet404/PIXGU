@@ -83,6 +83,8 @@ export const usePlayers = create<State & Action>((set, get) => ({
     }
   },
   removePlayer: (userID: string) => {
+    if (!get().value.players[userID]) return
+
     set({
       value: {
         ...get().value,
@@ -97,6 +99,10 @@ export const usePlayers = create<State & Action>((set, get) => ({
           get().value.playersDbInfos,
           ([k, v]) => k !== userID,
         ) as Record<string, User>,
+
+        playersArrWithDBInfo: get().value.playersArrWithDBInfo.filter(
+          (player) => player.id !== userID,
+        ),
       },
     })
   },

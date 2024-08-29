@@ -10,35 +10,38 @@ export const pusherGameRoom = loggedUserProducure
       roomID: z.string().cuid2(),
       socketId: z.string(),
       channelName: z.string(),
+      isHostApi: z.boolean(),
     }),
   )
   .mutation(async ({ input, ctx }) => {
-    const { roomID, socketId, channelName } = input
+    const { roomID, socketId, channelName, isHostApi } = input
     const pusherServer = getPusherServer()
     const user = ctx.user
     const userID = user.id
 
-    const isUserHost =
-      (await ctx.redisDb.get<string>(`room:${roomID}:host_ID`)) === user.id
+    const hostID = await ctx.redisDb.get<string>(`room:${roomID}:host_ID`)
 
-    // if (!isUserHost)
+    const isUserHost = hostID === user.id
+
+    // if (isUserHost)
     //   if (
-    //     !channelName.startsWith(
-    //       toPusherKey(`private-room_${roomID}:connect_to_player:${userID}`),
-    //     ) ||
     //     channelName !==
-    //       toPusherKey(`presence-private-room_${roomID}:connect_to_host`)
+    //       toPusherKey(`presence-private-room-${roomID}:connect_to_host`) &&
+    //     !channelName.startsWith(
+    //       toPusherKey(`private-room-${roomID}:connect_to_host`),
+    //     )
     //   )
     //     throw new TRPCError({
     //       code: 'UNAUTHORIZED',
     //       message: 'Unauthorized channel name',
     //     })
 
-    // if (isUserHost)
+    // if (!isUserHost)
     //   if (
-    //     channelName !== toPusherKey(`private-room_${roomID}:connect_to_host`) ||
     //     channelName !==
-    //       toPusherKey(`presence-private-room_${roomID}:connect_to_host`)
+    //       toPusherKey(`presence-private-room-${roomID}:connect_to_host`) &&
+    //     channelName !==
+    //       toPusherKey(`private-room-${roomID}:connect_to_player:${userID}`)
     //   )
     //     throw new TRPCError({
     //       code: 'UNAUTHORIZED',
@@ -52,7 +55,7 @@ export const pusherGameRoom = loggedUserProducure
       channelName,
       isPresenceChannel
         ? {
-            user_id: user.id,
+            user_id: isUserHost && isHostApi ? user.id + '-HOST' : user.id,
             user_info: {
               profilePicture: user.profilePicture,
               username: user.username,

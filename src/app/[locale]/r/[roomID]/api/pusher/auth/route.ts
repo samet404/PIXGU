@@ -21,6 +21,7 @@ export async function POST(
     roomID: params.roomID,
     socketId: socketId!,
     channelName: channelName!,
+    isHostApi: false,
   })
 
   return new Response(JSON.stringify(authResponse))

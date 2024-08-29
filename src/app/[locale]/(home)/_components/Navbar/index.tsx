@@ -5,7 +5,7 @@ import SocialLinks from './components/LanguageDropdown/SocialLinks'
 
 const Navbar = () => {
   return (
-    <nav className="flex flex-row justify-between gap-1 pb-5 pt-2 xxs:w-full lg:w-[55rem]">
+    <nav className="flex flex-row justify-between gap-1 pb-5 pt-2 xxs:w-[95%] lg:w-[55rem]">
       <div className="flex flex-row  items-end gap-4">
         <Image
           src={Logo}

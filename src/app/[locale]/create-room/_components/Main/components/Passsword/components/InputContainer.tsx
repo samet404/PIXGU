@@ -11,7 +11,6 @@ const InputContainer = () => {
   const handleOnInput = () => {
     if (inputRef.current?.value != undefined) {
       useCreateRoomInputs.getState().add({
-        ...useCreateRoomInputs.getState().value,
         password: inputRef.current.value,
       })
 
@@ -39,7 +38,7 @@ const InputContainer = () => {
         onInput={() => handleOnInput()}
         ref={inputRef}
         placeholder={'To make private, set pass 💧'}
-        type="text"
+        type="password"
         className="w-full rounded-md bg-[rgba(255,255,255,0.2)] px-[0.40rem] py-1 text-white shadow-lg outline-none placeholder:text-[#ffffff72]"
       />
       <div className="flex flex-row gap-1">

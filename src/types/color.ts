@@ -8,16 +8,16 @@ export type HEX = `#${string}`
 export type Color = RGB | RGBA | HEX | HSL
 
 export type RGBObj = {
-  r: IntRange<0, 256>
-  g: IntRange<0, 256>
-  b: IntRange<0, 256>
+  r: number
+  g: number
+  b: number
 }
 
 export type RGBAObj = {
-  r: IntRange<0, 256>
-  g: IntRange<0, 256>
-  b: IntRange<0, 256>
-  a: IntRange<0, 2>
+  r: number
+  g: number
+  b: number
+  a: number
 }
 
 export type HSLObj = {

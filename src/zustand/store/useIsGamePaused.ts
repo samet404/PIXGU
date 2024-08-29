@@ -1,33 +1,15 @@
+import type { PausedGameCode } from '@/types/pausedGameCode '
 import { create } from 'zustand'
 
-type State = {
-  isPaused: boolean
-  reason:
-    | {
-        code: 'connectingHost'
-        description: 'Connecting to host'
-      }
-    | {
-        code: 'connectedHost'
-      }
-    | {
-        code: 'gamePausedByHost'
-        description: 'Game paused by host'
-      }
-    | { code: 'startedGameByHost' }
-    | {
-        code: 'gameOver'
-        description: 'Game over'
-      }
-    | { code: 'newRound' }
-    | {
-        code: 'waitingForPlayersToJoin'
-        description: 'Waiting for players to join'
-      }
-    | {
-        code: 'enoughPlayersToStart'
-      }
-}
+type State =
+  | {
+      isPaused: true
+      code: PausedGameCode
+    }
+  | {
+      isPaused: false
+      code: null
+    }
 
 type Action = {
   set: (input: State) => void
@@ -37,10 +19,7 @@ type Action = {
 
 export const useIsGamePaused = create<State & Action>((set, get) => ({
   isPaused: true,
-  reason: {
-    code: 'connectingHost',
-    description: 'Connecting to host',
-  },
+  code: 'connectingHost',
 
   get: () => get(),
 
@@ -52,9 +31,6 @@ export const useIsGamePaused = create<State & Action>((set, get) => ({
   reset: () =>
     set({
       isPaused: true,
-      reason: {
-        code: 'connectingHost',
-        description: 'Connecting to host',
-      },
+      code: 'connectingHost',
     }),
 }))

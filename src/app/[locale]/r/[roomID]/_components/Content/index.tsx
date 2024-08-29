@@ -18,17 +18,10 @@ const Content = async ({ params }: Props) => {
     const hostID = await redisDb.get<string>(`room:${roomID}:host_ID`)
     if (!hostID) throw new Error('NO_HOST_ID')
 
-    const isHostPlayer = await redisDb.get<boolean>(
-      `room:${roomID}:is_host_player`,
-    )
-
-    if (isHostPlayer === null || isHostPlayer === undefined)
-      throw new Error('NO_PLAYER_HOST')
-
     await redisDb.sadd(`room:${roomID}:active_players`, user.id)
 
     const { setServerContexts } = await import('./func')
-    setServerContexts(params.locale, roomID, user, hostID, isHostPlayer)
+    setServerContexts(params.locale, roomID, user, hostID)
 
     return <JoinedRoom />
   } catch (e) {

@@ -7,7 +7,6 @@ import {
   announcementRouter,
   articleRouter,
   authRouter,
-  chatRouter,
   gameRoomRouter,
 } from './router'
 
@@ -19,7 +18,6 @@ import {
 export const appRouter = createTRPCRouter({
   auth: authRouter,
   user: userRouter,
-  chat: chatRouter,
   article: articleRouter,
   gameRoom: gameRoomRouter,
   announcement: announcementRouter,

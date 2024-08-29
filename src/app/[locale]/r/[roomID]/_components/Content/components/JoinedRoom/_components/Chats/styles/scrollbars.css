@@ -1,0 +1,18 @@
+.chatMsgContainer::-webkit-scrollbar {
+  width: 0.4rem;
+}
+
+/* Track */
+.chatMsgContainer::-webkit-scrollbar-track {
+  border-radius: 1rem;
+}
+
+/* Handle */
+.chatMsgContainer::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+}
+
+.chatMsgContainer::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}

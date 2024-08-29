@@ -17,14 +17,14 @@ const LeftSide = async () => {
       id="main-left-side"
       className="grid h-full w-full gap-2 overflow-y-scroll rounded-md bg-[rgba(0,0,0,0.7)] p-2 xs:grid-cols-1 md:grid-cols-2 "
     >
-      <QuickMatch
+      {/* <QuickMatch
         name={langObj.quick_match.name}
         description={langObj.quick_match.description}
       />
       <JoinRoom
         name={langObj.join_room.name}
         description={langObj.join_room.description}
-      />
+      /> */}
       <CreateRoom
         name={langObj.create_room.name}
         description={langObj.create_room.description}

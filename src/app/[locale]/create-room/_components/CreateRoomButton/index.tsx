@@ -3,11 +3,11 @@
 import { useRouter } from 'next/navigation'
 import { api } from '@/trpc/react'
 import { Urbanist } from 'next/font/google'
-import { useState } from 'react'
-import { z } from 'zod'
+import { useRef } from 'react'
 import type { RouterInputs } from '@/trpc/shared'
 import { useCreateRoomInputs } from '@/zustand/store'
 import { clsxMerge } from '@/utils/clsxMerge'
+import { useAtomValue } from 'jotai'
 
 const urbanist = Urbanist({
   subsets: ['latin'],
@@ -16,28 +16,26 @@ const urbanist = Urbanist({
 
 const CreateRoomButton = () => {
   const router = useRouter()
-  const [isClientErr, setIsClientErr] = useState(false)
 
-  const { mutate, isLoading, isError, isSuccess } =
+  const { mutate, isLoading, isError, error, isSuccess } =
     api.gameRoom.create.useMutation({
-      onSuccess: (data) => router.push(`/r/${data.createdRoomID}`),
+      onSuccess: (data) => router.push(`/r/${data.createdRoomID}/h`),
     })
+
+  const btnText = (() => {
+    if (isLoading) return 'Creating...'
+    if (isError) {
+      if (error.data?.zodError) return 'invalid input'
+      else return 'Something went wrong'
+    }
+    if (isSuccess) return 'Redirecting to room...'
+    return 'Create'
+  })()
 
   return (
     <button
       onClick={() => {
         const inputs = useCreateRoomInputs.getState().value
-
-        try {
-          z.object({
-            name: z.string(),
-            password: z.string().optional(),
-            isHostPlayer: z.boolean(),
-          }).parse(inputs)
-        } catch (e) {
-          setIsClientErr(true)
-        }
-
         mutate(inputs as RouterInputs['gameRoom']['create'])
       }}
       disabled={isLoading}
@@ -51,13 +49,7 @@ const CreateRoomButton = () => {
         },
       )}
     >
-      {isLoading
-        ? 'Creating...'
-        : isError || isClientErr
-          ? 'Something went wrong'
-          : isSuccess
-            ? 'Redirecting to room...'
-            : 'Create'}
+      {btnText}
     </button>
   )
 }

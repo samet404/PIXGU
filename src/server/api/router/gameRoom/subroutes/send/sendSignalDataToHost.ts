@@ -33,13 +33,6 @@ export const sendSignalDataToHost = loggedUserProducure
         message: 'You are not in this room',
       })
 
-    const hostID = await ctx.redisDb.get<string>(`room:${roomID}:host_ID`)
-    if (hostID === ctx.user.id)
-      throw new TRPCError({
-        code: 'UNAUTHORIZED',
-        message: "You can't connect to yourself >:(",
-      })
-
     const pusherServer = ctx.getPusherServer()
     const { toPusherKey } = await import('@/utils')
 
@@ -49,7 +42,7 @@ export const sendSignalDataToHost = loggedUserProducure
     }
 
     await pusherServer.trigger(
-      toPusherKey(`private-room-${roomID}:connect_to_host`),
+      toPusherKey(`private-room-${roomID}:connect_to_host:${ctx.user.id}`),
       'webRTC_signal',
       pusherSignalData,
     )

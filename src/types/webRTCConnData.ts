@@ -1,4 +1,4 @@
-import type { IntRange } from '@/types'
+import type { IntRange, PausedGameCode } from '@/types'
 import type { Player } from '@/zustand/store'
 
 /**
@@ -61,6 +61,11 @@ type GuessChatFromClient = {
   data: {
     msg: string
   }
+}
+
+type GuessChatToPainter = {
+  event: 'guessChatToPainter'
+  data: string
 }
 
 /**
@@ -146,10 +151,10 @@ type PainterDrawFromHostAndClient = {
     x: number
     y: number
     rgba: {
-      r: IntRange<0, 256>
-      g: IntRange<0, 256>
-      b: IntRange<0, 256>
-      a: IntRange<0, 2>
+      r: number
+      g: number
+      b: number
+      a: number
     }
   }
 }
@@ -190,6 +195,8 @@ export type UserJoined = {
   event: 'playerJoined'
   data: {
     ID: string
+    username: string
+    usernameID: string
     usernameWithUsernameID: string
     profilePicture: string | null
   }
@@ -210,6 +217,56 @@ type Pong = {
   event: 'pong'
 } & PingPongData
 
+export type PauseMatch = {
+  event: 'pauseMatch'
+  data: PausedGameCode
+}
+
+export type ResumeMatch = {
+  event: 'resumeMatch'
+  data: PausedGameCode
+}
+
+export type SelectThemeFromHost = {
+  event: 'selectTheme'
+  data: [string, string]
+}
+
+export type SelectThemeFromClient = {
+  event: 'selectTheme'
+  data: string
+}
+
+export type PainterSelectedTheme = {
+  event: 'painterSelectedTheme'
+}
+
+export type PainterSelectingTheme = {
+  event: 'painterSelectingTheme'
+}
+
+export type PainterCouldNotSelectTheme = {
+  event: 'painterCouldNotSelectTheme'
+  data: 'timeIsUp' | 'playerLeft'
+}
+
+export type Coin = {
+  event: 'coin'
+  data: number
+}
+
+export type Guessed = {
+  event: 'guessed'
+  data: {
+    ID: string
+  }
+}
+
+export type PainterSelectionCanceled = {
+  event: 'painterSelectionCanceled'
+  data: 'playerLeft' | 'timeIsUp'
+}
+
 /**
  * DirectlyFromHost is the type of data that is sent directly from the host.
  */
@@ -226,6 +283,14 @@ export type DirectlyFromHost = (
   | YourWinnersChatFromHost
   | YourDarkZoneChatFromHost
   | Pong
+  | GuessChatToPainter
+  | PauseMatch
+  | ResumeMatch
+  | SelectThemeFromHost
+  | PainterSelectedTheme
+  | PainterSelectingTheme
+  | PainterSelectionCanceled
+  | PainterCouldNotSelectTheme
 ) & {
   from: 'host'
 }
@@ -239,6 +304,7 @@ export type DirectlyFromClient = (
   | DarkZoneChatFromClient
   | PainterDrawFromHostAndClient
   | Ping
+  | SelectThemeFromClient
 ) & {
   from: 'client'
 }

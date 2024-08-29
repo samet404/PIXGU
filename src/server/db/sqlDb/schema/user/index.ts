@@ -7,5 +7,3 @@ export * from './blockedUser'
 export * from './blockedUser/relations'
 
 export * from './userFriendship'
-
-export * from './usersToGameRoom'

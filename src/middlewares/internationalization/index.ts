@@ -16,6 +16,16 @@ export const internationalization: NextMiddleware = async (
 ) => {
   const { pathname } = req.nextUrl
 
+  if (
+    pathname.startsWith('/image/') ||
+    pathname.startsWith('/sound') ||
+    pathname.startsWith('/favicon') ||
+    pathname.startsWith('/robots.txt') ||
+    pathname.startsWith('/_next') ||
+    pathname.startsWith('/api')
+  )
+    return NextResponse.next()
+
   // if user is logged in
   const sessionId = cookies().get(lucia.sessionCookieName)?.value ?? null
 
@@ -66,10 +76,10 @@ export const internationalization: NextMiddleware = async (
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`,
   )
 
-  // if pathname has locale do nothing
+  // if pathname has locale don't do anything
   if (pathnameHasLocale) return
 
-  // if pathname has no locale add locale to pathname with user's device locale then redirect
+  // if pathname has no locale, add locale to pathname with user's device locale then redirect
   const locale = (await import('./funcs/getLocale')).getLocale(req, locales)
   req.nextUrl.pathname = `/${locale}${pathname}`
 

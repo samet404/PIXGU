@@ -1,47 +1,78 @@
 <!doctype html>
-<html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
   <body>
-    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
-    <div id="player"></div>
-    <!-- <script src="https://www.youtube.com/iframe_api"></script> -->
-    <script>
-      // 3. This function creates an <iframe> (and YouTube player)
-      //    after the API code downloads.
-      let player;
-      const onYouTubeIframeAPIReady = () => {
-        player = new YT.Player('player', {
-          height: '390',
-          width: '640',
-          videoId: 'M7lc1UVf-VE',
-          playerVars: {
-            playsinline: 1,
-          },
-          events: {
-            onReady: onPlayerReady,
-            onStateChange: onPlayerStateChange,
-          },
-        });
-      };
-
-      // 4. The API will call this function when the video player is ready.
-      const onPlayerReady = (event) => {
-        event.target.playVideo();
-      };
-
-      // 5. The API calls this function when the player's state changes.
-      //    The function indicates that when playing a video (state=1),
-      //    the player should play for six seconds and then stop.
-      let done = false;
-      const onPlayerStateChange = (event) => {
-        if (event.data == YT.PlayerState.PLAYING && !done) {
-          setTimeout(stopVideo, 6000);
-          done = true;
-        }
-      };
-
-      const stopVideo = () => {
-        player.stopVideo();
-      };
-    </script>
+    <canvas width="300" height="300" id="canvas"></canvas>
   </body>
+  <style>
+    html {
+      height: 100%;
+    }
+
+    body {
+      background-color: #00ffaa;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: start;
+    }
+
+    canvas {
+      border: black 2px solid;
+    }
+  </style>
+  <script>
+    const canvas = document.getElementById('canvas');
+    canvas.addEventListener('click', (e) => {
+      console.log(e.pageX, e.pageY);
+    });
+    const canvasBoundingRect = canvas.getBoundingClientRect();
+    setInterval(() => {
+      const body = document.body;
+
+      const randomX = (() => {
+        let random = Math.random() * body.offsetWidth - 20;
+
+        while (
+          random > canvasBoundingRect.left - 20 &&
+          random < canvasBoundingRect.right + 20
+        ) {
+          random = Math.random() * body.offsetWidth - 20;
+        }
+
+        return random;
+      })();
+      const randomY = (() => {
+        let random = Math.random() * body.offsetWidth - 20;
+
+        while (
+          random > canvasBoundingRect.top + 20 &&
+          random < canvasBoundingRect.bottom + 20
+        ) {
+          random = Math.random() * body.offsetHeight - 20;
+        }
+
+        return random;
+      })();
+      console.log(randomX, randomY);
+
+      const div = document.createElement('div');
+      div.style.position = 'absolute';
+      div.style.left = randomX + 'px';
+      div.style.top = randomY + 'px';
+      div.style.width = '20px';
+      div.style.height = '20px';
+      div.textContent = 'lorem ipssum';
+      div.style.transition = 'all 1s';
+      body.appendChild(div);
+
+      setTimeout(() => {
+        div.remove();
+      }, 500);
+    }, 40);
+  </script>
 </html>
