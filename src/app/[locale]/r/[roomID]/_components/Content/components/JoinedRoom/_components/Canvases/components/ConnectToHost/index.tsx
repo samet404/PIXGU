@@ -13,16 +13,14 @@ import { handlePeerDatas } from './funcs'
 import { goldLog } from '@/utils/goldLog'
 import { api } from '@/trpc/client'
 import { simplePeer } from '@/utils/simplePeer'
-import { useTopNavbarText } from '@/zustand/store/useTopNavbarText'
-import { useIsGamePaused } from '@/zustand/store/useIsGamePaused'
+import { useIsGameStopped } from '@/zustand/store/useIsGameStopped'
 
 export const ConnectToHost = () => {
   const soketiClient = useSoketiClient()
   const roomID = useRoomIDStore((state) => state.roomID)
   const myUserID = useUserIDStore((state) => state.userID)
   const setHostPeer = useHostPeer.getState().set
-  const setNavbarText = useTopNavbarText.getState().set
-  const setIsGamePaused = useIsGamePaused.getState().set
+  const setIsGameStopped = useIsGameStopped.getState().stop
 
   useEffectOnce(() => {
     console.log(roomID, myUserID)
@@ -67,13 +65,10 @@ export const ConnectToHost = () => {
 
     peer.on('connect', () => {
       positiveLog(`CONNECTED TO HOST`)
+      setIsGameStopped('waitingForPlayers')
 
       setHostPeer({
         status: 'connected',
-      })
-      setIsGamePaused({
-        isPaused: false,
-        code: null,
       })
 
       pingHostPeer(5000)
@@ -91,8 +86,6 @@ export const ConnectToHost = () => {
     presenceChannel.bind('pusher:subscription_error', (data: any) => {
       console.log('subscription_error for presence', data)
     })
-
-    console.log('a')
   })
 
   return null

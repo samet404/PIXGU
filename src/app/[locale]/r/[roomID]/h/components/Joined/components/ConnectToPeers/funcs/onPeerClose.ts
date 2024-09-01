@@ -7,4 +7,7 @@ export const onPeerClose = (
   userID: string,
   soketiClient: Pusher,
   roomID: string,
-) => peer.on('close', () => playerLeaved(soketiClient, userID, roomID))
+) =>
+  peer.on('close', () => {
+    playerLeaved(soketiClient, userID, roomID)
+  })

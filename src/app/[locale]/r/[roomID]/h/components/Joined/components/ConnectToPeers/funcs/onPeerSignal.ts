@@ -9,8 +9,7 @@ export const onPeerSignal = (
   roomID: string,
 ) =>
   peer.on('signal', async (data: WebRTCSignalData) => {
-    console.log(data)
-    goldLog(`${data.type.toUpperCase()} SENT TO ${userID}`)
+    goldLog(`${data.type.toUpperCase()} SENT TO ${userID}`, data)
 
     console.log('sending signal data to player ' + userID)
     await api.gameRoom.sendSignalDataToPlayer.mutate({

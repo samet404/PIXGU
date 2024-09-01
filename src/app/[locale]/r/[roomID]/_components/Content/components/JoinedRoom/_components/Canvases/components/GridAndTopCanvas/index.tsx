@@ -5,13 +5,15 @@ import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { useRef } from 'react'
 import { useCanvasesMainData } from '@/zustand/store'
 import { useCanvasDraw } from './hooks/useCanvasDraw'
+import { roundDownToNearest } from '@/utils/roundDownToNearest'
 
 export const GridAndTopCanvas = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const cellSideCount = useCanvasesMainData.getState().get().cellSideCount
   const bodyRef = useRef(document.body)
 
-  const getSize = () => bodyRef.current.offsetWidth * 0.45
+  const getSize = () =>
+    roundDownToNearest(bodyRef.current.offsetHeight * 0.8, 40)
   const setHeightAndWidth = () => {
     if (!canvasRef.current) return
 
@@ -46,7 +48,7 @@ export const GridAndTopCanvas = () => {
         imageRendering: 'pixelated',
       }}
       className={clsxMerge(
-        'absolute bottom-0 left-0 right-0 top-0 z-30 rounded-lg',
+        'absolute bottom-0 left-0 right-0 top-0 z-30 cursor-crosshair rounded-lg',
       )}
     />
   )

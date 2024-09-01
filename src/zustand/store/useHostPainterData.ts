@@ -9,7 +9,7 @@ type Value =
   | {
       status: 'painterSelectingTheme'
       themes: [string, string]
-      timeout: ReturnType<typeof setTimeout>
+      timeIsUpTimeout: ReturnType<typeof setTimeout>
     }
   | {
       status: 'waitingForPlayers'

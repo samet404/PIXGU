@@ -1,41 +1,110 @@
-import { decodedOnPeerData, grayLog } from '@/utils'
+import { decodedOnPeerData, grayLog, negativeLog } from '@/utils'
+import { useHostPeer } from '@/zustand/store'
 import {
-  getChats,
   getJoinedPlayers,
   getPainterDraw,
   getLeftPlayers,
   getPainter,
+  getGuessChat,
+  getWinnersChat,
+  getYourWinnersChat,
+  getYourGuessChat,
+  getPainterCouldNotSelectTheme,
+  getPainterSelectedTheme,
+  getPainterSelectingTheme,
+  getCoin,
+  getPrevPlayers,
+  getPong,
+  getMyCoin,
+  getGuessed,
+  getYouGuessed,
+  getThemes,
+  youAreSpectator,
+  getSpectator,
+  gameIsStopped,
+  getPrevSpectators,
 } from './funcs'
-import { useHostPeer } from '@/zustand/store/useHostPeer'
-import { getPrevPlayers } from './funcs/getPrevPlayers'
-import { getPong } from './funcs/getPong'
-import { getPauseMatch } from './funcs/getPauseMatch'
-import { getResumeMatch } from './funcs/getResumeMatch'
-import { getPainterSelectedTheme } from './funcs/getPainterSelectedTheme'
-import { getThemes } from './funcs/getThemes'
-import { getPainterSelectingTheme } from './funcs/getPainterSelectingTheme'
-import { getPainterCouldNotSelectTheme } from './funcs/getPainterCouldNotSelectTheme'
 
 /**
  * This function handles different peer datas.
  */
 export const handlePeerDatas = (userID: string) => {
-  decodedOnPeerData(useHostPeer.getState().get()!, (data) => {
-    if (data.from !== 'host') return null
-    grayLog(`RECEIVED ${data.event} DATA FROM HOST`, data)
+  decodedOnPeerData<'fromHost'>(useHostPeer.getState().get()!, (rtcData) => {
+    const { from, event } = rtcData
+    if (from !== 'host') return
 
-    getPainterCouldNotSelectTheme(data, userID)
-    getPainterSelectedTheme(data)
-    getPainterSelectingTheme(data)
-    getPauseMatch(data, userID)
-    getResumeMatch(data, userID)
-    getPainterDraw(data)
-    getPainter(data, userID)
-    getLeftPlayers(data)
-    getJoinedPlayers(data)
-    getPrevPlayers(data, userID)
-    getChats(data, userID)
-    getPong(data)
-    getThemes(data, userID)
+    grayLog(`RECEIVED ${event} DATA FROM HOST`, rtcData)
+
+    switch (event) {
+      case 'painterDraw':
+        getPainterDraw(rtcData.data)
+        break
+      case 'painterCouldNotSelectTheme':
+        getPainterCouldNotSelectTheme(rtcData.data, userID)
+        break
+      case 'painterSelectedTheme':
+        getPainterSelectedTheme()
+        break
+      case 'painterSelectingTheme':
+        getPainterSelectingTheme()
+        break
+      case 'coin':
+        getCoin(rtcData.data)
+        break
+      case 'currentPainter':
+        getPainter(rtcData.data, userID)
+        break
+      case 'playerLeft':
+        getLeftPlayers(rtcData.data)
+        break
+      case 'playerJoined':
+        getJoinedPlayers(rtcData.data)
+        break
+      case 'guessChat':
+        getGuessChat(rtcData.data)
+        break
+      case 'winnersChat':
+        getWinnersChat(rtcData.data)
+        break
+      case 'yourWinnersChat':
+        getYourWinnersChat(rtcData.data)
+        break
+      case 'yourGuessChat':
+        getYourGuessChat(rtcData.data)
+        break
+      case 'prevPlayers':
+        getPrevPlayers(rtcData.data, userID)
+        break
+      case 'pong':
+        getPong(rtcData.data)
+        break
+      case 'guessed':
+        getGuessed(rtcData.data)
+        break
+      case 'yourCoin':
+        getMyCoin(rtcData.data)
+        break
+      case 'youGuessed':
+        getYouGuessed()
+        break
+      case 'selectTheme':
+        getThemes(rtcData.data)
+        break
+      case 'youAreSpectator':
+        youAreSpectator()
+        break
+      case 'spectator':
+        getSpectator(rtcData.data)
+        break
+      case 'gameIsStopped':
+        gameIsStopped()
+        break
+      case 'prevSpectators':
+        getPrevSpectators(rtcData.data)
+        break
+      default:
+        negativeLog('RECEIVED NOT UNKNOWN EVENT FROM HOST', rtcData)
+        break
+    }
   })
 }

@@ -1,12 +1,6 @@
-import { Outfit } from 'next/font/google'
 import { Btn } from './components/Btn'
 import { Timer } from './components/Timer'
 import { useSelectThemePanel } from '@/zustand/store'
-
-const outfit = Outfit({
-  subsets: ['latin'],
-  weight: ['700', '900'],
-})
 
 export const SelectTheme = () => {
   const panelValues = useSelectThemePanel((s) => s.value)
@@ -15,8 +9,16 @@ export const SelectTheme = () => {
     return (
       <Timer>
         <section
-          className={`${outfit.className} z-30  flex h-full w-full animate-fade select-none items-center justify-center rounded-md bg-white animate-duration-200`}
+          style={{
+            backgroundColor: 'hsla(0,0%,100%,1)',
+            backgroundImage:
+              'radial-gradient(at 100% 100%, hsla(261,87%,68%,1) 0px, transparent 50%), radial-gradient(at 0% 100%, hsla(261,87%,68%,1) 0px, transparent 50%)',
+          }}
+          className={`relative z-30 flex h-full w-full animate-fade select-none items-center justify-center rounded-md bg-white shadow-[0_0px_10px_1px_rgba(0,0,0,0.5)] animate-duration-200`}
         >
+          <div className="absolute left-0 top-0 flex w-full items-center justify-center rounded-[0.4rem] bg-violet-200 p-5 text-[1.4rem] text-violet-500 shadow-[0_0px_10px_1px_rgba(0,0,0,0.1)]">
+            <div className="w-[90%] text-center">Choose your theme</div>
+          </div>
           <Btn theme={panelValues.themes[0]} position={1} />
           <Btn theme={panelValues.themes[1]} position={2} />
         </section>
@@ -26,7 +28,12 @@ export const SelectTheme = () => {
   if (panelValues.isOpen && panelValues.status === 'waitingForThemes')
     return (
       <section
-        className={`${outfit.className} absolute z-30  flex h-full w-full animate-fade select-none items-center justify-center rounded-md bg-white animate-duration-200`}
+        style={{
+          backgroundColor: 'hsla(0,0%,100%,1)',
+          backgroundImage:
+            'radial-gradient(at 100% 100%, hsla(261,87%,68%,1) 0px, transparent 50%), radial-gradient(at 0% 100%, hsla(261,87%,68%,1) 0px, transparent 50%)',
+        }}
+        className={`absolute z-30 flex  h-full w-full animate-fade select-none items-center justify-center rounded-md bg-white shadow-[0_0px_10px_1px_rgba(0,0,0,0.5)] animate-duration-200`}
       >
         <div className="text-[1.4rem] text-violet-500">
           Waiting host for themes...

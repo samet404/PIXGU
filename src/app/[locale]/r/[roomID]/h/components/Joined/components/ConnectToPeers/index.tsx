@@ -8,6 +8,7 @@ import { toPusherKey } from '@/utils/toPusherKey'
 import type { User } from 'lucia'
 import { useHostingHealth } from '@/zustand/store'
 import { playerLeaved } from './funcs/playerLeaved'
+import { grayLog } from '@/utils/grayLog'
 
 export const ConnectToPeers = () => {
   const setHostingHealth = useHostingHealth.getState().set
@@ -22,14 +23,15 @@ export const ConnectToPeers = () => {
 
     myConnectPresenceChannel.bind(
       'pusher:member_added',
-      (member: { id: string; info: User }) =>
+      (member: { id: string; info: Omit<User, 'id'> }) =>
         memberAdded(member, myUserID, roomID, soketiClient),
     )
 
     myConnectPresenceChannel.bind(
       'pusher:member_removed',
-      (member: { id: string; info: User }) => {
-        playerLeaved(soketiClient, member.id, roomID)
+      (member: { id: string; info: Omit<User, 'id'> }) => {
+        grayLog('MEMBER REMOVED FROM SOKETI CHANNEL', member)
+        // playerLeaved(soketiClient, member.id, roomID)
       },
     )
   })

@@ -1,22 +1,16 @@
-import type { WebRTCConnData } from '@/types/webRTCConnData'
+import type { PainterCouldNotSelectTheme } from '@/types/webRTCConnData'
 
 export const getPainterCouldNotSelectTheme = async (
-  rtcData: WebRTCConnData,
+  data: PainterCouldNotSelectTheme['data'],
   myUserID: string,
 ) => {
-  const { event, from } = rtcData
+  const { useNewPainterPanel } = await import('@/zustand/store')
+  const { useSelectThemePanel } = await import('@/zustand/store')
+  const { useGuessChatLayout } = await import('@/zustand/store')
+  const { useWinnersChatLayout } = await import('@/zustand/store')
 
-  if (event === 'painterCouldNotSelectTheme' && from === 'host') {
-    const { useNewPainterPanel } = await import('@/zustand/store')
-    const { useSelectThemePanel } = await import('@/zustand/store')
-    const { useGuessChatLayout } = await import('@/zustand/store')
-    const { useWinnersChatLayout } = await import('@/zustand/store')
-
-    const { data } = rtcData
-
-    useNewPainterPanel.getState().close()
-    useSelectThemePanel.getState().close()
-    useGuessChatLayout.getState().setImNotGuessed()
-    useWinnersChatLayout.getState().setImNotGuessed()
-  }
+  useNewPainterPanel.getState().close()
+  useSelectThemePanel.getState().close()
+  useGuessChatLayout.getState().setImNotGuessed()
+  useWinnersChatLayout.getState().setImNotGuessed()
 }

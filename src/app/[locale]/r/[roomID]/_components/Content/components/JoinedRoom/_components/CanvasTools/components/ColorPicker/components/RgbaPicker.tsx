@@ -17,7 +17,7 @@ export const RgbaPicker = () => {
           r: 0,
           g: 0,
           b: 0,
-          a: 1,
+          a: 0.5,
         }}
         className="h-full w-full animate-fade rounded-md bg-[#ffffff7b] animate-duration-75"
         onChange={handleOnChange}

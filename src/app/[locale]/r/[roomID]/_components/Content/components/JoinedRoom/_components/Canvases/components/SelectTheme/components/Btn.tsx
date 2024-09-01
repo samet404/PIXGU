@@ -2,6 +2,7 @@
 
 import { sendToHostPeer } from '@/utils/sendToHostPeer'
 import { useSelectThemePanel } from '@/zustand/store'
+import clsx from 'clsx'
 import { useEffect, useRef } from 'react'
 
 export const Btn = ({ theme, position }: Props) => {
@@ -33,7 +34,13 @@ export const Btn = ({ theme, position }: Props) => {
     <button
       ref={btnRef}
       onClick={onClick}
-      className={` h-full w-full text-[1.4rem] text-[#00000093] hover:text-violet-600`}
+      className={clsx(
+        `h-full w-full text-[1.4rem] text-[#00000093] hover:text-violet-600`,
+        {
+          'animate-fade-right': position === 1,
+          'animate-fade-left': position === 2,
+        },
+      )}
     >
       {theme}
     </button>

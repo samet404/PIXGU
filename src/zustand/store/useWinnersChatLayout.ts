@@ -19,6 +19,7 @@ type State = {
 }
 
 type Action = {
+  setSpectatorLayout: () => void
   setPainterLayout: () => void
   setImNotGuessed: () => void
   setIGuessed: () => void
@@ -42,6 +43,17 @@ export const useWinnersChatLayout = create<State & Action>((set, get) => ({
   open: () =>
     set({
       value: { ...get().value, isOpen: true } as Value,
+    }),
+
+  setSpectatorLayout: () =>
+    set({
+      value: {
+        isOpen: false,
+        haveAccess: true,
+        input: false,
+        change: true,
+        info: false,
+      },
     }),
 
   setPainterLayout: () => {

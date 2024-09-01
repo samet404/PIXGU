@@ -1,178 +1,97 @@
 import type { User } from 'lucia'
 import { filterObj } from '@/utils/filterObj'
 import { create } from 'zustand'
-import { goldLog } from '@/utils/goldLog'
 
-export type Player = (
-  | {
-      isPainter: false
-      isGuessed: boolean
-    }
-  | {
-      isPainter: true
-    }
-) & {
-  coin: number
-} & User
+export type Player = User
+
+type UserID = string
 
 type Players = {
-  players: Record<string, Player>
-  playersArrWithDBInfo: (Player & User)[]
-  playersDbInfos: Record<string, User>
+  obj: Record<UserID, Player>
+  arr: Player[]
   count: number
 }
 
 type State = { value: Players }
 
 type Action = {
-  mutate: (input: Partial<Players>) => void
   addPlayer: (userID: string, player: Player) => void
-  changePlayer: (userID: string, player: Partial<Player>) => void
   removePlayer: (userID: string) => void
-  resetAndSetPlayers: (
-    input: {
-      userID: string
-      player: Player
-    }[],
-  ) => void
   getPlayersIDs: () => string[]
-  getPlayer: (userID: string) => Player | null
-  getPlayersDbInfos: () => Record<
-    string,
-    {
-      usernameWithUsernameID: string
-      profilePicture: string | null
-    }
-  >
-  getPlayersDbInfosArr: () => {
-    ID: string
-    usernameWithUsernameID: string
-    profilePicture: string | null
-  }[]
-
+  getPlayer: (userID: string) => Player | undefined
   get: () => Players
   reset: () => void
 }
 
 const initValue: State = {
   value: {
-    players: {},
-    playersDbInfos: {},
-    playersArrWithDBInfo: [],
+    obj: {},
+    arr: [],
     count: 0,
   },
-} as const
+}
 
 export const usePlayers = create<State & Action>((set, get) => ({
   ...initValue,
 
-  mutate: (input) => {
-    set({
-      value: {
-        ...get().value,
-        ...input,
-      },
-    })
-  },
-  resetAndSetPlayers: (input) => {
-    get().value.players = {}
-
-    for (const item of input) {
-      const { userID, player } = item
-      get().addPlayer(userID, player)
-    }
-  },
+  get: () => get().value,
   removePlayer: (userID: string) => {
-    if (!get().value.players[userID]) return
-
     set({
       value: {
         ...get().value,
 
         count: get().value.count - 1,
-        players: filterObj(
-          get().value.players,
-          ([k, v]) => k !== userID,
-        ) as Record<string, Player>,
-
-        playersDbInfos: filterObj(
-          get().value.playersDbInfos,
-          ([k, v]) => k !== userID,
-        ) as Record<string, User>,
-
-        playersArrWithDBInfo: get().value.playersArrWithDBInfo.filter(
-          (player) => player.id !== userID,
-        ),
+        obj: filterObj(get().value.obj, ([k, v]) => k !== userID) as Record<
+          string,
+          Player
+        >,
+        arr: get().value.arr.filter((p) => p.id !== userID),
       },
     })
   },
   changePlayer: (userID: string, player: Partial<Player>) => {
+    const obj = {
+      ...get().value.obj,
+      [userID]: {
+        ...get().value.obj[userID],
+        ...player,
+      },
+    } as Record<UserID, Player>
+
     set({
       value: {
         ...get().value,
-        players: {
-          ...get().value.players,
-          [userID]: {
-            ...get().value.players[userID],
-            ...player,
-          },
-        } as Record<string, Player>,
+        obj,
+
+        arr: Object.keys(obj).map((k) => {
+          return {
+            ...obj[k],
+            id: k,
+          } as Player
+        }),
       },
     })
   },
-  getPlayer: (userID: string) => get().value.players[userID] ?? null,
-  addPlayer: (userID, player) => {
-    const { profilePicture, id, username, usernameID, usernameWithUsernameID } =
-      player
-    const next: State = {
+  getPlayer: (userID: string) => get().value.obj[userID],
+  addPlayer: async (userID, player) => {
+    set({
       value: {
         ...get().value,
         count: get().value.count + 1,
-        players: {
-          ...get().value.players,
+        obj: {
+          ...get().value.obj,
           [userID]: player,
         },
-
-        playersArrWithDBInfo: [
-          ...get().value.playersArrWithDBInfo,
-          {
-            coin: 0,
-            isGuessed: false,
-            isPainter: false,
-            profilePicture,
-            id,
-            username,
-            usernameID,
-            usernameWithUsernameID,
-          },
-        ],
-
-        playersDbInfos: {
-          ...get().value.playersDbInfos,
-          [userID]: {
-            profilePicture,
-            id,
-            username,
-            usernameID,
-            usernameWithUsernameID,
-          },
-        },
+        arr: [...get().value.arr, player],
       },
-    }
-
-    set(next)
-  },
-  getPlayersDbInfos: () => get().value.playersDbInfos,
-  getPlayersDbInfosArr: () =>
-    Object.entries(get().value.playersDbInfos).map(([ID, player]) => ({
-      ID,
-      ...player,
-    })),
-  getPlayersIDs: () => Object.keys(get().value.players),
-  get: () => get().value,
-  reset: () => {
-    set({
-      ...initValue,
     })
+
+    const playersCount = usePlayers.getState().value.count
+    if (playersCount === 1) {
+      const { useIsGameStopped } = await import('@/zustand/store')
+      useIsGameStopped.getState().stop('waitingForHost')
+    }
   },
+  getPlayersIDs: () => Object.keys(get().value.obj),
+  reset: () => set(initValue),
 }))

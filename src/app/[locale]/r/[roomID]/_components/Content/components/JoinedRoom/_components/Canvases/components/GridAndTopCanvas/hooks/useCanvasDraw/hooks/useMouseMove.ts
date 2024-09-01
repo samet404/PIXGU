@@ -1,14 +1,20 @@
 import { draw } from './func'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
-import { useCanvasesMainData, useWhoIsPainterClient } from '@/zustand/store'
+import {
+  useAmIPainting,
+  useCanvasesMainData,
+  useWhoIsPainterClient,
+} from '@/zustand/store'
 
 export const useMouseMove = (myUserID: string) => {
   const handler = (e: MouseEvent) => {
-    const whoIsPainter = useWhoIsPainterClient.getState().value
+    // const whoIsPainter = useWhoIsPainterClient.getState().value
 
-    if (whoIsPainter.status === 'thereIsNoPainter') return
-    if (!whoIsPainter.amIPainter) return null
+    // if (whoIsPainter.status === 'thereIsNoPainter') return
+    // if (!whoIsPainter.amIPainter) return null
     if (e.button !== 0) return null
+
+    if (!useAmIPainting.getState().amIPainting) return
 
     draw(e, myUserID)
   }

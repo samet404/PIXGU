@@ -1,3 +1,5 @@
+'use client'
+
 import { usePing } from '@/zustand/store/usePing'
 import { Status } from '../Status'
 import { useHostPeer } from '@/zustand/store/useHostPeer'

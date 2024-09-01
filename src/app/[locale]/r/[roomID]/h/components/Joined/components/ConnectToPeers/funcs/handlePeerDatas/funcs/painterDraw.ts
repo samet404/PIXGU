@@ -1,16 +1,23 @@
-import type { WebRTCConnData } from '@/types/webRTCConnData'
-import { sendToAllPeers } from '@/utils/sendToAllPeers'
-import { useWhoIsPainter } from '@/zustand/store'
+import type { PainterDrawFromHostAndClient } from '@/types/webRTCConnData'
 
-export const painterDraw = (rtcData: WebRTCConnData, userID: string) => {
-  if (
-    rtcData.event !== 'painterDraw' ||
-    rtcData.from !== 'client' ||
-    !useWhoIsPainter.getState().isPainter(userID)
-  )
-    return
+export const painterDraw = async (
+  data: PainterDrawFromHostAndClient['data'],
+  userID: string,
+) => {
+  const { sendToAllPeers, sendToPeerWithID } = await import('@/utils')
+  const { useWhoIsPainter } = await import('@/zustand/store')
 
-  const { x, y, rgba } = rtcData.data
+  if (!useWhoIsPainter.getState().isPainter(userID)) {
+    sendToPeerWithID(userID, {
+      from: 'host',
+      event: 'eventBlocked',
+      data: {
+        event: 'painterDraw',
+      },
+    })
+  }
+
+  const { x, y, rgba } = data
 
   sendToAllPeers(
     {

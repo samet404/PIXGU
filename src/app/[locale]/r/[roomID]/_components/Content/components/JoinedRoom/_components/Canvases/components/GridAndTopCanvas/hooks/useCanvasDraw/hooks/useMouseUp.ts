@@ -2,15 +2,16 @@ import { useEffectOnce } from '@/hooks/useEffectOnce'
 import {
   useAmIPainting,
   useCanvasesMainData,
+  usePixelsOnDraw,
   useWhoIsPainterClient,
 } from '@/zustand/store'
 
 export const useMouseUp = () => {
   const handler = () => {
-    const whoIsPainter = useWhoIsPainterClient.getState().value
+    // const whoIsPainter = useWhoIsPainterClient.getState().value
 
-    if (whoIsPainter.status === 'thereIsNoPainter') return
-    if (!whoIsPainter.amIPainter) return
+    // if (whoIsPainter.status === 'thereIsNoPainter') return
+    // if (!whoIsPainter.amIPainter) return
 
     useAmIPainting.getState().imNotPainting()
 
@@ -21,6 +22,8 @@ export const useMouseUp = () => {
 
     mctx.drawImage(draft!, 0, 0) // copy drawing to main
     dctx.clearRect(0, 0, draft!.width, draft!.height) // clear draft
+
+    usePixelsOnDraw.getState().reset()
   }
 
   useEffectOnce(() => {

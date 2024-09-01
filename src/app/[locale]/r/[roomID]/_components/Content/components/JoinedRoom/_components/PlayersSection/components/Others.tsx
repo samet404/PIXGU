@@ -6,16 +6,19 @@ import { useUserIDStore } from '@/zustand/provider'
 
 export const Others = () => {
   const myUserID = useUserIDStore((state) => state.userID)
-  const playersDbInfos = usePlayers((state) => state.getPlayersDbInfosArr())
+  const playersDbInfos = usePlayers((state) => state.value.arr)
 
-  return playersDbInfos.map((user) => {
-    if (myUserID !== user.ID)
-      return (
-        <User
-          key={user.ID}
-          name={user.usernameWithUsernameID}
-          profilePicture={user.profilePicture}
-        />
-      )
-  })
+  return playersDbInfos.map(
+    ({ id: ID, usernameWithUsernameID, profilePicture }) => {
+      if (myUserID !== ID)
+        return (
+          <User
+            key={ID}
+            id={ID}
+            usernameWithUsernameID={usernameWithUsernameID}
+            profilePicture={profilePicture}
+          />
+        )
+    },
+  )
 }

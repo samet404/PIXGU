@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { Img } from '../Img'
 import { useMyUserInfoForRoomStore } from '@/zustand/provider'
 
@@ -7,8 +8,16 @@ export const MyMsg = ({ msg }: Props) => {
   const { id, usernameWithUsernameID, profilePicture } =
     useMyUserInfoForRoomStore((state) => state.user)
 
+  useEffectOnce(() => {
+    const messageList = document.getElementById('winnersChatMsgContainer')
+    const scrollHeight = messageList!.scrollHeight
+    const clientHeight = messageList!.clientHeight
+
+    messageList!.scrollTop = scrollHeight - clientHeight
+  })
+
   return (
-    <div className="flex flex-row gap-[0.40rem]">
+    <div className="flex flex-row gap-[0.40rem] first:!mt-auto">
       <div className="pt-2">
         <Img userID={id} pfp={profilePicture} />
       </div>

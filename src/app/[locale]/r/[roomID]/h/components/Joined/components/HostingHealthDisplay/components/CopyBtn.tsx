@@ -4,6 +4,7 @@ import { useSpring, animated } from '@react-spring/web'
 import { useRef, useState } from 'react'
 
 export const CopyBtn = () => {
+  const hostStatus = useHostingHealth((s) => s.status)
   const [isCopied, setIsCopied] = useState<boolean>(false)
   const divRef = useRef<HTMLDivElement>(document.createElement('div'))
   const copiedTimeout = useRef<ReturnType<typeof setTimeout>>()
@@ -46,13 +47,14 @@ export const CopyBtn = () => {
     })
   }
 
-  return (
-    <animated.button
-      onClick={handleClick}
-      style={springs}
-      className="!hover:opactiy-60 rounded-md bg-[#ffffff82] px-4 leading-8 text-[#02020285] disabled:cursor-not-allowed disabled:opacity-65"
-    >
-      {isCopied ? 'Copied!' : 'Copy link'}
-    </animated.button>
-  )
+  if (hostStatus !== 'networkError' && hostStatus !== 'loading')
+    return (
+      <animated.button
+        onClick={handleClick}
+        style={springs}
+        className="!hover:opactiy-60 rounded-md bg-[#ffffff82] px-4 leading-8 text-[#02020285] disabled:cursor-not-allowed disabled:opacity-65"
+      >
+        {isCopied ? 'Copied!' : 'Copy link'}
+      </animated.button>
+    )
 }

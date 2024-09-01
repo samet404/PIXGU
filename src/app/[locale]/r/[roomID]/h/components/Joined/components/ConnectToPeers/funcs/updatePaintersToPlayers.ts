@@ -40,7 +40,7 @@ export const updatePaintersToPlayers = async (roomID: string) => {
   useHostPainterData.getState().set({
     status: 'painterSelectingTheme',
     themes,
-    timeout: setTimeout(() => {
+    timeIsUpTimeout: setTimeout(() => {
       sendToAllPeers({
         from: 'host',
         event: 'painterCouldNotSelectTheme',

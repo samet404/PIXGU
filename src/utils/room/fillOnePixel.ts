@@ -10,13 +10,24 @@ export const fillOnePixel = (x: number, y: number, rgba: RGBAObj) => {
   const cellPixelLength = canvasesMainData.cellPixelLength!
 
   // getting position of the pixel
-  const posX = cellPixelLength * x
-  const posY = cellPixelLength * y
+  const posX = Math.floor(cellPixelLength * x)
+  const posY = Math.floor(cellPixelLength * y)
 
-  const dctx = canvasesMainData.draft!.getContext('2d')!
+  const mctx = canvasesMainData.draft!.getContext('2d')!
 
-  // drawing the pixel
-  dctx.fillStyle = `rgb(${r}, ${g}, ${b})`
-  dctx.globalAlpha = a
-  dctx.fillRect(posX, posY, cellPixelLength, cellPixelLength)
+  // Create ImageData for the entire pixel area
+  const imageData = mctx.createImageData(cellPixelLength, cellPixelLength)
+  const data = imageData.data
+  console.log(cellPixelLength)
+
+  // Fill the entire ImageData with the color
+  for (let i = 0; i < data.length; i += 4) {
+    data[i] = r // Red
+    data[i + 1] = g // Green
+    data[i + 2] = b // Blue
+    data[i + 3] = Math.floor(a * 255) // Alpha (rounded to nearest integer)
+  }
+
+  // Put the ImageData on the canvas
+  mctx.putImageData(imageData, posX, posY)
 }

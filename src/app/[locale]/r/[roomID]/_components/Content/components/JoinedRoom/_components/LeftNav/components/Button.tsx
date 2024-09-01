@@ -5,6 +5,9 @@ import { useEventListener } from 'usehooks-ts'
 import { useRef, type ReactNode } from 'react'
 
 export const Button = ({ onKeyDown, className, onClick, icon }: Props) => {
+  const clickSfxRef = useRef<HTMLAudioElement>(
+    new Audio('/sound/sfx/button/crystal_panel_button.mp3'),
+  )
   const documentRef = useRef(document)
   const [springs, api] = useSpring(() => ({
     from: {
@@ -28,6 +31,7 @@ export const Button = ({ onKeyDown, className, onClick, icon }: Props) => {
   useEventListener('keydown', (e) => onKeyDown(e), documentRef)
 
   const handleClick = () => {
+    clickSfxRef.current.play()
     clickAnimation()
     onClick?.()
   }

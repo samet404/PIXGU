@@ -3,7 +3,7 @@
 import { useEventListener } from 'usehooks-ts'
 import sendImg from '@/png/icons8-send-30-black.png'
 import Image from 'next/image'
-import { Fragment, useRef } from 'react'
+import { useRef } from 'react'
 import { sendToHostPeer } from '@/utils/sendToHostPeer'
 
 export const Input = () => {
@@ -38,12 +38,12 @@ export const Input = () => {
   )
 
   return (
-    <Fragment>
+    <div className="flex flex-row items-center rounded-md bg-[#ffffff73]">
       <input
         ref={inputRef}
         spellCheck={false}
         type="text"
-        className="w-full px-2 text-[#00000081]"
+        className="w-full px-2  text-[#00000081]"
       />
       <button
         onMouseDown={sendMsg}
@@ -51,6 +51,6 @@ export const Input = () => {
       >
         <Image src={sendImg} alt="send" className="size-5 opacity-20" />
       </button>
-    </Fragment>
+    </div>
   )
 }

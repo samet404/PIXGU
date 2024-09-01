@@ -3,18 +3,23 @@
 import { useRef } from 'react'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { useCanvasesMainData } from '@/zustand/store'
+import { roundDownToNearest } from '@/utils/roundDownToNearest'
 
 export const DraftCanvas = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const cellSideCount = useCanvasesMainData.getState().get().cellSideCount
   const bodyRef = useRef(document.body)
 
-  const getSize = () => bodyRef.current.offsetWidth * 0.45
+  const getSize = () =>
+    roundDownToNearest(bodyRef.current.offsetHeight * 0.8, 40)
   const setHeightAndWidth = () => {
     if (!canvasRef.current) return
 
     canvasRef.current.width = getSize()
     canvasRef.current.height = getSize()
+
+    const ctx = canvasRef.current.getContext('2d')!
+    ctx.imageSmoothingEnabled = false
 
     useCanvasesMainData.getState().add({
       draft: canvasRef.current,

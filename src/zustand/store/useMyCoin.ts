@@ -3,7 +3,7 @@ import { create } from 'zustand'
 type State = { coin: number }
 
 type Action = {
-  set: (input: number) => void
+  add: (input: number) => void
   get: () => number
   reset: () => void
 }
@@ -13,9 +13,9 @@ const initValue = 0
 export const useMyCoin = create<State & Action>((set, get) => ({
   coin: initValue,
 
-  set: (input) =>
+  add: (input) =>
     set({
-      coin: input,
+      coin: get().coin + input,
     }),
 
   get: () => get().coin,

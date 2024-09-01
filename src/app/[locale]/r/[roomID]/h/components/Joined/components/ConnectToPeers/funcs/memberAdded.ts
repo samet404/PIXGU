@@ -12,7 +12,7 @@ import { signalData } from './signalData'
 export const memberAdded = (
   member: {
     id: string
-    info: User
+    info: Omit<User, 'id'>
   },
   myUserID: string,
   roomID: string,
@@ -49,7 +49,10 @@ export const memberAdded = (
   )
 
   onPeerSignal(peer, userID, roomID)
-  onPeerConnect(peer, userID, roomID, member.info)
+  onPeerConnect(peer, userID, roomID, {
+    id: userID,
+    ...member.info,
+  })
   onPeerError(peer, userID, soketiClient, roomID)
   onPeerClose(peer, userID, soketiClient, roomID)
 }

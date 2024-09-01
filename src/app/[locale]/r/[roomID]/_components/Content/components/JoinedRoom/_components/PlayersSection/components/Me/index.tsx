@@ -3,8 +3,14 @@
 import { useMyUserInfoForRoomStore } from '@/zustand/provider'
 import { Urbanist, Inter } from 'next/font/google'
 import { Img } from './components/Img'
-import { truncateStr } from '@/utils/truncateStr'
 import { Coin } from './components/Coin'
+import {
+  useAmIGuessed,
+  useAmISpectator,
+  useWhoIsPainterClient,
+} from '@/zustand/store'
+import { clsxMerge } from '@/utils/clsxMerge'
+import { useEffect, useRef } from 'react'
 
 const urbanist = Urbanist({
   subsets: ['latin'],
@@ -17,12 +23,35 @@ const inter = Inter({
 })
 
 const Me = () => {
+  const successSfxRef = useRef<HTMLAudioElement>(
+    new Audio('/sound/sfx/success.mp3'),
+  )
   const { profilePicture, usernameWithUsernameID } = useMyUserInfoForRoomStore(
     (state) => state.user,
   )
+  const amISpectator = useAmISpectator((s) => s.amISpectator)
+  const whoIsPainter = useWhoIsPainterClient((s) => s.value)
+  const amIGuessed = useAmIGuessed((s) => s.amIGuessed)
+
+  useEffect(() => {
+    if (!amIGuessed) return
+
+    successSfxRef.current.volume = 0.4
+    successSfxRef.current.play()
+  }, [amIGuessed])
 
   return (
-    <div className="group group flex w-full flex-col items-center justify-center rounded-lg bg-[#ffffff2e]">
+    <div
+      className={clsxMerge(
+        `group group flex w-full flex-col items-center justify-center rounded-lg bg-[#ffffff2e]`,
+        {
+          'bg-[rgba(179,104,255,0.33)]':
+            whoIsPainter.status === 'currentPainter' && whoIsPainter.amIPainter,
+          'bg-[rgba(254,240,41,0.22)]': amIGuessed === true,
+          'opacity-50': amISpectator,
+        },
+      )}
+    >
       <div className={`flex w-full flex-row items-center justify-between p-2`}>
         <div className="flex w-full flex-row items-center gap-2 peer-hover:bg-red-200 ">
           {profilePicture ? (

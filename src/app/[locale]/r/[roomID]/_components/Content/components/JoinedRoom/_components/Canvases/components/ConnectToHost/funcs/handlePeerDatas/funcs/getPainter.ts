@@ -1,50 +1,52 @@
-import type { WebRTCConnData } from '@/types'
+import type { CurrentPainter } from '@/types'
+import {
+  useAmIGuessed,
+  useCanvasesMainData,
+  useGuessChatLayout,
+  useIsGameStopped,
+  useWhoIsPainterClient,
+  useWinnersChatLayout,
+} from '@/zustand/store'
 
-export const getPainter = async (rtcData: WebRTCConnData, myUserID: string) => {
-  const { event, from } = rtcData
+export const getPainter = async (
+  data: CurrentPainter['data'],
+  myUserID: string,
+) => {
+  const amIPainter = myUserID === data
 
-  if (event === 'currentPainter' && from === 'host') {
-    const { goldLog } = await import('@/utils/goldLog')
-    const {
-      useWhoIsPainterClient,
-      useGuessChatLayout,
-      useWinnersChatLayout,
-      useCanvasesMainData,
-    } = await import('@/zustand/store')
+  useIsGameStopped.getState().open()
 
-    const { data } = rtcData
-    goldLog('currentPainter', data)
-    const amIPainter = myUserID === data
-    useWhoIsPainterClient.getState().setCurrentPainter({
-      painterID: data,
-      amIPainter,
-    })
+  useWhoIsPainterClient.getState().setCurrentPainter({
+    painterID: data,
+    amIPainter,
+  })
 
-    const { main, draft } = useCanvasesMainData.getState()
+  const { main, draft } = useCanvasesMainData.getState()
 
-    const mctx = main!.getContext('2d')!
-    mctx.beginPath()
-    mctx.fillStyle = '#ffffff'
-    mctx.fillRect(0, 0, main!.width, main!.height)
-    mctx.beginPath()
+  const mctx = main!.getContext('2d')!
+  mctx.beginPath()
+  mctx.fillStyle = '#ffffff'
+  mctx.fillRect(0, 0, main!.width, main!.height)
+  mctx.beginPath()
 
-    const dctx = draft!.getContext('2d')!
-    dctx.beginPath()
-    dctx.clearRect(0, 0, main!.width, main!.height)
-    dctx.beginPath()
+  const dctx = draft!.getContext('2d')!
+  dctx.beginPath()
+  dctx.clearRect(0, 0, main!.width, main!.height)
+  dctx.beginPath()
 
-    if (amIPainter) {
-      const { useSelectThemePanel } = await import('@/zustand/store')
+  useAmIGuessed.getState().noIMNotGuessed()
 
-      useSelectThemePanel.getState().open()
-      useWinnersChatLayout.getState().setPainterLayout()
-      useGuessChatLayout.getState().setPainterLayout()
-    } else {
-      const { useNewPainterPanel } = await import('@/zustand/store')
+  if (amIPainter) {
+    const { useSelectThemePanel } = await import('@/zustand/store')
 
-      useNewPainterPanel.getState().open({ painterID: data })
-      useWinnersChatLayout.getState().setImNotGuessed()
-      useGuessChatLayout.getState().setImNotGuessed()
-    }
+    useSelectThemePanel.getState().open()
+    useWinnersChatLayout.getState().setPainterLayout()
+    useGuessChatLayout.getState().setPainterLayout()
+  } else {
+    const { useNewPainterPanel } = await import('@/zustand/store')
+
+    useNewPainterPanel.getState().open({ painterID: data })
+    useWinnersChatLayout.getState().setImNotGuessed()
+    useGuessChatLayout.getState().setImNotGuessed()
   }
 }

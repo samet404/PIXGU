@@ -1,12 +1,5 @@
-import type { WebRTCConnData } from '@/types/webRTCConnData'
+import type { SelectThemeFromHost } from '@/types/webRTCConnData'
+import { useSelectThemePanel } from '@/zustand/store'
 
-export const getThemes = async (rtcData: WebRTCConnData, userID: string) => {
-  const { from, event } = rtcData
-  if (event === 'selectTheme' && from === 'host') {
-    const { data } = rtcData
-
-    const { useSelectThemePanel } = await import('@/zustand/store')
-
-    useSelectThemePanel.getState().setSelectingTheme({ themes: data })
-  }
-}
+export const getThemes = (data: SelectThemeFromHost['data']) =>
+  useSelectThemePanel.getState().setSelectingTheme({ themes: data })

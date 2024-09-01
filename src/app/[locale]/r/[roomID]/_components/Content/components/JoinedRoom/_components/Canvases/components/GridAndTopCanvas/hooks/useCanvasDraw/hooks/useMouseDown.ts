@@ -9,10 +9,10 @@ import {
 export const useMouseDown = (myUserID: string) => {
   const handler = (e: MouseEvent) => {
     console.log('startPosition')
-    const whoIsPainter = useWhoIsPainterClient.getState().value
+    // const whoIsPainter = useWhoIsPainterClient.getState().value
 
-    if (whoIsPainter.status === 'thereIsNoPainter') return
-    if (!whoIsPainter.amIPainter) return null
+    // if (whoIsPainter.status === 'thereIsNoPainter') return
+    // if (!whoIsPainter.amIPainter) return null
     if (e.button !== 0) return null
 
     useAmIPainting.getState().imPainting()
@@ -21,6 +21,7 @@ export const useMouseDown = (myUserID: string) => {
   }
 
   useEffectOnce(() => {
+    console.log('mousedown')
     const canvasesMainData = useCanvasesMainData.getState().get()
 
     if (!canvasesMainData.grid) {

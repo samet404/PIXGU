@@ -1,8 +1,7 @@
 import { drawOnCanvas } from './func'
-import type { WebRTCConnData } from '@/types'
+import type { PainterDrawFromHostAndClient } from '@/types'
 
-export const getPainterDraw = (rtcData: WebRTCConnData) => {
-  if (rtcData.event !== 'painterDraw' || rtcData.from !== 'host') return null
-  const { x, y, rgba } = rtcData.data
+export const getPainterDraw = (data: PainterDrawFromHostAndClient['data']) => {
+  const { x, y, rgba } = data
   drawOnCanvas(rgba, { x, y })
 }

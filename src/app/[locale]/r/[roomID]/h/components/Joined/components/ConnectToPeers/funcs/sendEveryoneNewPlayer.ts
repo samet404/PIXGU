@@ -1,22 +1,23 @@
 import { sendToAllPeers } from '@/utils/sendToAllPeers'
 import { usePlayers } from '@/zustand/store'
 
-export const sendEveryoneNewPlayerDbInfo = (playerID: string) => {
+export const sendEveryoneNewPlayer = (ID: string, isSpectator: boolean) => {
   const { usernameWithUsernameID, profilePicture, username, usernameID } =
-    usePlayers.getState().get().playersDbInfos[playerID]!
+    usePlayers.getState().value.obj[ID]!
 
   sendToAllPeers(
     {
       from: 'host',
       event: 'playerJoined',
       data: {
-        ID: playerID,
+        ID,
         profilePicture,
         usernameWithUsernameID,
         username,
         usernameID,
+        isSpectator,
       },
     },
-    { except: [playerID] },
+    { except: [ID] },
   )
 }

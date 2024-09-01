@@ -8,6 +8,8 @@ import { JoinBtn } from './components/JoinBtn'
 import { useHostingHealth } from '@/zustand/store'
 import { Fragment } from 'react'
 import { useRoomIDStore } from '@/zustand/provider'
+import { StopBtn } from './components/StopBtn'
+import { HavingIssuesBtn } from './components/HavingIssuesBtn'
 
 export const HostingHealthDisplay = () => {
   const status = useHostingHealth((s) => s.status)
@@ -104,13 +106,11 @@ export const HostingHealthDisplay = () => {
         <div className="text-[1.2rem] opacity-75">{smText}</div>
       </div>
       <div className="flex flex-row gap-3 drop-shadow-[0_0px_10px_rgba(0,0,0,0.2)]">
-        {status === 'readyToStart' ? <StartBtn roomID={roomID} /> : null}
-        {status !== 'networkError' && status !== 'loading' ? (
-          <Fragment>
-            <JoinBtn />
-            <CopyBtn />
-          </Fragment>
-        ) : null}
+        <StartBtn roomID={roomID} />
+        <StopBtn roomID={roomID} />
+        <JoinBtn />
+        <CopyBtn />
+        <HavingIssuesBtn />
       </div>
       <div className="absolute bottom-4 w-[90%] text-[0.9rem] text-[#ffffff63]"></div>
     </div>

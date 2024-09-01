@@ -1,17 +1,11 @@
-import type { WebRTCConnData } from '@/types'
+import type { PrevPlayers } from '@/types'
 import { usePlayers } from '@/zustand/store'
-import { useMyCoin } from '@/zustand/store/useMyCoin'
 
-export const getPrevPlayers = (rtcData: WebRTCConnData, userID: string) => {
-  const { event, from } = rtcData
-  if (event === 'prevPlayers' && from === 'host') {
-    const addPlayer = usePlayers.getState().addPlayer
-    const setMyCoin = useMyCoin.getState().set
+export const getPrevPlayers = (data: PrevPlayers['data'], userID: string) => {
+  const addPlayer = usePlayers.getState().addPlayer
 
-    const data = rtcData.data
-    Object.keys(data).forEach((key) => {
-      if (key === userID) return
-      addPlayer(key, data[key]!)
-    })
-  }
+  Object.keys(data).forEach((key) => {
+    if (key === userID) return
+    addPlayer(key, data[key]!)
+  })
 }

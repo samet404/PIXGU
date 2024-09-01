@@ -2,19 +2,15 @@ import { redisDb } from '@/db/redis'
 import { themes } from './data.json'
 
 const run = async () => {
-  try {
-    await redisDb.flushall()
-    console.log('Redis flushed')
-  } catch (e) {
-    console.error(`Error flushing redis`)
-  }
+  await redisDb.flushall()
+  console.log('Redis flushed ✅')
 
-  try {
-    themes.forEach(async (v) => await redisDb.sadd<string>('room_themes', v))
-    console.log('Themes added to redis')
-  } catch (e) {
-    console.error(`Error adding themes to redis`)
-  }
+  Object.keys(themes).forEach((lang) =>
+    themes[lang as keyof typeof themes].forEach(
+      async (theme) => await redisDb.sadd<string>(`room_themes:${lang}`, theme),
+    ),
+  )
+  console.log('Themes added to redis ✅')
 }
 
 run()

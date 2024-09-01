@@ -30,6 +30,13 @@ export const useGuessChatLayout = create<State & Action>((set, get) => ({
   open: () => set({ value: { ...get().value, isOpen: true } }),
   close: () => set({ value: { ...get().value, isOpen: false } }),
 
+  setSpectatorLayout: () => {
+    set({
+      value: { isOpen: true, input: false, change: true, info: false },
+    })
+    useRoomGuessChatMsgsStore.getState().reset()
+  },
+
   setPainterLayout: () => {
     set({
       value: { isOpen: true, input: false, change: true, info: true },
@@ -47,7 +54,7 @@ export const useGuessChatLayout = create<State & Action>((set, get) => ({
 
   setIGuessed: () => {
     set({
-      value: { isOpen: true, input: true, change: true, info: true },
+      value: { isOpen: true, input: false, change: true, info: true },
     })
 
     useRoomGuessChatMsgsStore.getState().reset()

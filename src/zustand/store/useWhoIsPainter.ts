@@ -48,10 +48,9 @@ export const useWhoIsPainter = create<State & Action>((set, get) => ({
     const value = get().value
     if (value.status === 'currentPainter') {
       return value.painterID === ID
-    } else {
-      console.error('No painter')
-      return false
     }
+
+    return false
   },
 
   reset: () => set(initValue),

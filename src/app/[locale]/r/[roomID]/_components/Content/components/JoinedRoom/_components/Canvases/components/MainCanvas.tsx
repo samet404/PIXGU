@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffectOnce } from '@/hooks/useEffectOnce'
+import { roundDownToNearest } from '@/utils/roundDownToNearest'
 import { useCanvasesMainData } from '@/zustand/store'
 import { useRef } from 'react'
 
@@ -9,7 +10,8 @@ export const MainCanvas = () => {
   const cellSideCount = useCanvasesMainData.getState().get().cellSideCount
   const bodyRef = useRef(document.body)
 
-  const getSize = () => bodyRef.current.offsetWidth * 0.45
+  const getSize = () =>
+    roundDownToNearest(bodyRef.current.offsetHeight * 0.85, 40)
   const setHeightAndWidth = () => {
     if (!canvasRef.current) return
 

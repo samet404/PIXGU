@@ -1,31 +1,10 @@
-import type { IntRange, PausedGameCode } from '@/types'
 import type { Player } from '@/zustand/store'
 
 /**
  * WebRTCConnData is the type of data that
  *  is sent over the WebRTC connection.
  */
-export type WebRTCConnData = DirectlyFromHost | DirectlyFromClient
-
-/**
- * AllowedEvents event is sent from the host to
- * the client to tell the client which events are allowed.
- */
-export type AllowedEvents = {
-  from: 'host'
-  event: 'allowedEvents'
-  data: DirectlyFromClient['event'][]
-}
-
-/**
- * BlockedEvents event is sent from the host to
- * the client to tell the client which events are blocked.
- */
-export type BlockedEvents = {
-  from: 'host'
-  event: 'blockedEvents'
-  data: DirectlyFromClient['event'][]
-}
+export type WebRTCConnData = WebRTCConnDataFromHost | WebRTCConnDataFromClient
 
 /**
  * GuessChatFromHost event is sent from the host to the client to tell
@@ -56,16 +35,11 @@ export type YourGuessChatFromHost = {
 /**
  * GuessChatFromClient event is sent from the client to the host to tell guess chat msg
  */
-type GuessChatFromClient = {
+export type GuessChatFromClient = {
   event: 'guessChat'
   data: {
     msg: string
   }
-}
-
-type GuessChatToPainter = {
-  event: 'guessChatToPainter'
-  data: string
 }
 
 /**
@@ -97,44 +71,8 @@ export type YourWinnersChatFromHost = {
 /**
  * WinnersChatFromClient event is sent from the client to the host to tell winners chat msg
  */
-type WinnersChatFromClient = {
+export type WinnersChatFromClient = {
   event: 'winnersChat'
-  data: {
-    msg: string
-  }
-}
-
-/**
- * DarkZoneChatFromHost event is sent from the host to the client to tell
- * the client that a player has sent a chat message.
- */
-export type DarkZoneChatFromHost = {
-  event: 'darkZoneChat'
-  data: {
-    msgID: string
-    from: string
-    msg: string
-  }
-}
-
-/**
- * YourDarkZoneFromHost event is a data type sent from the host,
- * where the message of the user who sent the message to the chat is
- *  verified and sent back to the user who sent the message
- */
-export type YourDarkZoneChatFromHost = {
-  event: 'yourDarkZoneChat'
-  data: {
-    msgID: string
-    msg: string
-  }
-}
-
-/**
- * DarkZoneFromClient event is sent from the client to the host to tell winners chat msg
- */
-export type DarkZoneChatFromClient = {
-  event: 'darkZoneChat'
   data: {
     msg: string
   }
@@ -144,7 +82,7 @@ export type DarkZoneChatFromClient = {
  *  The PainterDrawFromHostAndClient event is first thrown by the client to the host.
  * Then the host validates and sent it to all other players.
  */
-type PainterDrawFromHostAndClient = {
+export type PainterDrawFromHostAndClient = {
   event: 'painterDraw'
   data: {
     painterID: string
@@ -162,7 +100,7 @@ type PainterDrawFromHostAndClient = {
 /**
  * The PainterDrawFromHostAndClient event is first thrown by the host to the new player.
  */
-type PrevPlayers = {
+export type PrevPlayers = {
   event: 'prevPlayers'
   data: Record<string, Player>
 }
@@ -171,16 +109,16 @@ type PrevPlayers = {
  * The CurrentPainters event is sent from the host to the client to tell
  * the client who is currently painter.
  */
-type CurrentPainter = {
+export type CurrentPainter = {
   event: 'currentPainter'
   data: string
 }
 
 /**
- * UserLeft event is sent from the host to the client to tell
+ * PlayerLeft event is sent from the host to the client to tell
  * the client that a player has left the room.
  */
-export type UserLeft = {
+export type PlayerLeft = {
   event: 'playerLeft'
   data: {
     ID: string
@@ -191,7 +129,7 @@ export type UserLeft = {
  * UserJoined event is sent from the host to the client to tell
  * the client that a player has joined the room.
  */
-export type UserJoined = {
+export type PlayerJoined = {
   event: 'playerJoined'
   data: {
     ID: string
@@ -199,6 +137,7 @@ export type UserJoined = {
     usernameID: string
     usernameWithUsernameID: string
     profilePicture: string | null
+    isSpectator: boolean
   }
 }
 
@@ -209,23 +148,13 @@ type PingPongData = {
   }
 }
 
-type Ping = {
+export type Ping = {
   event: 'ping'
 } & PingPongData
 
-type Pong = {
+export type Pong = {
   event: 'pong'
 } & PingPongData
-
-export type PauseMatch = {
-  event: 'pauseMatch'
-  data: PausedGameCode
-}
-
-export type ResumeMatch = {
-  event: 'resumeMatch'
-  data: PausedGameCode
-}
 
 export type SelectThemeFromHost = {
   event: 'selectTheme'
@@ -252,7 +181,10 @@ export type PainterCouldNotSelectTheme = {
 
 export type Coin = {
   event: 'coin'
-  data: number
+  data: {
+    to: string
+    amount: number
+  }
 }
 
 export type Guessed = {
@@ -262,35 +194,63 @@ export type Guessed = {
   }
 }
 
-export type PainterSelectionCanceled = {
-  event: 'painterSelectionCanceled'
-  data: 'playerLeft' | 'timeIsUp'
+export type YourCoin = {
+  event: 'yourCoin'
+  data: {
+    amount: number
+  }
+}
+
+export type YouGuessed = {
+  event: 'youGuessed'
+}
+
+export type YouAreSpectator = {
+  event: 'youAreSpectator'
+}
+
+export type Spectator = {
+  event: 'spectator'
+  data: {
+    ID: string
+  }
+}
+
+export type PrevSpectators = {
+  event: 'prevSpectators'
+  data: string[]
+}
+
+export type GameIsStopped = {
+  event: 'gameIsStopped'
 }
 
 /**
  * DirectlyFromHost is the type of data that is sent directly from the host.
  */
-export type DirectlyFromHost = (
-  | UserLeft
-  | UserJoined
+export type WebRTCConnDataFromHost = (
+  | PlayerLeft
+  | PlayerJoined
   | PainterDrawFromHostAndClient
   | PrevPlayers
   | CurrentPainter
   | GuessChatFromHost
   | WinnersChatFromHost
-  | DarkZoneChatFromHost
   | YourGuessChatFromHost
   | YourWinnersChatFromHost
-  | YourDarkZoneChatFromHost
   | Pong
-  | GuessChatToPainter
-  | PauseMatch
-  | ResumeMatch
   | SelectThemeFromHost
   | PainterSelectedTheme
   | PainterSelectingTheme
-  | PainterSelectionCanceled
   | PainterCouldNotSelectTheme
+  | Guessed
+  | Coin
+  | YourCoin
+  | YouGuessed
+  | YouAreSpectator
+  | Spectator
+  | PrevSpectators
+  | GameIsStopped
 ) & {
   from: 'host'
 }
@@ -298,10 +258,9 @@ export type DirectlyFromHost = (
 /**
  * DirectlyFromClient is the type of data that is sent directly from the client.
  */
-export type DirectlyFromClient = (
+export type WebRTCConnDataFromClient = (
   | WinnersChatFromClient
   | GuessChatFromClient
-  | DarkZoneChatFromClient
   | PainterDrawFromHostAndClient
   | Ping
   | SelectThemeFromClient

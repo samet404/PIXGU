@@ -11,7 +11,6 @@ type Action = {
 const initValue = {
   matchInterval: null,
   isFirstMatch: true,
-  theme: null,
 } as const
 
 export const useOtherHostRoomStatus = create<State & Action>((set, get) => ({
@@ -30,5 +29,4 @@ export const useOtherHostRoomStatus = create<State & Action>((set, get) => ({
 export type OtherRoomStatues = {
   matchInterval: ReturnType<typeof setInterval> | null
   isFirstMatch: boolean
-  theme: string | null
 }

@@ -2,14 +2,34 @@ import type { WebRTCConnData } from '@/types/webRTCConnData'
 import type SimplePeer from 'simple-peer'
 import { negativeLog } from './negativeLog'
 import { grayLog } from './grayLog'
+import { violetLog } from './violetLog'
 
 /**
  * Send data to peer
  */
 export const sendToPeer = (
-  peer: SimplePeer.Instance,
+  peer: SimplePeer.Instance | undefined,
   data: WebRTCConnData | WebRTCConnData[],
 ) => {
+  if (!peer) {
+    if (typeof data === 'object') {
+      violetLog(
+        `PEER OBJECT NOT FOUND WHEN SENDING ${(data as WebRTCConnData).event} TO PEER`,
+        data,
+      )
+      return
+    }
+
+    if (Array.isArray(data))
+      (data as WebRTCConnData[]).forEach((d) => {
+        violetLog(
+          `PEER OBJECT NOT FOUND WHEN SENDING ${(data as WebRTCConnData).event} TO PEER`,
+          data,
+        )
+      })
+    return
+  }
+
   if (typeof data === 'object') {
     grayLog(`SENDING ${(data as WebRTCConnData).event} TO PEER`, data, peer)
   } else if (Array.isArray(data)) {
@@ -17,11 +37,6 @@ export const sendToPeer = (
     ;(data as WebRTCConnData[]).forEach((d) => {
       grayLog(`SENDING ${d.event} TO PEER`, data, peer)
     })
-  }
-
-  if (!peer) {
-    negativeLog('Peer not found when sending data')
-    return
   }
 
   try {
