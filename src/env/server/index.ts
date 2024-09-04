@@ -137,14 +137,12 @@ export const env = createEnv({
 
     PUSHER_APP_ID: z
       .string()
-      .cuid2()
       .refine(
         (str) => !str.includes('YOUR_PUSHER_APP_ID_HERE'),
         'You forgot to change the default pusher app id',
       ),
     PUSHER_KEY: z
       .string()
-      .cuid2()
       .refine(
         (str) => !str.includes('YOUR_PUSHER_KEY_HERE'),
         'You forgot to change the default pusher key',

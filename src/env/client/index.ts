@@ -14,14 +14,12 @@ export const env = createEnv({
   client: {
     NEXT_PUBLIC_PUSHER_APP_ID: z
       .string()
-      .cuid2()
       .refine(
         (str) => !str.includes('YOUR_NEXT_PUBLIC_PUSHER_APP_ID_HERE'),
         'You forgot to change the default next public pusher app id',
       ),
     NEXT_PUBLIC_PUSHER_KEY: z
       .string()
-      .cuid2()
       .refine(
         (str) => !str.includes('YOUR_NEXT_PUBLIC_PUSHER_KEY_HERE'),
         'You forgot to change the default next public pusher key',
