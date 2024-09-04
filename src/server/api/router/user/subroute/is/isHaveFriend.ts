@@ -5,16 +5,16 @@ import { eq } from 'drizzle-orm'
 export const isHaveFriend = loggedUserProducure.query(async ({ ctx }) => {
   const userID = ctx.user.id
 
-  const userWithFriend = await ctx.db.query.user.findFirst({
-    where: eq(user.id, userID),
-    columns: {},
-    with: {
-      friend: {
-        columns: { ID: true },
-      },
-    },
-  })
+  // const userWithFriend = await ctx.db.query.user.findFirst({
+  //   where: eq(user.id, userID),
+  //   columns: {},
+  //   with: {
+  //     friend: {
+  //       columns: { ID: true },
+  //     },
+  //   },
+  // })
 
-  if (!userWithFriend?.friend[0]) return false
-  return true
+  // if (!userWithFriend?.friend[0]) return false
+  // return true
 })

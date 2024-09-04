@@ -5,11 +5,11 @@ import { notFound } from 'next/navigation'
 import pfp2 from '@/png/pfp2.png'
 
 type UserPageProps = {
-  params: { usernameWithUsernameID: string }
+  params: { ID: string }
 }
 
 const User = async ({ params }: UserPageProps) => {
-  const usernameWithUsernameID = params.usernameWithUsernameID
+  const usernameWithUsernameID = params.ID
   const splitedUsernameWithUsernameID = usernameWithUsernameID.split('%40')
 
   const username = splitedUsernameWithUsernameID[0]

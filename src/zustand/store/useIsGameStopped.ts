@@ -1,4 +1,21 @@
 import { create } from 'zustand'
+import { useWhoIsPainterClient } from './useWhoIsPainterClient'
+import { useAmIPainting } from './useAmIPainting'
+import { useWinnersChatLayout } from './useWinnersChatLayout'
+import { useGuessChatLayout } from './useGuessChatLayout'
+import { useRoomWinnersChatMsgsStore } from './useRoomWinnersChatMsgs'
+import { useRoomGuessChatMsgsStore } from './useRoomGuessChatMsgs'
+import { useGuessedPlayers } from './useGuessedPlayers'
+import { useMyCoin } from './useMyCoin'
+import { useCoins } from './useCoins'
+import { useLastPixel } from './useLastPixel'
+import { usePixelHistory } from './usePixelHistory'
+import { useSpectators } from './useSpectators'
+import { useAmISpectator } from './useAmISpectator'
+import { usePixelsOnDraw } from './usePixelsOnDraw'
+import { useSelectThemePanel } from './useSelectThemePanel'
+import { useNewPainterPanel } from './useNewPainterPanel'
+import { useMatchCount } from './useMatchCount'
 
 type Code = 'connectingToHost' | 'waitingForHost' | 'waitingForPlayers'
 
@@ -35,10 +52,27 @@ export const useIsGameStopped = create<State & Action>((set, get) => ({
       value: { ...get().value, isStopped: false, code: null },
     }),
 
-  stop: (code) =>
+  stop: (code) => {
+    useWhoIsPainterClient.getState().reset()
+    useAmIPainting.getState().reset()
+    useWinnersChatLayout.getState().reset()
+    useGuessChatLayout.getState().reset()
+    useRoomWinnersChatMsgsStore.getState().reset()
+    useRoomGuessChatMsgsStore.getState().reset()
+    useGuessedPlayers.getState().reset()
+    useMyCoin.getState().reset()
+    useCoins.getState().reset()
+    useLastPixel.getState().reset()
+    usePixelHistory.getState().reset()
+    useSpectators.getState().reset()
+    useAmISpectator.getState().reset()
+    usePixelsOnDraw.getState().reset()
+    useNewPainterPanel.getState().reset()
+    useMatchCount.getState().reset()
+    useSelectThemePanel.getState().reset()
     set({
       value: { ...get(), isStopped: true, code },
-    }),
-
+    })
+  },
   reset: () => set(initState),
 }))

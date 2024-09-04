@@ -1,6 +1,6 @@
 import {
   useHostingHealth,
-  useOtherHostRoomStatus,
+  useMatchStatus,
   usePeers,
   usePlayers,
   useWhoIsPainter,
@@ -20,7 +20,6 @@ export const playerLeaved = (
 ) => {
   goldLog(`PLAYER ${userID} LEFT THE GAME`)
   const setHostingHealth = useHostingHealth.getState().set
-  const otherHostRoomStatues = useOtherHostRoomStatus.getState().get()
 
   usePeers.getState().removePeer(userID)
   soketiClient.unsubscribe(
@@ -31,12 +30,12 @@ export const playerLeaved = (
 
   if (usePlayers.getState().value.count <= 1) {
     setHostingHealth('waitingForPlayers')
-    if (otherHostRoomStatues.matchInterval)
-      clearInterval(otherHostRoomStatues.matchInterval)
-  } else if (useWhoIsPainter.getState().isPainter(userID)) {
-    if (otherHostRoomStatues.matchInterval)
-      clearInterval(otherHostRoomStatues.matchInterval)
 
+    const interval = useMatchStatus.getState().value.matchInterval
+    if (interval) clearInterval(interval)
+  } else if (useWhoIsPainter.getState().isPainter(userID)) {
+    const interval = useMatchStatus.getState().value.matchInterval
+    if (interval) clearInterval(interval)
     sendToAllPeers({
       from: 'host',
       event: 'painterCouldNotSelectTheme',

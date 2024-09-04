@@ -22,7 +22,8 @@ export { isHaveFriend } from './is/isHaveFriend'
 
 export { sendFriendRequest } from './set/sendFriendRequest'
 export { declineIncomingFriendRequest } from './set/declineIncomingFriendRequest'
-export { acceptIncomingFriendRequest } from './set/acceptIncomingFriendRequest'
+// TODO idk just fix here
+// export { acceptIncomingFriendRequest } from './set/acceptIncomingFriendRequest'
 export { getFriendRequests } from './get/getFriendRequests'
 
 export { setNewUsername } from './set/setNewUsername'

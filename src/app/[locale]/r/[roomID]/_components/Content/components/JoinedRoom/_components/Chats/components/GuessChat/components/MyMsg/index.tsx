@@ -18,11 +18,11 @@ export const MyMsg = ({ msg }: Props) => {
 
   return (
     <div className="flex flex-row gap-[0.40rem] first:!mt-auto">
-      <div className="pt-2">
+      <div className="flex shrink-0 pt-2">
         <Img userID={id} pfp={profilePicture} />
       </div>
       <div className="flex w-[90%] flex-col gap-2">
-        <div className="pt-2 text-[1rem] leading-3 text-white">
+        <div className="line-clamp-1 text-ellipsis break-all pt-2 text-[0.9rem] leading-3 text-white">
           {usernameWithUsernameID ?? id}
         </div>
         <div className="flex break-all rounded-md bg-gradient-to-r from-[#ffffff5f] to-transparent px-2 py-1 leading-5 text-[#0000006d]">

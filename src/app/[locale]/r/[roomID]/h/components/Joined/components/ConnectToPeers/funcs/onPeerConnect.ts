@@ -1,7 +1,12 @@
 import type { User } from 'lucia'
 import type SimplePeer from 'simple-peer'
 import { positiveLog } from '@/utils/positiveLog'
-import { useHostingHealth, usePlayers, useSpectators } from '@/zustand/store'
+import {
+  useCoins,
+  useHostingHealth,
+  usePlayers,
+  useSpectators,
+} from '@/zustand/store'
 import { handlePeerDatas } from './handlePeerDatas'
 import { sendEveryoneNewPlayer } from './sendEveryoneNewPlayer'
 import { sendPrevPlayersToNewPlayer } from './sendPrevPlayersToNewPlayer'
@@ -29,13 +34,23 @@ export const onPeerConnect = (
       })
 
       useSpectators.getState().add(userID)
+      Object.keys(useCoins.getState().coins).forEach((ID) => {
+        sendToPeer(peer, {
+          from: 'host',
+          event: 'coin',
+          data: {
+            to: ID,
+            amount: useCoins.getState().coins[ID]!,
+          },
+        })
+      })
     }
 
     usePlayers.getState().addPlayer(userID, {
       ...user,
     })
 
-    handlePeerDatas(userID)
+    handlePeerDatas(userID, roomID)
     sendPrevPlayersToNewPlayer(userID)
     sendToPeer(peer, {
       from: 'host',

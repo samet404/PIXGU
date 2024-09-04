@@ -2,8 +2,10 @@ import { useSpring, animated } from '@react-spring/web'
 import { useAtom } from 'jotai'
 import { createPortal } from 'react-dom'
 import { isModalOpenAtom } from './atoms'
-import { Modal } from './components/Modal'
 import { Fragment } from 'react'
+import dynamic from 'next/dynamic'
+
+const Modal = dynamic(() => import('./components/Modal').then((m) => m.Modal))
 
 export const HavingIssuesBtn = () => {
   const [isModalOpen, setIsModalOpen] = useAtom(isModalOpenAtom)
@@ -18,7 +20,7 @@ export const HavingIssuesBtn = () => {
     },
   }))
 
-  const handleClick = async () => {
+  const handleClick = () => {
     api.start({
       from: {
         scale: 0.9,

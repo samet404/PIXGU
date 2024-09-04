@@ -20,7 +20,7 @@ type Action = {
 }
 
 const initValue = {
-  cellSideCount: 40,
+  cellSideCount: 80,
   isGridsInitialized: false,
 } as const
 

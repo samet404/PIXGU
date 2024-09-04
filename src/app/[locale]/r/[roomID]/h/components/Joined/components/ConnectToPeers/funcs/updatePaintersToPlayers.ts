@@ -2,7 +2,7 @@ import { api } from '@/trpc/client'
 import { sendToAllPeers } from '@/utils/sendToAllPeers'
 import { sendToPainterPeer } from '@/utils/sendToPainterPeer'
 import { sToMs } from '@/utils/sToMs'
-import { useOtherHostRoomStatus, useWhoIsPainter } from '@/zustand/store'
+import { useMatchStatus, useWhoIsPainter } from '@/zustand/store'
 import { useHostPainterData } from '@/zustand/store/useHostPainterData'
 import { createMatch } from './createMatch'
 
@@ -47,7 +47,7 @@ export const updatePaintersToPlayers = async (roomID: string) => {
         data: 'timeIsUp',
       })
 
-      clearInterval(useOtherHostRoomStatus.getState().matchInterval!)
+      useMatchStatus.getState().cancel()
 
       createMatch(roomID)
     }, sToMs(20)),

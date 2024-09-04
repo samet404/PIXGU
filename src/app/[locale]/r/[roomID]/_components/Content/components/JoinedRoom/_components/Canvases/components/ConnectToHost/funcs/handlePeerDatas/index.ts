@@ -23,6 +23,10 @@ import {
   getSpectator,
   gameIsStopped,
   getPrevSpectators,
+  getEveryoneGuessed,
+  gameEnded,
+  getPrevCoins,
+  getPrevPainterDraw,
 } from './funcs'
 
 /**
@@ -47,9 +51,6 @@ export const handlePeerDatas = (userID: string) => {
         break
       case 'painterSelectingTheme':
         getPainterSelectingTheme()
-        break
-      case 'coin':
-        getCoin(rtcData.data)
         break
       case 'currentPainter':
         getPainter(rtcData.data, userID)
@@ -81,6 +82,9 @@ export const handlePeerDatas = (userID: string) => {
       case 'guessed':
         getGuessed(rtcData.data)
         break
+      case 'coin':
+        getCoin(rtcData.data)
+        break
       case 'yourCoin':
         getMyCoin(rtcData.data)
         break
@@ -101,6 +105,18 @@ export const handlePeerDatas = (userID: string) => {
         break
       case 'prevSpectators':
         getPrevSpectators(rtcData.data)
+        break
+      case 'everyoneGuessed':
+        getEveryoneGuessed()
+        break
+      case 'gameEnded':
+        gameEnded(rtcData.data)
+        break
+      case 'prevCoins':
+        getPrevCoins(rtcData.data)
+        break
+      case 'prevPainterDraw':
+        getPrevPainterDraw(rtcData.data)
         break
       default:
         negativeLog('RECEIVED NOT UNKNOWN EVENT FROM HOST', rtcData)

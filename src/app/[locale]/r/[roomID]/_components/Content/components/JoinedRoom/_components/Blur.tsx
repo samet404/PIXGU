@@ -3,6 +3,7 @@
 import type { PropsWithChildren } from 'react'
 import { useIsGameStopped } from '@/zustand/store/useIsGameStopped'
 import { Outfit } from 'next/font/google'
+import { useAmISpectator } from '@/zustand/store'
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -11,9 +12,10 @@ const outfit = Outfit({
 
 export const Blur = ({ children }: PropsWithChildren) => {
   const isGameStopped = useIsGameStopped((s) => s.value)
+  const isSpectator = useAmISpectator((s) => s.amISpectator)
   const { code, isStopped } = isGameStopped
 
-  if (!isStopped) return null
+  if (!isStopped || isSpectator) return null
 
   const textDiv = (() => {
     const text = (() => {

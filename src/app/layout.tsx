@@ -19,6 +19,8 @@ import { TRPCReactProvider } from '../trpc/react'
 import { Analytics } from '@vercel/analytics/react'
 import type { Locale } from '@/types'
 import { type Metadata } from 'next'
+import { BuyMeCoffee } from './_components/BuyMeCoffee'
+import { Version } from './_components/Version'
 
 export const metadata: Metadata = {
   title: 'PIXGU',
@@ -44,6 +46,8 @@ const RootLayout = (props: {
           <Providers>
             <MusicPlayer />
             {props.children}
+            <BuyMeCoffee />
+            <Version />
             <Analytics />
           </Providers>
         </TRPCReactProvider>

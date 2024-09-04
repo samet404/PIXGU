@@ -15,6 +15,4 @@ export const onPeerError = (
     soketiClient.unsubscribe(
       toPusherKey(`private-room-${roomID}:connect_to_host:${userID}`),
     )
-    usePeers.getState().removePeer(userID)
-    usePlayers.getState().removePlayer(userID)
   })

@@ -3,7 +3,9 @@ import {
   useAmIGuessed,
   useCanvasesMainData,
   useGuessChatLayout,
+  useGuessedPlayers,
   useIsGameStopped,
+  useMatchCount,
   useWhoIsPainterClient,
   useWinnersChatLayout,
 } from '@/zustand/store'
@@ -15,7 +17,7 @@ export const getPainter = async (
   const amIPainter = myUserID === data
 
   useIsGameStopped.getState().open()
-
+  useMatchCount.getState().increment()
   useWhoIsPainterClient.getState().setCurrentPainter({
     painterID: data,
     amIPainter,
@@ -34,6 +36,7 @@ export const getPainter = async (
   dctx.clearRect(0, 0, main!.width, main!.height)
   dctx.beginPath()
 
+  useGuessedPlayers.getState().reset()
   useAmIGuessed.getState().noIMNotGuessed()
 
   if (amIPainter) {

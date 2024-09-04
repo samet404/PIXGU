@@ -12,8 +12,8 @@ const Content = async ({ params }: Props) => {
   if (!user) throw new Error('UNAUTHORIZED')
 
   try {
-    const { isUserHavePermToJoin } = await import('./func')
-    await isUserHavePermToJoin(user.id, roomID)
+    // const { isUserHavePermToJoin } = await import('./func')
+    // await isUserHavePermToJokin(user.id, roomID)
 
     const hostID = await redisDb.get<string>(`room:${roomID}:host_ID`)
     if (!hostID) throw new Error('NO_HOST_ID')

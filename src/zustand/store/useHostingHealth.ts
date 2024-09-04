@@ -6,6 +6,7 @@ type Status =
   | 'gameIsStarted'
   | 'waitingForPlayers'
   | 'readyToStart'
+  | 'gameEnded'
 
 type State = {
   status: Status

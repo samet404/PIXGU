@@ -13,7 +13,7 @@ export const usePing = create<State & Action>((set, get) => ({
 
   set: (input) =>
     set({
-      ping: input,
+      ping: input - 3 >= 0 ? input - 3 : 0,
     }),
 
   get: () => get().ping,

@@ -10,7 +10,7 @@ export const Img = ({ userID, pfp }: Props) => {
 
   if ((pfp && isPfpBroken(userID)) || hasError || !pfp)
     return (
-      <div className="flex size-8 flex-shrink-0 rounded-full bg-white"></div>
+      <div className="flex-shrink-1 flex size-8 rounded-full bg-white"></div>
     )
 
   if (pfp && !hasError) {
@@ -21,7 +21,7 @@ export const Img = ({ userID, pfp }: Props) => {
         height={32}
         onError={() => sethasError(true)}
         alt="pfp"
-        className="flex size-8 flex-shrink-0 rounded-full bg-white"
+        className="flex size-6 flex-shrink-0 rounded-full bg-white"
       />
     )
   }

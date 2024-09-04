@@ -1,15 +1,53 @@
 import { updatePaintersToPlayers } from './updatePaintersToPlayers'
-import { grayLog, getNextArrElmI, mToMs } from '@/utils'
-import { useOtherHostRoomStatus } from '@/zustand/store/useOtherHostRoomStatus'
-import { usePlayers, useWhoIsPainter } from '@/zustand/store'
+import { grayLog, getNextArrElmI, mToMs, sToMs } from '@/utils'
+import { useMatchStatus } from '@/zustand/store/useMatchStatus'
+import {
+  useGuessedPlayers,
+  useHostingHealth,
+  usePixelHistory,
+  usePlayers,
+  useSpectators,
+  useWhoIsPainter,
+} from '@/zustand/store'
 
-export const createMatch = (roomID: string) => {
-  const otherRoomStatues = useOtherHostRoomStatus.getState().get()
-  const playersIDs = usePlayers.getState().getPlayersIDs()
+export const createMatch = async (roomID: string) => {
+  const isSpectator = useSpectators.getState().isSpectator
+  const playersIDs = usePlayers
+    .getState()
+    .getPlayersIDs()
+    .filter((ID) => !isSpectator(ID))
   const players = usePlayers.getState().get
   const setCurrentPainter = useWhoIsPainter.getState().setCurrentPainter
+  const isFirstMatch = useMatchStatus.getState().value.isFirstMatch
+  const isGameEnded = useMatchStatus.getState().value.matchCount === 10
 
-  if (otherRoomStatues.isFirstMatch && players().count >= 2) {
+  if (isGameEnded) {
+    const { useCoins } = await import('@/zustand/store')
+    const { sendToAllPeers } = await import('@/utils')
+
+    useMatchStatus.getState().reset()
+
+    sendToAllPeers({
+      from: 'host',
+      event: 'gameEnded',
+      data: {
+        coins: useCoins.getState().getSortedByAmount(),
+      },
+    })
+
+    useHostingHealth.getState().set('gameEnded')
+
+    setTimeout(() => {
+      if (usePlayers.getState().value.count > 1)
+        useHostingHealth.getState().set('readyToStart')
+      else useHostingHealth.getState().set('waitingForPlayers')
+    }, sToMs(20))
+
+    return
+  }
+
+  if (isFirstMatch && players().count >= 2) {
+    useGuessedPlayers.getState().reset()
     const painterID = playersIDs[0]!
     setCurrentPainter({
       nextPainterI: 1,
@@ -17,15 +55,14 @@ export const createMatch = (roomID: string) => {
       amIPainter: false,
     })
 
-    useOtherHostRoomStatus.getState().add({
-      isFirstMatch: false,
-    })
+    useMatchStatus
+      .getState()
+      .newMatch(setInterval(() => createMatch(roomID), mToMs(4)))
 
-    useOtherHostRoomStatus.getState().add({
-      matchInterval: setInterval(() => createMatch(roomID), mToMs(22)),
-    })
+    usePixelHistory.getState().reset()
     updatePaintersToPlayers(roomID)
   } else if (players().count >= 2) {
+    useGuessedPlayers.getState().reset()
     const whoIsPainter = useWhoIsPainter.getState().value
 
     if (whoIsPainter.status === 'thereIsNoPainter') {
@@ -43,6 +80,7 @@ export const createMatch = (roomID: string) => {
       painterID: playersIDs[nextPainterI]!,
     })
 
+    usePixelHistory.getState().reset()
     updatePaintersToPlayers(roomID)
     grayLog('MATCH CREATED')
   }

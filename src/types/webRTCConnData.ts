@@ -1,4 +1,5 @@
 import type { Player } from '@/zustand/store'
+import type { User } from 'lucia'
 
 /**
  * WebRTCConnData is the type of data that
@@ -6,10 +7,6 @@ import type { Player } from '@/zustand/store'
  */
 export type WebRTCConnData = WebRTCConnDataFromHost | WebRTCConnDataFromClient
 
-/**
- * GuessChatFromHost event is sent from the host to the client to tell
- * the client that a player has sent a chat message.
- */
 export type GuessChatFromHost = {
   event: 'guessChat'
   data: {
@@ -19,11 +16,6 @@ export type GuessChatFromHost = {
   }
 }
 
-/**
- * YourGuessChatFromHost event is a data type sent from the host,
- * where the message of the user who sent the message to the chat is
- *  verified and sent back to the user who sent the message
- */
 export type YourGuessChatFromHost = {
   event: 'yourGuessChat'
   data: {
@@ -32,9 +24,6 @@ export type YourGuessChatFromHost = {
   }
 }
 
-/**
- * GuessChatFromClient event is sent from the client to the host to tell guess chat msg
- */
 export type GuessChatFromClient = {
   event: 'guessChat'
   data: {
@@ -42,10 +31,6 @@ export type GuessChatFromClient = {
   }
 }
 
-/**
- * WinnersChatFromHost event is sent from the host to the client to tell
- * the client that a player has sent a chat message.
- */
 export type WinnersChatFromHost = {
   event: 'winnersChat'
   data: {
@@ -55,11 +40,6 @@ export type WinnersChatFromHost = {
   }
 }
 
-/**
- * YourWinnersChatFromHost event is a data type sent from the host,
- * where the message of the user who sent the message to the chat is
- *  verified and sent back to the user who sent the message
- */
 export type YourWinnersChatFromHost = {
   event: 'yourWinnersChat'
   data: {
@@ -68,9 +48,6 @@ export type YourWinnersChatFromHost = {
   }
 }
 
-/**
- * WinnersChatFromClient event is sent from the client to the host to tell winners chat msg
- */
 export type WinnersChatFromClient = {
   event: 'winnersChat'
   data: {
@@ -78,10 +55,6 @@ export type WinnersChatFromClient = {
   }
 }
 
-/**
- *  The PainterDrawFromHostAndClient event is first thrown by the client to the host.
- * Then the host validates and sent it to all other players.
- */
 export type PainterDrawFromHostAndClient = {
   event: 'painterDraw'
   data: {
@@ -97,27 +70,33 @@ export type PainterDrawFromHostAndClient = {
   }
 }
 
-/**
- * The PainterDrawFromHostAndClient event is first thrown by the host to the new player.
- */
+export type PrevPainterDraw = {
+  event: 'prevPainterDraw'
+  data: {
+    painterID: string
+    pixels: {
+      x: number
+      y: number
+      rgba: {
+        r: number
+        g: number
+        b: number
+        a: number
+      }
+    }[]
+  }
+}
+
 export type PrevPlayers = {
   event: 'prevPlayers'
   data: Record<string, Player>
 }
 
-/**
- * The CurrentPainters event is sent from the host to the client to tell
- * the client who is currently painter.
- */
 export type CurrentPainter = {
   event: 'currentPainter'
   data: string
 }
 
-/**
- * PlayerLeft event is sent from the host to the client to tell
- * the client that a player has left the room.
- */
 export type PlayerLeft = {
   event: 'playerLeft'
   data: {
@@ -125,10 +104,6 @@ export type PlayerLeft = {
   }
 }
 
-/**
- * UserJoined event is sent from the host to the client to tell
- * the client that a player has joined the room.
- */
 export type PlayerJoined = {
   event: 'playerJoined'
   data: {
@@ -179,6 +154,13 @@ export type PainterCouldNotSelectTheme = {
   data: 'timeIsUp' | 'playerLeft'
 }
 
+export type Guessed = {
+  event: 'guessed'
+  data: {
+    ID: string
+  }
+}
+
 export type Coin = {
   event: 'coin'
   data: {
@@ -187,11 +169,9 @@ export type Coin = {
   }
 }
 
-export type Guessed = {
-  event: 'guessed'
-  data: {
-    ID: string
-  }
+export type PrevCoins = {
+  event: 'prevCoins'
+  data: Record<User['id'], number>
 }
 
 export type YourCoin = {
@@ -225,9 +205,17 @@ export type GameIsStopped = {
   event: 'gameIsStopped'
 }
 
-/**
- * DirectlyFromHost is the type of data that is sent directly from the host.
- */
+export type EveryoneGuessed = {
+  event: 'everyoneGuessed'
+}
+
+export type GameEnded = {
+  event: 'gameEnded'
+  data: {
+    coins: [string, number][]
+  }
+}
+
 export type WebRTCConnDataFromHost = (
   | PlayerLeft
   | PlayerJoined
@@ -246,11 +234,15 @@ export type WebRTCConnDataFromHost = (
   | Guessed
   | Coin
   | YourCoin
+  | PrevCoins
   | YouGuessed
   | YouAreSpectator
   | Spectator
   | PrevSpectators
   | GameIsStopped
+  | EveryoneGuessed
+  | PrevPainterDraw
+  | GameEnded
 ) & {
   from: 'host'
 }

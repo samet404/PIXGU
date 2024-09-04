@@ -1,5 +1,3 @@
-import type { IntRange } from './intRange'
-
 export type RGB = `rgb(${string}, ${string}, ${string})`
 export type RGBA = `rgba(${string}, ${string}, ${string}, ${string})`
 export type HSL = `hsl(${string}, ${string}%, ${string}%)`

@@ -5,9 +5,9 @@ import { Img } from '../Img'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
 
 export const Msg = ({ ID, msg }: Props) => {
-  const playersDbInfos = usePlayers((state) => state.getPlayersDbInfos())
-  const pfp = playersDbInfos[ID]?.profilePicture
-  const name = playersDbInfos[ID]?.usernameWithUsernameID
+  const player = usePlayers((s) => s.getPlayer(ID))
+  const pfp = player?.profilePicture
+  const name = player?.usernameWithUsernameID
 
   useEffectOnce(() => {
     const messageList = document.getElementById('guessChatMsgContainer')

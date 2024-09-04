@@ -15,7 +15,7 @@ export const useMyCoin = create<State & Action>((set, get) => ({
 
   add: (input) =>
     set({
-      coin: get().coin + input,
+      coin: parseFloat((get().coin + input).toFixed(2)),
     }),
 
   get: () => get().coin,

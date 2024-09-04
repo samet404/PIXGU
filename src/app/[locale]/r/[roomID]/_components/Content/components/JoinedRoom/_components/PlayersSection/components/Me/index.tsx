@@ -45,9 +45,9 @@ const Me = () => {
       className={clsxMerge(
         `group group flex w-full flex-col items-center justify-center rounded-lg bg-[#ffffff2e]`,
         {
+          'bg-[rgba(254,240,41,0.22)]': amIGuessed === true,
           'bg-[rgba(179,104,255,0.33)]':
             whoIsPainter.status === 'currentPainter' && whoIsPainter.amIPainter,
-          'bg-[rgba(254,240,41,0.22)]': amIGuessed === true,
           'opacity-50': amISpectator,
         },
       )}
@@ -68,7 +68,7 @@ const Me = () => {
         <div
           className={`${inter.className} flex  items-center justify-center rounded-full bg-gradient-to-br from-yellow-200 to-yellow-400 p-2 text-xs tracking-tighter text-white drop-shadow-[0_0px_8px_rgba(0,0,0,0.1)]`}
         >
-          <div className="flex drop-shadow-[0_0px_2px_rgba(0,0,0,0.3)]">
+          <div className="flex w-14 items-center justify-center text-[0.8rem] leading-3 drop-shadow-[0_0px_2px_rgba(0,0,0,0.3)]">
             <Coin />
           </div>
         </div>

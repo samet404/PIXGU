@@ -18,7 +18,7 @@ export const Img = ({ src }: Props) => {
       onError={() => sethasErr(true)}
       sizes="calc(1.15vw + 46px)"
       alt="profilePicture"
-      className="h-full flex-shrink-0 select-none rounded-full drop-shadow-[0_0px_5px_rgba(0,0,0,0.3)]"
+      className="size-8 h-full flex-shrink-0 select-none rounded-full drop-shadow-[0_0px_5px_rgba(0,0,0,0.3)]"
     />
   )
 }

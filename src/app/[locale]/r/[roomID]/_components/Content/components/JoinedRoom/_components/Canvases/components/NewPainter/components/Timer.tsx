@@ -1,6 +1,6 @@
 'use client'
 
-import { calcPercentage } from '@/utils/calcPercentage'
+import { percentageOf } from '@/utils/percentageOf'
 import { useEffect, useRef, useState } from 'react'
 
 export const Timer = () => {
@@ -19,7 +19,7 @@ export const Timer = () => {
         return
       }
 
-      setWidth(calcPercentage(currentSecond, 20))
+      setWidth(percentageOf(currentSecond, 20))
     }, 50)
 
     return () => clearInterval(interval)

@@ -8,6 +8,7 @@ type State = {
 type Action = {
   add: (userID: string, amount: number) => void
   get: (userID: string) => number
+  getSortedByAmount: () => [string, number][]
   reset: () => void
 }
 
@@ -22,10 +23,23 @@ export const useCoins = create<State & Action>((set, get) => ({
     set({
       coins: {
         ...get().coins,
-        [userID]: amount,
+        [userID]: parseFloat(((get().coins[userID] ?? 0) + amount).toFixed(2)),
       },
     }),
+  getSortedByAmount: () => {
+    const coins = get().coins
 
+    let sortable: [string, number][] = []
+    for (let userID in coins) {
+      sortable.push([userID, coins[userID] ?? 0])
+    }
+
+    const sorted = sortable.sort((a, b) => {
+      return a[1] - b[1]
+    })
+
+    return sorted
+  },
   get: (userID) => get().coins[userID] ?? 0,
   reset: () => set(initValue),
 }))

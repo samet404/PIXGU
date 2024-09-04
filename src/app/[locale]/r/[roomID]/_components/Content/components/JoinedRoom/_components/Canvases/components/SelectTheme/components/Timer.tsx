@@ -1,6 +1,6 @@
 'use client'
 
-import { calcPercentage } from '@/utils/calcPercentage'
+import { percentageOf } from '@/utils/percentageOf'
 import { useEffect, useRef, useState, type PropsWithChildren } from 'react'
 
 export const Timer = ({ children }: PropsWithChildren) => {
@@ -19,7 +19,7 @@ export const Timer = ({ children }: PropsWithChildren) => {
         return
       }
 
-      setHeight(calcPercentage(currentSecond, 20))
+      setHeight(percentageOf(currentSecond, 20))
     }, 50)
 
     return () => clearInterval(interval)

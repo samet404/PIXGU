@@ -9,7 +9,7 @@ import {
   sendFriendRequest,
   getFriendRequests,
   declineIncomingFriendRequest,
-  acceptIncomingFriendRequest,
+  // acceptIncomingFriendRequest,
   isUserExitsByID,
   isFriendExitsByID,
   isUserExitsByUsernameWithUsernameID,
@@ -35,6 +35,7 @@ export const userRouter = createTRPCRouter({
   getByUsernameWithUsernameID: getUserByUsernameWithUsernameID,
   getByUsernameAndUsernameID: getUserByUsernameAndUsernameID,
 
+  // TODO fix friend stuff
   isHaveFriend: isHaveFriend,
   getFriends: getFriends,
   getFirstFriend: getFirstFriend,
@@ -48,7 +49,7 @@ export const userRouter = createTRPCRouter({
 
   sendFriendRequest: sendFriendRequest,
   declineIncomingFriendRequest: declineIncomingFriendRequest,
-  acceptIncomingFriendRequest: acceptIncomingFriendRequest,
+  // acceptIncomingFriendRequest: acceptIncomingFriendRequest,
 
   setNewUsername: setNewUsername,
   setNewLocale: setNewLocale,

@@ -35,8 +35,8 @@ const User = ({ id, usernameWithUsernameID, profilePicture }: Props) => {
       className={clsxMerge(
         'group group flex w-full flex-row items-center justify-center text-ellipsis rounded-lg bg-[#ffffff2e] p-2 duration-300',
         {
-          'bg-[rgba(179,104,255,0.33)]': isPainter,
           'bg-[rgba(254,240,41,0.22)]': isGuessed,
+          'bg-[rgba(179,104,255,0.33)]': isPainter,
           'opacity-50': isSpectator,
         },
       )}
@@ -56,7 +56,7 @@ const User = ({ id, usernameWithUsernameID, profilePicture }: Props) => {
       <div
         className={`${inter.className} flex items-center justify-center rounded-full bg-gradient-to-br from-yellow-200 to-yellow-400 p-2 text-xs tracking-tighter text-white drop-shadow-[0_0px_8px_rgba(0,0,0,0.1)]`}
       >
-        <div className="flex items-center justify-center drop-shadow-[0_0px_2px_rgba(0,0,0,0.3)]">
+        <div className="flex w-14 items-center justify-center leading-3 drop-shadow-[0_0px_2px_rgba(0,0,0,0.3)]">
           <Coin ID={id} />
         </div>
       </div>

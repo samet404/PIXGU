@@ -7,18 +7,12 @@ import { Fragment, Suspense } from 'react'
 import { ConnectToHost } from './components/ConnectToHost'
 import { NewPainter } from './components/NewPainter'
 import { SelectTheme } from './components/SelectTheme'
-import { Outfit } from 'next/font/google'
-
-const outfit = Outfit({
-  subsets: ['latin'],
-  weight: ['700'],
-})
 
 const Canvases = () => {
   return (
     <Fragment>
       <div
-        className={`${outfit.className} relative flex rounded-lg border-[0.2rem] border-[#ffffff37]`}
+        className={`relative flex rounded-lg border-[0.2rem] border-[#ffffff37]`}
       >
         <MainCanvas />
         <DraftCanvas />

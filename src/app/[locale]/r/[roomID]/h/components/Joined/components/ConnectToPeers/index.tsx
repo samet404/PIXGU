@@ -7,7 +7,6 @@ import { memberAdded } from './funcs'
 import { toPusherKey } from '@/utils/toPusherKey'
 import type { User } from 'lucia'
 import { useHostingHealth } from '@/zustand/store'
-import { playerLeaved } from './funcs/playerLeaved'
 import { grayLog } from '@/utils/grayLog'
 
 export const ConnectToPeers = () => {

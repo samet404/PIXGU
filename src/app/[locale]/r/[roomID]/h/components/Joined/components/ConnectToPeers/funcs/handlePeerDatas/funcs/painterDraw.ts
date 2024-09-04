@@ -1,23 +1,20 @@
 import type { PainterDrawFromHostAndClient } from '@/types/webRTCConnData'
+import { usePixelHistory } from '@/zustand/store'
 
 export const painterDraw = async (
   data: PainterDrawFromHostAndClient['data'],
   userID: string,
 ) => {
-  const { sendToAllPeers, sendToPeerWithID } = await import('@/utils')
+  const { sendToAllPeers } = await import('@/utils')
   const { useWhoIsPainter } = await import('@/zustand/store')
 
   if (!useWhoIsPainter.getState().isPainter(userID)) {
-    sendToPeerWithID(userID, {
-      from: 'host',
-      event: 'eventBlocked',
-      data: {
-        event: 'painterDraw',
-      },
-    })
+    // TODO
   }
 
   const { x, y, rgba } = data
+  const { r, g, b, a } = rgba
+  usePixelHistory.getState().add({ x, y, r, g, b, a })
 
   sendToAllPeers(
     {

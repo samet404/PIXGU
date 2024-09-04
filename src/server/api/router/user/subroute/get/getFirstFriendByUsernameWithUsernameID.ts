@@ -9,32 +9,32 @@ export const getFirstFriendByUsernameWithUsernameID = loggedUserProducure
     if (!input) return null
     console.log(input)
 
-    const userID = ctx.user.id
+    // const userID = ctx.user.id
 
-    // main db
-    const userWithFriendWithIDColumn = await ctx.db.query.user.findFirst({
-      where: eq(user.id, userID),
-      columns: {},
-      with: {
-        friend: {
-          limit: 1,
-          where: eq(userFriendship.friendUsernameWithUsernameID, input),
-          columns: { friendID: true },
-        },
-      },
-    })
+    // // main db
+    // const userWithFriendWithIDColumn = await ctx.db.query.user.findFirst({
+    //   where: eq(user.id, userID),
+    //   columns: {},
+    //   with: {
+    //     friend: {
+    //       limit: 1,
+    //       where: eq(userFriendship.friendUsernameWithUsernameID, input),
+    //       columns: { friendID: true },
+    //     },
+    //   },
+    // })
 
-    const friendID = userWithFriendWithIDColumn?.friend[0]?.friendID
-    if (!friendID) return null
+    // const friendID = userWithFriendWithIDColumn?.friend[0]?.friendID
+    // if (!friendID) return null
 
-    const friend = await ctx.db.query.user.findFirst({
-      where: eq(user.id, friendID),
-      columns: {
-        id: true,
-        usernameWithUsernameID: true,
-        profilePicture: true,
-      },
-    })
+    // const friend = await ctx.db.query.user.findFirst({
+    //   where: eq(user.id, friendID),
+    //   columns: {
+    //     id: true,
+    //     usernameWithUsernameID: true,
+    //     profilePicture: true,
+    //   },
+    // })
 
-    return friend
+    // return friend
   })

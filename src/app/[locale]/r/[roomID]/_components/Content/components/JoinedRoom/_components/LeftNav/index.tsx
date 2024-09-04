@@ -8,7 +8,9 @@ const outfit = Outfit({
 
 export const LeftNav = () => {
   return (
-    <nav className={`${outfit.className} flex flex-col items-start gap-2`}>
+    <nav
+      className={`${outfit.className} flex flex-row items-start gap-2 rounded-md bg-[#ffffff27] p-1`}
+    >
       <Marketplace />
     </nav>
   )

@@ -43,7 +43,7 @@ export const getFirstFriendUsernameWithUsernameID = loggedUserProducure.query(
       },
     )
 
-    return firstFriendUsernameWithUsernameID?.friend[0]
-      ?.friendUsernameWithUsernameID
+    // return firstFriendUsernameWithUsernameID?.friend[0]
+    //   ?.friendUsernameWithUsernameID
   },
 )

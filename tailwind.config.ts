@@ -46,6 +46,9 @@ export default {
     },
     extend: {
       animation: {
+        'fade-blur-bright': 'fade-blur-bright .5 both ease-in',
+        'fade-blur': 'fade-blur .5s both ease-in',
+        hide: 'hide 0.2s',
         'animate-hosting-room-gradient':
           'hosting-room-gradient 3s ease-in-out infinite',
         'accordion-down': 'accordion-down 0.2s ease-out',
@@ -54,6 +57,44 @@ export default {
         'animate-err-pulse-shadow': 'err-pulse-shadow 3s ease-in-out infinite',
       },
       keyframes: {
+        hide: {
+          from: {
+            display: 'flex',
+          },
+          to: {
+            opacity: '0',
+          },
+        },
+        'fade-blur': {
+          '0%': {
+            filter: 'blur(20px)',
+            opacity: '0',
+          },
+
+          '100%': {
+            opacity: '1',
+          },
+        },
+        'fade-blur-bright': {
+          '0%': {
+            filter: 'blur(20px)',
+            opacity: '0',
+          },
+
+          '100%': {
+            opacity: '1',
+          },
+        },
+
+        'hide-down': {
+          from: {
+            display: 'block',
+          },
+          to: {
+            transform: 'translateY(40px)',
+            opacity: '100',
+          },
+        },
         'pass-input': {
           '0%': {
             backgroundPosition: '0% 50%',
@@ -65,6 +106,7 @@ export default {
             backgroundPosition: ' 0% 50%',
           },
         },
+
         wiggle: {
           '0%, 100%': { transform: 'rotate(-3deg)' },
           '50%': { transform: 'rotate(3deg)' },

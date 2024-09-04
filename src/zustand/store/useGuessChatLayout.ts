@@ -12,6 +12,7 @@ type State = {
 }
 
 type Action = {
+  setSpectatorLayout: () => void
   setPainterLayout: () => void
   setImNotGuessed: () => void
   setIGuessed: () => void

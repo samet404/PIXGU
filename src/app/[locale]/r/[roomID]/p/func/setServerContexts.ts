@@ -15,7 +15,6 @@ export const setServerContexts = async (
   roomID: string,
   user: User,
   hostID?: string,
-  isHostPlayer?: boolean,
 ) => {
   setIsLogged(true)
   setLocale(locale)
@@ -23,8 +22,4 @@ export const setServerContexts = async (
   setRoomID(roomID)
   setUserID(user.id)
   if (hostID) await import('@/context/server').then((m) => m.setHostID(hostID))
-  if (isHostPlayer)
-    await import('@/context/server').then((m) =>
-      m.setIsHostPlayer(isHostPlayer),
-    )
 }

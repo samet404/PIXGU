@@ -4,11 +4,12 @@ export const chat = async (
   data: (GuessChatFromClient | WinnersChatFromClient)['data'],
   event: (GuessChatFromClient | WinnersChatFromClient)['event'],
   userID: string,
+  roomID: string,
 ) => {
   if (data.msg.trim() === '') return
 
   if (event === 'guessChat')
-    import('./funcs/guessChat').then((m) => m.guessChat(data, userID))
+    import('./funcs/guessChat').then((m) => m.guessChat(data, userID, roomID))
 
   const { sendToAllPeers, sendToPeerWithID } = await import('@/utils')
   const { createId } = await import('@paralleldrive/cuid2')

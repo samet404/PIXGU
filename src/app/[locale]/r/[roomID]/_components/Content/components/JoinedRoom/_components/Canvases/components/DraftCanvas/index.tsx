@@ -4,19 +4,33 @@ import { useRef } from 'react'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { useCanvasesMainData } from '@/zustand/store'
 import { roundDownToNearest } from '@/utils/roundDownToNearest'
+import { calcPercentage } from '@/utils/calcPercentage'
 
 export const DraftCanvas = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const cellSideCount = useCanvasesMainData.getState().get().cellSideCount
   const bodyRef = useRef(document.body)
 
-  const getSize = () =>
-    roundDownToNearest(bodyRef.current.offsetHeight * 0.8, 40)
   const setHeightAndWidth = () => {
     if (!canvasRef.current) return
+    const width = (() => {
+      const containerWidth = roundDownToNearest(
+        document.getElementById('canvasesContainer')!.clientWidth,
+        80,
+      )
 
-    canvasRef.current.width = getSize()
-    canvasRef.current.height = getSize()
+      // if container width is greater than 90% of the screen height we set it to 90% of the screen height
+      console.log(document.body.clientHeight)
+      const screenMaxHeight = calcPercentage(90, document.body.clientHeight)
+      console.log(screenMaxHeight + 'maxScreenHeight')
+      if (containerWidth > screenMaxHeight)
+        return roundDownToNearest(screenMaxHeight, 40)
+
+      return containerWidth
+    })()
+
+    canvasRef.current.width = width
+    canvasRef.current.height = width
 
     const ctx = canvasRef.current.getContext('2d')!
     ctx.imageSmoothingEnabled = false

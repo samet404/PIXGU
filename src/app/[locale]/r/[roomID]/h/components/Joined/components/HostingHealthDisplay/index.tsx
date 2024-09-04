@@ -31,6 +31,8 @@ export const HostingHealthDisplay = () => {
         return '#34d3cb70'
       case 'waitingForPlayers':
         return '#348bd370'
+      case 'gameEnded':
+        return '#d6e15a70'
     }
   })()
 
@@ -59,6 +61,8 @@ export const HostingHealthDisplay = () => {
         return 'Everything is ready to start'
       case 'waitingForPlayers':
         return 'You can copy the link and share it with your friends'
+      case 'gameEnded':
+        return 'The game has end. You can view the final results and start a new game if desired.'
       default:
         return ''
     }
@@ -80,6 +84,7 @@ export const HostingHealthDisplay = () => {
             status === 'gameIsStarted',
           'border-b-[#34d3cb] text-[#34d3cb]': status === 'readyToStart',
           'border-b-[#348bd3] text-[#348bd3]': status === 'waitingForPlayers',
+          'border-b-[#eaff00] text-[#eaff00]': status === 'gameEnded',
         },
       )}
     >
@@ -98,6 +103,8 @@ export const HostingHealthDisplay = () => {
                 status === 'readyToStart',
               'inline-block bg-gradient-to-r from-[#348bd3] to-[#348bd3] bg-clip-text text-transparent':
                 status === 'waitingForPlayers',
+              'inline-block bg-gradient-to-r from-[#eaff00] to-[#eaff00] bg-clip-text text-transparent':
+                status === 'gameEnded',
             },
           )}
         >
@@ -106,8 +113,8 @@ export const HostingHealthDisplay = () => {
         <div className="text-[1.2rem] opacity-75">{smText}</div>
       </div>
       <div className="flex flex-row gap-3 drop-shadow-[0_0px_10px_rgba(0,0,0,0.2)]">
-        <StartBtn roomID={roomID} />
-        <StopBtn roomID={roomID} />
+        {status === 'readyToStart' ? <StartBtn roomID={roomID} /> : null}
+        {status === 'gameIsStarted' ? <StopBtn roomID={roomID} /> : null}
         <JoinBtn />
         <CopyBtn />
         <HavingIssuesBtn />

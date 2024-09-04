@@ -35,7 +35,6 @@ const config = {
     return config;
   },
   experimental: {
-    serverComponentsExternalPackages: ['ably'],
   },
   reactStrictMode: false,
   images: {
