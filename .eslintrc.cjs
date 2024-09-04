@@ -73,6 +73,7 @@ const config = {
     '@typescript-eslint/array-type': 'off',
     '@typescript-eslint/consistent-type-definitions': 'off',
     '@typescript-eslint/no-unused-vars': 'off',
+    '@typescript-eslint/no-unnecessary-type-assertion': 'warn',
     '@typescript-eslint/no-useless-empty-export': 'warn',
     '@typescript-eslint/require-await': 'warn',
     '@typescript-eslint/no-empty-function': 'warn',

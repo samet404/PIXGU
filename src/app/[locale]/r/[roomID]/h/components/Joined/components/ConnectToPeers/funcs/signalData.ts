@@ -19,5 +19,5 @@ export const signalData = (data: WebRTC_signalDataToHost) => {
     return
   }
 
-  peers[userID]!.peer.signal(signalData)
+  peers[userID].peer.signal(signalData)
 }
