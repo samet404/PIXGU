@@ -155,6 +155,12 @@ export const env = createEnv({
         (str) => !str.includes('YOUR_PUSHER_SECRET_HERE'),
         'You forgot to change the default pusher secret',
       ),
+    PUSHER_WS_HOST: z
+      .string()
+      .refine(
+        (str) => !str.includes('YOUR_PUSHER_WS_HOST_HERE'),
+        'You forgot to change the default pusher secret',
+      ),
 
     NODE_ENV: z
       .enum(['development', 'test', 'production'])
@@ -195,6 +201,7 @@ export const env = createEnv({
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     GOOGLE_REDIRECT_URI: process.env.GOOGLE_REDIRECT_URI,
 
+    PUSHER_WS_HOST: process.env.PUSHER_WS_HOST,
     PUSHER_APP_ID: process.env.PUSHER_APP_ID,
     PUSHER_KEY: process.env.PUSHER_KEY,
     PUSHER_SECRET: process.env.PUSHER_SECRET,
