@@ -24,6 +24,12 @@ export const env = createEnv({
         (str) => !str.includes('YOUR_NEXT_PUBLIC_PUSHER_KEY_HERE'),
         'You forgot to change the default next public pusher key',
       ),
+    NEXT_PUBLIC_PUSHER_WS_HOST: z
+      .string()
+      .refine(
+        (str) => !str.includes('YOUR_NEXT_PUBLIC_PUSHER_WS_HOST_HERE'),
+        'You forgot to change the default next public pusher ws host',
+      ),
   },
 
   /**
@@ -31,6 +37,7 @@ export const env = createEnv({
    * middlewares) or client-side so we need to destruct manually.
    */
   runtimeEnv: {
+    NEXT_PUBLIC_PUSHER_WS_HOST: process.env.NEXT_PUBLIC_PUSHER_WS_HOST,
     NEXT_PUBLIC_PUSHER_APP_ID: process.env.NEXT_PUBLIC_PUSHER_APP_ID,
     NEXT_PUBLIC_PUSHER_KEY: process.env.NEXT_PUBLIC_PUSHER_KEY,
   },

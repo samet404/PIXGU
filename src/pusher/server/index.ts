@@ -6,7 +6,7 @@ export const getPusherServer = (options?: PusherServer.Options) =>
     appId: env.PUSHER_APP_ID,
     key: env.PUSHER_KEY,
     secret: env.PUSHER_SECRET,
-    host: '127.0.0.1',
+    host: env.PUSHER_WS_HOST,
     port: '6002',
     useTLS: false,
     ...options,

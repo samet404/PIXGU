@@ -4,7 +4,7 @@ import { env } from '@/env/client'
 
 export const getPusherClient = (options?: Options) =>
   new PusherClient(env.NEXT_PUBLIC_PUSHER_KEY, {
-    wsHost: '127.0.0.1',
+    wsHost: env.NEXT_PUBLIC_PUSHER_WS_HOST,
     wsPort: 6002,
     forceTLS: false,
     disableStats: true,
