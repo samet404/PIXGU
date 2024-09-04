@@ -1,19 +1,19 @@
-// import Main from './_components/Main'
-// import CreateRoomButton from './_components/CreateRoomButton'
-// import GradientContainer from './_components/GradientContainer'
-// import BackgroundImages from './_components/BackgroundImages'
+import Main from './_components/Main'
+import CreateRoomButton from './_components/CreateRoomButton'
+import GradientContainer from './_components/GradientContainer'
+import BackgroundImages from './_components/BackgroundImages'
 
-// import './_styles/scrollbars.css'
-// import dynamic from 'next/dynamic'
-// import { api } from '@/trpc/server'
-// import { Suspense } from 'react'
-// import { Waves } from './_components/Waves'
+import './_styles/scrollbars.css'
+import dynamic from 'next/dynamic'
+import { api } from '@/trpc/server'
+import { Suspense } from 'react'
+import { Waves } from './_components/Waves'
 
-// const ErrDisplay = dynamic(() => import('@/components/ErrDisplay'))
+const ErrDisplay = dynamic(() => import('@/components/ErrDisplay'))
 
 const CreateRoom = async () => {
-  // const isLogged = await api.auth.isLogged.query()
-  // if (!isLogged) return <ErkrDisplay msg="UNAUTHORZIED" redirectTo="/login" />
+  const isLogged = await api.auth.isLogged.query()
+  if (!isLogged) return <ErrDisplay msg="UNAUTHORZIED" redirectTo="/login" />
 
   return (
     <div
@@ -23,7 +23,7 @@ const CreateRoom = async () => {
       {/* <Nav /> */}
 
       <div className="relative z-10 flex h-full w-full flex-col items-center justify-start gap-3">
-        {/* <Suspense>
+        <Suspense>
           <BackgroundImages />
         </Suspense>
         <GradientContainer>
@@ -32,7 +32,7 @@ const CreateRoom = async () => {
         </GradientContainer>
         <Suspense>
           <Waves />
-        </Suspense> */}
+        </Suspense>
       </div>
     </div>
   )
