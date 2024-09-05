@@ -28,7 +28,6 @@ export const env = createEnv({
 
     UPSTASH_REDIS_REST_URL: z
       .string()
-      .url()
       .refine(
         (str) => !str.includes('YOUR_UPSTASH_REDIS_REST_URL_HERE'),
         'You forgot to change the default UPSTASH_REDIS_REST_URL',
@@ -43,7 +42,6 @@ export const env = createEnv({
 
     REDIS_URL: z
       .string()
-      .url()
       .refine(
         (str) => !str.includes('YOUR_REDIS_URL_HERE'),
         'You forgot to change the default REDIS_URL',
@@ -79,7 +77,6 @@ export const env = createEnv({
 
     DISCORD_REDIRECT_URI: z
       .string()
-      .url()
       .refine(
         (str) => !str.includes('YOUR_DISCORD_REDIRECT_URI_HERE'),
         'You forgot to change the default discord redirect uri',
@@ -129,7 +126,7 @@ export const env = createEnv({
 
     GOOGLE_REDIRECT_URI: z
       .string()
-      .url()
+
       .refine(
         (str) => !str.includes('YOUR_GOOGLE_REDIRECT_URI_HERE'),
         'You forgot to change the default google redirect uri',
