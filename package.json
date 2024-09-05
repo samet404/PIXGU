@@ -3,6 +3,7 @@
   "name": "drewify",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "bun@1.1.7",
   "scripts": {
     "build:css": "postcss src/app/_styles/globals.css -o output.css -w",
     "build": "next build",
