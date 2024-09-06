@@ -6,7 +6,7 @@ export default {
   out: './src/server/db/sqlDb',
   dialect: 'postgresql',
   dbCredentials: {
-    url: env.NEON_URL,
+    url: env.POSTGRES_URL,
   },
   verbose: true,
   strict: true,

@@ -10,6 +10,20 @@ export const env = createEnv({
    * isn't built with invalid env vars.
    */
   server: {
+    POSTGRES_URL: z
+      .string()
+      .refine(
+        (str) => !str.includes('YOUR_POSTGRES_URL_HERE'),
+        'You forgot to change the default POSTGRES_URL',
+      ),
+
+    POSTGRES_PASSWORD: z
+      .string()
+      .refine(
+        (str) => !str.includes('YOUR_POSTGRES_PASSWORD_HERE'),
+        'You forgot to change the default POSTGRES_PASSWORD',
+      ),
+
     UPSTASH_REDIS_REST_URL: z
       .string()
       .refine(
@@ -137,6 +151,9 @@ export const env = createEnv({
    */
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
+
+    POSTGRES_URL: process.env.POSTGRES_URL,
+    POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD,
 
     UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
     UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
