@@ -48,7 +48,9 @@ export const pusherGameRoom = loggedUserProducure
     //       message: 'Unauthorized channel name',
     //     })
 
-    const isPresenceChannel = channelName.startsWith('presence-')
+    const isPresenceChannel =
+      channelName.startsWith('private-presence-') ||
+      channelName.startsWith('presence-')
 
     const authResponse = pusherServer.authorizeChannel(
       socketId,
