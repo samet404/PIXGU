@@ -10,22 +10,6 @@ export const env = createEnv({
    * isn't built with invalid env vars.
    */
   server: {
-    NEON_URL: z.string().refine((str) => !str.includes('YOUR_NEON_URL_HERE')),
-
-    XATA_BRANCH: z
-      .string()
-      .refine(
-        (str) => !str.includes('YOUR_XATA_BRANCH_HERE'),
-        'You forgot to change the default SQL_DATABASE_URL',
-      ),
-
-    XATA_API_KEY: z
-      .string()
-      .refine(
-        (str) => !str.includes('YOUR_XATA_API_KEY_HERE'),
-        'You forgot to change the default SQL_DATABASE_URL',
-      ),
-
     UPSTASH_REDIS_REST_URL: z
       .string()
       .refine(
@@ -45,20 +29,6 @@ export const env = createEnv({
       .refine(
         (str) => !str.includes('YOUR_REDIS_URL_HERE'),
         'You forgot to change the default REDIS_URL',
-      ),
-
-    ABLY_API_KEY: z
-      .string()
-      .refine(
-        (str) => !str.includes('YOUR_ABLY_API_KEY_HERE'),
-        'You forgot to change the default ABLY_API_KEY',
-      ),
-
-    ABLY_DEFAULT_CLIENT_ID: z
-      .string()
-      .refine(
-        (str) => !str.includes('YOUR_ABLY_DEFAULT_CLIENT_ID_HERE'),
-        'You forgot to change the default ABLY_DEFAULT_CLIENT_ID',
       ),
 
     DISCORD_CLIENT_ID: z
@@ -126,7 +96,6 @@ export const env = createEnv({
 
     GOOGLE_REDIRECT_URI: z
       .string()
-
       .refine(
         (str) => !str.includes('YOUR_GOOGLE_REDIRECT_URI_HERE'),
         'You forgot to change the default google redirect uri',
@@ -169,11 +138,6 @@ export const env = createEnv({
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
 
-    NEON_URL: process.env.NEON_URL,
-
-    XATA_BRANCH: process.env.XATA_BRANCH,
-    XATA_API_KEY: process.env.XATA_API_KEY,
-
     UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
     UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
 
@@ -182,9 +146,6 @@ export const env = createEnv({
     DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,
     DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,
     DISCORD_REDIRECT_URI: process.env.DISCORD_REDIRECT_URI,
-
-    ABLY_API_KEY: process.env.ABLY_API_KEY,
-    ABLY_DEFAULT_CLIENT_ID: process.env.ABLY_DEFAULT_CLIENT_ID,
 
     SPOTIFY_CLIENT_ID: process.env.SPOTIFY_CLIENT_ID,
     SPOTIFY_CLIENT_SECRET: process.env.SPOTIFY_CLIENT_SECRET,

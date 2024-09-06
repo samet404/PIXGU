@@ -78,7 +78,6 @@
     "negotiator": "^0.6.3",
     "next": "14.0.2",
     "nextjs-progressbar": "^0.0.16",
-    "nuqs": "^1.17.0",
     "oslo": "^1.2.0",
     "peerjs": "^1.5.2",
     "prettier": "^3.2.5",
