@@ -10,19 +10,11 @@ export const env = createEnv({
    * isn't built with invalid env vars.
    */
   server: {
-    POSTGRES_URL: z
-      .string()
-      .refine(
-        (str) => !str.includes('YOUR_POSTGRES_URL_HERE'),
-        'You forgot to change the default POSTGRES_URL',
-      ),
+    XATA_BRANCH: z.string(),
+    XATA_API_KEY: z.string(),
+    XATA_CONNECTION_STRING: z.string(),
 
-    POSTGRES_PASSWORD: z
-      .string()
-      .refine(
-        (str) => !str.includes('YOUR_POSTGRES_PASSWORD_HERE'),
-        'You forgot to change the default POSTGRES_PASSWORD',
-      ),
+    BASE_URL: z.string(),
 
     UPSTASH_REDIS_REST_URL: z
       .string()
@@ -152,8 +144,11 @@ export const env = createEnv({
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
 
-    POSTGRES_URL: process.env.POSTGRES_URL,
-    POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD,
+    BASE_URL: process.env.BASE_URL,
+
+    XATA_BRANCH: process.env.XATA_BRANCH,
+    XATA_API_KEY: process.env.XATA_API_KEY,
+    XATA_CONNECTION_STRING: process.env.XATA_CONNECTION_STRING,
 
     UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
     UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,

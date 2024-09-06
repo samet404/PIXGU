@@ -1,16 +1,10 @@
 import * as schema from './schema'
-import { env } from '@/env/server'
-import { Client } from 'pg'
-import { drizzle } from 'drizzle-orm/node-postgres'
+import { drizzle } from 'drizzle-orm/xata-http'
+import { getXataClient } from '../../../xata'
 
-export const client = new Client({
-  connectionString: env.POSTGRES_URL,
-})
+const xata = getXataClient()
 
-await client.connect()
-
-export const db = drizzle(client, {
-  schema: {
-    ...schema,
-  },
+export const db = drizzle(xata, {
+  schema,
+  logger: true,
 })

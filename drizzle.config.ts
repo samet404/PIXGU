@@ -6,8 +6,9 @@ export default {
   out: './src/server/db/sqlDb',
   dialect: 'postgresql',
   dbCredentials: {
-    url: env.POSTGRES_URL,
+    url: env.XATA_CONNECTION_STRING,
   },
+
   verbose: true,
   strict: true,
 } satisfies Config

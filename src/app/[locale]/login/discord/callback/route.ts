@@ -104,6 +104,7 @@ export async function GET(request: Request): Promise<Response> {
         status: 400,
       })
     }
+    console.log(e)
     return new Response(null, {
       status: 500,
     })

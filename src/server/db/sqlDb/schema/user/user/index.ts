@@ -6,6 +6,9 @@ import {
   text,
   bigint,
 } from 'drizzle-orm/pg-core'
+import { blockedUser } from '../blockedUser'
+import { relations } from 'drizzle-orm'
+import { userFriendship } from '../userFriendship'
 
 export const user = pgTable('user', {
   id: text('id').primaryKey(),
@@ -34,3 +37,10 @@ export const user = pgTable('user', {
 
   // playingRoomScoreID: varchar('playing_room_score_ID', { length: 128 }),
 })
+
+export const userRelations = relations(user, ({ many }) => ({
+  blockedBy: many(blockedUser, { relationName: 'blockedBy' }),
+  blocked: many(blockedUser, { relationName: 'blocked' }),
+
+  friend: many(userFriendship),
+}))
