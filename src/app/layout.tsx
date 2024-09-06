@@ -16,7 +16,6 @@ config.autoAddCss = false
 // others
 import { cookies } from 'next/headers'
 import { TRPCReactProvider } from '../trpc/react'
-import { Analytics } from '@vercel/analytics/react'
 import type { Locale } from '@/types'
 import { type Metadata } from 'next'
 import { BuyMeCoffee } from './_components/BuyMeCoffee'
@@ -48,7 +47,6 @@ const RootLayout = (props: {
             {props.children}
             <BuyMeCoffee />
             <Version />
-            <Analytics />
           </Providers>
         </TRPCReactProvider>
       </body>
