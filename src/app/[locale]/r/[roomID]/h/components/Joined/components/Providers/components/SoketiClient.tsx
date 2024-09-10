@@ -58,22 +58,11 @@ export const SoketiClient = ({ children, roomID }: Props) => {
       },
     )
 
-    soketiClientRef.current.connection.bind('pusher:member_added', (member) => {
-      console.log('pusher:member_added', member)
+    soketiClientRef.current.connection.bind('pusher:error', (err: any) => {
+      console.error('pusher:error', err)
     })
 
-    soketiClientRef.current.connection.bind(
-      'pusher:member_removed',
-      (member) => {
-        console.log('pusher:member_removed', member)
-      },
-    )
-
-    soketiClientRef.current.connection.bind('pusher:error', (pusherError) => {
-      console.error('pusher:error', pusherError)
-    })
-
-    soketiClientRef.current.connection.bind('pusher:ping', (latency) => {
+    soketiClientRef.current.connection.bind('pusher:ping', (latency: any) => {
       console.log('pusher:ping', latency)
     })
 

@@ -24,7 +24,7 @@ export const ConnectToPeers = () => {
       setHostingHealth('waitingForPlayers')
     })
 
-    myConnectPresenceChannel.bind('pusher:subscription_error', (e) => {
+    myConnectPresenceChannel.bind('pusher:subscription_error', (e: any) => {
       console.log(e)
       setHostingHealth('networkError')
     })

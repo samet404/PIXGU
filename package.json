@@ -88,6 +88,7 @@
     "react-player": "^2.13.0",
     "redis": "^4.6.12",
     "server-only-context": "^0.1.0",
+    "sharp": "^0.33.5",
     "simple-peer": "^9.11.1",
     "superjson": "^1.13.1",
     "swr": "^2.2.4",

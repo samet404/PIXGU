@@ -1,8 +1,8 @@
 'use client'
 
 import { usePlayers } from '@/zustand/store'
-import { Img } from '../Img'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
+import { UserPfp } from '@/components/UserPfp'
 
 export const Msg = ({ ID, msg }: Props) => {
   const player = usePlayers((s) => s.getPlayer(ID))
@@ -20,7 +20,16 @@ export const Msg = ({ ID, msg }: Props) => {
   return (
     <div className="flex flex-row gap-[0.40rem] first:!mt-auto">
       <div className="pt-2">
-        <Img userID={ID} pfp={pfp} />
+        <UserPfp
+          ID={ID}
+          src={pfp}
+          width={32}
+          height={32}
+          alt="pfp"
+          // TODO sizes here pls
+          sizes="TODO"
+          className="flex size-6 flex-shrink-0 rounded-full bg-white"
+        />
       </div>
       <div className="flex w-[90%] flex-col gap-2">
         <div className="text-whitek overflow-ellipsis pt-2 text-[1rem] leading-3">

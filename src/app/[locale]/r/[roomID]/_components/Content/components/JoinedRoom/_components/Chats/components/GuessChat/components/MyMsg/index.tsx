@@ -1,7 +1,7 @@
 'use client'
 
+import { UserPfp } from '@/components/UserPfp'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
-import { Img } from '../Img'
 import { useMyUserInfoForRoomStore } from '@/zustand/provider'
 
 export const MyMsg = ({ msg }: Props) => {
@@ -19,7 +19,16 @@ export const MyMsg = ({ msg }: Props) => {
   return (
     <div className="flex flex-row gap-[0.40rem] first:!mt-auto">
       <div className="flex shrink-0 pt-2">
-        <Img userID={id} pfp={profilePicture} />
+        <UserPfp
+          ID={id}
+          src={profilePicture}
+          width={32}
+          height={32}
+          alt="pfp"
+          // TODO sizes here pls
+          sizes="TODO"
+          className="flex size-6 flex-shrink-0 rounded-full bg-white"
+        />
       </div>
       <div className="flex w-[90%] flex-col gap-2">
         <div className="line-clamp-1 text-ellipsis break-all pt-2 text-[0.9rem] leading-3 text-white">

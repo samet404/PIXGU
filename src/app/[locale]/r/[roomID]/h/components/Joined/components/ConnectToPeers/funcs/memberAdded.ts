@@ -37,11 +37,11 @@ export const memberAdded = (
     toPusherKey(`private-room-${roomID}:connect_to_host:${userID}`),
   )
 
-  myConnectChannel.bind('pusher:subscription_succeeded', (data: any) => {
+  myConnectChannel.bind('cription_succeeded', (data: any) => {
     console.log('subscription_succeeded', data)
   })
 
-  myConnectChannel.bind('pusher:subscription_error', (data: any) => {
+  myConnectChannel.bind('cription_error', (data: any) => {
     console.log('subscription_error', data)
   })
   myConnectChannel.bind('webRTC_signal', (data: WebRTC_signalDataToHost) =>
