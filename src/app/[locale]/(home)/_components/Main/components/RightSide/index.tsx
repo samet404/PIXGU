@@ -1,5 +1,5 @@
 import Settings from './components/Settings'
-import UserProfile from './components/UserProfile'
+import { UserProfile } from './components/UserProfile'
 
 const RightSide = () => {
   return (

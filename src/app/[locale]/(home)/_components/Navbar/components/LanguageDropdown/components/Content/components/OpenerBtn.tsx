@@ -1,9 +1,8 @@
 'use client'
 
-import { useAtomValue, useSetAtom } from 'jotai'
+import { useSetAtom } from 'jotai'
 import { switchIsDropdownOpenAtom } from '../atoms'
 import { Inter } from 'next/font/google'
-import { useFirstPartOfPathname } from '@/hooks'
 
 const inter = Inter({
   subsets: ['latin'],

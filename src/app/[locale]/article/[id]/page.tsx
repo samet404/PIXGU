@@ -1,19 +1,8 @@
 import Footer from '../_components/Footer'
 import Header from '../_components/Header'
 import LeftSidebar from '../_components/LeftSidebar'
-import RightSidebar from '../_components/RightSidebar'
-import Image from 'next/image'
-import Link from 'next/link'
-import { type ReactNode } from 'react'
-import { api } from '@/trpc/server'
-import { Inter } from 'next/font/google'
 
-const inter = Inter({
-  subsets: ['latin'],
-  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
-})
-
-const Article = async ({ params }: Props) => {
+const Article = ({ params }: Props) => {
   return (
     <div className="flex h-full w-full flex-row  bg-gradient-to-tr from-[#0d0d34] via-[#0d0d34] to-[#23236f]">
       <LeftSidebar />

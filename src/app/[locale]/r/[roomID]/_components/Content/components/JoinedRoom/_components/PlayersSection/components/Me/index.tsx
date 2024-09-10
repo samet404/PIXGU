@@ -1,8 +1,7 @@
 'use client'
 
 import { useMyUserInfoForRoomStore } from '@/zustand/provider'
-import { Urbanist, Inter } from 'next/font/google'
-import { Img } from './components/Img'
+import { Inter } from 'next/font/google'
 import { Coin } from './components/Coin'
 import {
   useAmIGuessed,
@@ -11,11 +10,7 @@ import {
 } from '@/zustand/store'
 import { clsxMerge } from '@/utils/clsxMerge'
 import { useEffect, useRef } from 'react'
-
-const urbanist = Urbanist({
-  subsets: ['latin'],
-  weight: '700',
-})
+import { UserPfp } from '@/components/UserPfp'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -26,9 +21,8 @@ const Me = () => {
   const successSfxRef = useRef<HTMLAudioElement>(
     new Audio('/sound/sfx/success.mp3'),
   )
-  const { profilePicture, usernameWithUsernameID } = useMyUserInfoForRoomStore(
-    (state) => state.user,
-  )
+  const { profilePicture, usernameWithUsernameID, id } =
+    useMyUserInfoForRoomStore((state) => state.user)
   const amISpectator = useAmISpectator((s) => s.amISpectator)
   const whoIsPainter = useWhoIsPainterClient((s) => s.value)
   const amIGuessed = useAmIGuessed((s) => s.amIGuessed)
@@ -54,14 +48,17 @@ const Me = () => {
     >
       <div className={`flex w-full flex-row items-center justify-between p-2`}>
         <div className="flex w-full flex-row items-center gap-2 peer-hover:bg-red-200 ">
-          {profilePicture ? (
-            <Img src={profilePicture} />
-          ) : (
-            <div className="flex-shrink-0 select-none rounded-full bg-white drop-shadow-[0_0px_5px_rgba(0,0,0,0.3)]"></div>
-          )}
-          <div
-            className={`${urbanist.className} line-clamp-1 w-[70%] break-all pr-1 text-sm tracking-wide text-[#ffffffd4] drop-shadow-[0_0px_2px_rgba(0,0,0,0.55)]`}
-          >
+          <UserPfp
+            ID={id}
+            width={46}
+            height={46}
+            src={profilePicture}
+            sizes="calc(1.15vw + 46px)"
+            alt="profilePicture"
+            className="size-8 h-full flex-shrink-0 select-none rounded-full drop-shadow-[0_0px_5px_rgba(0,0,0,0.3)]"
+          />
+
+          <div className="line-clamp-1 w-[70%] break-all pr-1 text-sm tracking-wide text-[#ffffffd4] drop-shadow-[0_0px_2px_rgba(0,0,0,0.55)]">
             {usernameWithUsernameID}
           </div>
         </div>

@@ -23,8 +23,6 @@ const User = async ({ params }: UserPageProps) => {
     usernameID: usernameID,
   })
 
-  console.log(user)
-
   if (user.length == 0) return notFound()
 
   if (user[0])

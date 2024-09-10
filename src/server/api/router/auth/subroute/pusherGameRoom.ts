@@ -23,6 +23,7 @@ export const pusherGameRoom = loggedUserProducure
 
     const isUserHost = hostID === user.id
 
+    //TODO add security improvements here
     // if (isUserHost)
     //   if (
     //     channelName !==
@@ -48,25 +49,17 @@ export const pusherGameRoom = loggedUserProducure
     //       message: 'Unauthorized channel name',
     //     })
 
-    const isPresenceChannel =
-      channelName.startsWith('private-presence-') ||
-      channelName.startsWith('presence-')
+    const isPresenceChannel = channelName.startsWith('presence-')
 
-    const authResponse = pusherServer.authorizeChannel(
-      socketId,
-      channelName,
-      isPresenceChannel
-        ? {
-            user_id: isUserHost && isHostApi ? user.id + '-HOST' : user.id,
-            user_info: {
-              profilePicture: user.profilePicture,
-              username: user.username,
-              usernameID: user.usernameID,
-              usernameWithUsernameID: user.usernameWithUsernameID,
-            },
-          }
-        : undefined,
-    )
-
-    return authResponse
+    if (isPresenceChannel)
+      return pusherServer.authorizeChannel(socketId, channelName, {
+        user_id: isUserHost && isHostApi ? user.id + '-HOST' : user.id,
+        user_info: {
+          profilePicture: user.profilePicture,
+          username: user.username,
+          usernameID: user.usernameID,
+          usernameWithUsernameID: user.usernameWithUsernameID,
+        },
+      })
+    else return pusherServer.authorizeChannel(socketId, channelName)
   })

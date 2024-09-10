@@ -6,7 +6,6 @@ import { eq } from 'drizzle-orm'
 export const getByID = publicProcedure
   .input(z.string().cuid2())
   .query(async ({ ctx, input }) => {
-    console.log(ctx)
     const articleResult = await ctx.db
       .select()
       .from(article)
@@ -14,7 +13,6 @@ export const getByID = publicProcedure
       .limit(1)
 
     const firstArticle = articleResult[0]
-    console.log(ctx.session)
 
     return firstArticle
   })

@@ -9,7 +9,6 @@ import { getLocale } from '@/context/server'
 
 const LeftSide = async () => {
   const locale = getLocale()
-  console.log(`locale: ${locale}`)
   const langObj = await getLangObj(locale)
 
   return (

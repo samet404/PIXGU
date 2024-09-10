@@ -1,6 +1,6 @@
 'use client'
 
-import { useBrokenPlayersPfp } from '@/zustand/store'
+import { useBrokenUserPfps } from '@/zustand/store'
 import Image from 'next/image'
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
@@ -11,9 +11,9 @@ const Default = dynamic(() =>
 
 export const Img = ({ ID, src }: Props) => {
   const [hasError, setHasError] = useState<boolean>(false)
-  const isPfpBroken = useBrokenPlayersPfp((state) => state.isBroken)
+  const isPfpBroken = useBrokenUserPfps((state) => state.isBroken)
 
-  if (hasError) useBrokenPlayersPfp.getState().add(ID)
+  if (hasError) useBrokenUserPfps.getState().add(ID)
 
   if (isPfpBroken(ID) || hasError || !src)
     return (

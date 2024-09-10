@@ -1,23 +1,89 @@
 'use client'
 
-import { useEffect, type ReactNode } from 'react'
+import { useEffect, useRef, type ReactNode } from 'react'
 import { SoketiClientCtx } from '@/context/client/react'
 import { getPusherClient } from '@/pusher/client'
+import type Pusher from 'pusher-js'
 
 export const SoketiClient = ({ children, roomID }: Props) => {
-  const soketiClient = getPusherClient({
-    authEndpoint: `h/api/pusher/auth`,
-    cluster: 'your_cluster',
-  })
+  const soketiClientRef = useRef<Pusher>(
+    getPusherClient({
+      authEndpoint: `${window.location.href}/api/pusher/auth`,
+      cluster: 'your_cluster',
+    }),
+  )
+
+  console.log('soketiClient', soketiClientRef.current)
 
   useEffect(() => {
+    const handleConnectionStateChange = (state: string) => {
+      console.log('Connection state changed:', state)
+      if (state === 'disconnected' || state === 'failed') {
+        console.error(
+          `Connection ${state}. Please check your internet connection.`,
+        )
+      }
+    }
+
+    const handleError = (err: any) => {
+      console.error('Pusher error:', err)
+    }
+
+    soketiClientRef.current.connection.bind(
+      'state_change',
+      handleConnectionStateChange,
+    )
+    soketiClientRef.current.connection.bind('error', handleError)
+
+    soketiClientRef.current.connection.bind('connected', () => {
+      console.log('Connected to Pusher')
+    })
+
+    soketiClientRef.current.connection.bind('disconnected', () => {
+      console.log('Disconnected from Pusher')
+      console.warn('Disconnected from the server. Attempting to reconnect...')
+    })
+
+    soketiClientRef.current.connection.bind('failed', () => {
+      console.error('Connection to Pusher failed')
+      console.error(
+        'Failed to connect to the server. Please refresh the page or try again later.',
+      )
+    })
+
+    soketiClientRef.current.connection.bind(
+      'pusher:subscription_succeeded',
+      () => {
+        console.log('pusher:subscription_succeeded')
+      },
+    )
+
+    soketiClientRef.current.connection.bind('pusher:member_added', (member) => {
+      console.log('pusher:member_added', member)
+    })
+
+    soketiClientRef.current.connection.bind(
+      'pusher:member_removed',
+      (member) => {
+        console.log('pusher:member_removed', member)
+      },
+    )
+
+    soketiClientRef.current.connection.bind('pusher:error', (pusherError) => {
+      console.error('pusher:error', pusherError)
+    })
+
+    soketiClientRef.current.connection.bind('pusher:ping', (latency) => {
+      console.log('pusher:ping', latency)
+    })
+
     return () => {
-      soketiClient.disconnect()
+      soketiClientRef.current.disconnect()
     }
   }, [])
 
   return (
-    <SoketiClientCtx.Provider value={soketiClient}>
+    <SoketiClientCtx.Provider value={soketiClientRef.current}>
       {children}
     </SoketiClientCtx.Provider>
   )

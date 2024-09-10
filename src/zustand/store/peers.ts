@@ -1,5 +1,4 @@
 import type { Peers } from '@/types'
-import { filterObj } from '@/utils/filterObj'
 import type SimplePeer from 'simple-peer'
 import { create } from 'zustand'
 

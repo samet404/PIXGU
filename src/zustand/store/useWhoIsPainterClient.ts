@@ -1,4 +1,3 @@
-import type { IntRange } from '@/types/intRange'
 import { create } from 'zustand'
 
 type Value =

@@ -3,7 +3,7 @@ import Image from 'next/image'
 import paperAndInk from '@/png/paperAndInk.png'
 import clsx from 'clsx'
 
-const HowToPlay = async ({ name, description }: Props) => {
+const HowToPlay = ({ name, description }: Props) => {
   return (
     <div>
       <MainButton

@@ -4,7 +4,7 @@ import { useEffectReturnOnce } from '@/hooks/useEffectReturn'
 import {
   usePeers,
   usePlayers,
-  useBrokenPlayersPfp,
+  useBrokenUserPfps,
   useRoomWinnersChatMsgsStore,
   useIsOnlineStore,
   useMyCoin,
@@ -16,7 +16,7 @@ import {
 export const ResetStates = () => {
   const resetPlayers = usePlayers.getState().reset
   const resetPeers = usePeers.getState().reset
-  const resetBrokenPlayersPfp = useBrokenPlayersPfp.getState().reset
+  const resetBrokenPlayersPfp = useBrokenUserPfps.getState().reset
   const resetWinnersChat = useRoomWinnersChatMsgsStore.getState().reset
   const resetIsOnline = useIsOnlineStore.getState().reset
   const resetPing = usePing.getState().reset

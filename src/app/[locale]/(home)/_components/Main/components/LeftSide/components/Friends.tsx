@@ -3,7 +3,7 @@ import Image from 'next/image'
 import friends from '@/png/friends.png'
 import { getIsLogged } from '@/context/server'
 
-const Friends = async ({ name, description }: Props) => {
+const Friends = ({ name, description }: Props) => {
   const isLogged = getIsLogged()
 
   return (

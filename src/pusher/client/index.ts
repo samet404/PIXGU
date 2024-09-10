@@ -5,12 +5,9 @@ import { env } from '@/env/client'
 export const getPusherClient = (options?: Options) =>
   new PusherClient(env.NEXT_PUBLIC_PUSHER_KEY, {
     wsHost: env.NEXT_PUBLIC_PUSHER_WS_HOST,
-    wsPort: 6002,
-    forceTLS: false,
-    disableStats: true,
+    wssPort: parseInt(env.NEXT_PUBLIC_PUSHER_WSS_PORT),
+    cluster: env.NEXT_PUBLIC_PUSHER_CLUSTER,
     enabledTransports: ['ws', 'wss'],
-    cluster: 'your-cluster',
-    authEndpoint: '/api/pusher/auth',
-
+    forceTLS: true,
     ...options,
   })

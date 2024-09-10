@@ -8,7 +8,7 @@ type Action = {
   reset: () => void
 }
 
-export const useBrokenPlayersPfp = create<State & Action>((set, get) => ({
+export const useBrokenUserPfps = create<State & Action>((set, get) => ({
   value: new Set<string>([]),
   add: (userID) => get().value.add(userID),
   isBroken: (userID) => get().value.has(userID),

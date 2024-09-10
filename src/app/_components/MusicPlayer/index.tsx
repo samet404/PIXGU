@@ -8,10 +8,10 @@ import { useAtomValue } from 'jotai'
 import { musicAtom } from '../../_atoms/atomsWithStorage'
 
 const playlist = [
-  'SODYQmix4h0',
-  '2taAeB6CbtI',
-  'ZKBKJ9DmOhs',
-  'QiblLmQ4258',
+  'U0TXIXTzJEY',
+  'pqDqIMUo2OU',
+  'D1-8AvV0I3s',
+  '3NBeC7maoZc',
   'JjT0p2z4hGgb',
 ]
 

@@ -11,13 +11,7 @@ export const Client = () => {
   const countRef = useRef(0)
 
   useEffectOnce(() => {
-    const channel = soketiClient.subscribe('private-hello')
-
-    channel.bind('my-event', (data: string) => setText(data))
-
-    const channel2 = soketiClient.subscribe('hello')
-
-    const channel3 = soketiClient.subscribe('presence-private-hello')
+    const channel3 = soketiClient.subscribe('hello')
     channel3.bind('pusher:subscription_succeeded', (members: any) => {
       console.log('members', members)
     })
@@ -26,10 +20,10 @@ export const Client = () => {
       console.log('member added', member)
     })
 
-    channel2.bind('my-event', (data: string) => setText(data))
+    channel3.bind('my-event', (data: string) => setText(data))
 
     return () => {
-      channel.unsubscribe()
+      channel3.unsubscribe()
     }
   })
 

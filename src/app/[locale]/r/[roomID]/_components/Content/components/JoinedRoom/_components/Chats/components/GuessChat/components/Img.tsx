@@ -1,12 +1,12 @@
-import { useBrokenPlayersPfp } from '@/zustand/store/useBrokenPlayersPfp'
+import { useBrokenUserPfps } from '@/zustand/store'
 import Image from 'next/image'
 import { useState } from 'react'
 
 export const Img = ({ userID, pfp }: Props) => {
   const [hasError, sethasError] = useState<boolean>(false)
-  const isPfpBroken = useBrokenPlayersPfp((state) => state.isBroken)
+  const isPfpBroken = useBrokenUserPfps((state) => state.isBroken)
 
-  if (hasError) useBrokenPlayersPfp.getState().add(userID)
+  if (hasError) useBrokenUserPfps.getState().add(userID)
 
   if ((pfp && isPfpBroken(userID)) || hasError || !pfp)
     return (

@@ -1,23 +1,21 @@
+import { UserPfp } from '@/components/UserPfp'
 import { api } from '@/trpc/server'
-import Image from 'next/image'
 import Link from 'next/link'
 
-const UserProfile = async () => {
+export const UserProfile = async () => {
   const user = await api.auth.getUser.query()
-  console.log(user)
-
-  const profilePicture = user?.profilePicture
-  const usernameWithUsernameID = user?.usernameWithUsernameID
-
   if (!user) return null
-  if (!profilePicture) return null
+
+  const profilePicture = user.profilePicture
+  const userID = user.id
 
   return (
     <Link
-      href={`/u/${usernameWithUsernameID}`}
+      href={`/u/${userID}`}
       className="h-12 w-12 rounded-full border-[0.3rem] border-[white] drop-shadow-[0_0px_3px_rgba(0,0,0,0.2)] duration-100 hover:opacity-60"
     >
-      <Image
+      <UserPfp
+        ID={userID}
         src={profilePicture}
         alt="Profile picture"
         width={66}
@@ -28,5 +26,3 @@ const UserProfile = async () => {
     </Link>
   )
 }
-
-export default UserProfile

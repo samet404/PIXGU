@@ -3,7 +3,7 @@ import Image from 'next/image'
 import createroom from '@/png/createroom.png'
 import { getIsLogged } from '@/context/server'
 
-const CreateRoom = async ({ name, description }: Props) => {
+const CreateRoom = ({ name, description }: Props) => {
   const isLogged = getIsLogged()
 
   return (

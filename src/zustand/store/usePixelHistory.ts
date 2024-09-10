@@ -1,5 +1,3 @@
-import type { IntRange } from '@/types/intRange'
-
 type X = number
 type Y = number
 

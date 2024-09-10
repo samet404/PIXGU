@@ -10,6 +10,7 @@ export const Provider = ({ children }: PropsWithChildren) => {
   useEffect(() => {
     return () => {
       pusherClient.disconnect()
+      console.log('Disconnected from Pusher')
     }
   }, [])
 

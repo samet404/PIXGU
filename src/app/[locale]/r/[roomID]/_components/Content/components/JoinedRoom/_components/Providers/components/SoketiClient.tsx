@@ -1,14 +1,18 @@
 'use client'
 
-import { useEffect, type ReactNode } from 'react'
+import { useEffect, useRef, type ReactNode } from 'react'
 import { SoketiClientCtx } from '@/context/client/react'
 import { getPusherClient } from '@/pusher/client'
+import type Pusher from 'pusher-js'
 
 export const SoketiClient = ({ children, roomID }: Props) => {
-  const soketiClient = getPusherClient({
-    authEndpoint: `${roomID}/api/pusher/auth`,
-    cluster: 'your_cluster',
-  })
+  const soketiClientRef = useRef<Pusher>(
+    getPusherClient({
+      authEndpoint: `${window.location.href}/api/pusher/auth`,
+      cluster: 'your_cluster',
+    }),
+  )
+  const soketiClient = soketiClientRef.current
 
   useEffect(() => {
     return () => {

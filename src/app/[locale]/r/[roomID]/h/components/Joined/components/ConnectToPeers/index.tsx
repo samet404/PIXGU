@@ -20,6 +20,15 @@ export const ConnectToPeers = () => {
       toPusherKey(`presence-private-room-${roomID}:connect_to_host`),
     )
 
+    myConnectPresenceChannel.bind('pusher:subscription_succeeded', () => {
+      setHostingHealth('waitingForPlayers')
+    })
+
+    myConnectPresenceChannel.bind('pusher:subscription_error', (e) => {
+      console.log(e)
+      setHostingHealth('networkError')
+    })
+
     myConnectPresenceChannel.bind(
       'pusher:member_added',
       (member: { id: string; info: Omit<User, 'id'> }) =>
@@ -33,10 +42,6 @@ export const ConnectToPeers = () => {
         // playerLeaved(soketiClient, member.id, roomID)
       },
     )
-  })
-
-  useEffectOnce(() => {
-    setHostingHealth('waitingForPlayers')
   })
 
   return null

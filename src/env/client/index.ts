@@ -12,12 +12,6 @@ export const env = createEnv({
    */
 
   client: {
-    NEXT_PUBLIC_PUSHER_APP_ID: z
-      .string()
-      .refine(
-        (str) => !str.includes('YOUR_NEXT_PUBLIC_PUSHER_APP_ID_HERE'),
-        'You forgot to change the default next public pusher app id',
-      ),
     NEXT_PUBLIC_PUSHER_KEY: z
       .string()
       .refine(
@@ -30,6 +24,19 @@ export const env = createEnv({
         (str) => !str.includes('YOUR_NEXT_PUBLIC_PUSHER_WS_HOST_HERE'),
         'You forgot to change the default next public pusher ws host',
       ),
+    NEXT_PUBLIC_PUSHER_WSS_PORT: z
+      .string()
+      .refine(
+        (str) => !str.includes('YOUR_NEXT_PUBLIC_PUSHER_WSS_PORT_HERE'),
+        'You forgot to change the default next public pusher ws host',
+      ),
+
+    NEXT_PUBLIC_PUSHER_CLUSTER: z
+      .string()
+      .refine(
+        (str) => !str.includes('YOUR_NEXT_PUBLIC_PUSHER_CLUSTER_HERE'),
+        'You forgot to change the default next public pusher cluster',
+      ),
   },
 
   /**
@@ -37,8 +44,9 @@ export const env = createEnv({
    * middlewares) or client-side so we need to destruct manually.
    */
   runtimeEnv: {
+    NEXT_PUBLIC_PUSHER_CLUSTER: process.env.NEXT_PUBLIC_PUSHER_CLUSTER,
+    NEXT_PUBLIC_PUSHER_WSS_PORT: process.env.NEXT_PUBLIC_PUSHER_WSS_PORT,
     NEXT_PUBLIC_PUSHER_WS_HOST: process.env.NEXT_PUBLIC_PUSHER_WS_HOST,
-    NEXT_PUBLIC_PUSHER_APP_ID: process.env.NEXT_PUBLIC_PUSHER_APP_ID,
     NEXT_PUBLIC_PUSHER_KEY: process.env.NEXT_PUBLIC_PUSHER_KEY,
   },
   /**
