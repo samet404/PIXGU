@@ -4,6 +4,7 @@ import { useMatchStatus } from '@/zustand/store/useMatchStatus'
 import {
   useGuessedPlayers,
   useHostingHealth,
+  useHostPainterData,
   usePixelHistory,
   usePlayers,
   useSpectators,

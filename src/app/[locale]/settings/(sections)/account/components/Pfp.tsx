@@ -30,11 +30,14 @@ const Pfp = ({ profilePicture }: { profilePicture: string | null }) => {
         </div>
       )}
 
-      <button
-        className={`${inter.className} rounded-lg bg-[rgba(255,255,255,0.5)] p-2 font-[500] text-[rgba(0,0,0,0.5)] shadow-[0_5px_10px_-5px_rgba(0,0,0,0.25)] outline-white`}
+      <div
+        className={`${inter.className} flex flex-row items-center gap-2 text-[rgba(0,0,0,0.5)]`}
       >
-        Change Pfp
-      </button>
+        <button className="rounded-lg bg-[rgba(255,255,255,0.5)] p-2 font-[500] shadow-[0_5px_10px_-5px_rgba(0,0,0,0.25)] outline-white">
+          Change Pfp
+        </button>
+        (coming soon)
+      </div>
     </div>
   )
 }

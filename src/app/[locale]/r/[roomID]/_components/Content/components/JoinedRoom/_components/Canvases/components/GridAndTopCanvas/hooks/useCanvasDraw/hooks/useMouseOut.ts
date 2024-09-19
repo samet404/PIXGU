@@ -30,10 +30,10 @@ export const useMouseOut = () => {
       return
     }
 
-    grid.addEventListener('mouseout', handler)
+    grid.addEventListener('pointerout', handler)
 
     return () => {
-      grid.removeEventListener('mouseout', handler)
+      grid.removeEventListener('pointerout', handler)
     }
   })
 }

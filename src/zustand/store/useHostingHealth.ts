@@ -7,6 +7,7 @@ type Status =
   | 'waitingForPlayers'
   | 'readyToStart'
   | 'gameEnded'
+  | 'wsError'
 
 type State = {
   status: Status

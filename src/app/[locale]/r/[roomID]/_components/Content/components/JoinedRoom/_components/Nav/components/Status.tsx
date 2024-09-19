@@ -4,10 +4,12 @@ export const Status = ({ text, theme, ...rest }: Props) => {
   return (
     <div
       className={clsxMerge(
-        'flex flex-row items-center gap-3 rounded-full bg-[rgba(52,211,153,0.20)]   duration-[2000ms]',
+        'flex flex-row items-center gap-3 rounded-full bg-[rgba(52,211,153,0.20)]  duration-[2000ms]',
         {
           'bg-[rgba(52,211,153,0.2)]': theme === 'green',
           'bg-[rgba(248,113,113,0.2)]': theme === 'red',
+          'animate-pulse bg-[rgba(255,226,112,0.27)] animate-infinite':
+            theme === 'bright yellow',
           'animate-pulse bg-[rgba(250,204,21,0.2)] animate-infinite':
             theme === 'yellow',
           'p-1': !text,
@@ -20,6 +22,7 @@ export const Status = ({ text, theme, ...rest }: Props) => {
         className={clsxMerge('size-3 rounded-full duration-[2000ms]', {
           'bg-emerald-400': theme === 'green',
           'bg-red-400': theme === 'red',
+          'bg-yellow-200': theme === 'bright yellow',
           'bg-yellow-400': theme === 'yellow',
         })}
       ></div>
@@ -32,5 +35,5 @@ export const Status = ({ text, theme, ...rest }: Props) => {
 
 type Props = {
   text: string
-  theme: 'green' | 'red' | 'yellow'
+  theme: 'green' | 'red' | 'yellow' | 'bright yellow'
 } & ComponentProps<'div'>

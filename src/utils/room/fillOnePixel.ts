@@ -1,5 +1,5 @@
 import type { RGBAObj } from '@/types'
-import { useCanvasesMainData } from '@/zustand/store'
+import { useCanvasesMainData, useLastPixel } from '@/zustand/store'
 
 /**
  * Fills one pixel on the canvas
@@ -27,6 +27,11 @@ export const fillOnePixel = (x: number, y: number, rgba: RGBAObj) => {
     data[i + 2] = b // Blue
     data[i + 3] = Math.floor(a * 255) // Alpha (rounded to nearest integer)
   }
+
+  useLastPixel.getState().set({
+    x,
+    y,
+  })
 
   // Put the ImageData on the canvas
   mctx.putImageData(imageData, posX, posY)

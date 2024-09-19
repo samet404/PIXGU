@@ -1,21 +1,26 @@
 import { IsOpen } from './components/IsOpen'
+import Image from 'next/image'
+import background from '@/png/market.png'
+import { Button } from './components/Button'
 
 export const Marketplace = () => {
   return (
     <IsOpen>
-      <div className="flex h-full w-full flex-col p-2">
-        <div className="flex flex-col gap-1">
-          <div className="flex flex-col gap-1">
-            <div className="text-[3rem] leading-[4rem] text-[#ffffffdb]  drop-shadow-[0_0px_2px_rgba(0,0,0,0.70)]">
-              Marketplace
-            </div>
-            <div className="pb-[0.40rem] text-[1.2rem] text-[#ffffffdb]  drop-shadow-[0_0px_2px_rgba(0,0,0,0.40)]">
-              The mysterious salesman silently stares into your soul.
-            </div>
-          </div>
-          <div className="pb-[0.40rem] text-[1.2rem] text-[#ffffffdb]  drop-shadow-[0_0px_2px_rgba(0,0,0,0.40)]"></div>
+      <div className="flex h-full w-full flex-row">
+        <Image
+          src={background}
+          alt="marketplace"
+          className="z-99 flex-shrink-0"
+        />
+        <div
+          style={{
+            scrollbarWidth: 'none',
+          }}
+          className="flex w-full grid-cols-5 gap-4 overflow-y-scroll p-2 "
+        >
+          <Button name="letterHint" price={200} />
+          <Button name="ai" price={200} />
         </div>
-        <div className="grid grid-cols-5 grid-rows-5 gap-2 "></div>
       </div>
     </IsOpen>
   )

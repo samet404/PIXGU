@@ -64,6 +64,7 @@ export const getUserByID = publicProcedure
           usernameID: user.usernameID,
           usernameWithUsernameID: user.usernameWithUsernameID,
           profilePicture: user.profilePicture,
+          createdAt: user.createdAt,
         })
         .from(user)
         .where(eq(user.id, input))

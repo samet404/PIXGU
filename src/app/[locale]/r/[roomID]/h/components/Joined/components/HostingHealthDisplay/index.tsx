@@ -6,7 +6,6 @@ import { StartBtn } from './components/StartBtn'
 import { CopyBtn } from './components/CopyBtn'
 import { JoinBtn } from './components/JoinBtn'
 import { useHostingHealth } from '@/zustand/store'
-import { Fragment } from 'react'
 import { useRoomIDStore } from '@/zustand/provider'
 import { StopBtn } from './components/StopBtn'
 import { HavingIssuesBtn } from './components/HavingIssuesBtn'
@@ -25,6 +24,8 @@ export const HostingHealthDisplay = () => {
         return 'rgba(52, 211, 153, 0.438)'
       case 'networkError':
         return 'rgba(211, 52, 100, 0.438)'
+      case 'wsError':
+        return 'rgba(211, 52, 100, 0.438)'
       case 'loading':
         return 'rgba(255, 184, 70, 0.400)'
       case 'readyToStart':
@@ -40,6 +41,8 @@ export const HostingHealthDisplay = () => {
     switch (status) {
       case 'gameIsStarted':
         return 'Started'
+      case 'wsError':
+        return 'Websocket Error'
       case 'networkError':
         return 'Network Error'
       case 'readyToStart':
@@ -57,6 +60,8 @@ export const HostingHealthDisplay = () => {
         return 'Game is running right now, you can use host tools to manage game'
       case 'networkError':
         return 'Your internet connection has been interrupted, please refresh the page when you reconnect to the internet and then ask other players to refresh'
+      case 'wsError':
+        return "There is a problem with the websocket connection, if trying again doesn't work, please contact with us"
       case 'readyToStart':
         return 'Everything is ready to start'
       case 'waitingForPlayers':
@@ -65,6 +70,28 @@ export const HostingHealthDisplay = () => {
         return 'The game has end. You can view the final results and start a new game if desired.'
       default:
         return ''
+    }
+  })()
+
+  const joinBtn = (() => {
+    switch (status) {
+      case 'readyToStart':
+        return <JoinBtn />
+      case 'waitingForPlayers':
+        return <JoinBtn />
+      default:
+        return null
+    }
+  })()
+
+  const copyBtn = (() => {
+    switch (status) {
+      case 'readyToStart':
+        return <CopyBtn />
+      case 'waitingForPlayers':
+        return <CopyBtn />
+      default:
+        return null
     }
   })()
 
@@ -77,7 +104,7 @@ export const HostingHealthDisplay = () => {
         `relative flex h-full w-full select-none flex-col items-center justify-center gap-5 border-b-8  text-center drop-shadow-[0_0px_2px_rgba(0,0,0,0.55)] ease-in-out animate-delay-700`,
         {
           'border-b-[#e0376ada] text-[rgba(224,55,106,0.853)]':
-            status === 'networkError',
+            status === 'networkError' || 'wsError',
           'animate-pulse border-b-[#ffb746] text-[rgb(255,183,70)]':
             status === 'loading',
           'animate-pulse border-b-[#34d399ff] text-emerald-400':
@@ -88,13 +115,13 @@ export const HostingHealthDisplay = () => {
         },
       )}
     >
-      <div className="flex w-[90%] flex-col gap-[0.1rem]">
+      <div className="flex w-[90%] flex-col items-center gap-[0.1rem]">
         <div
           className={clsxMerge(
             'from-[30%] via-[#ffffff90] to-[70%] text-[2.5rem] leading-[2.9rem]',
             {
               'inline-block bg-gradient-to-r from-[rgba(224,55,106,0.853)] to-[rgba(224,55,106,0.853)] bg-clip-text text-transparent':
-                status === 'networkError',
+                status === 'networkError' || 'wsError',
               'inline-block bg-gradient-to-r from-[rgb(255,183,70)] to-[rgb(255,183,70)] bg-clip-text text-transparent':
                 status === 'loading',
               'inline-block bg-gradient-to-r from-emerald-400 to-emerald-400 bg-clip-text text-transparent':
@@ -110,13 +137,15 @@ export const HostingHealthDisplay = () => {
         >
           {lgText}
         </div>
-        <div className="text-[1.2rem] opacity-75">{smText}</div>
+        <div className="text-[1.2rem]  leading-6 opacity-75 lg:w-[50%]">
+          {smText}
+        </div>
       </div>
-      <div className="flex flex-row gap-3 drop-shadow-[0_0px_10px_rgba(0,0,0,0.2)]">
+      <div className="flex h-8 flex-row gap-3 drop-shadow-[0_0px_10px_rgba(0,0,0,0.2)]">
         {status === 'readyToStart' ? <StartBtn roomID={roomID} /> : null}
         {status === 'gameIsStarted' ? <StopBtn roomID={roomID} /> : null}
-        <JoinBtn />
-        <CopyBtn />
+        {joinBtn}
+        {copyBtn}
         <HavingIssuesBtn />
       </div>
       <div className="absolute bottom-4 w-[90%] text-[0.9rem] text-[#ffffff63]"></div>

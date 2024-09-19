@@ -4,6 +4,8 @@ import Image from 'next/image'
 import { Tool } from '../Tool'
 import { RgbaPicker } from './components/RgbaPicker'
 import ColorPalette from '@/svg/color-palette-svgrepo-com.svg'
+import { useRgba } from '@/zustand/store'
+import { Color } from './components/Color'
 
 export const ColorPicker = () => {
   return (
@@ -15,9 +17,10 @@ export const ColorPicker = () => {
           className="h-full w-full opacity-55"
         />
       }
-      className="group hover:bg-[#ffffff44]"
+      className="group relative rounded-b-none hover:bg-[#ffffff44]"
     >
       <RgbaPicker />
+      <Color />
     </Tool>
   )
 }

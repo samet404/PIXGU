@@ -43,7 +43,7 @@ export const NewPainter = () => {
           backgroundImage:
             'radial-gradient(at 100% 100%, hsla(261,87%,68%,1) 0px, transparent 50%), radial-gradient(at 0% 100%, hsla(261,87%,68%,1) 0px, transparent 50%)',
         }}
-        className={`absolute z-50 flex h-full h-full w-full w-full flex-col items-center justify-center rounded-[0.4rem]`}
+        className={`absolute z-50 flex h-full w-full flex-col items-center justify-center rounded-[0.4rem] bg-white`}
       >
         {content}
       </div>

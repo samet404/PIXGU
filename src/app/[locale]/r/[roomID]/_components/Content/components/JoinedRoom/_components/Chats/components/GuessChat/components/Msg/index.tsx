@@ -18,21 +18,19 @@ export const Msg = ({ ID, msg }: Props) => {
   })
 
   return (
-    <div className="flex flex-row gap-[0.40rem] first:!mt-auto">
-      <div className="pt-2">
-        <UserPfp
-          ID={ID}
-          src={pfp}
-          width={32}
-          height={32}
-          alt="pfp"
-          // TODO sizes here pls
-          sizes="TODO"
-          className="flex size-6 flex-shrink-0 rounded-full bg-white"
-        />
-      </div>
-      <div className="flex w-[90%] flex-col gap-2">
-        <div className="text-whitek overflow-ellipsis pt-2 text-[1rem] leading-3">
+    <div className="flex flex-row justify-start gap-[0.40rem] first:!mt-auto">
+      <UserPfp
+        ID={ID}
+        src={pfp}
+        width={32}
+        height={32}
+        alt="pfp"
+        // TODO sizes here pls
+        sizes="TODO"
+        className="flex-shrink-1 flex size-8 rounded-full border-[0.1rem] border-white bg-white"
+      />
+      <div className="flex flex-col gap-1">
+        <div className="overflow-ellipsis text-[1rem] leading-3 text-white">
           {name ?? ID}
         </div>
         <div className="flex break-all rounded-md bg-gradient-to-r from-[#ffffff5f] to-transparent px-2 py-1 leading-5 text-[#0000006d]">

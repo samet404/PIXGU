@@ -4,7 +4,7 @@ import { getLocale } from '@/context/server'
 
 const Content = () => {
   return (
-    <div className="relative z-10">
+    <div className="group relative z-10">
       <OpenerBtn lang={getLocale()} />
       <Dropdown />
     </div>

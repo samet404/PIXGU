@@ -15,7 +15,7 @@ import { useAmISpectator } from './useAmISpectator'
 import { usePixelsOnDraw } from './usePixelsOnDraw'
 import { useSelectThemePanel } from './useSelectThemePanel'
 import { useNewPainterPanel } from './useNewPainterPanel'
-import { useMatchCount } from './useMatchCount'
+import { useMatchStatusClient } from './useMatchStatusClient'
 
 type Code = 'connectingToHost' | 'waitingForHost' | 'waitingForPlayers'
 
@@ -23,7 +23,7 @@ type State = {
   value:
     | {
         isStopped: true
-        code: Code
+        code: Code[]
       }
     | {
         isStopped: false
@@ -40,7 +40,7 @@ type Action = {
 const initState: State = {
   value: {
     isStopped: true,
-    code: 'connectingToHost',
+    code: ['connectingToHost', 'waitingForPlayers', 'waitingForHost'],
   },
 }
 
@@ -53,6 +53,15 @@ export const useIsGameStopped = create<State & Action>((set, get) => ({
     }),
 
   stop: (code) => {
+    set({
+      value: {
+        ...get(),
+        isStopped: true,
+        code: [code, ...(get().value.code ?? [])],
+      },
+    })
+
+    if (get().value.isStopped) return
     useWhoIsPainterClient.getState().reset()
     useAmIPainting.getState().reset()
     useWinnersChatLayout.getState().reset()
@@ -68,11 +77,8 @@ export const useIsGameStopped = create<State & Action>((set, get) => ({
     useAmISpectator.getState().reset()
     usePixelsOnDraw.getState().reset()
     useNewPainterPanel.getState().reset()
-    useMatchCount.getState().reset()
+    useMatchStatusClient.getState().reset()
     useSelectThemePanel.getState().reset()
-    set({
-      value: { ...get(), isStopped: true, code },
-    })
   },
   reset: () => set(initState),
 }))

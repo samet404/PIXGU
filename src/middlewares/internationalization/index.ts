@@ -15,7 +15,7 @@ export const internationalization: NextMiddleware = async (
   req: NextRequest,
 ) => {
   const { pathname } = req.nextUrl
-
+  console.log('pathname', pathname)
   if (
     pathname.startsWith('/image/') ||
     pathname.startsWith('/sound') ||
@@ -28,8 +28,9 @@ export const internationalization: NextMiddleware = async (
 
   // if user is logged in
   const sessionId = cookies().get(lucia.sessionCookieName)?.value ?? null
+  const isLoggedIn = sessionId !== null && sessionId !== undefined
 
-  if (sessionId) {
+  if (isLoggedIn) {
     const authInfo = await lucia.validateSession(sessionId)
 
     if (authInfo.user) {
@@ -58,6 +59,13 @@ export const internationalization: NextMiddleware = async (
 
         // if pathname has another locale redirect to redis locale
         if (pathnameAnotherLocale) {
+          if (
+            pathname.replace(pathnameAnotherLocale, '').startsWith('/login')
+          ) {
+            req.nextUrl.pathname = `/${redisLocale}`
+            return NextResponse.redirect(req.nextUrl)
+          }
+
           req.nextUrl.pathname = `/${redisLocale}${pathname.replace(`/${pathnameAnotherLocale}`, '')}`
           return NextResponse.redirect(req.nextUrl)
         }
@@ -72,16 +80,52 @@ export const internationalization: NextMiddleware = async (
   // if user is not logged in or user has no locale in redis
 
   // if pathname has locale
-  const pathnameHasLocale = locales.some(
+  const pathnameLocale = locales.find(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`,
   )
 
   // if pathname has locale don't do anything
-  if (pathnameHasLocale) return
+
+  if (pathnameLocale) {
+    const pathnameWithoutLocale = pathname.replace(`/${pathnameLocale}`, '')
+    console.log('pathnameWithoutLocale', pathnameWithoutLocale)
+
+    if (!isLoggedIn)
+      if (
+        !pathnameWithoutLocale.startsWith('/start') &&
+        !pathnameWithoutLocale.startsWith('/login')
+      ) {
+        req.nextUrl.pathname = `/${pathnameLocale}/start`
+        return NextResponse.redirect(req.nextUrl)
+      }
+
+    if (isLoggedIn)
+      if (
+        pathnameWithoutLocale.startsWith('/start') ||
+        pathnameWithoutLocale.startsWith('/login')
+      ) {
+        req.nextUrl.pathname = `/${pathnameLocale}`
+        return NextResponse.redirect(req.nextUrl)
+      }
+
+    return
+  }
 
   // if pathname has no locale, add locale to pathname with user's device locale then redirect
   const locale = (await import('./funcs/getLocale')).getLocale(req, locales)
-  req.nextUrl.pathname = `/${locale}${pathname}`
 
+  if (!isLoggedIn)
+    if (!pathname.startsWith('/start') && !pathname.startsWith('/login')) {
+      req.nextUrl.pathname = `/${locale}/start`
+      return NextResponse.redirect(req.nextUrl)
+    }
+
+  if (isLoggedIn)
+    if (pathname.startsWith('/start') || pathname.startsWith('/login')) {
+      req.nextUrl.pathname = `/${locale}`
+      return NextResponse.redirect(req.nextUrl)
+    }
+
+  req.nextUrl.pathname = `/${locale}${pathname}`
   return NextResponse.redirect(req.nextUrl)
 }

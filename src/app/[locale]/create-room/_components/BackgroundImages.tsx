@@ -8,7 +8,7 @@ import octopus from '@/png/octopus.png'
 
 const BackgroundImages = () => {
   return (
-    <div className="absolute h-[30rem] w-full animate-fade drop-shadow-[0_0px_10px_rgba(0,0,0,0.8)]">
+    <div className="pointer-events-none absolute h-[30rem] w-full animate-fade drop-shadow-[0_0px_10px_rgba(0,0,0,0.8)]">
       <Image
         className="absolute left-[10%] top-[10%] size-10 rotate-12 opacity-30"
         src={starImg}

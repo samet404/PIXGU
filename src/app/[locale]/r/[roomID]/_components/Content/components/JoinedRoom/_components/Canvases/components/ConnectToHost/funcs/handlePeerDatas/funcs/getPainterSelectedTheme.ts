@@ -1,2 +1,11 @@
-export const getPainterSelectedTheme = async () =>
-  (await import('@/zustand/store')).useNewPainterPanel.getState().close()
+import {
+  useMatchStatusClient,
+  useNewPainterPanel,
+  useSelectThemePanel,
+} from '@/zustand/store'
+
+export const getPainterSelectedTheme = () => {
+  useMatchStatusClient.getState().newMatch()
+  useNewPainterPanel.getState().close()
+  useSelectThemePanel.getState().close()
+}

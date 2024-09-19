@@ -8,6 +8,7 @@ export const getSelectedTheme = async (
   const { useHostPainterData } = await import('@/zustand/store')
 
   const hostPainterData = useHostPainterData.getState().value
+  console.log('hostPainterData', hostPainterData)
   if (hostPainterData.status !== 'painterSelectingTheme') return
 
   const { themes } = hostPainterData
@@ -25,13 +26,8 @@ export const getSelectedTheme = async (
     selectedTheme: data,
   })
 
-  sendToAllPeers(
-    {
-      from: 'host',
-      event: 'painterSelectedTheme',
-    },
-    {
-      except: [userID],
-    },
-  )
+  sendToAllPeers({
+    from: 'host',
+    event: 'painterSelectedTheme',
+  })
 }

@@ -17,7 +17,7 @@ export const MyMsg = ({ msg }: Props) => {
   })
 
   return (
-    <div className="flex flex-row gap-[0.40rem] first:!mt-auto">
+    <div className="flex flex-row justify-start gap-[0.40rem] first:!mt-auto">
       <div className="flex shrink-0 pt-2">
         <UserPfp
           ID={id}
@@ -30,7 +30,7 @@ export const MyMsg = ({ msg }: Props) => {
           className="flex size-6 flex-shrink-0 rounded-full bg-white"
         />
       </div>
-      <div className="flex w-[90%] flex-col gap-2">
+      <div className="flex flex-col gap-1">
         <div className="line-clamp-1 text-ellipsis break-all pt-2 text-[0.9rem] leading-3 text-white">
           {usernameWithUsernameID ?? id}
         </div>

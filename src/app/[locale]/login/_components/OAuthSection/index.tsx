@@ -27,12 +27,12 @@ const OAuthSection = async () => {
         <Spotify />
         <Github />
       </div>
-      <Link
+      {/* <Link
         href={'/articles/oeu90qdjAS)'}
         className={`${inter.className} whitespace-pre-line rounded-md bg-[rgba(255,255,255,0.2)] p-2 text-sm font-[400] underline`}
       >
         {langObj.passwordArticleDesc}
-      </Link>
+      </Link> */}
     </section>
   )
 }

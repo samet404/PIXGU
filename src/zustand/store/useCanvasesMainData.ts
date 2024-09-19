@@ -9,6 +9,7 @@ export type CanvasesMainData = {
   grid?: HTMLCanvasElement
 
   isGridsInitialized?: boolean
+  zoom: number
 }
 
 type State = CanvasesMainData
@@ -22,6 +23,7 @@ type Action = {
 const initValue = {
   cellSideCount: 80,
   isGridsInitialized: false,
+  zoom: 0.5,
 } as const
 
 export const useCanvasesMainData = create<State & Action>((set, get) => ({

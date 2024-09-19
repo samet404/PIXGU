@@ -1,6 +1,5 @@
 #gameEnded::-webkit-scrollbar,
-#playersSection::-webkit-scrollbar,
-#rootDiv::-webkit-scrollbar {
+#playersSection::-webkit-scrollbar {
   width: 0.4rem;
 }
 
@@ -31,4 +30,19 @@
 #playersSection::-webkit-scrollbar-thumb:hover,
 #rootDiv::-webkit-scrollbar-thumb:hover {
   background: rgba(181, 181, 181, 0.5);
+}
+
+#rootDiv::-webkit-scrollbar {
+  width: 0px;
+}
+
+.react-transform-wrapper.transform-component-module_wrapper__SPB86 {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.react-transform-wrapper {
+  width: 100% !important;
+  position: relative !important;
+  display: flex !important;
 }

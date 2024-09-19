@@ -20,9 +20,9 @@ const Nav = async () => {
       }}
       className={`${outfit.className} flex h-full w-52 flex-col items-center justify-between overflow-y-auto pb-5 pt-7 text-[rgba(255,255,255,0.8)] shadow-[0_0px_40px_10px_rgba(0,0,0,0.4)]`}
     >
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col items-center gap-4">
         {isLogged ? <NavItem name="Account" /> : null}
-        <NavItem name="Themes" />
+        {/* <NavItem name="Themes" /> */}
         <NavItem name="Controls" />
         <NavItem name="Sounds" />
       </div>

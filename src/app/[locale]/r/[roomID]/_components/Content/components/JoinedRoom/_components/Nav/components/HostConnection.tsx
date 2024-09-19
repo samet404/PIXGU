@@ -8,9 +8,18 @@ export const HostConnection = () => {
   const status = useHostPeer((state) => state.status)
 
   const theme = (() => {
-    if (status === 'connected') return 'green'
-    if (status === 'connecting') return 'yellow'
-    return 'red'
+    switch (status) {
+      case 'connected':
+        return 'green'
+      case 'failed':
+        return 'red'
+      case 'disconnected':
+        return 'red'
+      case 'connecting':
+        return 'yellow'
+      case 'host not in room':
+        return 'bright yellow'
+    }
   })()
 
   return <Status text={firstLetterUppercase(status)} theme={theme} />

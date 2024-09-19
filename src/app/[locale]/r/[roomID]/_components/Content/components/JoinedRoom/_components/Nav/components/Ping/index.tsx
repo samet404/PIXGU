@@ -9,20 +9,31 @@ export const Ping = () => {
   const hostConnectionStatus = useHostPeer((state) => state.status)
 
   const theme = (() => {
-    if (hostConnectionStatus === 'failed') return 'red'
-    if (hostConnectionStatus === 'connecting') return 'yellow'
+    switch (hostConnectionStatus) {
+      case 'failed':
+        return 'red'
+      case 'connecting':
+        return 'yellow'
+      case 'host not in room':
+        return 'bright yellow'
+    }
+
     if (ping < 50) return 'green'
     if (ping < 100) return 'yellow'
     return 'red'
   })()
 
   const text = (() => {
-    if (
-      hostConnectionStatus === 'failed' ||
-      hostConnectionStatus === 'connecting'
-    )
-      return '-'
-    return `${ping}ms`
+    switch (hostConnectionStatus) {
+      case 'failed':
+        return '-'
+      case 'connecting':
+        return '-'
+      case 'host not in room':
+        return '-'
+      default:
+        return `${ping}ms`
+    }
   })()
 
   return <Status text={text} theme={theme} />

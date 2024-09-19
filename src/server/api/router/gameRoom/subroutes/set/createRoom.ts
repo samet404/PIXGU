@@ -27,9 +27,17 @@ export const createRoom = loggedUserProducure
     }),
   )
   .mutation(async ({ input, ctx }) => {
+    const userID = ctx.user.id
+    const createdRooms = await ctx.redisDb.scard(`user:${userID}:created_rooms`)
+
+    if (createdRooms >= 4)
+      throw new TRPCError({
+        code: 'UNAUTHORIZED',
+        message: 'You have reached the maximum number of rooms',
+      })
+
     const createdAt = new Date()
     const { name, password } = input
-    const userID = ctx.user.id
 
     const createId = init({
       length: 5,
@@ -59,10 +67,13 @@ export const createRoom = loggedUserProducure
     await ctx.redisDb.sadd(`room:${roomID!}:active_players`, userID)
     await ctx.redisDb.set(`room:${roomID!}:created_at`, createdAt)
     await ctx.redisDb.set(`room:${roomID!}:host_ID`, userID)
+    await ctx.redisDb.sadd(`user:${userID}:created_rooms`, roomID!)
 
     if (password) {
       await ctx.redisDb.set(`room:${roomID!}:password`, password)
       await ctx.redisDb.sadd(`room:${roomID!}:players_known_pass`, userID)
+    } else {
+      await ctx.redisDb.sadd(`active_public_rooms`, roomID!)
     }
 
     return {

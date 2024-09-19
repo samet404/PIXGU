@@ -18,9 +18,7 @@ const CreateRoomButton = () => {
   const router = useRouter()
 
   const { mutate, isLoading, isError, error, isSuccess } =
-    api.gameRoom.create.useMutation({
-      onSuccess: (data) => router.push(`/r/${data.createdRoomID}/h`),
-    })
+    api.gameRoom.create.useMutation()
 
   const btnText = (() => {
     if (isLoading) return 'Creating...'
@@ -28,7 +26,7 @@ const CreateRoomButton = () => {
       if (error.data?.zodError) return 'invalid input'
       else return 'Something went wrong'
     }
-    if (isSuccess) return 'Redirecting to room...'
+    if (isSuccess) return 'Created'
     return 'Create'
   })()
 

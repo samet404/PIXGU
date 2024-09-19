@@ -28,6 +28,7 @@ import {
   getPrevCoins,
   getPrevPainterDraw,
 } from './funcs'
+import { getPainterTrash } from './funcs/getPainterTrash'
 
 /**
  * This function handles different peer datas.
@@ -117,6 +118,11 @@ export const handlePeerDatas = (userID: string) => {
         break
       case 'prevPainterDraw':
         getPrevPainterDraw(rtcData.data)
+        break
+      case 'marketItemPurchased':
+        break
+      case 'painterTrash':
+        getPainterTrash()
         break
       default:
         negativeLog('RECEIVED NOT UNKNOWN EVENT FROM HOST', rtcData)

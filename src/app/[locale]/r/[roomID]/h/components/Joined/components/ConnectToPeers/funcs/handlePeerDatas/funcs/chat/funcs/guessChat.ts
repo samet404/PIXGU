@@ -2,6 +2,7 @@ import type { GuessChatFromClient } from '@/types/webRTCConnData'
 import {
   useCoins,
   useGuessedPlayers,
+  useHostPainterData,
   useMatchStatus,
   useWhoIsPainter,
 } from '@/zustand/store'
@@ -13,12 +14,17 @@ export const guessChat = async (
   userID: string,
   roomID: string,
 ) => {
-  const { useHostPainterData } = await import('@/zustand/store')
   const painterData = useHostPainterData.getState().value
+  if (painterData.status !== 'painterSelectedTheme') return
 
+  console.log('guessChat', {
+    theme: useMatchStatus.getState().value.matchInterval
+      ? painterData.selectedTheme.toLocaleLowerCase()
+      : null,
+    msg: data.msg,
+  })
   if (
     useMatchStatus.getState().value.matchInterval &&
-    painterData.status === 'painterSelectedTheme' &&
     painterData.selectedTheme?.toLocaleLowerCase() ===
       data.msg.toLocaleLowerCase()
   ) {

@@ -36,6 +36,7 @@ export const usePlayers = create<State & Action>((set, get) => ({
 
   get: () => get().value,
   removePlayer: (userID: string) => {
+    if (!get().value.obj[userID]) return
     set({
       value: {
         ...get().value,

@@ -20,6 +20,12 @@ export const useMouseUp = () => {
     const dctx = draft!.getContext('2d')!
     const mctx = main!.getContext('2d')!
 
+    console.log({
+      draftHeight: draft!.height,
+      draftWidth: draft!.width,
+      mainHeight: main!.height,
+      mainWidth: main!.width,
+    })
     mctx.drawImage(draft!, 0, 0) // copy drawing to main
     dctx.clearRect(0, 0, draft!.width, draft!.height) // clear draft
 
@@ -33,9 +39,9 @@ export const useMouseUp = () => {
       return
     }
 
-    grid.addEventListener('mouseup', handler)
+    grid.addEventListener('pointerup', handler)
     return () => {
-      grid.removeEventListener('mouseup', handler)
+      grid.removeEventListener('pointerup', handler)
     }
   })
 }

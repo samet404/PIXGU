@@ -21,22 +21,6 @@ export const updatePaintersToPlayers = async (roomID: string) => {
     roomID,
   })) as [string, string]
 
-  sendToAllPeers(
-    {
-      from: 'host',
-      event: 'painterSelectingTheme',
-    },
-    {
-      except: [painterID],
-    },
-  )
-
-  sendToPainterPeer({
-    from: 'host',
-    event: 'selectTheme',
-    data: themes,
-  })
-
   useHostPainterData.getState().set({
     status: 'painterSelectingTheme',
     themes,
@@ -51,5 +35,21 @@ export const updatePaintersToPlayers = async (roomID: string) => {
 
       createMatch(roomID)
     }, sToMs(20)),
+  })
+
+  sendToAllPeers(
+    {
+      from: 'host',
+      event: 'painterSelectingTheme',
+    },
+    {
+      except: [painterID],
+    },
+  )
+
+  sendToPainterPeer({
+    from: 'host',
+    event: 'selectTheme',
+    data: themes,
   })
 }

@@ -1,5 +1,4 @@
 import type { PainterCouldNotSelectTheme } from '@/types/webRTCConnData'
-import { useMatchCount } from '@/zustand/store'
 
 export const getPainterCouldNotSelectTheme = async (
   data: PainterCouldNotSelectTheme['data'],
@@ -10,7 +9,6 @@ export const getPainterCouldNotSelectTheme = async (
   const { useGuessChatLayout } = await import('@/zustand/store')
   const { useWinnersChatLayout } = await import('@/zustand/store')
 
-  useMatchCount.getState().decrement()
   useNewPainterPanel.getState().close()
   useSelectThemePanel.getState().close()
   useGuessChatLayout.getState().setImNotGuessed()

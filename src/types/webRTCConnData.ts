@@ -1,5 +1,6 @@
 import type { Player } from '@/zustand/store'
 import type { User } from 'lucia'
+import type { Powerup } from './powerups'
 
 /**
  * WebRTCConnData is the type of data that
@@ -68,6 +69,10 @@ export type PainterDrawFromHostAndClient = {
       a: number
     }
   }
+}
+
+export type PainterTrash = {
+  event: 'painterTrash'
 }
 
 export type PrevPainterDraw = {
@@ -216,6 +221,21 @@ export type GameEnded = {
   }
 }
 
+export type MarketItem = {
+  event: 'marketItem'
+  data: {
+    name: Powerup
+  }
+}
+
+export type MarketItemPurchased = {
+  event: 'marketItemPurchased'
+  data: {
+    userID: string
+    name: 'letterHint'
+  }
+}
+
 export type WebRTCConnDataFromHost = (
   | PlayerLeft
   | PlayerJoined
@@ -243,6 +263,8 @@ export type WebRTCConnDataFromHost = (
   | EveryoneGuessed
   | PrevPainterDraw
   | GameEnded
+  | PainterTrash
+  | MarketItemPurchased
 ) & {
   from: 'host'
 }
@@ -255,7 +277,9 @@ export type WebRTCConnDataFromClient = (
   | GuessChatFromClient
   | PainterDrawFromHostAndClient
   | Ping
+  | PainterTrash
   | SelectThemeFromClient
+  | MarketItem
 ) & {
   from: 'client'
 }

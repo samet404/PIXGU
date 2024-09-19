@@ -20,8 +20,7 @@ const Login = ({ name, description }: Props) => {
       name={name}
       description={description}
       keyName="4"
-      roundedClass="rounded-br-md"
-      className="hover:from-[rgba(59,164,255,0.4)] hover:to-[rgba(255,255,255,0.3)]"
+      className="rounded-br-md hover:from-[rgba(59,164,255,0.4)] hover:to-[rgba(255,255,255,0.3)]"
     />
   )
 }

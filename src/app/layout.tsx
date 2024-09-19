@@ -20,6 +20,7 @@ import type { Locale } from '@/types'
 import { type Metadata } from 'next'
 import { BuyMeCoffee } from './_components/BuyMeCoffee'
 import { Version } from './_components/Version'
+import { api } from '@/trpc/server'
 
 export const metadata: Metadata = {
   title: 'PIXGU',

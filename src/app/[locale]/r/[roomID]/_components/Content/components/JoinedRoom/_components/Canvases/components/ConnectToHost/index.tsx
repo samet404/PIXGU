@@ -2,41 +2,31 @@
 
 import type { WebRTCSignalData } from '@/types/webRTCSignalData'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
-import { useHostPeer } from '@/zustand/store/useHostPeer'
 import { useSoketiClient } from '@/context/client/react'
-import { toPusherKey } from '@/utils/toPusherKey'
 import { useRoomIDStore, useUserIDStore } from '@/zustand/provider'
 import { signalData } from './funcs/signalData'
+import type { User } from 'lucia'
+import { subscribePusher } from '@/utils/subscribePusher'
+import { useHostPeer, usePing } from '@/zustand/store'
 import { positiveLog } from '@/utils/positiveLog'
-import { pingHostPeer } from '@/utils/pingHostPeer'
-import { handlePeerDatas } from './funcs'
-import { goldLog } from '@/utils/goldLog'
-import { api } from '@/trpc/client'
-import { simplePeer } from '@/utils/simplePeer'
-import { useIsGameStopped } from '@/zustand/store/useIsGameStopped'
+import { createHostPeer } from './funcs/createHostPeer'
 
 export const ConnectToHost = () => {
   const soketiClient = useSoketiClient()
   const roomID = useRoomIDStore((state) => state.roomID)
   const myUserID = useUserIDStore((state) => state.userID)
-  const setHostPeer = useHostPeer.getState().set
-  const setIsGameStopped = useIsGameStopped.getState().stop
 
   useEffectOnce(() => {
-    console.log(roomID, myUserID)
-
-    setHostPeer({
-      peer: simplePeer(),
-    })
-
-    const peer = useHostPeer.getState().get()!
-
-    const myConnectChannel = soketiClient.subscribe(
-      toPusherKey(`private-room-${roomID}:connect_to_player:${myUserID}`),
+    createHostPeer(roomID, myUserID)
+    const myConnectChannel = subscribePusher(
+      soketiClient,
+      `private-room-${roomID}:connect_to_player:${myUserID}`,
     )
 
-    myConnectChannel.bind('pusher:subscription_succeeded', (data: any) => {
-      console.log('subscription_succeeded', data)
+    myConnectChannel.bind('pusher:subscription_succeeded', () => {
+      positiveLog(
+        `SUBSCRIBED TO "private-room-${roomID}:connect_to_player:${myUserID}" CHANNEL (WS)`,
+      )
     })
 
     myConnectChannel.bind('pusher:subscription_error', (data: any) => {
@@ -47,41 +37,53 @@ export const ConnectToHost = () => {
       signalData(data),
     )
 
-    peer.on('signal', async (signalData: WebRTCSignalData) => {
-      goldLog(`${signalData.type.toUpperCase()} SENT TO HOST`)
-      await api.gameRoom.sendSignalDataToHost.mutate({
-        roomID,
-        signalData,
-      })
-    })
-
-    peer.on('error', (err) => {
-      console.error(err)
-
-      setHostPeer({
-        status: 'failed',
-      })
-    })
-
-    peer.on('connect', () => {
-      positiveLog(`CONNECTED TO HOST`)
-      setIsGameStopped('waitingForPlayers')
-
-      setHostPeer({
-        status: 'connected',
-      })
-
-      pingHostPeer(5000)
-      handlePeerDatas(myUserID)
-    })
-
-    const presenceChannel = soketiClient.subscribe(
-      toPusherKey(`presence-private-room-${roomID}:connect_to_host`),
+    const presenceChannel = subscribePusher(
+      soketiClient,
+      `presence-private-room-${roomID}:connect_to_host`,
     )
 
-    presenceChannel.bind('pusher:subscription_succeeded', (data: any) => {
-      console.log('subscription_succeeded for presence', data)
-    })
+    presenceChannel.bind(
+      'pusher:subscription_succeeded',
+      (data: {
+        count: number
+        me: { id: 'slw1594m2jwzk7rf5ia6nwi0'; info: Omit<User, 'id'> }
+        members: Record<string, Omit<User, 'id'>>
+        myID: string
+      }) => {
+        positiveLog(
+          `SUBSCRIBED TO "presence-private-room-${roomID}:connect_to_host" CHANNEL (WS)`,
+          data,
+        )
+
+        const isHostInRoom = Object.keys(data.members).some((ID) =>
+          ID.endsWith('-HOST'),
+        )
+
+        if (isHostInRoom) useHostPeer.getState().set({ status: 'connecting' })
+      },
+    )
+
+    presenceChannel.bind(
+      'pusher:member_added',
+      (member: { id: string; info: Omit<User, 'id'> }) => {
+        const isHostInRoom = member.id.endsWith('-HOST')
+
+        if (isHostInRoom) useHostPeer.getState().set({ status: 'connecting' })
+      },
+    )
+
+    presenceChannel.bind(
+      'pusher:member_removed',
+      (member: { id: string; info: Omit<User, 'id'> }) => {
+        const isHost = member.id.endsWith('-HOST')
+
+        if (isHost) {
+          useHostPeer.getState().reset()
+          createHostPeer(roomID, myUserID)
+          usePing.getState().reset()
+        }
+      },
+    )
 
     presenceChannel.bind('pusher:subscription_error', (data: any) => {
       console.log('subscription_error for presence', data)

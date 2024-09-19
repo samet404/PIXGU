@@ -13,23 +13,6 @@ export const MainCanvas = () => {
   const setHeightAndWidth = () => {
     if (!canvasRef.current) return
 
-    const width = (() => {
-      const containerWidth = roundDownToNearest(
-        document.getElementById('canvasesContainer')!.clientWidth,
-        80,
-      )
-
-      // if container width is greater than 90% of the screen height we set it to 90% of the screen height
-      const screenMaxHeight = calcPercentage(90, document.body.clientHeight)
-      if (containerWidth > screenMaxHeight)
-        return roundDownToNearest(screenMaxHeight, 80)
-
-      return containerWidth
-    })()
-
-    canvasRef.current.width = width
-    canvasRef.current.height = width
-
     const canvas = canvasRef.current
     const ctx = canvas.getContext('2d')!
     ctx.fillStyle = 'white'
@@ -56,6 +39,8 @@ export const MainCanvas = () => {
   return (
     <canvas
       ref={canvasRef}
+      width={480}
+      height={480}
       style={{
         imageRendering: 'pixelated',
       }}

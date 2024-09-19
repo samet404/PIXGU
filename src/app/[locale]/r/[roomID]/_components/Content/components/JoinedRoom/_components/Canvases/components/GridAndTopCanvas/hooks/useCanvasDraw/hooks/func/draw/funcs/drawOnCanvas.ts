@@ -1,7 +1,8 @@
-import type { IntRange, RGBAObj } from '@/types'
+import type { RGBAObj } from '@/types'
+import { calculatePixelsBetween } from '@/utils/calculatePixelsBetween'
 import { fillOnePixel } from '@/utils/room'
 import { sendToHostPeer } from '@/utils/sendToHostPeer'
-import { useLastPixel, usePixelHistory } from '@/zustand/store'
+import { useLastPixel, usePixelsOnDraw } from '@/zustand/store'
 
 export const drawOnCanvas = (
   newX: number,
@@ -9,25 +10,40 @@ export const drawOnCanvas = (
   rgba: RGBAObj,
   myUserID: string,
 ) => {
-  const prevA = usePixelHistory.getState().get({ x: newX, y: newY })?.a ?? 0
-
-  const { r, g, b, a } = rgba
-
-  usePixelHistory.getState().add({
-    x: newX,
-    y: newY,
-    r: r,
-    g: g,
-    b: b,
-    a: (a + prevA) as IntRange<0, 2>,
-  })
-
-  useLastPixel.getState().set({
-    x: newX,
-    y: newY,
-  })
-
   fillOnePixel(newX, newY, rgba)
+
+  const lastPixelOnDraw =
+    usePixelsOnDraw.getState().value[
+      usePixelsOnDraw.getState().value.length - 1
+    ]
+
+  if (lastPixelOnDraw) {
+    const prevX = lastPixelOnDraw[0]
+    const prevY = lastPixelOnDraw[1]
+
+    console.log(newX, newY, prevX, prevY)
+    console.log(usePixelsOnDraw.getState().value)
+    const pixelsBetween = calculatePixelsBetween(prevX, prevY, newX, newY)
+
+    for (let pixel of pixelsBetween) {
+      sendToHostPeer({
+        from: 'client',
+        event: 'painterDraw',
+        data: {
+          painterID: myUserID,
+          x: pixel.x,
+          y: pixel.y,
+          rgba,
+        },
+      })
+      fillOnePixel(pixel.x, pixel.y, rgba)
+    }
+  }
+
+  usePixelsOnDraw.getState().set({
+    x: newX,
+    y: newY,
+  })
 
   sendToHostPeer({
     from: 'client',

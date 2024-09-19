@@ -4,8 +4,8 @@ import { Providers } from './_components/Providers'
 import { Suspense } from 'react'
 import AnimatedDiv from './_components/AnimatedDiv'
 import { Blur } from './_components/Blur'
+import bgImg from '@/png/gamebg.png'
 import Canvases from './_components/Canvases'
-import { CanvasesBottom } from './_components/CanvasesBottom'
 import CanvasTools from './_components/CanvasTools'
 import { Chats } from './_components/Chats'
 import Nav from './_components/Nav'
@@ -16,6 +16,8 @@ import { ResetStates } from './_components/ResetStates'
 import { Spectator } from './_components/Spectator'
 import { Outfit } from 'next/font/google'
 import { GameEnd } from './_components/GameEnd'
+import { Powerups } from './_components/Powerups'
+import Image from 'next/image'
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -43,9 +45,10 @@ const JoinedRoom = () => {
           <Suspense>
             <Blur />
           </Suspense>
-          <div className="h-full w-full">
+          <div className="h-[100vh] w-full">
             <Suspense>
               <Marketplace />
+              <Powerups />
             </Suspense>
             <div
               id="rootDiv"
@@ -58,16 +61,8 @@ const JoinedRoom = () => {
                 <PlayersSection />
               </div>
               <div className="z-10 flex grow flex-col items-center gap-2 rounded-lg">
-                <div
-                  id="canvasesContainer"
-                  className="flex h-full w-full items-center gap-2 rounded-lg"
-                >
-                  <Canvases />
-                </div>
-
-                <div className="flex w-full grow select-none flex-col items-center justify-center gap-3">
-                  <CanvasesBottom />
-                </div>
+                <div className="wf"></div>
+                <Canvases />
               </div>
               <div className="flex h-[90vh] max-w-[20rem] flex-col gap-2 lg:w-[12rem] xl:w-[15rem]">
                 <CanvasTools />

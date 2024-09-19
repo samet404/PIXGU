@@ -21,8 +21,7 @@ const Friends = ({ name, description }: Props) => {
         disabled={!isLogged}
         description={description}
         keyName="3"
-        roundedClass={'rounded-bl-md'}
-        className="h-full w-full hover:from-[#00aaff9c] hover:to-[rgba(255,255,255,0.3)]"
+        className="h-full w-full rounded-bl-md hover:from-[#00aaff9c] hover:to-[rgba(255,255,255,0.3)]"
       />
     </div>
   )

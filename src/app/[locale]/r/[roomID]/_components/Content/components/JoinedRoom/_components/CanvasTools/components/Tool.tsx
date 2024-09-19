@@ -12,7 +12,7 @@ export const Tool = ({
   return (
     <button
       className={clsxMerge(
-        `${className}  group flex h-full w-full  items-center justify-center gap-2 rounded-md bg-[rgba(255,255,255,0.2.2)] p-1`,
+        ` group flex h-full w-full  items-center justify-center gap-2 rounded-md bg-[rgba(255,255,255,0.2.2)] p-1 ${className} `,
         classNameConditions ?? {},
       )}
       {...rest}

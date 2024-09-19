@@ -5,7 +5,7 @@ import {
   useGuessChatLayout,
   useGuessedPlayers,
   useIsGameStopped,
-  useMatchCount,
+  useMatchStatusClient,
   useWhoIsPainterClient,
   useWinnersChatLayout,
 } from '@/zustand/store'
@@ -17,7 +17,7 @@ export const getPainter = async (
   const amIPainter = myUserID === data
 
   useIsGameStopped.getState().open()
-  useMatchCount.getState().increment()
+  useMatchStatusClient.getState().waitingForThemes()
   useWhoIsPainterClient.getState().setCurrentPainter({
     painterID: data,
     amIPainter,

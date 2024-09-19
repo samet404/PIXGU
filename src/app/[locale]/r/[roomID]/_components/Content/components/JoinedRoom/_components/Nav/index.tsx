@@ -1,21 +1,25 @@
 import BtnLeave from './components/BtnLeave'
 import { Ping } from './components/Ping'
 import { HostConnection } from './components/HostConnection'
-import { Match } from './components/Match'
+import { MatchCount } from './components/MatchCount'
+import { MatchTime } from './components/MatchTime'
 
 const Nav = () => {
   return (
-    <nav
-      className={`z-50 flex  w-full animate-fade-down flex-row items-center justify-between py-1 pl-2 pr-1 shadow-[0_0px_10px_1px_rgba(0,0,0,0.5)]`}
-    >
-      <div className="flex flex-row items-center gap-2">
-        <HostConnection />
-        <Ping />
-        <Match />
-      </div>
+    <div className="z-50 flex w-full animate-fade-down flex-col shadow-[0_0px_20px_1px_rgba(0,0,0,0.4)]">
+      <div
+        className={` flex h-[2.2rem] w-full  flex-row items-center justify-between py-1 pr-1 `}
+      >
+        <div className="flex flex-row  items-center gap-2 pl-2">
+          <HostConnection />
+          <Ping />
+          <MatchCount />
+          <MatchTime />
+        </div>
 
-      <BtnLeave />
-    </nav>
+        <BtnLeave />
+      </div>
+    </div>
   )
 }
 

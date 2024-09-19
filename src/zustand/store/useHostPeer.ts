@@ -3,7 +3,12 @@ import { create } from 'zustand'
 
 type State = {
   peer: SimplePeer.Instance | null
-  status: 'connecting' | 'connected' | 'failed'
+  status:
+    | 'connecting'
+    | 'connected'
+    | 'failed'
+    | 'disconnected'
+    | 'host not in room'
 }
 
 type Action = {
@@ -14,7 +19,7 @@ type Action = {
 
 const initValue = {
   peer: null,
-  status: 'connecting',
+  status: 'host not in room',
 } as const
 
 export const useHostPeer = create<State & Action>((set, get) => ({
@@ -27,5 +32,9 @@ export const useHostPeer = create<State & Action>((set, get) => ({
     })
   },
   get: () => get().peer,
-  reset: () => set({ ...initValue }),
+  reset: () => {
+    const peer = get().peer
+    if (peer) peer.destroy()
+    set(initValue)
+  },
 }))

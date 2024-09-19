@@ -5,6 +5,7 @@ import { useState, type ComponentProps } from 'react'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
 import type { OverrideProps } from '@/types/overrideProps'
+import { clsxMerge } from '@/utils/clsxMerge'
 
 const Default = dynamic(() =>
   import('./components/Default').then((m) => m.Default),
@@ -20,6 +21,7 @@ export const UserPfp = ({
   alt,
   ...rest
 }: Props) => {
+  const [loaded, setLoaded] = useState<boolean>(false)
   const [hasError, setHasError] = useState<boolean>(false)
   const isPfpBroken = useBrokenUserPfps.getState().isBroken
   if (hasError) useBrokenUserPfps.getState().add(ID)
@@ -34,8 +36,11 @@ export const UserPfp = ({
         width={width}
         height={height}
         alt={alt}
+        onLoadingComplete={() => setLoaded(true)}
         onError={() => setHasError(true)}
-        className={className}
+        className={clsxMerge(`${className}`, {
+          'animate-pulse': !loaded,
+        })}
         sizes={sizes}
         {...rest}
       />

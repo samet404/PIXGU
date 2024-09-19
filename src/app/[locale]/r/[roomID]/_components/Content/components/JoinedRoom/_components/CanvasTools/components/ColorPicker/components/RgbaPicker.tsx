@@ -6,7 +6,7 @@ export const RgbaPicker = () => {
     useRgba.getState().set(newColor)
 
   return (
-    <div className="absolute right-[22%] top-[4%] z-20 hidden h-[10rem] w-[12rem] group-hover:flex">
+    <div className="absolute top-2 z-50 hidden h-[12rem] w-[14rem] p-6 group-hover:flex">
       <RgbaColorPicker
         style={{
           width: '100%',
@@ -19,7 +19,7 @@ export const RgbaPicker = () => {
           b: 0,
           a: 0.5,
         }}
-        className="h-full w-full animate-fade rounded-md bg-[#ffffff7b] animate-duration-75"
+        className="z-50 h-full w-full  animate-fade rounded-md bg-[#ffffff7b] animate-duration-75"
         onChange={handleOnChange}
       />
     </div>

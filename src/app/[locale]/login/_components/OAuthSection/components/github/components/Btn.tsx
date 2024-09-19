@@ -20,7 +20,7 @@ export const Btn = () => {
     >
       <FontAwesomeIcon
         icon={faGithub}
-        fontSize={35}
+        fontSize={45}
         color={'rgba(255,255,255,0.85)'}
       />
     </button>
