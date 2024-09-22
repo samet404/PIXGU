@@ -41,7 +41,7 @@ export const HavingIssuesBtn = () => {
         style={springs}
         className="z-10 flex h-full items-center justify-center rounded-md bg-[#ffffff82] px-4  text-[#02020285] hover:opacity-60 disabled:cursor-not-allowed disabled:opacity-65"
       >
-        Having issues?
+        Having connection issues?
       </animated.button>
       {typeof window !== 'undefined'
         ? isModalOpen

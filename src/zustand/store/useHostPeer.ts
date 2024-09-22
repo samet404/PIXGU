@@ -8,7 +8,7 @@ export type HostPeerState = {
     | 'connected'
     | 'failed'
     | 'disconnected'
-    | 'host not found'
+    | 'finding host'
 }
 
 type Action = {
@@ -19,7 +19,7 @@ type Action = {
 
 const initValue = {
   peer: null,
-  status: 'host not found',
+  status: 'finding host',
 } as const
 
 export const useHostPeer = create<HostPeerState & Action>((set, get) => ({

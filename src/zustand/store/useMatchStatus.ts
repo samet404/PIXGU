@@ -21,7 +21,7 @@ const initValue: State = {
   value: {
     matchTimeout: null,
     isFirstMatch: true,
-    matchCount: 1,
+    matchCount: 0,
     lastMatchStartedAt: null,
   },
 }

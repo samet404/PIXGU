@@ -33,7 +33,7 @@ export const HostingHealthDisplay = () => {
       case 'waitingForPlayers':
         return '#348bd370'
       case 'gameEnded':
-        return '#d6e15a70'
+        return '#bef06066'
     }
   })()
 
@@ -51,6 +51,8 @@ export const HostingHealthDisplay = () => {
         return 'Waiting For Players'
       case 'loading':
         return 'Loading...'
+      case 'gameEnded':
+        return 'Game has ended'
     }
   })()
 
@@ -67,7 +69,7 @@ export const HostingHealthDisplay = () => {
       case 'waitingForPlayers':
         return 'You can copy the link and share it with your friends'
       case 'gameEnded':
-        return 'The game has end. You can view the final results and start a new game if desired.'
+        return 'You can view the final results and start a new game if desired.'
       default:
         return ''
     }
@@ -111,7 +113,7 @@ export const HostingHealthDisplay = () => {
             status === 'gameIsStarted',
           'border-b-[#34d3cb] text-[#34d3cb]': status === 'readyToStart',
           'border-b-[#348bd3] text-[#348bd3]': status === 'waitingForPlayers',
-          'border-b-[#eaff00] text-[#eaff00]': status === 'gameEnded',
+          'border-b-[#b9f746] text-[#b9f746]': status === 'gameEnded',
         },
       )}
     >
@@ -130,7 +132,7 @@ export const HostingHealthDisplay = () => {
                 status === 'readyToStart',
               'inline-block bg-gradient-to-r from-[#348bd3] to-[#348bd3] bg-clip-text text-transparent':
                 status === 'waitingForPlayers',
-              'inline-block bg-gradient-to-r from-[#eaff00] to-[#eaff00] bg-clip-text text-transparent':
+              'inline-block bg-gradient-to-r from-[#b9f746] to-[#b9f746] bg-clip-text text-transparent':
                 status === 'gameEnded',
             },
           )}

@@ -5,6 +5,10 @@ import { PlayersSection } from './components/PlayersSection'
 import { ConnectToPeers } from './components/ConnectToPeers'
 import { Providers } from './components/Providers'
 import { getHostID, getRoomID, getUser, getUserID } from '@/context/server'
+import dynamic from 'next/dynamic'
+import { env } from '@/env/server'
+
+const States = dynamic(() => import('./components/States'))
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -25,8 +29,9 @@ const Joined = () => {
       >
         <ConnectToPeers />
         <HostingHealthDisplay />
-        <div className="flex flex-col items-center py-14">
+        <div className="flex flex-col items-center gap-4 py-14">
           <PlayersSection />
+          {env.NODE_ENV === 'development' && <States />}
         </div>
       </div>
     </Providers>

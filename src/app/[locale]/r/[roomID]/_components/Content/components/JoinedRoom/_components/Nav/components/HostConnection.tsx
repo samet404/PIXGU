@@ -17,7 +17,7 @@ export const HostConnection = () => {
         return 'red'
       case 'connecting':
         return 'yellow'
-      case 'host not found':
+      case 'finding host':
         return 'bright yellow'
     }
   })()

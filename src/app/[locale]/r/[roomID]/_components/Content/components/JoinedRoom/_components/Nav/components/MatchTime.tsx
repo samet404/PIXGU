@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from 'react'
 export const MatchTime = () => {
   const [remainingMs, setRemainingMs] = useState<number | null>(null)
   const matchStatus = useMatchStatusClient((s) => s.status)
+  const startTimeRef = useRef<number | null>(null)
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   const clearIfAvailable = () => {
@@ -26,15 +27,14 @@ export const MatchTime = () => {
         break
       case 'started':
         {
-          let innerRemainingMs = mToMs(4)
+          startTimeRef.current = Date.now()
 
           intervalRef.current = setInterval(() => {
-            setRemainingMs((prev) => prev! - 1000)
-            innerRemainingMs -= 1000
+            const passedMs = Date.now() - startTimeRef.current!
+            console.log('passedMs', passedMs)
+            setRemainingMs(() => mToMs(4) - passedMs)
 
-            if (innerRemainingMs === 0) {
-              clearIfAvailable()
-            }
+            if (passedMs >= mToMs(4)) clearIfAvailable()
           }, 1000)
           setRemainingMs(mToMs(4))
         }

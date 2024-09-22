@@ -27,7 +27,7 @@ export const BuyMeCoffee = () => {
       </Link>
 
       <div className="hidden animate-fade pr-4 text-[0.7rem] text-black selection:!bg-black group-hover:flex">
-        {`I have no money :( also you can disable in the settings`}
+        {`I have no money :(`}
       </div>
     </div>
   )

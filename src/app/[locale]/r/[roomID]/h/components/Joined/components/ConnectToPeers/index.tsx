@@ -12,6 +12,7 @@ import { positiveLog } from '@/utils/positiveLog'
 import { negativeLog } from '@/utils/negativeLog'
 import { violetLog } from '@/utils/violetLog'
 import { createPeer } from './funcs/createPeer'
+import { subscribePusher } from '@/utils/subscribePusher'
 
 export const ConnectToPeers = () => {
   const setHostingHealth = useHostingHealth.getState().set
@@ -20,8 +21,9 @@ export const ConnectToPeers = () => {
   const soketiClient = useSoketiClient()
 
   useEffectOnce(() => {
-    const myConnectPresenceChannel = soketiClient.subscribe(
-      toPusherKey(`presence-private-room-${roomID}:connect_to_host`),
+    const myConnectPresenceChannel = subscribePusher(
+      soketiClient,
+      `presence-private-room-${roomID}:connect_to_host`,
     )
 
     myConnectPresenceChannel.bind(

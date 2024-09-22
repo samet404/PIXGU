@@ -30,6 +30,7 @@ export const playerLeaved = (
 
   if (usePlayers.getState().value.count <= 1) {
     setHostingHealth('waitingForPlayers')
+    useMatchStatus.getState().reset()
   } else if (useWhoIsPainter.getState().isPainter(userID)) {
     sendToAllPeers({
       from: 'host',

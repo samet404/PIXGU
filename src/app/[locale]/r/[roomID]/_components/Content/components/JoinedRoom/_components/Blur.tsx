@@ -29,10 +29,10 @@ export const Blur = ({ children }: PropsWithChildren) => {
             <div>Failed to connect to host</div>
           </div>
         )
-      case 'host not found':
+      case 'finding host':
         return (
           <div className="flex flex-row gap-4">
-            <div>Host not found</div>
+            <div>finding host</div>
           </div>
         )
       case 'disconnected':
@@ -60,7 +60,7 @@ export const Blur = ({ children }: PropsWithChildren) => {
         return 'from-[#d9538d] to-[#ee0351]'
       case 'failed':
         return 'from-[#d9538dbd] to-[#ee0351b7]'
-      case 'host not found':
+      case 'finding host':
         return 'from-[#fef08ad9] to-[#ffef77bf]'
     }
 

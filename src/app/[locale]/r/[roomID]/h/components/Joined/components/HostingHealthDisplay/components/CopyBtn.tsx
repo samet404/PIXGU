@@ -10,7 +10,11 @@ export const CopyBtn = () => {
   const copiedTimeout = useRef<ReturnType<typeof setTimeout>>()
 
   useEffectOnce(() => {
-    divRef.current.textContent = window.location.href.replace(/\/h$/, '')
+    const url = window.location.href
+
+    divRef.current.textContent = url
+      .replace(`${url.split('/')[3]}/`, '')
+      .replace('/h', '')
     return () => {
       clearTimeout(copiedTimeout.current)
     }

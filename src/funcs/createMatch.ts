@@ -19,13 +19,20 @@ export const createMatch = async (roomID: string) => {
   const players = usePlayers.getState().get
   const setCurrentPainter = useWhoIsPainter.getState().setCurrentPainter
   const isFirstMatch = useMatchStatus.getState().value.isFirstMatch
-  const isGameEnded = useMatchStatus.getState().value.matchCount + 1 === 10
+  const isGameEnded = useMatchStatus.getState().value.matchCount === 10
 
   console.log('matchCount: ', useMatchStatus.getState().value.matchCount)
   if (isGameEnded) {
-    const { useCoins } = await import('@/zustand/store')
+    const {
+      useCoins,
+      useSpectators,
+      useLastPixel,
+      usePixelHistory,
+      useGuessedPlayers,
+      useHostPainterData,
+      useMatchStatus,
+    } = await import('@/zustand/store')
     const { sendToAllPeers } = await import('@/utils')
-
     useMatchStatus.getState().reset()
 
     sendToAllPeers({
@@ -37,6 +44,13 @@ export const createMatch = async (roomID: string) => {
     })
 
     useHostingHealth.getState().set('gameEnded')
+
+    useMatchStatus.getState().reset()
+    useSpectators.getState().reset()
+    useLastPixel.getState().reset()
+    usePixelHistory.getState().reset()
+    useGuessedPlayers.getState().reset()
+    useHostPainterData.getState().reset()
 
     setTimeout(() => {
       if (usePlayers.getState().value.count > 1)

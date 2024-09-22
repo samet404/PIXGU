@@ -7,7 +7,7 @@ import { useRoomIDStore, useUserIDStore } from '@/zustand/provider'
 import { signalData } from './funcs/signalData'
 import type { User } from 'lucia'
 import { subscribePusher } from '@/utils/subscribePusher'
-import { useHostPeer, usePing } from '@/zustand/store'
+import { useHostPeer, useIsGameStopped, usePing } from '@/zustand/store'
 import { positiveLog } from '@/utils/positiveLog'
 import { createHostPeer } from './funcs/createHostPeer'
 
@@ -80,6 +80,7 @@ export const ConnectToHost = () => {
         if (isHost) {
           useHostPeer.getState().reset()
           createHostPeer(roomID, myUserID)
+          useIsGameStopped.getState().addCode('connectingToHost')
           usePing.getState().reset()
         }
       },
