@@ -8,6 +8,7 @@ import {
 } from 'next/server'
 import { lucia } from '@/auth/lucia'
 import { cookies } from 'next/headers'
+import { env } from '@/env/server'
 
 const locales: Locale[] = ['en', 'tr']
 
@@ -35,7 +36,7 @@ export const internationalization: NextMiddleware = async (
 
     if (authInfo.user) {
       const redisLocaleRes = await fetch(
-        `http://localhost:4000/api/locale/${authInfo.user.id}`,
+        `${env.BASE_URL}/api/locale/${authInfo.user.id}`,
       )
       const redisLocale = await redisLocaleRes.json()
 
