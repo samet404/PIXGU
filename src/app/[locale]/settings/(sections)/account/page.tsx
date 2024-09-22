@@ -1,4 +1,4 @@
-import Pfp from './components/Pfp'
+import { Pfp } from './components/Pfp'
 import Username from './components/Username'
 import { api } from '@/trpc/server'
 import SectionWrapper from '../_components/SectionWrapper'
@@ -11,7 +11,7 @@ const Account = async () => {
     return (
       <SectionWrapper text="Account">
         <div className="flex flex-col gap-2">
-          <Pfp profilePicture={user.profilePicture} />
+          <Pfp ID={user.id} profilePicture={user.profilePicture} />
           <Username username={user.username} />
           <div className="flex pt-20">
             <LogoutBtn />

@@ -13,6 +13,7 @@ export const Default = ({ className, sizes }: Props) => {
       src={pfp}
       alt="default_pfp"
       sizes={sizes}
+      onLoad={() => setLoaded(true)}
       onError={() => console.error('Error loading default pfp')}
       className={clsxMerge(`${className}`, {
         'animate-pulse': !loaded,

@@ -1,6 +1,4 @@
-import Image from 'next/image'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser } from '@fortawesome/free-solid-svg-icons'
+import { UserPfp } from '@/components/UserPfp'
 import { Inter } from 'next/font/google'
 
 const inter = Inter({
@@ -8,27 +6,20 @@ const inter = Inter({
   weight: ['500'],
 })
 
-const Pfp = ({ profilePicture }: { profilePicture: string | null }) => {
+export const Pfp = ({ ID, profilePicture }: Props) => {
   return (
     <div className="flex flex-row items-center gap-2">
-      {profilePicture ? (
-        <Image
-          className="h-20 w-20 select-none rounded-full bg-black shadow-[0_5px_20px_0px_rgba(0,0,0,0.25)]"
+      <div className="size-20">
+        <UserPfp
+          ID={ID}
           src={profilePicture}
-          width={120}
-          height={120}
-          sizes="calc(1.96vw + 75px)"
-          alt="Profile Picture"
+          alt="Profile picture"
+          width={66}
+          height={66}
+          sizes="(min-width: 2620px) calc(0.26vw + 54px), (min-width: 1840px) calc(0.39vw + 46px), (min-width: 1020px) calc(0.5vw + 41px), 37px"
+          className="h-full w-full select-none rounded-full bg-gray-400"
         />
-      ) : (
-        <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gray-400 shadow-[0_5px_20px_0px_rgba(0,0,0,0.25)]">
-          <FontAwesomeIcon
-            icon={faUser}
-            color="rgba(255,255,255,0.7)"
-            fontSize={55}
-          />
-        </div>
-      )}
+      </div>
 
       <div
         className={`${inter.className} flex flex-row items-center gap-2 text-[rgba(0,0,0,0.5)]`}
@@ -42,4 +33,7 @@ const Pfp = ({ profilePicture }: { profilePicture: string | null }) => {
   )
 }
 
-export default Pfp
+type Props = {
+  ID: string
+  profilePicture: string | null | undefined
+}

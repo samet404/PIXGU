@@ -35,11 +35,7 @@ export const getSelectedTheme = (
   useMatchStatus.getState().setTimeout({ roomID })
 
   clearTimeout(hostPainterData.timeIsUpTimeout)
-  useHostPainterData.getState().set({
-    status: 'painterSelectedTheme',
-    themes: themes,
-    selectedTheme: data,
-  })
+  useHostPainterData.getState().painterSelectedTheme(data)
 
   sendToAllPeers({
     from: 'host',

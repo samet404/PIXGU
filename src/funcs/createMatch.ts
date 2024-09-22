@@ -50,7 +50,6 @@ export const createMatch = async (roomID: string) => {
     useLastPixel.getState().reset()
     usePixelHistory.getState().reset()
     useGuessedPlayers.getState().reset()
-    useHostPainterData.getState().reset()
 
     setTimeout(() => {
       if (usePlayers.getState().value.count > 1)

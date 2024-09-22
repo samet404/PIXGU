@@ -42,5 +42,5 @@ export const getThemes = loggedUserProducure
     if (!themes)
       throw new TRPCError({ code: 'NOT_FOUND', message: 'Themes not found' })
 
-    return themes
+    return themes as [string, string]
   })
