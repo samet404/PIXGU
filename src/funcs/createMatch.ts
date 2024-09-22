@@ -35,6 +35,7 @@ export const createMatch = async (roomID: string) => {
     } = await import('@/zustand/store')
     const { sendToAllPeers } = await import('@/utils')
     useMatchStatus.getState().reset()
+    useHostPainterData.getState().reset()
 
     sendToAllPeers({
       from: 'host',

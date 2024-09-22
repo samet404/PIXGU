@@ -43,7 +43,7 @@ export const Modal = () => {
         <Item
           title="Browser issues"
           description={[
-            'If you are using firefox based browser your issue might be related to the browser. We are currently working on to fix firefox based problems. But now we recommend you using chromium based browsers like brave or chrome for player and host.',
+            'If you are using firefox based browser your issue might be related to the browser. We are currently working on to fix firefox based problems. But now we recommend you using chromium based browsers like brave or chrome',
             'Turn on hardware acceleration in your browser settings. This maybe solve your issues.',
             'Try to disable any extensions you have installed in your browser. Extensions can change website behavior.',
             `Don't use old browser versions. We recommend you to use latest version of your browser.`,
