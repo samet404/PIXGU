@@ -26,6 +26,7 @@
       "@/db/*": ["src/server/db/*"],
       "@/sqlDb": ["src/server/db/sqlDb"],
       "@/sqlDb/*": ["src/server/db/sqlDb/*"],
+      "@/geoIP": ["src/server/db/geoIP"],
       "@/redis/*": ["src/server/db/redis/*"],
       "@/context/*": ["src/context/*"],
       "@/redis": ["src/server/db/redis/"],

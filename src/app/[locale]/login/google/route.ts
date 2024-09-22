@@ -1,6 +1,7 @@
 import { generateState } from 'arctic'
 import { google } from '@/auth/lucia/providers'
 import { cookies } from 'next/headers'
+import { env } from '@/env/server'
 
 export async function GET(): Promise<Response> {
   const state = generateState()
@@ -11,7 +12,7 @@ export async function GET(): Promise<Response> {
   url.searchParams.set('access_type', 'offline')
   cookies().set('google_oauth_state', state, {
     path: '/',
-    secure: process.env.NODE_ENV === 'production',
+    secure: env.NODE_ENV === 'production',
     httpOnly: true,
     maxAge: 60 * 10,
     sameSite: 'lax',

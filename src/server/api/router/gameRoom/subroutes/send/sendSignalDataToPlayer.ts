@@ -34,7 +34,7 @@ export const sendSignalDataToPlayer = loggedUserProducure
         message: 'You are not in this room',
       })
 
-    const hostID = await ctx.redisDb.get<string>(`room:${roomID}:host_ID`)
+    const hostID = await ctx.redisDb.get(`room:${roomID}:host_ID`)
 
     if (hostID !== ctx.user.id)
       throw new TRPCError({

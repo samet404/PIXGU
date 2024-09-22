@@ -1,17 +1,13 @@
 import Main from './_components/Main'
-import CreateRoomButton from './_components/CreateRoomButton'
-import GradientContainer from './_components/GradientContainer'
 import BackgroundImages from './_components/BackgroundImages'
-
 import './_styles/scrollbars.css'
 import dynamic from 'next/dynamic'
 import { api } from '@/trpc/server'
 import { Suspense } from 'react'
-import { Waves } from './_components/Waves'
-import { CreatedRooms } from './_components/CreatedRooms'
 import Image from 'next/image'
 import Logo from '@/png/logo.png'
 import Spinner from '@/components/Spinner'
+import { Content } from './_components/Content'
 
 const ErrDisplay = dynamic(() => import('@/components/ErrDisplay'))
 
@@ -37,11 +33,9 @@ const CreateRoom = async () => {
           sizes="calc(2.33vw + 90px)"
         ></Image>
         <Suspense fallback={<Spinner />}>
-          <GradientContainer>
+          <Content>
             <Main />
-            <CreateRoomButton />
-          </GradientContainer>
-          <CreatedRooms />
+          </Content>
         </Suspense>
       </div>
       {/* <Waves /> */}

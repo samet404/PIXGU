@@ -36,7 +36,7 @@ export const UserPfp = ({
         width={width}
         height={height}
         alt={alt}
-        onLoadingComplete={() => setLoaded(true)}
+        onLoad={() => setLoaded(true)}
         onError={() => setHasError(true)}
         className={clsxMerge(`${className}`, {
           'animate-pulse': !loaded,

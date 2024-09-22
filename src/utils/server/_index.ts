@@ -1,1 +1,1 @@
-export { killRoom } from './killRoom'
+export { pathFromRoot } from './pathFromRoot'

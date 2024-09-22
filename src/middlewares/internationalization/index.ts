@@ -34,10 +34,10 @@ export const internationalization: NextMiddleware = async (
     const authInfo = await lucia.validateSession(sessionId)
 
     if (authInfo.user) {
-      const redisDb = (await import('@/redis')).redisDb
-      const redisLocale = (await redisDb.get(
-        `locale:${authInfo.user?.id}`,
-      )) as Locale
+      const redisLocaleRes = await fetch(
+        `http://localhost:4000/api/locale/${authInfo.user.id}`,
+      )
+      const redisLocale = await redisLocaleRes.json()
 
       // if user has a locale in redis
       if (redisLocale) {

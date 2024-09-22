@@ -3,6 +3,7 @@ import 'server-only'
 import { Lucia } from 'lucia'
 import { adapter } from './adapter'
 import type { DatabaseUser } from '@/auth/types'
+import { env } from '@/env/server'
 
 // import { webcrypto } from "crypto";
 // globalThis.crypto = webcrypto as Crypto;
@@ -10,7 +11,7 @@ import type { DatabaseUser } from '@/auth/types'
 export const lucia = new Lucia(adapter, {
   sessionCookie: {
     attributes: {
-      secure: process.env.NODE_ENV === 'production',
+      secure: env.NODE_ENV === 'production',
     },
   },
   getUserAttributes: (attributes) => {

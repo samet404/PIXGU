@@ -25,7 +25,8 @@ import {
 } from './subroute'
 
 export const userRouter = createTRPCRouter({
-  generateNewUsernameID: generateNewUsernameID,
+  generateNewUsernameID,
+
   getById: getUserByID,
   getByUsername: getUserByUsername,
   getByUsernameID: getUserByUsernameID,

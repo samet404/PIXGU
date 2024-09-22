@@ -32,8 +32,8 @@ type State = {
 }
 
 type Action = {
-  stop: (code: Code) => void
-  open: () => void
+  removeCode: (code: Code) => void
+  addCode: (code: Code) => void
   reset: () => void
 }
 
@@ -47,12 +47,24 @@ const initState: State = {
 export const useIsGameStopped = create<State & Action>((set, get) => ({
   ...initState,
 
-  open: () =>
-    set({
-      value: { ...get().value, isStopped: false, code: null },
-    }),
+  removeCode: (code) => {
+    if (!get().value.isStopped) return
+    if (get().value.code?.length === 1) {
+      set({
+        value: { isStopped: false, code: null },
+      })
+      return
+    }
 
-  stop: (code) => {
+    set({
+      value: {
+        isStopped: true,
+        code: (get().value.code ?? []).filter((c) => c !== code),
+      },
+    })
+  },
+
+  addCode: (code) => {
     set({
       value: {
         ...get(),
@@ -61,7 +73,6 @@ export const useIsGameStopped = create<State & Action>((set, get) => ({
       },
     })
 
-    if (get().value.isStopped) return
     useWhoIsPainterClient.getState().reset()
     useAmIPainting.getState().reset()
     useWinnersChatLayout.getState().reset()

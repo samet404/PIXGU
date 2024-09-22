@@ -12,7 +12,7 @@ export const Timer = () => {
     const interval = setInterval(() => {
       if (passedTime.current >= time.current) {
         clearInterval(interval)
-        useIsGameStopped.getState().stop('waitingForHost')
+        useIsGameStopped.getState().addCode('waitingForHost')
         useGameEndedPanel.getState().close()
         return
       }

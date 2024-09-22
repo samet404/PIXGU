@@ -16,27 +16,12 @@ export const env = createEnv({
 
     BASE_URL: z.string(),
 
-    UPSTASH_REDIS_REST_URL: z
-      .string()
-      .refine(
-        (str) => !str.includes('YOUR_UPSTASH_REDIS_REST_URL_HERE'),
-        'You forgot to change the default UPSTASH_REDIS_REST_URL',
-      ),
-
-    UPSTASH_REDIS_REST_TOKEN: z
-      .string()
-      .refine(
-        (str) => !str.includes('UPSTASH_REDIS_REST_TOKEN_HERE'),
-        'You forgot to change the default UPSTASH_REDIS_REST_TOKEN',
-      ),
-
     REDIS_URL: z
       .string()
       .refine(
         (str) => !str.includes('YOUR_REDIS_URL_HERE'),
         'You forgot to change the default REDIS_URL',
       ),
-
     DISCORD_CLIENT_ID: z
       .string()
       .refine(
@@ -148,6 +133,8 @@ export const env = createEnv({
     NODE_ENV: z
       .enum(['development', 'test', 'production'])
       .default('development'),
+    ROOT_FOLDER_NAME: z.string().default('PIXGU'),
+    IP_ADDRESS: z.string().default('66.6.44.4'),
   },
 
   /**
@@ -155,6 +142,8 @@ export const env = createEnv({
    * middlewares) or client-side so we need to destruct manually.
    */
   runtimeEnv: {
+    IP_ADDRESS: process.env.IP_ADDRESS,
+    ROOT_FOLDER_NAME: process.env.ROOT_FOLDER_NAME,
     NODE_ENV: process.env.NODE_ENV,
 
     BASE_URL: process.env.BASE_URL,
@@ -162,9 +151,6 @@ export const env = createEnv({
     XATA_BRANCH: process.env.XATA_BRANCH,
     XATA_API_KEY: process.env.XATA_API_KEY,
     XATA_CONNECTION_STRING: process.env.XATA_CONNECTION_STRING,
-
-    UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
-    UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
 
     REDIS_URL: process.env.REDIS_URL,
 

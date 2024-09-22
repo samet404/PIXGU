@@ -1,22 +1,25 @@
+import { mToMs } from '@/utils/mToMs'
+import { createMatch } from 'src/funcs/createMatch'
 import { create } from 'zustand'
 
 type State = {
   value: {
-    matchInterval: ReturnType<typeof setInterval> | null
+    matchTimeout: ReturnType<typeof setTimeout> | null
     isFirstMatch: boolean
     matchCount: number
     lastMatchStartedAt: number | null
   }
 }
 type Action = {
-  newMatch: (interval: ReturnType<typeof setInterval>) => void
+  newMatch: () => void
+  setTimeout: (input: { roomID: string }) => void
   cancel: () => void
   reset: () => void
 }
 
 const initValue: State = {
   value: {
-    matchInterval: null,
+    matchTimeout: null,
     isFirstMatch: true,
     matchCount: 1,
     lastMatchStartedAt: null,
@@ -26,26 +29,37 @@ const initValue: State = {
 export const useMatchStatus = create<State & Action>((set, get) => ({
   ...initValue,
 
-  newMatch: (interval) => {
-    clearInterval(get().value.matchInterval!)
-
+  newMatch: () => {
     set({
       value: {
         matchCount: get().value.matchCount + 1,
-        matchInterval: interval,
+        matchTimeout: null,
         isFirstMatch: false,
         lastMatchStartedAt: Date.now(),
       },
     })
   },
+
+  setTimeout: ({ roomID }) => {
+    if (get().value.matchTimeout) clearInterval(get().value.matchTimeout!)
+    set({
+      value: {
+        matchCount: get().value.matchCount,
+        matchTimeout: setTimeout(() => createMatch(roomID), mToMs(4)),
+        isFirstMatch: false,
+        lastMatchStartedAt: get().value.lastMatchStartedAt,
+      },
+    })
+  },
+
   cancel: () => {
-    const matchInterval = get().value.matchInterval
-    if (matchInterval) clearInterval(matchInterval)
+    const matchTimeout = get().value.matchTimeout
+    if (matchTimeout) clearInterval(matchTimeout)
     set({
       value: {
         matchCount:
           get().value.matchCount !== 0 ? get().value.matchCount - 1 : 0,
-        matchInterval: null,
+        matchTimeout: null,
         isFirstMatch: get().value.matchCount === 1,
         lastMatchStartedAt: get().value.lastMatchStartedAt,
       },
@@ -54,8 +68,8 @@ export const useMatchStatus = create<State & Action>((set, get) => ({
 
   get: () => get(),
   reset: () => {
-    const matchInterval = get().value.matchInterval
-    if (matchInterval) clearInterval(matchInterval)
+    const matchTimeout = get().value.matchTimeout
+    if (matchTimeout) clearInterval(matchTimeout)
     set(initValue)
   },
 }))

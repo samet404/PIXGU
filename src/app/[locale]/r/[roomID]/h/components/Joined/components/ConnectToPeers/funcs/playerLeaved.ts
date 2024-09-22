@@ -8,10 +8,10 @@ import {
 import { toPusherKey } from '@/utils/toPusherKey'
 import type Pusher from 'pusher-js'
 import { sendEveryonePlayerLeaved } from './sendEveryonePlayerLeaved'
-import { createMatch } from './createMatch'
 import { negativeLog } from '@/utils/negativeLog'
 import { sendToAllPeers } from '@/utils/sendToAllPeers'
 import { goldLog } from '@/utils/goldLog'
+import { createMatch } from 'src/funcs/createMatch'
 
 export const playerLeaved = (
   soketiClient: Pusher,
@@ -30,18 +30,14 @@ export const playerLeaved = (
 
   if (usePlayers.getState().value.count <= 1) {
     setHostingHealth('waitingForPlayers')
-
-    const interval = useMatchStatus.getState().value.matchInterval
-    if (interval) clearInterval(interval)
   } else if (useWhoIsPainter.getState().isPainter(userID)) {
-    const interval = useMatchStatus.getState().value.matchInterval
-    if (interval) clearInterval(interval)
     sendToAllPeers({
       from: 'host',
       event: 'painterCouldNotSelectTheme',
       data: 'playerLeft',
     })
 
+    useMatchStatus.getState().cancel()
     createMatch(roomID)
   }
 

@@ -14,7 +14,7 @@ export const Ping = () => {
         return 'red'
       case 'connecting':
         return 'yellow'
-      case 'host not in room':
+      case 'host not found':
         return 'bright yellow'
     }
 
@@ -29,7 +29,7 @@ export const Ping = () => {
         return '-'
       case 'connecting':
         return '-'
-      case 'host not in room':
+      case 'host not found':
         return '-'
       default:
         return `${ping}ms`

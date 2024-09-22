@@ -37,5 +37,10 @@ export const useHostPainterData = create<State & Action>((set, get) => ({
     set({
       value: input,
     }),
-  reset: () => set(initValue),
+  reset: () => {
+    const value = get().value
+    if (value.status === 'painterSelectingTheme' && value.timeIsUpTimeout)
+      clearTimeout(value.timeIsUpTimeout)
+    set(initValue)
+  },
 }))

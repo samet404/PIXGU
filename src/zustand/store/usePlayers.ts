@@ -90,7 +90,7 @@ export const usePlayers = create<State & Action>((set, get) => ({
     const playersCount = usePlayers.getState().value.count
     if (playersCount === 1) {
       const { useIsGameStopped } = await import('@/zustand/store')
-      useIsGameStopped.getState().stop('waitingForHost')
+      useIsGameStopped.getState().removeCode('waitingForPlayers')
     }
   },
   getPlayersIDs: () => Object.keys(get().value.obj),

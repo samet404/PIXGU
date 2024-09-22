@@ -1,28 +1,28 @@
 import type SimplePeer from 'simple-peer'
 import { create } from 'zustand'
 
-type State = {
+export type HostPeerState = {
   peer: SimplePeer.Instance | null
   status:
     | 'connecting'
     | 'connected'
     | 'failed'
     | 'disconnected'
-    | 'host not in room'
+    | 'host not found'
 }
 
 type Action = {
-  set: (input: Partial<State>) => void
+  set: (input: Partial<HostPeerState>) => void
   get: () => SimplePeer.Instance | null
   reset: () => void
 }
 
 const initValue = {
   peer: null,
-  status: 'host not in room',
+  status: 'host not found',
 } as const
 
-export const useHostPeer = create<State & Action>((set, get) => ({
+export const useHostPeer = create<HostPeerState & Action>((set, get) => ({
   ...initValue,
 
   set: (input) => {

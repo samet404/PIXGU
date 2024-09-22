@@ -15,7 +15,7 @@ const Content = async ({ params }: Props) => {
     // const { isUserHavePermToJoin } = await import('./func')
     // await isUserHavePermToJokin(user.id, roomID)
 
-    const hostID = await redisDb.get<string>(`room:${roomID}:host_ID`)
+    const hostID = await redisDb.get(`room:${roomID}:host_ID`)
     if (!hostID) throw new Error('NO_HOST_ID')
 
     await redisDb.sadd(`room:${roomID}:active_players`, user.id)

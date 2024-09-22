@@ -2,8 +2,8 @@
 
 import { faGear } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useSpring, animated } from '@react-spring/web'
 import Link from 'next/link'
+import { useSpring, animated } from '@react-spring/web'
 
 const Settings = () => {
   const [springs, api] = useSpring(() => ({

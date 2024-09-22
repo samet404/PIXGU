@@ -1,22 +1,24 @@
 import type { RouterInputs } from '@/trpc/shared'
 import { create } from 'zustand'
 
-type State = { value: Partial<RouterInput> }
+type State = Partial<RouterInput>
 
 type Action = {
-  add: (input: Partial<RouterInput>) => void
-  get: () => Partial<RouterInput>
+  setName: (name: string | undefined) => void
+  setPass: (pass: string | undefined) => void
+  reset: () => void
+}
+
+const initialState: State = {
+  name: undefined,
+  password: undefined,
 }
 
 export const useCreateRoomInputs = create<State & Action>((set, get) => ({
-  value: {
-    isHostPlayer: true,
-  },
-
-  add: (input) => {
-    set({ value: { ...get().value, ...input } })
-  },
-  get: () => get().value,
+  ...initialState,
+  setName: (name) => set({ ...get(), name }),
+  setPass: (pass) => set({ password: pass }),
+  reset: () => set(initialState),
 }))
 
 type RouterInput = RouterInputs['gameRoom']['create']

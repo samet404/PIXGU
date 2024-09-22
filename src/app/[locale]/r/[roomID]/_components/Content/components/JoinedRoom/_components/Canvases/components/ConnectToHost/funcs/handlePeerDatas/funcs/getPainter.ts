@@ -16,7 +16,8 @@ export const getPainter = async (
 ) => {
   const amIPainter = myUserID === data
 
-  useIsGameStopped.getState().open()
+  if (useIsGameStopped.getState().value.code?.includes('waitingForHost'))
+    useIsGameStopped.getState().removeCode('waitingForHost')
   useMatchStatusClient.getState().waitingForThemes()
   useWhoIsPainterClient.getState().setCurrentPainter({
     painterID: data,

@@ -1,9 +1,9 @@
 import { createTRPCRouter } from '../../trpc'
+import { getByID } from '../article/subroutes'
 import {
   createRoom,
   isRoomHavePassword,
   knowRoomPass,
-  getRooms,
   getPlayingRooms,
   isExits,
   sendSignalDataToHost,
@@ -14,14 +14,18 @@ import {
   killRoom,
   getRandomRoomID,
   getRandomPublicRoomID,
+  getActiveRoomsID,
+  getRoomByID,
 } from './subroutes'
 
 export const gameRoomRouter = createTRPCRouter({
   create: createRoom,
+  killRoom,
 
+  getByID: getRoomByID,
+  getActiveRoomsID,
   getRandomRoomID,
   getRandomPublicRoomID,
-  killRoom,
   getCreatedRoomsIDs,
   getCreatedRoom,
   getPlayingRooms,
@@ -30,7 +34,6 @@ export const gameRoomRouter = createTRPCRouter({
   isHavePass: isRoomHavePassword,
 
   knowPass: knowRoomPass,
-  getRooms: getRooms,
 
   isExits,
 

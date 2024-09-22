@@ -19,7 +19,7 @@ const Canvases = () => {
   return (
     <div
       id="canvasesContainer"
-      className="flex h-[90vh] w-full items-center overflow-hidden rounded-lg bg-[#00000020]"
+      className="flex h-[90vh] w-full overflow-hidden rounded-lg bg-[#00000020]"
     >
       <TransformWrapper
         initialScale={1}

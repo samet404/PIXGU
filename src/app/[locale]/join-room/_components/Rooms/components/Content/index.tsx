@@ -3,37 +3,52 @@
 import { api } from '@/trpc/react'
 import { RoomItem } from './components/RoomItem'
 import dynamic from 'next/dynamic'
-import { Urbanist } from 'next/font/google'
-
-const urbanist = Urbanist({
-  subsets: ['latin'],
-  weight: ['600'],
-})
+import { forwardRef, useImperativeHandle, type Ref } from 'react'
+import { sortByAtom } from '../atoms'
+import { useAtomValue } from 'jotai'
 
 const ErrDisplay = dynamic(() => import('@/components/ErrDisplay'))
 const Spinner = dynamic(() => import('@/components/Spinner'))
 
-export const Content = () => {
-  const { data, error, isError, isLoading } = api.gameRoom.getRooms.useQuery()
+export const Content = forwardRef(
+  (
+    _: unknown,
+    ref: Ref<{
+      refetch: () => void
+    }>,
+  ) => {
+    const sortBy = useAtomValue(sortByAtom)
+    const { data, error, isError, isLoading, refetch, isRefetching } =
+      api.gameRoom.getActiveRoomsID.useQuery(
+        {
+          sortBy,
+        },
+        {
+          refetchOnWindowFocus: false,
+        },
+      )
 
-  if (isError) return <ErrDisplay msg={'UNKNOWN'} reason={error.message} />
-  if (isLoading)
-    return (
-      <div className="flex size-36 h-full w-full items-center justify-center">
-        <Spinner />
-      </div>
-    )
+    useImperativeHandle(ref, () => ({
+      refetch,
+    }))
 
-  if (data.length === 0)
-    return (
-      <div
-        className={`${urbanist.className} w-full animate-fade text-center text-white`}
-      >
-        No available room found
-      </div>
-    )
+    if (isError) return <ErrDisplay msg={'UNKNOWN'} reason={error.message} />
+    if (isLoading || isRefetching)
+      return (
+        <div className="flex size-36 h-full w-full items-center justify-center">
+          <Spinner />
+        </div>
+      )
 
-  return data.map(({ ID, name, isPublic }) => (
-    <RoomItem key={ID} ID={ID} name={name} isPublic={isPublic} />
-  ))
-}
+    if (data.length === 0)
+      return (
+        <div className="w-full animate-fade text-center text-white">
+          No available room found
+        </div>
+      )
+
+    return data.map((ID) => <RoomItem key={ID} ID={ID} />)
+  },
+)
+
+Content.displayName = 'RoomsContent'

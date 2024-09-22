@@ -7,7 +7,7 @@ const run = async () => {
 
   Object.keys(themes).forEach((lang) =>
     themes[lang as keyof typeof themes].forEach(
-      async (theme) => await redisDb.sadd<string>(`room_themes:${lang}`, theme),
+      async (theme) => await redisDb.sadd(`room_themes:${lang}`, theme),
     ),
   )
   console.log('Themes added to redis ✅')

@@ -1,10 +1,15 @@
 import './_styles/scrollbars.css'
 import { setLocale } from '@/context/server'
 import type { Locale } from '@/types'
-import IDBox from './_components/IDBox'
 import { Rooms } from './_components/Rooms'
 import Logo from '@/png/logo.png'
 import Image from 'next/image'
+import { Outfit } from 'next/font/google'
+
+const outfit = Outfit({
+  subsets: ['latin'],
+  weight: ['400', '700', '600'],
+})
 
 const JoinRoom = ({ params }: Props) => {
   setLocale(params.locale)
@@ -15,20 +20,18 @@ const JoinRoom = ({ params }: Props) => {
         backgroundImage:
           'radial-gradient(at 80% 100%,  hsla(222,47%,16%,1) 0px, transparent 50%),radial-gradient(at 0% 0%, #ff37a578 0px, transparent 50%)',
       }}
-      className="relative z-20 flex h-full w-full flex-row items-center justify-center gap-3 bg-gradient-to-tl from-[hsla(220,39%,10%,1)] via-[hsla(220,39%,10%,1)] to-transparent p-4"
+      className={`${outfit.className} relative z-20 flex h-full w-full flex-col items-center justify-center gap-3 bg-gradient-to-tl from-[hsla(220,39%,10%,1)] via-[hsla(220,39%,10%,1)] to-transparent p-4`}
     >
-      <div className="flex h-full grow">
+      <div className="flex flex-row items-end justify-between xxs:w-full lg:w-[50rem] ">
         <Image
           src={Logo}
           alt="logo"
           className="size-[6rem] select-none object-contain"
           sizes="calc(2.33vw + 90px)"
         ></Image>
+        <div className="text-[#a0217f]">Join rooms near you to reduce ping</div>
       </div>
-      <div className="flex h-full animate-fade items-start gap-1 rounded-lg bg-gradient-to-tr from-[#2de77a] via-[#74ffae] to-[#2de77a] p-1 shadow-[0_0px_20px_1px_#7eea7872]">
-        <Rooms />
-        <IDBox />
-      </div>
+      <Rooms />
     </div>
   )
 }

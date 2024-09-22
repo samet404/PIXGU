@@ -35,7 +35,7 @@ export const Btn = ({ theme, position }: Props) => {
       ref={btnRef}
       onClick={onClick}
       className={clsx(
-        `h-full w-full text-[1.4rem] text-[#00000093] hover:text-violet-600`,
+        `h-full w-full text-[1rem] text-[#00000093] hover:text-violet-600`,
         {
           'animate-fade-right': position === 1,
           'animate-fade-left': position === 2,

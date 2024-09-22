@@ -12,14 +12,14 @@ export const createRoom = loggedUserProducure
       name: z
         .string()
         .min(1)
-        .max(255)
+        .max(20)
         .refine((v) => v.trim() !== '', {
           message: 'Name cannot be empty string',
         }),
       password: z
         .string()
         .min(1)
-        .max(255)
+        .max(50)
         .refine((v) => v.trim() !== '', {
           message: 'Name cannot be empty string',
         })
@@ -27,6 +27,7 @@ export const createRoom = loggedUserProducure
     }),
   )
   .mutation(async ({ input, ctx }) => {
+    console.log('ip:', ctx.clientIP)
     const userID = ctx.user.id
     const createdRooms = await ctx.redisDb.scard(`user:${userID}:created_rooms`)
 
@@ -60,14 +61,27 @@ export const createRoom = loggedUserProducure
       }
     }
 
-    console.log(isRoomExits)
+    const { lookupCity } = await import('@/geoIP')
+    const geoIP = await lookupCity(ctx.clientIP)
+
+    if (!geoIP)
+      throw new TRPCError({
+        code: 'BAD_REQUEST',
+        message: 'Geolocation information not found',
+      })
+
+    const ll = [geoIP.location.latitude, geoIP.location.longitude]
+    const country = geoIP.country.iso_code
 
     await ctx.redisDb.set(`room:${roomID!}:name`, name)
     await ctx.redisDb.sadd(`room:${roomID!}:admins`, userID)
     await ctx.redisDb.sadd(`room:${roomID!}:active_players`, userID)
-    await ctx.redisDb.set(`room:${roomID!}:created_at`, createdAt)
+    await ctx.redisDb.set(`room:${roomID!}:created_at`, createdAt.toString())
     await ctx.redisDb.set(`room:${roomID!}:host_ID`, userID)
+    await ctx.redisDb.set(`room:${roomID!}:host_country`, country)
+    await ctx.redisDb.set(`room:${roomID!}:host_LL`, JSON.stringify(ll))
     await ctx.redisDb.sadd(`user:${userID}:created_rooms`, roomID!)
+    await ctx.redisDb.set(`room:${roomID!}:`, ctx.clientIP)
 
     if (password) {
       await ctx.redisDb.set(`room:${roomID!}:password`, password)

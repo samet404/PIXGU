@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import {
   useGuessedPlayers,
   useHostingHealth,
+  useHostPainterData,
   useMatchStatus,
   useSpectators,
 } from '@/zustand/store'
@@ -38,6 +39,7 @@ export const StopBtn = ({ roomID }: Props) => {
     useGuessedPlayers.getState().reset()
     useHostingHealth.getState().set('readyToStart')
     useSpectators.getState().reset()
+    useHostPainterData.getState().reset()
 
     sendToAllPeers({
       from: 'host',

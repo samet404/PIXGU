@@ -12,7 +12,7 @@ const Start = () => {
         href={'/login'}
         className="duration-400  rounded-lg text-center text-[2rem] text-[#0000008e] transition-opacity hover:opacity-50"
       >
-        Join us spark your imagination
+        Join us to spark your imagination
       </Link>
     </div>
   )

@@ -1,23 +1,38 @@
 import type { SelectThemeFromClient } from '@/types/webRTCConnData'
+import { negativeLog, sendToAllPeers } from '@/utils'
+import {
+  useHostPainterData,
+  useMatchStatus,
+  useWhoIsPainter,
+} from '@/zustand/store'
 
-export const getSelectedTheme = async (
+export const getSelectedTheme = (
   data: SelectThemeFromClient['data'],
   userID: string,
+  roomID: string,
 ) => {
-  const { negativeLog, sendToAllPeers } = await import('@/utils')
-  const { useHostPainterData } = await import('@/zustand/store')
+  const isPainter = useWhoIsPainter.getState().isPainter(userID)
+  if (!isPainter) return
 
   const hostPainterData = useHostPainterData.getState().value
-  console.log('hostPainterData', hostPainterData)
   if (hostPainterData.status !== 'painterSelectingTheme') return
 
   const { themes } = hostPainterData
 
-  if (!themes) negativeLog('Received selected theme when there is no themes')
-  if (!themes.includes(data))
+  if (!themes) {
+    negativeLog('Received selected theme when there is no themes')
+    return
+  }
+
+  if (!themes.includes(data)) {
     negativeLog(
       'Selected theme received but the theme is not among the sent themes',
     )
+    return
+  }
+
+  useMatchStatus.getState().newMatch()
+  useMatchStatus.getState().setTimeout({ roomID })
 
   clearTimeout(hostPainterData.timeIsUpTimeout)
   useHostPainterData.getState().set({

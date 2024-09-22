@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
-import { createMatch } from '../../ConnectToPeers/funcs'
 import { useHostingHealth } from '@/zustand/store'
-import { useEffectOnce } from 'usehooks-ts'
+import { createMatch } from 'src/funcs/createMatch'
+import { useEffectOnce } from '@/hooks/useEffectOnce'
 
 export const StartBtn = ({ roomID }: Props) => {
   const buttonRef = useRef<HTMLButtonElement | null>(null)

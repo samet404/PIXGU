@@ -14,6 +14,7 @@ import { db } from '@/sqlDb'
 import { redisDb } from '@/redis'
 import { validateRequest } from '@/auth/lucia/validateRequest'
 import { getPusherServer } from '@/pusher/server'
+import { env } from '@/env/server'
 
 /**
  * 1. CONTEXT
@@ -28,8 +29,21 @@ import { getPusherServer } from '@/pusher/server'
  * @see https://trpc.io/docs/server/context
  */
 
+const getIP = (headers: Headers) => {
+  const FALLBACK_IP_ADDRESS = '0.0.0.0'
+  const forwardedFor = headers.get('x-forwarded-for')
+
+  if (forwardedFor) return forwardedFor.split(',')[0] ?? FALLBACK_IP_ADDRESS
+
+  return headers.get('x-real-ip') ?? FALLBACK_IP_ADDRESS
+}
+
 export const createTRPCContext = async (opts: { headers: Headers }) => {
   const { session, user } = await validateRequest()
+  const clientIP =
+    process.env.NODE_ENV === 'development'
+      ? env.IP_ADDRESS
+      : getIP(opts.headers)
 
   return {
     redisDb,
@@ -37,6 +51,7 @@ export const createTRPCContext = async (opts: { headers: Headers }) => {
     getPusherServer,
     session,
     user,
+    clientIP,
     ...opts,
   }
 }

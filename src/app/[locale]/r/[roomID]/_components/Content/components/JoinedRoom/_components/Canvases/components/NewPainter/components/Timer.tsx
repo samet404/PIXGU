@@ -42,7 +42,7 @@ export const Timer = () => {
         ></div>
       </div>
 
-      <div className="pl-2 text-[1.1rem] font-[500] text-violet-500 ">
+      <div className="pl-2 text-[1rem] font-[500] text-violet-500 ">
         {description}
       </div>
     </div>

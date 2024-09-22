@@ -19,7 +19,7 @@ export const pusherGameRoom = loggedUserProducure
     const user = ctx.user
     const userID = user.id
 
-    const hostID = await ctx.redisDb.get<string>(`room:${roomID}:host_ID`)
+    const hostID = await ctx.redisDb.get(`room:${roomID}:host_ID`)
 
     const isUserHost = hostID === user.id
 

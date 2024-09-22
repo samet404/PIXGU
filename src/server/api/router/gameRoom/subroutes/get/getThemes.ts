@@ -8,7 +8,6 @@ export const getThemes = loggedUserProducure
       roomID: z.string().cuid2(),
     }),
   )
-  .output(z.array(z.string()).length(2))
   .query(async ({ input, ctx }) => {
     const { roomID } = input
 
@@ -31,7 +30,7 @@ export const getThemes = loggedUserProducure
         message: 'You are not in this room',
       })
 
-    const hostID = await ctx.redisDb.get<string>(`room:${roomID}:host_ID`)
+    const hostID = await ctx.redisDb.get(`room:${roomID}:host_ID`)
 
     if (hostID !== ctx.user.id)
       throw new TRPCError({
@@ -39,7 +38,7 @@ export const getThemes = loggedUserProducure
         message: 'You are not the host of this room',
       })
 
-    const themes = await ctx.redisDb.srandmember<string[]>('room_themes', 2)
+    const themes = await ctx.redisDb.srandmember('room_themes:en', 2)
     if (!themes)
       throw new TRPCError({ code: 'NOT_FOUND', message: 'Themes not found' })
 

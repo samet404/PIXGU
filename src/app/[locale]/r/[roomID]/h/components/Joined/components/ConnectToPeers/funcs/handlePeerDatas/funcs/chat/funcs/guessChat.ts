@@ -6,8 +6,8 @@ import {
   useMatchStatus,
   useWhoIsPainter,
 } from '@/zustand/store'
-import { createMatch } from '../../../../createMatch'
-import { mToMs, sendToAllPeers, sendToPeerWithID } from '@/utils'
+import { sendToAllPeers, sendToPeerWithID } from '@/utils'
+import { createMatch } from 'src/funcs/createMatch'
 
 export const guessChat = async (
   data: GuessChatFromClient['data'],
@@ -18,16 +18,16 @@ export const guessChat = async (
   if (painterData.status !== 'painterSelectedTheme') return
 
   console.log('guessChat', {
-    theme: useMatchStatus.getState().value.matchInterval
-      ? painterData.selectedTheme.toLocaleLowerCase()
-      : null,
+    theme: painterData.selectedTheme.toLocaleLowerCase(),
     msg: data.msg,
   })
-  if (
-    useMatchStatus.getState().value.matchInterval &&
-    painterData.selectedTheme?.toLocaleLowerCase() ===
-      data.msg.toLocaleLowerCase()
-  ) {
+
+  const theme = painterData.selectedTheme.toLocaleLowerCase().trim()
+  if (!theme) {
+    console.error('theme is empty')
+    return
+  }
+  if (theme === data.msg.toLocaleLowerCase().trim()) {
     const { sendManyToAllPeers, sendManyToPeerWithID } = await import('@/utils')
     const whoIsPainter = useWhoIsPainter.getState().value
     if (whoIsPainter.status === 'thereIsNoPainter') return
@@ -112,9 +112,6 @@ export const guessChat = async (
 
     if (isEveryoneGuessed) {
       createMatch(roomID)
-      useMatchStatus
-        .getState()
-        .newMatch(setInterval(() => createMatch(roomID), mToMs(4)))
 
       sendToAllPeers({
         from: 'host',

@@ -1,5 +1,4 @@
 import { loggedUserProducure } from '@/procedure'
-import { z } from 'zod'
 
 export const getPlayingRooms = loggedUserProducure.query(async ({ ctx }) => {
   const userID = ctx.user.id
@@ -7,13 +6,13 @@ export const getPlayingRooms = loggedUserProducure.query(async ({ ctx }) => {
 
   const rooms = await Promise.all(
     roomsIDs.map(async (ID) => {
-      const name = await ctx.redisDb.get<string>(`room:${ID}:name`)
+      const name = await ctx.redisDb.get(`room:${ID}:name`)
       if (!name) {
         console.error(`room:${ID}:name is not exits`)
         return null
       }
 
-      const hostID = await ctx.redisDb.get<string>(`room:${ID}:host_ID`)
+      const hostID = await ctx.redisDb.get(`room:${ID}:host_ID`)
       if (!hostID) {
         console.error(`room:${ID}:host_ID is not exits`)
         return null
@@ -21,7 +20,7 @@ export const getPlayingRooms = loggedUserProducure.query(async ({ ctx }) => {
 
       const isPublic = await ctx.redisDb.get(`room:${ID}:password`)
 
-      const createdAt = await ctx.redisDb.get<Date>(`room:${ID}:created_at`)
+      const createdAt = await ctx.redisDb.get(`room:${ID}:created_at`)
       if (!createdAt) {
         console.error(`room:${ID}:created_at is not exits`)
         return null
@@ -32,7 +31,7 @@ export const getPlayingRooms = loggedUserProducure.query(async ({ ctx }) => {
         name: name,
         amIHost: hostID === userID,
         isPublic: !isPublic,
-        createdAt: createdAt,
+        createdAt: new Date(createdAt),
       }
     }),
   )

@@ -19,7 +19,7 @@ export const NewPainter = () => {
         newPainterSfxRef.current.play()
         return (
           <Fragment>
-            <div className="absolute left-0 top-1 flex w-full animate-fade items-center justify-center text-[1.4rem] text-violet-500">
+            <div className="absolute left-0 top-1 flex w-full animate-fade items-center justify-center text-[1rem] text-violet-500">
               Waiting host for themes...
             </div>
             <User />

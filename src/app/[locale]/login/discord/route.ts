@@ -1,6 +1,7 @@
 import { generateState } from 'arctic'
 import { discord } from '@/auth/lucia/providers'
 import { cookies } from 'next/headers'
+import { env } from '@/env/server'
 
 export async function GET(): Promise<Response> {
   const state = generateState()
@@ -10,7 +11,7 @@ export async function GET(): Promise<Response> {
 
   cookies().set('discord_oauth_state', state, {
     path: '/',
-    secure: process.env.NODE_ENV === 'production',
+    secure: env.NODE_ENV === 'production',
     httpOnly: true,
     maxAge: 60 * 10,
     sameSite: 'lax',

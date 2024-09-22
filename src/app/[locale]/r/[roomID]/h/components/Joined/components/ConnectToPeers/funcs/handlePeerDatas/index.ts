@@ -29,7 +29,7 @@ export const handlePeerDatas = (userID: string, roomID: string) => {
         chat(rtcData.data, event, userID, roomID)
         break
       case 'selectTheme':
-        getSelectedTheme(rtcData.data, userID)
+        getSelectedTheme(rtcData.data, userID, roomID)
         break
       case 'painterDraw':
         painterDraw(rtcData.data, userID)

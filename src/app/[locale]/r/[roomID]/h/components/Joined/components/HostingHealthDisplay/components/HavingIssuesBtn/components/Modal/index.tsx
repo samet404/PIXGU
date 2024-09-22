@@ -41,17 +41,10 @@ export const Modal = () => {
         />
 
         <Item
-          title="Bad order to enter the game"
-          description={[
-            `Don't enter room after other people have left or joined. You must be first person in room. You shouldn't leave the room as hosting will be terminated.`,
-          ]}
-        />
-
-        <Item
           title="Browser issues"
           description={[
             'If you are using firefox based browser your issue might be related to the browser. We are currently working on to fix firefox based problems. But now we recommend you using chromium based browsers like brave or chrome for player and host.',
-            'Turn on hardware acceleration in your browser settings. This will make your browser faster.',
+            'Turn on hardware acceleration in your browser settings. This maybe solve your issues.',
             'Try to disable any extensions you have installed in your browser. Extensions can change website behavior.',
             `Don't use old browser versions. We recommend you to use latest version of your browser.`,
           ]}

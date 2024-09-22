@@ -14,7 +14,7 @@ export const User = () => {
   return (
     <div className="flex animate-fade flex-col items-center">
       <Img src={user.profilePicture} />
-      <div className="text-[2rem] font-bold text-violet-500">
+      <div className="text-[1rem] font-bold text-violet-500">
         {user.usernameWithUsernameID}
       </div>
     </div>

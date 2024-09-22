@@ -4,7 +4,7 @@ import { goldLog } from '@/utils/goldLog'
 import { pingHostPeer } from '@/utils/pingHostPeer'
 import { positiveLog } from '@/utils/positiveLog'
 import { simplePeer } from '@/utils/simplePeer'
-import { useHostPeer } from '@/zustand/store'
+import { useHostPeer, useIsGameStopped } from '@/zustand/store'
 import { handlePeerDatas } from './handlePeerDatas'
 
 export const createHostPeer = (roomID: string, myUserID: string) => {
@@ -34,6 +34,7 @@ export const createHostPeer = (roomID: string, myUserID: string) => {
   peer.on('connect', () => {
     positiveLog(`CONNECTED TO HOST`)
 
+    useIsGameStopped.getState().removeCode('connectingToHost')
     setHostPeer({
       status: 'connected',
     })

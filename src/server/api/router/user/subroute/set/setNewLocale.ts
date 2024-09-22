@@ -7,5 +7,5 @@ export const setNewLocale = loggedUserProducure
     const userID = ctx.user.id
     const newLocale = input
 
-    await ctx.redisDb.set(`locale:${userID}`, newLocale)
+    await ctx.redisDb.set(`user:${userID}:locale`, newLocale)
   })

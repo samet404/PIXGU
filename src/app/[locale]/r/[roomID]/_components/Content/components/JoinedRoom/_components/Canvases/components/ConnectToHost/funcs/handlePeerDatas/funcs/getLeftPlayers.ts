@@ -19,7 +19,7 @@ export const getLeftPlayers = async (data: PlayerLeft['data']) => {
     } = await import('@/zustand/store')
 
     if (usePlayers.getState().value.count === 0)
-      useIsGameStopped.getState().stop('waitingForPlayers')
+      useIsGameStopped.getState().addCode('waitingForPlayers')
     useWhoIsPainterClient.getState().reset()
     useGuessChatLayout.getState().reset()
     useWinnersChatLayout.getState().reset()
