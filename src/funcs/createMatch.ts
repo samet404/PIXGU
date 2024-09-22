@@ -4,6 +4,7 @@ import { useMatchStatus } from '@/zustand/store/useMatchStatus'
 import {
   useGuessedPlayers,
   useHostingHealth,
+  useHostPainterData,
   usePixelHistory,
   usePlayers,
   useSpectators,
@@ -69,6 +70,7 @@ export const createMatch = async (roomID: string) => {
       amIPainter: false,
     })
 
+    useHostPainterData.getState().reset()
     usePixelHistory.getState().reset()
     updatePainterToPlayers(roomID)
   } else if (players().count >= 2) {
@@ -90,6 +92,7 @@ export const createMatch = async (roomID: string) => {
       painterID: playersIDs[nextPainterI]!,
     })
 
+    useHostPainterData.getState().reset()
     usePixelHistory.getState().reset()
     updatePainterToPlayers(roomID)
   }

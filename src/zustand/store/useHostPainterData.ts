@@ -67,7 +67,6 @@ export const useHostPainterData = create<State & Action>((set, get) => ({
             })
 
             useMatchStatus.getState().cancel()
-            useHostPainterData.getState().reset()
             createMatch(roomID)
           }, sToMs(20)),
         },
