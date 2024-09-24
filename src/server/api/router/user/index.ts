@@ -27,7 +27,7 @@ import {
 export const userRouter = createTRPCRouter({
   generateNewUsernameID,
 
-  getById: getUserByID,
+  getByID: getUserByID,
   getByUsername: getUserByUsername,
   getByUsernameID: getUserByUsernameID,
   isExitsByID: isUserExitsByID,

@@ -67,7 +67,7 @@ export const internationalization: NextMiddleware = async (
             return NextResponse.redirect(req.nextUrl)
           }
 
-          if (pathname.startsWith('/settings')) {
+          if (pathname.endsWith('/settings')) {
             req.nextUrl.pathname = `/${redisLocale}/settings/account`
             return NextResponse.redirect(req.nextUrl)
           }
@@ -130,7 +130,7 @@ export const internationalization: NextMiddleware = async (
     if (pathname.startsWith('/start') || pathname.startsWith('/login')) {
       req.nextUrl.pathname = `/${locale}`
       return NextResponse.redirect(req.nextUrl)
-    } else if (pathname.startsWith('/settings')) {
+    } else if (pathname.endsWith('/settings')) {
       req.nextUrl.pathname = `/${locale}/settings/account`
       return NextResponse.redirect(req.nextUrl)
     }

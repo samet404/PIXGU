@@ -22,9 +22,9 @@ const Nav = async () => {
     >
       <div className="flex flex-col items-center gap-4">
         {isLogged ? <NavItem name="Account" /> : null}
-        {/* <NavItem name="Themes" /> */}
         <NavItem name="Controls" />
         <NavItem name="Sounds" />
+        <NavItem name="Advanced" />
       </div>
 
       <HomeBtn />

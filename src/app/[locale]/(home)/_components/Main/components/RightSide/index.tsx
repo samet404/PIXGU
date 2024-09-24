@@ -1,6 +1,5 @@
 import Settings from './components/Settings'
 import { UserProfile } from './components/UserProfile'
-import { getIsLogged } from '@/context/server'
 
 const RightSide = () => {
   return (

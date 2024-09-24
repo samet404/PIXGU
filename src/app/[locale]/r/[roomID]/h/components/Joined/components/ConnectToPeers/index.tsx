@@ -113,7 +113,7 @@ export const ConnectToPeers = () => {
     myConnectPresenceChannel.bind(
       'pusher:member_removed',
       (member: { id: string; info: Omit<User, 'id'> }) => {
-        grayLog('MEMBER REMOVED FROM SOKETI CHANNEL', member)
+        negativeLog('MEMBER REMOVED FROM SOKETI CHANNEL', member)
         // playerLeaved(soketiClient, member.id, roomID)
       },
     )

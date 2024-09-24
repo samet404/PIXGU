@@ -34,8 +34,6 @@ export const createMatch = async (roomID: string) => {
       useMatchStatus,
     } = await import('@/zustand/store')
     const { sendToAllPeers } = await import('@/utils')
-    useMatchStatus.getState().reset()
-    useHostPainterData.getState().reset()
 
     sendToAllPeers({
       from: 'host',
@@ -46,9 +44,12 @@ export const createMatch = async (roomID: string) => {
     })
 
     useHostingHealth.getState().set('gameEnded')
-
+    useMatchStatus.getState().reset()
+    useHostPainterData.getState().reset()
+    useWhoIsPainter.getState().reset()
     useMatchStatus.getState().reset()
     useSpectators.getState().reset()
+    useCoins.getState().reset()
     useLastPixel.getState().reset()
     usePixelHistory.getState().reset()
     useGuessedPlayers.getState().reset()

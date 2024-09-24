@@ -9,6 +9,7 @@ import {
   authRouter,
   gameRoomRouter,
 } from './router'
+import { settingsRouter } from './router/settings'
 
 /**
  * This is the primary router for your server.
@@ -18,6 +19,7 @@ import {
 export const appRouter = createTRPCRouter({
   auth: authRouter,
   user: userRouter,
+  settings: settingsRouter,
   article: articleRouter,
   gameRoom: gameRoomRouter,
   announcement: announcementRouter,

@@ -66,6 +66,7 @@ export const ConnectToHost = () => {
     presenceChannel.bind(
       'pusher:member_added',
       (member: { id: string; info: Omit<User, 'id'> }) => {
+        positiveLog('MEMBER ADDED TO SOKETI CHANNEL', member)
         const isHostInRoom = member.id.endsWith('-HOST')
 
         if (isHostInRoom) useHostPeer.getState().set({ status: 'connecting' })

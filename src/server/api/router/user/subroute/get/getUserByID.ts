@@ -14,9 +14,9 @@ import { eq } from 'drizzle-orm'
  *
  * @example
  *
- * const user = await api.user.getById('id')
+ * const user = await api.user.getByID('id')
  *
- * const user = await api.user.getById({ ID: 'ds02mao', config: { username: false } })
+ * const user = await api.user.getByID({ ID: 'ds02mao', config: { username: false } })
  *
  */
 export const getUserByID = publicProcedure
