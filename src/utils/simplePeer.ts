@@ -5,9 +5,9 @@ export const iceServers: RTCIceServer[] = [
     urls: 'stun:stun.relay.metered.ca:80',
   },
   {
-    urls: 'turn:global.relay.metered.ca:80?transport=tcp',
-    username: 'deb044f685ce32c4b6566f9c',
-    credential: 'gDy3Pgf3ErAAju6v',
+    urls: 'turns:global.relay.metered.ca:443?transport=tcp',
+    username: 'f63902bb2301c242c5811caf',
+    credential: 'eKHSkufOyBjwfOKQ',
   },
 ]
 
@@ -22,7 +22,10 @@ export const simplePeer = (opts?: SimplePeer.Options): SimplePeer.Instance => {
 
   return new SimplePeer({
     initiator: opts?.initiator ?? false,
-
+    channelConfig: {
+      ordered: true,
+    },
+    objectMode: true,
     ...opts,
     config: {
       iceServers: iceServersData,

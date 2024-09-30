@@ -16,6 +16,7 @@ export const calculatePixelsBetween = (
   let x = prevX
   let y = prevY
 
+  // eslint-disable-next-line no-constant-condition
   while (true) {
     pixels.push({ x, y })
 
@@ -32,5 +33,5 @@ export const calculatePixelsBetween = (
     }
   }
 
-  return pixels
+  return pixels.slice(1, -1)
 }

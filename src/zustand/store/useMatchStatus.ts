@@ -4,22 +4,22 @@ import { create } from 'zustand'
 
 type State = {
   value: {
-    matchTimeout: ReturnType<typeof setTimeout> | null
+    matchInterval: ReturnType<typeof setInterval> | null
     isFirstMatch: boolean
     matchCount: number
     lastMatchStartedAt: number | null
   }
 }
 type Action = {
-  newMatch: () => void
-  setTimeout: (input: { roomID: string }) => void
-  cancel: () => void
+  startInterval: (roomID: string) => void
+  cancelInterval: () => void
+  clearInterval: () => void
   reset: () => void
 }
 
 const initValue: State = {
   value: {
-    matchTimeout: null,
+    matchInterval: null,
     isFirstMatch: true,
     matchCount: 0,
     lastMatchStartedAt: null,
@@ -29,47 +29,60 @@ const initValue: State = {
 export const useMatchStatus = create<State & Action>((set, get) => ({
   ...initValue,
 
-  newMatch: () => {
+  startInterval: (roomID) => {
+    const state = get().value
+    if (state.matchInterval) {
+      clearInterval(state.matchInterval)
+      console.log('interval cleared')
+    }
+    const startedAt = Date.now()
     set({
       value: {
         matchCount: get().value.matchCount + 1,
-        matchTimeout: null,
+        matchInterval: setInterval(() => {
+          const state = get().value
+          const passedMs = Date.now() - startedAt
+          console.log('passedMs in startInterval:', passedMs, {
+            passedMs,
+            state,
+            startedAt,
+            date: Date.now(),
+          })
+
+          if (passedMs >= mToMs(0.25)) {
+            if (state.matchInterval) clearInterval(state.matchInterval)
+            createMatch(roomID)
+          }
+        }, 1000),
         isFirstMatch: false,
-        lastMatchStartedAt: Date.now(),
+        lastMatchStartedAt: startedAt,
       },
     })
   },
 
-  setTimeout: ({ roomID }) => {
-    if (get().value.matchTimeout) clearInterval(get().value.matchTimeout!)
-    set({
-      value: {
-        matchCount: get().value.matchCount,
-        matchTimeout: setTimeout(() => createMatch(roomID), mToMs(4)),
-        isFirstMatch: false,
-        lastMatchStartedAt: get().value.lastMatchStartedAt,
-      },
-    })
-  },
-
-  cancel: () => {
-    const matchTimeout = get().value.matchTimeout
+  cancelInterval: () => {
+    const matchTimeout = get().value.matchInterval
     if (matchTimeout) clearInterval(matchTimeout)
     set({
       value: {
         matchCount:
           get().value.matchCount !== 0 ? get().value.matchCount - 1 : 0,
-        matchTimeout: null,
+        matchInterval: null,
         isFirstMatch: get().value.matchCount === 1,
         lastMatchStartedAt: get().value.lastMatchStartedAt,
       },
     })
   },
 
+  clearInterval: () => {
+    const matchTimeout = get().value.matchInterval
+    if (matchTimeout) clearInterval(matchTimeout)
+    set({ ...get() })
+  },
   get: () => get(),
   reset: () => {
-    const matchTimeout = get().value.matchTimeout
-    if (matchTimeout) clearInterval(matchTimeout)
+    const matchInterval = get().value.matchInterval
+    if (matchInterval) clearInterval(matchInterval)
     set(initValue)
   },
 }))

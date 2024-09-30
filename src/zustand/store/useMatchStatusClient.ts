@@ -9,7 +9,7 @@ type State = {
 }
 
 type Action = {
-  newMatch: () // interval: ReturnType<typeof setInterval>
+  startInterval: () // interval: ReturnType<typeof setInterval>
 
   => void
   clearMatch: () => void
@@ -28,7 +28,7 @@ const initValue: State = {
 export const useMatchStatusClient = create<State & Action>((set, get) => ({
   ...initValue,
 
-  newMatch: () => {
+  startInterval: () => {
     // const matchInterval = get().matchInterval
     // if (matchInterval) clearInterval(matchInterval)
 

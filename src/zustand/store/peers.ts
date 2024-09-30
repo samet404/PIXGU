@@ -16,7 +16,11 @@ export const usePeers = create<State & Action>((set, get) => ({
 
   get: () => get().peers,
   removePeer: (ID) => {
-    delete get().peers[ID]
+    const peer = get().peers[ID]?.peer
+    if (peer) {
+      peer.destroy()
+      delete get().peers[ID]
+    }
   },
   add: (input) => {
     const { ID, peer } = input
@@ -28,5 +32,10 @@ export const usePeers = create<State & Action>((set, get) => ({
       },
     })
   },
-  reset: () => set({ peers: {} }),
+  reset: () => {
+    for (const ID in get().peers) {
+      get().removePeer(ID)
+    }
+    set({ peers: {} })
+  },
 }))

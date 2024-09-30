@@ -1,9 +1,9 @@
 import { negativeLog } from '@/utils/negativeLog'
 import { sendToAllPeers } from '@/utils/sendToAllPeers'
 import { create } from 'zustand'
-import { useMatchStatus } from './useMatchStatus'
 import { createMatch } from 'src/funcs/createMatch'
 import { sToMs } from '@/utils/sToMs'
+import { useMatchStatus } from './useMatchStatus'
 
 type Value =
   | {
@@ -14,7 +14,8 @@ type Value =
   | {
       status: 'painterSelectingTheme'
       themes: [string, string]
-      timeIsUpTimeout: ReturnType<typeof setTimeout>
+      timeIsUpIntervalStartedAt: number
+      timeIsUpInterval: ReturnType<typeof setInterval>
     }
   | {
       status: 'waitingForPlayers'
@@ -53,22 +54,36 @@ export const useHostPainterData = create<State & Action>((set, get) => ({
   },
   painterSelectingTheme: (themes, roomID) => {
     const value = get().value
-
+    const startedAt = Date.now()
+    console.log('startedAt: ', startedAt)
     if (value.status === 'waitingForPlayers')
       set({
         value: {
           status: 'painterSelectingTheme',
           themes,
-          timeIsUpTimeout: setTimeout(() => {
-            sendToAllPeers({
-              from: 'host',
-              event: 'painterCouldNotSelectTheme',
-              data: 'timeIsUp',
-            })
+          timeIsUpIntervalStartedAt: startedAt,
+          timeIsUpInterval: setInterval(() => {
+            const data = get().value
+            if (data.status !== 'painterSelectingTheme') return
 
-            useMatchStatus.getState().cancel()
-            createMatch(roomID)
-          }, sToMs(20)),
+            const passedMs = Date.now() - startedAt
+            console.log('timeIsUpInterval passed ms: ', passedMs, {
+              passedMs,
+              timeIsUpIntervalStartedAt: startedAt,
+              data,
+            })
+            if (passedMs >= sToMs(20)) {
+              clearInterval(data.timeIsUpInterval)
+
+              sendToAllPeers({
+                from: 'host',
+                event: 'painterCouldNotSelectTheme',
+                data: 'timeIsUp',
+              })
+
+              createMatch(roomID)
+            }
+          }, 1000),
         },
       })
     else negativeLog('ATTEMPTED TO SET SELECTING THEME AT WRONG TIME')
@@ -76,8 +91,8 @@ export const useHostPainterData = create<State & Action>((set, get) => ({
 
   reset: () => {
     const value = get().value
-    if (value.status === 'painterSelectingTheme' && value.timeIsUpTimeout)
-      clearTimeout(value.timeIsUpTimeout)
+    if (value.status === 'painterSelectingTheme' && value.timeIsUpInterval)
+      clearInterval(value.timeIsUpInterval)
     set(initValue)
   },
 }))

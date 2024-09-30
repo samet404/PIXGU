@@ -54,11 +54,17 @@ export const createMatch = async (roomID: string) => {
     usePixelHistory.getState().reset()
     useGuessedPlayers.getState().reset()
 
-    setTimeout(() => {
-      if (usePlayers.getState().value.count > 1)
-        useHostingHealth.getState().set('readyToStart')
-      else useHostingHealth.getState().set('waitingForPlayers')
-    }, sToMs(20))
+    const intervalStartedAt = Date.now()
+    const interval = setInterval(() => {
+      const passedMs = Date.now() - intervalStartedAt
+
+      if (passedMs >= mToMs(0.25)) {
+        clearInterval(interval)
+        if (usePlayers.getState().value.count > 1)
+          useHostingHealth.getState().set('readyToStart')
+        else useHostingHealth.getState().set('waitingForPlayers')
+      }
+    }, 1000)
 
     return
   }

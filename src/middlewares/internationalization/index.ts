@@ -48,12 +48,17 @@ export const internationalization: NextMiddleware = async (
           pathname === `/${redisLocale}`
 
         // if pathname has redis locale do nothing
-        if (pathnameHasRedisLocale) return
+        if (pathnameHasRedisLocale) {
+          if (pathname.endsWith('/settings'))
+            req.nextUrl.pathname = `/${redisLocale}/settings/account`
+
+          return NextResponse.redirect(req.nextUrl)
+        }
 
         // if pathname has another locale
         const pathnameAnotherLocale = locales.find((locale) => {
           if (locale === redisLocale) return undefined
-          if (pathname.includes(`/${locale}/`) || pathname === `/${locale}`)
+          if (pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`)
             return locale
           return undefined
         })

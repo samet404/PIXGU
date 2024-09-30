@@ -1,22 +1,30 @@
-import { create } from 'zustand'
 import type { RouterOutputs } from '@/trpc/shared'
+import { create } from 'zustand'
 import { subscribeWithSelector } from 'zustand/middleware'
 import { syncTabs } from 'zustand-sync-tabs'
 
-type TRPCGetAll = RouterOutputs['settings']['getAll']
+type TRPCGetAllSettings = RouterOutputs['settings']['getAll']
 
 type State = {
   others: {
-    consoleLogFunc: typeof console.log | undefined
+    consoleLog: typeof console.log | undefined
+    consoleError: typeof console.error | undefined
+    consoleInfo: typeof console.info | undefined
+    consoleWarn: typeof console.warn | undefined
   }
-} & TRPCGetAll
+} & TRPCGetAllSettings
 
 type PartitalState = Partial<State>
 
 type Action = {
-  setInitialState: (state: TRPCGetAll) => void
+  setInitialState: (state: TRPCGetAllSettings) => void
   setDeveloperMode: (isEnabled: boolean) => void
-  setConsoleLogFun: (input: typeof console.log | undefined) => void
+  setConsoleLogFuncs: (
+    consoleLog: typeof console.log | undefined,
+    consoleError: typeof console.error | undefined,
+    consoleInfo: typeof console.info | undefined,
+    consoleWarn: typeof console.warn | undefined,
+  ) => void
 }
 
 const initState: PartitalState = {}
@@ -38,10 +46,18 @@ export const useSettings = create<PartitalState & Action>()(
             developerMode: isEnabled,
           })
         },
-        setConsoleLogFun: (input) =>
+        setConsoleLogFuncs: (
+          consoleLog,
+          consoleError,
+          consoleInfo,
+          consoleWarn,
+        ) =>
           set({
             others: {
-              consoleLogFunc: input,
+              consoleLog,
+              consoleError,
+              consoleInfo,
+              consoleWarn,
             },
           }),
       }),

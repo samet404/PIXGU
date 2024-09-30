@@ -13,5 +13,5 @@ export const decodedOnHostPeerData = (
     return
   }
 
-  import('@/utils').then((m) => m.decodedOnPeerData(hostPeer, callback))
+  import('@/utils').then((m) => m.onPeerData(hostPeer, callback))
 }

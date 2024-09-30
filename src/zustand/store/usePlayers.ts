@@ -1,6 +1,7 @@
 import type { User } from 'lucia'
 import { filterObj } from '@/utils/filterObj'
 import { create } from 'zustand'
+import { usePeers } from './peers'
 
 export type Player = User
 
@@ -75,6 +76,9 @@ export const usePlayers = create<State & Action>((set, get) => ({
   },
   getPlayer: (userID: string) => get().value.obj[userID],
   addPlayer: async (userID, player) => {
+    const isPlayerAlreadyInRoom = Object.keys(get().value.obj).includes(userID)
+    if (isPlayerAlreadyInRoom) usePeers.getState().removePeer(userID)
+
     set({
       value: {
         ...get().value,

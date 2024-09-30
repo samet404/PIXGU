@@ -1,32 +1,56 @@
-// types
 import { type ReactNode } from 'react'
-
-// styles
-import './_styles/globals.css'
-
-// components
 import Providers from './_components/Providers'
-import { MusicPlayer } from './_components/MusicPlayer'
-
-// fontawesome
-import { config } from '@fortawesome/fontawesome-svg-core'
-import '@fortawesome/fontawesome-svg-core/styles.css'
-config.autoAddCss = false
-
-// others
 import { cookies } from 'next/headers'
 import { TRPCReactProvider } from '../trpc/react'
 import type { Locale } from '@/types'
 import { type Metadata } from 'next'
 import { BuyMeCoffee } from './_components/BuyMeCoffee'
 import { Version } from './_components/Version'
-import { api } from '@/trpc/server'
+import './_styles/globals.css'
+
+// fontawesome
+import { config } from '@fortawesome/fontawesome-svg-core'
+import '@fortawesome/fontawesome-svg-core/styles.css'
+config.autoAddCss = false
 
 export const metadata: Metadata = {
-  title: 'PIXGU',
+  title: {
+    absolute: '',
+    default: 'PIXGU',
+    template: 'PIXGU | %s',
+  },
+  creator: '404',
+  description:
+    'Welcome to PIXGU, where your terrible stick figures become legendary masterpieces! Grab your virtual pixelated pencil and prepare for a wild ride of artistic mayhem. Draw and guess the words as fast as you can!. Can you draw a underwater fire station? Of course you can.',
+  keywords: [
+    'pixgu',
+    'PIXGU',
+    'draw',
+    'guess',
+    'pixel art',
+    'virtual art',
+    'art',
+    'drawing',
+    'painting',
+    'pix',
+    'pixel',
+    'draw art',
+    'draw pixel art',
+  ],
+  category: 'game',
+  openGraph: {
+    title: 'PIXGU',
+    description:
+      'Welcome to PIXGU, where your terrible stick figures become legendary masterpieces! Grab your virtual pixelated pencil and prepare for a wild ride of artistic mayhem. Draw and guess the words as fast as you can!. Can you draw a underwater fire station? Of course you can.',
+  },
+  icons: {
+    icon: '/image/png/logo.png',
+  },
+
+  metadataBase: new URL('https://pixgu.com'),
 }
 
-const RootLayout = (props: {
+const RootLayout = async (props: {
   children: ReactNode
   params: {
     locale: Locale
@@ -44,9 +68,8 @@ const RootLayout = (props: {
         <TRPCReactProvider cookies={cookies().toString()}>
           {/* <CustomCursor /> */}
           <Providers>
-            <MusicPlayer />
-            {props.children}
             <BuyMeCoffee />
+            {props.children}
             <Version />
           </Providers>
         </TRPCReactProvider>
