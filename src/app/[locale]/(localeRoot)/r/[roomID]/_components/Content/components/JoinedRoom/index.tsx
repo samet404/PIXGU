@@ -18,6 +18,7 @@ import { Outfit } from 'next/font/google'
 import { GameEnd } from './_components/GameEnd'
 import { Powerups } from './_components/Powerups'
 import Image from 'next/image'
+import CanvasTools from './_components/CanvasTools'
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -64,7 +65,7 @@ const JoinedRoom = () => {
                 <Canvases />
               </div>
               <div className="flex h-[90vh] max-w-[20rem] flex-col gap-2 lg:w-[12rem] xl:w-[15rem]">
-                {/* <CanvasTools /> */}
+                <CanvasTools />
                 <Chats />
               </div>
             </div>

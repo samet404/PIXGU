@@ -37,6 +37,7 @@ export const drawOnCanvas = (
 
     console.log('pixels between ', pixelsBetween.length)
     console.log('pixelsBetween: ', pixelsBetween, newX, newY)
+
     for (let pixel of pixelsBetween) {
       sendToHostPeer({
         from: 'client',

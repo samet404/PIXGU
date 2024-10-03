@@ -49,7 +49,7 @@ export const useMatchStatus = create<State & Action>((set, get) => ({
             date: Date.now(),
           })
 
-          if (passedMs >= mToMs(0.25)) {
+          if (passedMs >= mToMs(4)) {
             if (state.matchInterval) clearInterval(state.matchInterval)
             createMatch(roomID)
           }

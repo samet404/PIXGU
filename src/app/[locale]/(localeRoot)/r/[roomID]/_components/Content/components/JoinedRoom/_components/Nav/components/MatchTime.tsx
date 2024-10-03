@@ -32,11 +32,11 @@ export const MatchTime = () => {
           intervalRef.current = setInterval(() => {
             const passedMs = Date.now() - startTimeRef.current!
             console.log('passedMs', passedMs)
-            setRemainingMs(() => mToMs(0.25) - passedMs)
+            setRemainingMs(() => mToMs(4) - passedMs)
 
-            if (passedMs >= mToMs(0.25)) clearIfAvailable()
+            if (passedMs >= mToMs(4)) clearIfAvailable()
           }, 1000)
-          setRemainingMs(mToMs(0.25))
+          setRemainingMs(mToMs(4))
         }
         break
 

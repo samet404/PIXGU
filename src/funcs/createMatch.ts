@@ -58,7 +58,7 @@ export const createMatch = async (roomID: string) => {
     const interval = setInterval(() => {
       const passedMs = Date.now() - intervalStartedAt
 
-      if (passedMs >= mToMs(0.25)) {
+      if (passedMs >= mToMs(4)) {
         clearInterval(interval)
         if (usePlayers.getState().value.count > 1)
           useHostingHealth.getState().set('readyToStart')

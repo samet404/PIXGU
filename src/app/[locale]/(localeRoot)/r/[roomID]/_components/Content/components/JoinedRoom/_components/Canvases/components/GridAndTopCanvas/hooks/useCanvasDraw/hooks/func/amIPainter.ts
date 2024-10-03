@@ -5,4 +5,5 @@ export const amIPainter = () => {
 
   if (whoIsPainter.status === 'thereIsNoPainter') return false
   if (!whoIsPainter.amIPainter) return false
+  return true
 }

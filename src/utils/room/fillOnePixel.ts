@@ -21,8 +21,10 @@ export const fillOnePixel = (
   const posY = Math.floor(cellPixelLength * y)
 
   const draft = canvasesMainData.draft!
-  const dctx = canvasesMainData.draft!.getContext('2d')!
-  const mctx = draft.getContext('2d')!
+  const dctx = canvasesMainData.draft!.getContext('2d', {
+    willReadFrequently: true,
+  })!
+  const mctx = draft.getContext('2d', { willReadFrequently: true })!
 
   // Create ImageData for the entire pixel area
   const imageData = dctx.createImageData(cellPixelLength, cellPixelLength)
@@ -42,7 +44,22 @@ export const fillOnePixel = (
     y,
   })
 
-  console.log('fillOnePixel: ', posX, posY)
+  console.log({
+    type: 'fillOnePixel',
+    x,
+    y,
+    posX,
+    posY,
+    cellPixelLength,
+    data,
+    imageData,
+    r,
+    g,
+    b,
+    a,
+    lastPixel: useLastPixel.getState().value,
+    canvasesMainData,
+  })
   // Put the ImageData on the canvas
   dctx.putImageData(imageData, posX, posY)
   mctx.drawImage(draft, posX, posY, 0, 0) // copy drawing to main
