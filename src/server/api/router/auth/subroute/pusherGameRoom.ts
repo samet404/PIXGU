@@ -4,7 +4,7 @@ import { toPusherKey } from '@/utils/toPusherKey'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
-export const pusherGameRoom = loggedUserProducure
+// export const pusherGameRoom = loggedUserProducure
   .input(
     z.object({
       roomID: z.string().cuid2(),

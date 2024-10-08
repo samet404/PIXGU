@@ -31,6 +31,7 @@ export const internationalization: NextMiddleware = async (
   const sessionId = cookies().get(lucia.sessionCookieName)?.value ?? null
   const isLoggedIn = sessionId !== null && sessionId !== undefined
 
+  console.log('middleware logged: ', isLoggedIn)
   if (isLoggedIn) {
     const authInfo = await lucia.validateSession(sessionId)
 

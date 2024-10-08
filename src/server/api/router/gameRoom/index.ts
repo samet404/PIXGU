@@ -37,6 +37,6 @@ export const gameRoomRouter = createTRPCRouter({
 
   isExits,
 
-  sendSignalDataToHost,
-  sendSignalDataToPlayer,
+  // sendSignalDataToHost,
+  // sendSignalDataToPlayer,
 })

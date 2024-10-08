@@ -1,0 +1,11 @@
+import type SimplePeer from 'simple-peer'
+import { playerLeaved } from './funcs/playerLeaved'
+
+export const onPeerClose = (
+  peer: SimplePeer.Instance,
+  userID: string,
+  roomID: string,
+) =>
+  peer.on('close', () => {
+    playerLeaved(userID, roomID)
+  })

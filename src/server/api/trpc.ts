@@ -13,7 +13,6 @@ import { ZodError } from 'zod'
 import { db } from '@/sqlDb'
 import { redisDb } from '@/redis'
 import { validateRequest } from '@/auth/lucia/validateRequest'
-import { getPusherServer } from '@/pusher/server'
 import { env } from '@/env/server'
 
 /**
@@ -48,7 +47,6 @@ export const createTRPCContext = async (opts: { headers: Headers }) => {
   return {
     redisDb,
     db,
-    getPusherServer,
     session,
     user,
     clientIP,

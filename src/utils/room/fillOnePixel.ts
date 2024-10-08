@@ -62,8 +62,18 @@ export const fillOnePixel = (
   })
   // Put the ImageData on the canvas
   dctx.putImageData(imageData, posX, posY)
-  mctx.drawImage(draft, posX, posY, 0, 0) // copy drawing to main
-  dctx.clearRect(posX, posY, 0, 0) // clear draft
+  mctx.drawImage(
+    draft,
+    posX,
+    posY,
+    0,
+    0,
+    posX,
+    posY,
+    cellPixelLength,
+    cellPixelLength,
+  ) // copy drawing to main
+  // dctx.clearRect(posX, posY, 0, 0) // clear draft
   if (options?.returnImageData)
     return mctx.getImageData(0, 0, draft.width, draft.height)
 }
