@@ -21,4 +21,7 @@ export const useCreateRoomInputs = create<State & Action>((set, get) => ({
   reset: () => set(initialState),
 }))
 
-type RouterInput = RouterInputs['gameRoom']['create']
+type RouterInput = {
+  name: string
+  password: string | null
+}

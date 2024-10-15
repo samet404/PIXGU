@@ -1,4 +1,3 @@
-export { createRoom } from './set/createRoom'
 export { killRoom } from './del/killRoom'
 
 export { getPlayingRooms } from './get/getPlayingRooms'
@@ -16,6 +15,3 @@ export { isRoomHavePassword } from './is/isRoomHavePassword'
 export { knowRoomPass } from './is/knowRoomPass'
 
 export { isExits } from './is/isExits'
-
-export { sendSignalDataToHost } from './send/sendSignalDataToHost'
-export { sendSignalDataToPlayer } from './send/sendSignalDataToPlayer'

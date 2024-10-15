@@ -19,6 +19,7 @@
     "baseUrl": "./",
     "paths": {
       "@/middlewares": ["src/middlewares/index.ts"],
+      "@/helpers": ["src/helpers/index.ts"],
       "@/xata": ["src/xata/"],
       "@/procedure": ["src/server/api/procedure"],
       "@/schema/*": ["src/server/db/sqlDb/schema/*"],

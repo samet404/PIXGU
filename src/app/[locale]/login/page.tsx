@@ -3,10 +3,19 @@ import bgImg from '@/jpg/marek-piwnicki-Uc0hRKBu3xY-unsplash.jpg'
 import NavigationSection from './_components/NavigationSection'
 import OAuthSection from './_components/OAuthSection'
 import Logo from '@/png/logo.png'
+import { Inter } from 'next/font/google'
+import { GuestSection } from './_components/GuestSection'
+
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+})
 
 const Page = () => {
   return (
-    <div className="flex h-full w-full flex-col items-center ">
+    <div
+      className={`${inter.className} flex h-full w-full flex-col items-center`}
+    >
       <Image
         src={bgImg}
         alt="background"
@@ -21,9 +30,10 @@ const Page = () => {
         <Image
           src={Logo}
           alt="logo"
-          className=" h-[auto] w-[5rem] pb-6 drop-shadow-[0_0px_8px_rgba(0,0,0,0.7)]"
+          className=" h-[auto] w-[6rem] pb-6 drop-shadow-[0_0px_8px_rgba(0,0,0,0.3)]"
           sizes="calc(1.96vw + 75px)"
         ></Image>
+        <GuestSection />
         <OAuthSection />
       </main>
     </div>

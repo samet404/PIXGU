@@ -92,44 +92,6 @@ export const env = createEnv({
         'You forgot to change the default google redirect uri',
       ),
 
-    PUSHER_APP_ID: z
-      .string()
-      .refine(
-        (str) => !str.includes('YOUR_PUSHER_APP_ID_HERE'),
-        'You forgot to change the default pusher app id',
-      ),
-    PUSHER_KEY: z
-      .string()
-      .refine(
-        (str) => !str.includes('YOUR_PUSHER_KEY_HERE'),
-        'You forgot to change the default pusher key',
-      ),
-    PUSHER_SECRET: z
-      .string()
-      .refine(
-        (str) => !str.includes('YOUR_PUSHER_SECRET_HERE'),
-        'You forgot to change the default pusher secret',
-      ),
-    PUSHER_WS_HOST: z
-      .string()
-      .refine(
-        (str) => !str.includes('YOUR_PUSHER_WS_HOST_HERE'),
-        'You forgot to change the default pusher secret',
-      ),
-
-    PUSHER_CLUSTER: z
-      .string()
-      .refine(
-        (str) => !str.includes('YOUR_PUSHER_CLUSTER_HERE'),
-        'You forgot to change the default pusher cluster',
-      ),
-    PUSHER_PORT: z
-      .string()
-      .refine(
-        (str) => !str.includes('YOUR_PUSHER_PORT_HERE'),
-        'You forgot to change the default pusher port',
-      ),
-
     NODE_ENV: z
       .enum(['development', 'test', 'production'])
       .default('development'),
@@ -167,13 +129,6 @@ export const env = createEnv({
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     GOOGLE_REDIRECT_URI: process.env.GOOGLE_REDIRECT_URI,
-
-    PUSHER_WS_HOST: process.env.PUSHER_WS_HOST,
-    PUSHER_APP_ID: process.env.PUSHER_APP_ID,
-    PUSHER_KEY: process.env.PUSHER_KEY,
-    PUSHER_SECRET: process.env.PUSHER_SECRET,
-    PUSHER_PORT: process.env.PUSHER_PORT,
-    PUSHER_CLUSTER: process.env.PUSHER_CLUSTER,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

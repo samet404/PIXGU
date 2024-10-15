@@ -2,6 +2,7 @@ import { z } from 'zod'
 import { publicProcedure } from '@/server/api/trpc'
 import { user } from '@/schema/user'
 import { and, eq } from 'drizzle-orm'
+import { TRPCError } from '@trpc/server'
 
 export const generateNewUsernameID = publicProcedure
   .input(
@@ -10,9 +11,17 @@ export const generateNewUsernameID = publicProcedure
     }),
   )
   .query(async ({ input, ctx }) => {
+    const MAX_RETRY = 10
+    let retry = 0
     let notUnique = true
 
     while (notUnique) {
+      if (retry > MAX_RETRY)
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Max retry exceeded',
+        })
+
       let ID = Math.floor(Math.random() * 1000 + 0).toString()
 
       switch (ID.length) {

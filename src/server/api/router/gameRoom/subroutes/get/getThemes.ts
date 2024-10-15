@@ -1,8 +1,8 @@
-import { loggedUserProducure } from '@/procedure'
+import { joinedUserProducure, loggedUserProducure } from '@/procedure'
 import { TRPCError } from '@trpc/server'
 import z from 'zod'
 
-export const getThemes = loggedUserProducure
+export const getThemes = joinedUserProducure
   .input(
     z.object({
       roomID: z.string().cuid2(),
@@ -12,7 +12,7 @@ export const getThemes = loggedUserProducure
     const { roomID } = input
 
     const isRoomExists =
-      (await ctx.redisDb.sismember('active_rooms', roomID)) === 1
+      (await ctx.redisDb.sismember('dactive_rooms', roomID)) === 1
     if (!isRoomExists)
       throw new TRPCError({
         code: 'NOT_FOUND',

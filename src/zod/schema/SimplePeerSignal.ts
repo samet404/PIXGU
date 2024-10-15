@@ -9,15 +9,13 @@ export const SimplePeerSignal = (z: typeof zod) =>
         init: z
           .object({
             direction: z
-              .literal('inactive')
-              .optional()
-              .or(z.literal('recvonly'))
-              .optional()
-              .or(z.literal('sendonly'))
-              .optional()
-              .or(z.literal('sendrecv'))
-              .optional()
-              .or(z.literal('stopped'))
+              .union([
+                z.literal('inactive'),
+                z.literal('recvonly'),
+                z.literal('sendonly'),
+                z.literal('sendrecv'),
+                z.literal('stopped'),
+              ])
               .optional(),
 
             sendEncodings: z.any().optional(),
@@ -42,10 +40,11 @@ export const SimplePeerSignal = (z: typeof zod) =>
     .or(
       z.object({
         sdp: z.string().optional(),
-        type: z
-          .literal('answer')
-          .or(z.literal('offer'))
-          .or(z.literal('pranswer'))
-          .or(z.literal('rollback')),
+        type: z.union([
+          z.literal('answer'),
+          z.literal('offer'),
+          z.literal('pranswer'),
+          z.literal('rollback'),
+        ]),
       }),
     )

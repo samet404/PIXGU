@@ -1,3 +1,4 @@
-import { internationalization } from '@/middlewares'
+import { main } from '@/middlewares'
 
-export default internationalization
+export default main
+// TODO add middleware chain somehow
