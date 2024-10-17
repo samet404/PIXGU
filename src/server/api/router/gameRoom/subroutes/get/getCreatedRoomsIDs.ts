@@ -1,7 +1,8 @@
-import { loggedUserProducure } from '@/procedure'
+import { joinedUserProducure } from '@/procedure'
 
-export const getCreatedRoomsIDs = loggedUserProducure.query(async ({ ctx }) => {
-  const userID = ctx.user.id
+export const getCreatedRoomsIDs = joinedUserProducure.query(async ({ ctx }) => {
+  console.log(ctx.guest)
+  const userID = ctx.isGuest ? ctx.guest!.ID : ctx.user?.id
   const roomsIDs = await ctx.redisDb.smembers(`user:${userID}:created_rooms`)
 
   return roomsIDs

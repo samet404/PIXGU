@@ -30,22 +30,45 @@ const CreateRoomButton = ({ createdRoomsRef }: Props) => {
   const { error, isLoading, isSuccess } = status
   const io = useSocketIO((s) => s.io)!
 
-  const reset = () => {}
+  const reset = () => {
+    setStatus({
+      error: null,
+      isLoading: false,
+      isSuccess: false,
+    })
+  }
 
   useEffectOnce(() => {
-    io.on('connect', () => {
-      io.on('cr-error', (err) => {
-        resetTimeoutRef.current = setTimeout(reset, 3000)
-      })
-
-      io.on('cr-success', (roomID: string) => {
-        setStatus({
-          error: null,
-          isLoading: false,
-          isSuccess: true,
-        })
-      })
+    io.on('cr-error', (err) => {
+      resetTimeoutRef.current = setTimeout(reset, 3000)
     })
+
+    io.on('cr-success', (roomID: string) => {
+      setStatus({
+        error: null,
+        isLoading: false,
+        isSuccess: true,
+      })
+      createdRoomsRef?.current?.refetch()
+    })
+
+    io.on(
+      'cr-error',
+      (
+        e:
+          | 'REACHED_MAX_ROOMS'
+          | 'GEOLOCATION_INFORMATION_NOT_FOUND'
+          | 'INTERNAL_SERVER_ERROR',
+      ) => {
+        console.error(e)
+        useCreateRoomInputs.getState().reset()
+        setStatus({
+          error: e,
+          isLoading: false,
+          isSuccess: false,
+        })
+      },
+    )
   })
 
   useEffect(() => {

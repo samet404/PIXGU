@@ -98,7 +98,7 @@ export const main: NextMiddleware = async (req: NextRequest) => {
 
   console.log('cookies().toString(): ', cookies().toString())
   const isGuestValid = await fetch(
-    `${env.BASE_URL}/api/validate-guest-auth-token`,
+    `${env.BASE_URL}/api/validate-guest-auth-session`,
     {
       headers: {
         cookie: cookies().toString(),

@@ -12,6 +12,10 @@ export const env = createEnv({
    */
 
   client: {
+    NEXT_PUBLIC_NODE_ENV: z.union([
+      z.literal('development'),
+      z.literal('production'),
+    ]),
     NEXT_PUBLIC_SOCKETIO_URI: z.string().url(),
   },
 
@@ -20,6 +24,7 @@ export const env = createEnv({
    * middlewares) or client-side so we need to destruct manually.
    */
   runtimeEnv: {
+    NEXT_PUBLIC_NODE_ENV: process.env.NEXT_PUBLIC_NODE_ENV,
     NEXT_PUBLIC_SOCKETIO_URI: process.env.NEXT_PUBLIC_SOCKETIO_URI,
   },
   /**

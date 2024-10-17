@@ -21,7 +21,7 @@ export const GuestAccount = () => {
               alt="pfp"
               width={66}
               height={66}
-              sizes="(min-width: 2620px) calc(0.26vw + 54px), (min-width: 1840px) calc(0.39vw + 46px), (min-width: 1020px) calc(0.5vw + 41px), 37px"
+              sizes="calc(1.96vw + 75px)"
               className="h-full w-full select-none rounded-full bg-gray-400"
             />
           </div>

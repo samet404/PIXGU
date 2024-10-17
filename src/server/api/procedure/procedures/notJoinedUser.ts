@@ -7,7 +7,7 @@ export const notJoinedUserProducure = publicProcedure.use(
     let result
     if (ctx.user) throw new TRPCError({ code: 'UNAUTHORIZED' })
 
-    const guestAuthToken = cookies().get('guest-auth-token')?.value
+    const guestAuthToken = cookies().get('guest_auth_session')?.value
     if (!guestAuthToken) result = await next()
 
     const ID = await ctx.redisDb.get(`guest:${guestAuthToken}:ID`)

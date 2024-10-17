@@ -1,11 +1,14 @@
-import { loggedUserProducure } from '@/procedure'
+import { joinedUserProducure, loggedUserProducure } from '@/procedure'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
-export const getCreatedRoom = loggedUserProducure
+export const getCreatedRoom = joinedUserProducure
   .input(z.object({ ID: z.string().max(10).min(4) }))
   .query(async ({ ctx, input }) => {
-    const userID = ctx.user.id
+    const userID = (() => {
+      if (ctx.isGuest) return ctx.guest!.ID
+      return ctx.user!.id
+    })()
     const { ID } = input
     const hostID = await ctx.redisDb.get(`room:${ID}:host_ID`)
 

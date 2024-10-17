@@ -14,6 +14,7 @@ import { db } from '@/sqlDb'
 import { redisDb } from '@/redis'
 import { validateRequest } from '@/auth/lucia/validateRequest'
 import { env } from '@/env/server'
+import { killGuest, validateGuest } from '@/auth/guest'
 
 /**
  * 1. CONTEXT
@@ -44,11 +45,19 @@ export const createTRPCContext = async (opts: { headers: Headers }) => {
       ? env.IP_ADDRESS
       : getIP(opts.headers)
 
+  const guest = await validateGuest()
+
+  if (guest && user && session) killGuest()
+
+  const isGuest = !!guest
+
   return {
     redisDb,
     db,
+    guest,
     session,
     user,
+    isGuest,
     clientIP,
     ...opts,
   }

@@ -7,65 +7,63 @@ import { useHostingHealth, useSocketIO } from '@/zustand/store'
 import { useState, type PropsWithChildren } from 'react'
 import { io, type ManagerOptions, type SocketOptions } from 'socket.io-client'
 import { Inter } from 'next/font/google'
+import { env } from '@/env/client'
 
 const inter = Inter({
   subsets: ['latin'],
   weight: ['700'],
 })
 
-export const SocketIO = ({ namespace, opts, children }: Props) => {
+/**
+ * SocketIOProvider is a provider that handles socket.io connection.
+ */
+export const SocketIOProvider = ({ children }: Props) => {
+  const NAMESPACE = ''
+  const OPTS: Partial<ManagerOptions & SocketOptions> = {}
+
   const [error, setError] = useState<string | null>(null)
   const [isConnected, setIsConnected] = useState<boolean>(false)
   const setIO = useSocketIO((s) => s.setIO)
 
   useEffectOnce(() => {
     setIO(
-      io(`http://localhost:5000/${namespace}`, {
+      io(`${env.NEXT_PUBLIC_SOCKETIO_URI}/${NAMESPACE}`, {
         autoConnect: false,
         withCredentials: true,
-        secure: false,
-        ...opts,
+        secure: env.NEXT_PUBLIC_NODE_ENV === 'production',
+        ...OPTS,
       }),
     )
 
-    const ioRef = useSocketIO.getState().io!
-
-    ioRef.on('connect', () => {
+    useSocketIO.getState().io!.on('connect', () => {
       console.log('connected')
       setIsConnected(true)
-      ioRef.emit('auth')
+      useSocketIO.getState().io!.emit('auth')
     })
 
-    ioRef.once('is-logged', (status: boolean) => {
+    useSocketIO.getState().io!.once('is-logged', (status: boolean) => {
       console.log('is-logged', status)
     })
 
-    ioRef.on('disconnect', () => {
+    useSocketIO.getState().io!.on('disconnect', () => {
       console.log('disconnected')
     })
 
-    ioRef.on('connect_error', (err) => {
+    useSocketIO.getState().io!.on('connect_error', (err) => {
       console.error(err)
       setError(err.message)
 
       useHostingHealth.getState().set('wsError')
     })
 
-    ioRef.on('connect_failed', () => {
-      console.log('connect_failed')
+    useSocketIO.getState().io!.on('reconnect_error', (e) => {
+      console.error(e)
+      setError(`reconnect_error: ${e.message}`)
     })
 
-    ioRef.on('error', () => {
-      console.log('error')
-    })
-
-    ioRef.on('reconnect_error', () => {
-      console.log('reconnect_error')
-    })
-
-    if (!opts?.autoConnect) ioRef.connect()
+    if (!OPTS?.autoConnect) useSocketIO.getState().io!.connect()
     return () => {
-      ioRef.disconnect()
+      useSocketIO.getState().io!.disconnect()
     }
   })
 
@@ -89,7 +87,4 @@ export const SocketIO = ({ namespace, opts, children }: Props) => {
   )
 }
 
-type Props = PropsWithChildren<{
-  namespace?: string
-  opts?: Partial<ManagerOptions & SocketOptions>
-}>
+type Props = PropsWithChildren

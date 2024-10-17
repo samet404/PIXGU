@@ -9,6 +9,7 @@ import { TRPCError } from '@trpc/server'
 import { wToS, wToMs } from '@/utils'
 import { redisDb } from '@/db/redis'
 import { redirect } from 'next/navigation'
+import { killGuest } from '@/auth/guest'
 
 const createTokenId = init({
   length: 25,
@@ -24,26 +25,14 @@ export const joinAsGuest = async (input: { name: string }) => {
     name: z.string().trim().min(1).max(20),
   }).parse(input)
 
-  // #region if there is already token, delete it
-  const prevGuestAuthToken = cookies().get('guest-auth-token')?.value
-  if (prevGuestAuthToken) {
-    z.string().min(10).cuid2().parse(prevGuestAuthToken)
-
-    const guestID = await redisDb.get(`guest:token:${prevGuestAuthToken}:ID`)
-    await redisDb.del(`guest:token:${prevGuestAuthToken}:ID`)
-    await redisDb.del(`guest:${guestID}:name`)
-    await redisDb.del(`guest:${guestID}:name_ID`)
-    await redisDb.del(`guest:${guestID}:name_&_name_ID`)
-    cookies().delete('guest-auth-token')
-  }
-  // #endregion
+  killGuest()
 
   const { name } = input
   const guestAuthToken = createTokenId()
   const guestID = createGuestId()
 
-  await redisDb.set(`guest:token:${guestAuthToken}:ID`, guestID)
-  await redisDb.expire(`guest:token:${guestAuthToken}:ID`, wToS(2))
+  await redisDb.set(`guest:session:${guestAuthToken}:ID`, guestID)
+  await redisDb.expire(`guest:session:${guestAuthToken}:ID`, wToS(2))
 
   await redisDb.set(`guest:${guestID}:name`, name)
   await redisDb.expire(`guest:${guestID}:name`, wToS(2))
@@ -61,7 +50,7 @@ export const joinAsGuest = async (input: { name: string }) => {
   await redisDb.set(`guest:${guestID}:name_&_name_ID`, `${name}@${nameID}`)
   await redisDb.expire(`guest:${guestID}:name_&_name_ID`, wToS(2))
 
-  cookies().set('guest-auth-token', guestAuthToken, {
+  cookies().set('guest_auth_session', guestAuthToken, {
     maxAge: wToMs(2),
     httpOnly: true,
     path: '/',

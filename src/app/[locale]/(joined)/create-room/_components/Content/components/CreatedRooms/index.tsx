@@ -32,7 +32,8 @@ export const CreatedRooms = forwardRef(
           Created rooms
         </div>
         <div className="text-[1rem] text-[#d6fadf]">
-          You can create max 4 rooms
+          You can create up to 4 rooms. Rooms are automatically killed after 24
+          hours.
         </div>
         <div className="flex flex-col gap-1">
           <Content ref={contentRef} />
