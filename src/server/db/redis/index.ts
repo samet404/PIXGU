@@ -1,5 +1,3 @@
-import 'server-only'
-
 import { env } from '@/env/server'
 import Redis from 'ioredis'
 

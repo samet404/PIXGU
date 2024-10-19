@@ -19,7 +19,8 @@ export const ConnectToPeers = () => {
     receiveSignal()
     playerJoined(roomID)
     getPrevPlayers(roomID)
-  }, [io])
+    io.emit('ready')
+  }, [])
 
   return null
 }

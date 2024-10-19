@@ -7,7 +7,10 @@ export const GuestSection = () => {
       <div className="flex flex-row gap-1">
         <Content />
       </div>
-      <div className="text-[0.8rem]">Joining as guest can have limitations</div>
+      <div className="text-[0.8rem]">
+        Guest accounts have limited features and expire after 2 weeks of
+        inactivity.
+      </div>
     </Section>
   )
 }

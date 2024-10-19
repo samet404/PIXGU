@@ -27,7 +27,7 @@ export const BuyMeCoffee = () => {
       </Link>
 
       <div className="hidden animate-fade pr-4 text-[0.7rem] text-black selection:!bg-black group-hover:flex">
-        {`Game is still developing by one person and survives on your donations. I'd appreciate a coffee`}
+        {`Game is developing by one person and survives on your donations. I'd appreciate a coffee :3`}
       </div>
     </div>
   )

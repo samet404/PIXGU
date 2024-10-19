@@ -52,8 +52,6 @@ export const SocketIOProvider = ({ children }: Props) => {
     useSocketIO.getState().io!.on('connect_error', (err) => {
       console.error(err)
       setError(err.message)
-
-      useHostingHealth.getState().set('wsError')
     })
 
     useSocketIO.getState().io!.on('reconnect_error', (e) => {

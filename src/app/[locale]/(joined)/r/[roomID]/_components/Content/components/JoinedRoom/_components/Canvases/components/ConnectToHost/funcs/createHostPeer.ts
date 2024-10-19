@@ -4,10 +4,16 @@ import { goldLog } from '@/utils/goldLog'
 import { pingHostPeer } from '@/utils/pingHostPeer'
 import { positiveLog } from '@/utils/positiveLog'
 import { simplePeer } from '@/utils/simplePeer'
-import { useHostPeer, useIsGameStopped, usePlayers } from '@/zustand/store'
+import {
+  useHostPeer,
+  useIsGameStopped,
+  usePlayers,
+  useSocketIO,
+} from '@/zustand/store'
 import { handlePeerDatas } from './handlePeerDatas'
 
 export const createHostPeer = (roomID: string, myUserID: string) => {
+  const io = useSocketIO.getState().io
   const setHostPeer = useHostPeer.getState().set
   const peer = simplePeer()
 
@@ -17,10 +23,7 @@ export const createHostPeer = (roomID: string, myUserID: string) => {
 
   peer.on('signal', async (signalData: WebRTCSignalData) => {
     goldLog(`${signalData.type.toUpperCase()} SENT TO HOST`)
-    await api.gameRoom.sendSignalDataToHost.mutate({
-      roomID,
-      signalData,
-    })
+    io!.emit('send-webrtc-signal', signalData)
   })
 
   peer.on('error', (err) => {

@@ -1,8 +1,15 @@
+import type { Guest } from '@/types'
 import type { User } from 'lucia'
 import { createStore } from 'zustand'
 
 export type MyUserInfoForRoomStoreState = {
-  user: User
+  user:
+    | ({
+        type: 'guest'
+      } & Guest)
+    | ({
+        type: 'user'
+      } & User)
 }
 
 // export type MyUserInfoForRoomStoreAction = {}

@@ -3,58 +3,41 @@
 import type { PropsWithChildren } from 'react'
 
 import {
-  HostInfoStoreProvider,
   UserIDStoreProvider,
   RoomIDStoreProvider,
   MyUserInfoForRoomStoreProvider,
 } from '@/zustand/provider'
 import { type MyUserInfoForRoomStoreState } from '@/zustand/store'
-import dynamic from 'next/dynamic'
-import { SocketIO } from './components/SocketIO'
+import { SocketIOProvider } from './components/SocketIO'
 
-export const Providers = ({
-  roomID,
-  userID,
-  hostID,
-  user,
-  children,
-}: Props) => {
+export const Providers = ({ roomID, userID, user, children }: Props) => {
   return (
-    <SocketIO roomID={roomID}>
-      <HostInfoStoreProvider
+    <SocketIOProvider roomID={roomID}>
+      <UserIDStoreProvider
         initState={{
-          amIHost: userID === hostID,
-          hostID,
-          isPlayer: true,
+          userID,
         }}
       >
-        <UserIDStoreProvider
+        <RoomIDStoreProvider
           initState={{
-            userID,
+            roomID,
           }}
         >
-          <RoomIDStoreProvider
+          <MyUserInfoForRoomStoreProvider
             initState={{
-              roomID,
+              user: user,
             }}
           >
-            <MyUserInfoForRoomStoreProvider
-              initState={{
-                user: user,
-              }}
-            >
-              {children}
-            </MyUserInfoForRoomStoreProvider>
-          </RoomIDStoreProvider>
-        </UserIDStoreProvider>
-      </HostInfoStoreProvider>
-    </SocketIO>
+            {children}
+          </MyUserInfoForRoomStoreProvider>
+        </RoomIDStoreProvider>
+      </UserIDStoreProvider>
+    </SocketIOProvider>
   )
 }
 
 type Props = {
   userID: string
   roomID: string
-  hostID: string
   user: MyUserInfoForRoomStoreState['user']
 } & PropsWithChildren

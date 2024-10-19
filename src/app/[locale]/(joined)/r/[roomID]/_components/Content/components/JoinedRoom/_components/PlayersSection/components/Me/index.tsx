@@ -21,8 +21,7 @@ const Me = () => {
   const successSfxRef = useRef<HTMLAudioElement>(
     new Audio('/sound/sfx/success.mp3'),
   )
-  const { profilePicture, usernameWithUsernameID, id } =
-    useMyUserInfoForRoomStore((state) => state.user)
+  const user = useMyUserInfoForRoomStore((state) => state.user)
   const amISpectator = useAmISpectator((s) => s.amISpectator)
   const whoIsPainter = useWhoIsPainterClient((s) => s.value)
   const amIGuessed = useAmIGuessed((s) => s.amIGuessed)
@@ -49,17 +48,17 @@ const Me = () => {
       <div className={`flex w-full flex-row items-center justify-between p-2`}>
         <div className="flex w-full flex-row items-center gap-2 peer-hover:bg-red-200 ">
           <UserPfp
-            ID={id}
+            ID={user.type === 'guest' ? user.ID : user.id}
             width={46}
             height={46}
-            src={profilePicture}
+            src={user.type === 'guest' ? null : user.profilePicture}
             sizes="calc(1.15vw + 46px)"
             alt="profilePicture"
             className="size-8 h-full flex-shrink-0 select-none rounded-full drop-shadow-[0_0px_5px_rgba(0,0,0,0.3)]"
           />
 
           <div className="line-clamp-1 w-[70%] break-all pr-1 text-sm tracking-wide text-[#ffffffd4] drop-shadow-[0_0px_2px_rgba(0,0,0,0.55)]">
-            {usernameWithUsernameID}
+            {user.type === 'guest' ? user.name : user.usernameWithUsernameID}
           </div>
         </div>
         <div

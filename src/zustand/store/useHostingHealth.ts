@@ -1,13 +1,10 @@
 import { create } from 'zustand'
 
 type Status =
-  | 'loading'
-  | 'networkError'
   | 'gameIsStarted'
   | 'waitingForPlayers'
   | 'readyToStart'
   | 'gameEnded'
-  | 'wsError'
 
 type State = {
   status: Status
@@ -19,7 +16,7 @@ type Action = {
 }
 
 const initState: State = {
-  status: 'loading',
+  status: 'waitingForPlayers',
 }
 
 export const useHostingHealth = create<State & Action>((set, get) => ({

@@ -19,7 +19,12 @@ const Start = () => {
     >
       <Navbar />
       <div className=" relative flex w-full">
-        <Image src={bg} alt="bg" className=" aspect-video w-full" />
+        <Image
+          src={bg}
+          alt="bg"
+          sizes="100vw"
+          className=" aspect-video w-full"
+        />
         <div className="absolute bottom-0 left-0 flex h-[20%] w-full  justify-center p-4">
           <div className="hover:opacity-60">
             <Link
@@ -31,8 +36,8 @@ const Start = () => {
           </div>
         </div>
       </div>
-      <main className="flex h-[40rem] w-full items-center justify-center bg-gradient-to-t from-[#d575c2] to-[#1f1f1f] text-[4rem] text-white">
-        <div className="text-center font-[700] leading-[5rem] ">
+      <main className="flex h-[40rem] w-full items-center justify-center bg-gradient-to-t from-[#d575c2] to-[#1f1f1f] text-white  xxs:text-[1.5rem] md:text-[3rem] lg:text-[4rem]">
+        <div className="w-[90%] text-center font-[700] selection:!bg-[#ed0dc0] xxs:leading-[2rem]  md:leading-[4rem] lg:leading-[5rem]">
           We're creating a space where your creativity can flourish and shine.
         </div>
       </main>

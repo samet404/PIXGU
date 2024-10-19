@@ -6,20 +6,24 @@ import {
   setUser,
   setUserID,
   setRoomID,
+  setGuestID,
+  setIsGuest,
 } from '@/context/server'
-import type { Locale } from '@/types'
+import type { Guest, Locale } from '@/types'
 import type { User } from 'lucia'
 
 export const setServerContexts = async (
   locale: Locale,
   roomID: string,
-  user: User,
-  hostID?: string,
+  user: User | null,
+  guest: Guest | null,
+  isGuest: boolean,
 ) => {
   setIsLogged(true)
   setLocale(locale)
   setUser(user)
   setRoomID(roomID)
-  setUserID(user.id)
-  if (hostID) await import('@/context/server').then((m) => m.setHostID(hostID))
+  setUserID(user?.id ?? '')
+  setGuestID(guest?.ID ?? '')
+  isGuest ? setIsGuest(true) : setIsGuest(false)
 }

@@ -1,7 +1,7 @@
-import { loggedUserProducure } from '@/procedure'
+import { joinedUserProducure } from '@/procedure'
 import { z } from 'zod'
 
-export const setDeveloperMode = loggedUserProducure
+export const setDeveloperMode = joinedUserProducure
   .input(
     z.object({
       isEnabled: z.boolean(),
@@ -9,9 +9,10 @@ export const setDeveloperMode = loggedUserProducure
   )
   .mutation(async ({ ctx, input }) => {
     const { isEnabled } = input
+    const userID = ctx.isGuest ? ctx.guest!.ID : ctx.user!.id
 
     await ctx.redisDb.set(
-      `user:${ctx.user.id}:settings:developer_mode`,
+      `user:${userID}:settings:developer_mode`,
       isEnabled ? 1 : 0,
     )
   })

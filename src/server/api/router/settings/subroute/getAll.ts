@@ -1,9 +1,9 @@
-import { loggedUserProducure } from '@/procedure'
+import { joinedUserProducure } from '@/procedure'
 
-export const getAll = loggedUserProducure.query(async ({ ctx }) => {
-  const userID = ctx.user.id
+export const getAll = joinedUserProducure.query(async ({ ctx }) => {
+  const userID = ctx.isGuest ? ctx.guest!.ID : ctx.user!.id
   const developerMode = await ctx.redisDb.get(
-    `user:${ctx.user.id}:settings:developer_mode`,
+    `user:${userID}:settings:developer_mode`,
   )
   // const musicPlayer = await ctx.redisDb.get(
   //   `user:${userID}:settings:music_player`,

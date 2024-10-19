@@ -1,5 +1,11 @@
 import './_styles/scrollbars.css'
-import { getHostID, getRoomID, getUser, getUserID } from '@/context/server'
+import {
+  getGuest,
+  getHostID,
+  getRoomID,
+  getUser,
+  getUserID,
+} from '@/context/server'
 import { Providers } from './_components/Providers'
 import { Suspense } from 'react'
 import AnimatedDiv from './_components/AnimatedDiv'
@@ -29,12 +35,23 @@ const JoinedRoom = () => {
   const userID = getUserID()
   const hostID = getHostID()
   const roomID = getRoomID()
-  const user = getUser()!
+  const user = getUser()
+  const guest = getGuest()
 
+  console.log({
+    user,
+    guest,
+  })
   const isHost = userID === hostID
 
   return (
-    <Providers userID={userID} roomID={roomID} hostID={hostID} user={user}>
+    <Providers
+      userID={userID}
+      roomID={roomID}
+      hostID={hostID}
+      user={user}
+      guest={guest}
+    >
       <div
         className={`${outfit.className} relative flex h-full w-full flex-col`}
       >

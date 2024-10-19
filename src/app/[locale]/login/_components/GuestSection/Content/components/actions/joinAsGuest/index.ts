@@ -6,7 +6,7 @@ import { cookies } from 'next/headers'
 import { z } from 'zod'
 import { generateGuestUsernameID } from './funcs/generateGuestUsernameID'
 import { TRPCError } from '@trpc/server'
-import { wToS, wToMs } from '@/utils'
+import { wToMs } from '@/utils'
 import { redisDb } from '@/db/redis'
 import { redirect } from 'next/navigation'
 import { killGuest } from '@/auth/guest'
@@ -31,12 +31,6 @@ export const joinAsGuest = async (input: { name: string }) => {
   const guestAuthToken = createTokenId()
   const guestID = createGuestId()
 
-  await redisDb.set(`guest:session:${guestAuthToken}:ID`, guestID)
-  await redisDb.expire(`guest:session:${guestAuthToken}:ID`, wToS(2))
-
-  await redisDb.set(`guest:${guestID}:name`, name)
-  await redisDb.expire(`guest:${guestID}:name`, wToS(2))
-
   const nameID = await generateGuestUsernameID(name)
   if (!nameID)
     throw new TRPCError({
@@ -44,11 +38,23 @@ export const joinAsGuest = async (input: { name: string }) => {
       message: 'Cannot generate name ID',
     })
 
-  await redisDb.set(`guest:${guestID}:name_ID`, nameID)
-  await redisDb.expire(`guest:${guestID}:name_ID`, wToS(2))
+  const redisKeys = {
+    IDBySession: `guest:session:${guestAuthToken}:ID`,
+    name: `guest:${guestID}:name`,
+    nameID: `guest:${guestID}:name_ID`,
+    nameWithNameID: `guest:${guestID}:name_&_name_ID`,
+    createdAt: `guest:${guestID}:created_at`,
+    validatedAt: `guest:${guestID}:validated_at`,
+  }
 
-  await redisDb.set(`guest:${guestID}:name_&_name_ID`, `${name}@${nameID}`)
-  await redisDb.expire(`guest:${guestID}:name_&_name_ID`, wToS(2))
+  await redisDb.set(redisKeys.IDBySession, guestID)
+  await redisDb.set(redisKeys.name, name)
+  await redisDb.set(redisKeys.nameID, nameID)
+  await redisDb.set(redisKeys.nameWithNameID, `${name}@${nameID}`)
+
+  const now = Date.now()
+  await redisDb.set(redisKeys.createdAt, now)
+  await redisDb.set(redisKeys.validatedAt, now)
 
   cookies().set('guest_auth_session', guestAuthToken, {
     maxAge: wToMs(2),

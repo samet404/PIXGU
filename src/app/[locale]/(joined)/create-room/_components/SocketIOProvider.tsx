@@ -3,7 +3,7 @@
 import Spinner from '@/components/Spinner'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { clsxMerge } from '@/utils/clsxMerge'
-import { useHostingHealth, useSocketIO } from '@/zustand/store'
+import { useSocketIO } from '@/zustand/store'
 import { useState, type PropsWithChildren } from 'react'
 import { io, type ManagerOptions, type SocketOptions } from 'socket.io-client'
 import { Inter } from 'next/font/google'
@@ -53,14 +53,24 @@ export const SocketIOProvider = ({ children }: Props) => {
       useSocketIO.getState().io!.emit('auth')
     })
 
-    useSocketIO.getState().io!.once('is-logged', (status: boolean) => {
-      console.log('is-logged', status)
+    useSocketIO.getState().io!.once('auth', (status: AuthStatus) => {
+      console.log('auth', status)
+      if (!status.isSuccess)
+        setStatus({
+          isConnected: false,
+          isLoading: false,
+          error: `UNAUTHORIZED: You need to be ${status.required.join(' or ')}`,
+        })
     })
 
     useSocketIO.getState().io!.on('disconnect', () => {
       console.log('disconnected')
+      const error = status.error?.startsWith('UNAUTHORIZED')
+        ? status.error
+        : 'Disconnected'
+
       setStatus({
-        error: 'Disconnected',
+        error,
         isLoading: false,
         isConnected: false,
       })
@@ -73,7 +83,6 @@ export const SocketIOProvider = ({ children }: Props) => {
         isLoading: false,
         isConnected: false,
       })
-      useHostingHealth.getState().set('wsError')
     })
 
     useSocketIO.getState().io!.on('reconnect_error', (e) => {
@@ -122,3 +131,12 @@ export const SocketIOProvider = ({ children }: Props) => {
 }
 
 type Props = PropsWithChildren
+type AuthStatus =
+  | {
+      isSuccess: true
+      as: string
+    }
+  | {
+      isSuccess: false
+      required: string[]
+    }

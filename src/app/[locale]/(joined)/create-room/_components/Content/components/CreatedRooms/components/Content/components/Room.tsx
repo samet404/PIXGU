@@ -7,9 +7,15 @@ import Link from 'next/link'
 export const Room = ({ ID, refetch }: Props) => {
   const { mutateAsync: kill } = api.gameRoom.killRoom.useMutation()
   const { data, error, isError, isLoading } =
-    api.gameRoom.getCreatedRoom.useQuery({ ID })
+    api.gameRoom.getCreatedRoom.useQuery(
+      { ID },
+      {
+        refetchOnWindowFocus: false,
+      },
+    )
 
   if (isLoading || !data) return <Spinner />
+  if (error) return <div>{error.message}</div>
 
   const { createdAt, isPublic, name } = data
 
