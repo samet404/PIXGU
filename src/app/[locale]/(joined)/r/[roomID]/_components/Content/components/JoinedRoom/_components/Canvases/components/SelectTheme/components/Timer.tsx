@@ -12,7 +12,6 @@ export const Timer = ({ children }: PropsWithChildren) => {
 
     const interval = setInterval(() => {
       const currentSecond = (Date.now() - start.current!) / 1000
-      console.log(currentSecond)
       if (currentSecond >= 20) {
         clearInterval(interval)
         setHeight(100)

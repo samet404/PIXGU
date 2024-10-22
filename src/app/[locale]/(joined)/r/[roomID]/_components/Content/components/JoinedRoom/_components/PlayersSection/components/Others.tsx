@@ -8,17 +8,24 @@ export const Others = () => {
   const myUserID = useUserIDStore((state) => state.userID)
   const playersDbInfos = usePlayers((state) => state.value.arr)
 
-  return playersDbInfos.map(
-    ({ id: ID, usernameWithUsernameID, profilePicture }) => {
-      if (myUserID !== ID)
-        return (
-          <User
-            key={ID}
-            id={ID}
-            usernameWithUsernameID={usernameWithUsernameID}
-            profilePicture={profilePicture}
-          />
-        )
-    },
-  )
+  return playersDbInfos.map((p) => {
+    const isGuest = 'ID' in p
+    const ID = isGuest ? p.ID : p.id
+    const usernameWithUsernameID = isGuest
+      ? p.nameWithNameID
+      : p.usernameWithUsernameID
+    const profilePicture = isGuest ? null : p.profilePicture
+
+    console.log(p)
+
+    if (myUserID !== ID)
+      return (
+        <User
+          key={ID}
+          ID={ID}
+          nameWithNameID={usernameWithUsernameID}
+          profilePicture={profilePicture}
+        />
+      )
+  })
 }

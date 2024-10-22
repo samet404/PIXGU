@@ -4,6 +4,7 @@ import { useSpring, animated } from '@react-spring/web'
 import { useEventListener } from 'usehooks-ts'
 import { useRef, type ReactNode } from 'react'
 
+// @ts-nocheck
 export const Button = ({ onKeyDown, className, onMouseDown, icon }: Props) => {
   const clickSfxRef = useRef<HTMLAudioElement>(
     new Audio('/sound/sfx/button/crystal_panel_button.mp3'),

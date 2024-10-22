@@ -4,6 +4,7 @@ import { useRoomIDStore } from '@/zustand/provider'
 import { getPrevPlayers, playerJoined, receiveSignal } from './funcs'
 import { useHostingHealth, useSocketIO } from '@/zustand/store'
 import { useEffect } from 'react'
+import { playerLeft } from './funcs/playerLeft'
 
 export const ConnectToPeers = () => {
   const setHostingHealth = useHostingHealth.getState().set
@@ -17,9 +18,10 @@ export const ConnectToPeers = () => {
       setHostingHealth('waitingForPlayers')
     })
     receiveSignal()
+    playerLeft()
     playerJoined(roomID)
     getPrevPlayers(roomID)
-    io.emit('ready')
+    setTimeout(() => useSocketIO.getState().io!.emit('ready'), 2000)
   }, [])
 
   return null

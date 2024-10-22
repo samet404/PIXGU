@@ -29,18 +29,22 @@ export const SocketIOProvider = ({ roomID, children }: Props) => {
 
   const initStatusState: StatusState = {
     error: [],
+    isAuthSuccess: false,
+    isHostAuthSuccess: false,
     isLoading: true,
     isConnected: false,
     isDisconnected: false,
   }
 
-  const [status, setStatus] = useState<StatusState>({
-    error: [],
-    isLoading: true,
-    isConnected: false,
-    isDisconnected: false,
-  })
-  const { error, isConnected, isLoading } = status
+  const [status, setStatus] = useState<StatusState>(initStatusState)
+  const {
+    error,
+    isConnected,
+    isLoading,
+    isAuthSuccess,
+    isDisconnected,
+    isHostAuthSuccess,
+  } = status
   const setIO = useSocketIO((s) => s.setIO)
   console.log(status)
   useEffectOnce(() => {
@@ -55,24 +59,31 @@ export const SocketIOProvider = ({ roomID, children }: Props) => {
 
     useSocketIO.getState().io!.on('connect', () => {
       console.log('connected')
-      setStatus({
-        error: [],
-        isLoading: false,
-        isConnected: true,
-        isDisconnected: false,
+      setStatus((prev) => {
+        return {
+          ...prev,
+          isConnected: true,
+        }
       })
       useSocketIO.getState().io!.emit('auth')
-      useSocketIO.getState().io!.emit('auth-host')
     })
 
     useSocketIO.getState().io!.once('auth', (authStatus: AuthStatus) => {
-      console.log('auth', authStatus)
+      if (authStatus.isSuccess) {
+        setStatus((prev) => {
+          return {
+            ...prev,
+            isAuthSuccess: true,
+          }
+        })
+        useSocketIO.getState().io!.emit('host-auth')
+      }
       if (!authStatus.isSuccess) {
         console.log('auth is not successed')
         setStatus((prev) => {
           return {
             ...prev,
-            isConnected: false,
+            isAuthSuccess: false,
             error: [
               ...prev.error,
               `UNAUTHORIZED: You need to be ${authStatus.required.join(' or ')}`,
@@ -86,7 +97,14 @@ export const SocketIOProvider = ({ roomID, children }: Props) => {
       .getState()
       .io!.once('host-auth', (authStatus: HostAuthStatus) => {
         console.log('host-auth: ', authStatus)
-        if (!authStatus.isSuccess)
+        if (authStatus.isSuccess) {
+          setStatus((prev) => {
+            return {
+              ...prev,
+              isHostAuthSuccess: true,
+            }
+          })
+        } else {
           setStatus((prev) => {
             return {
               ...prev,
@@ -95,6 +113,7 @@ export const SocketIOProvider = ({ roomID, children }: Props) => {
               error: [...prev.error, authStatus.reason],
             }
           })
+        }
       })
 
     useSocketIO.getState().io!.on('disconnect', () => {
@@ -146,7 +165,7 @@ export const SocketIOProvider = ({ roomID, children }: Props) => {
     }
   })
 
-  if (isConnected) return children
+  if (isConnected && isHostAuthSuccess && isAuthSuccess) return children
   return (
     <div
       className={clsxMerge(
@@ -158,7 +177,7 @@ export const SocketIOProvider = ({ roomID, children }: Props) => {
       )}
     >
       <div className="font-[700]">
-        {error && 'Error at socket connection'}
+        {error.length > 0 && 'Error at socket connection'}
         {isLoading && 'Connecting to socket server'}
       </div>
       {error.length > 0 && (
@@ -205,6 +224,8 @@ type AuthStatus =
 type StatusState = {
   error: string[]
   isConnected: boolean
+  isAuthSuccess: boolean
+  isHostAuthSuccess: boolean
   isLoading: boolean
   isDisconnected: boolean
 }

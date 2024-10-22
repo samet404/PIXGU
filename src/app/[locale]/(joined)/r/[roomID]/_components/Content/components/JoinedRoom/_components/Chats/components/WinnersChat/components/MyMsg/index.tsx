@@ -5,8 +5,11 @@ import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { useMyUserInfoForRoomStore } from '@/zustand/provider'
 
 export const MyMsg = ({ msg }: Props) => {
-  const { id, usernameWithUsernameID, profilePicture } =
-    useMyUserInfoForRoomStore((state) => state.user)
+  const user = useMyUserInfoForRoomStore((state) => state.user)
+  const isGuest = 'ID' in user
+  const myID = isGuest ? user?.ID : user?.id
+  const name = isGuest ? user?.name : user?.usernameWithUsernameID
+  const pfp = isGuest ? null : user?.profilePicture
 
   useEffectOnce(() => {
     const messageList = document.getElementById('winnersChatMsgContainer')
@@ -20,8 +23,8 @@ export const MyMsg = ({ msg }: Props) => {
     <div className="flex flex-row gap-[0.40rem] first:!mt-auto">
       <div className="pt-2">
         <UserPfp
-          ID={id}
-          src={profilePicture}
+          ID={myID}
+          src={pfp}
           width={32}
           height={32}
           alt="pfp"
@@ -32,7 +35,7 @@ export const MyMsg = ({ msg }: Props) => {
       </div>
       <div className="flex w-[90%] flex-col gap-2">
         <div className="pt-2 text-[1rem] leading-3 text-white">
-          {usernameWithUsernameID ?? id}
+          {name ?? myID}
         </div>
         <div className="flex break-all rounded-md bg-gradient-to-r from-[#ffffff5f] to-transparent px-2 py-1 leading-5 text-[#0000006d]">
           {msg}

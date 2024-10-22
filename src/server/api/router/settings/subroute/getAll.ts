@@ -5,6 +5,8 @@ export const getAll = joinedUserProducure.query(async ({ ctx }) => {
   const developerMode = await ctx.redisDb.get(
     `user:${userID}:settings:developer_mode`,
   )
+
+  console.log('developerMode: ', developerMode)
   // const musicPlayer = await ctx.redisDb.get(
   //   `user:${userID}:settings:music_player`,
   // )

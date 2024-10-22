@@ -27,7 +27,7 @@ export const JoinBtn = () => {
     })
   }
 
-  if (hostStatus !== 'networkError' && hostStatus !== 'loading')
+  if (hostStatus !== 'readyToStart')
     return (
       <animated.button onClick={handleClick} style={springs} className="flex">
         <Link

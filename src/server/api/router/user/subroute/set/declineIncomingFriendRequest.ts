@@ -2,7 +2,6 @@ import { loggedUserProducure } from '@/procedure'
 import { z } from 'zod'
 import { redisDb } from '@/db/redis'
 // import { pusherServer } from '@/pusher/server'
-import { toPusherKey } from '@/utils/toPusherKey'
 
 export const declineIncomingFriendRequest = loggedUserProducure
   .input(

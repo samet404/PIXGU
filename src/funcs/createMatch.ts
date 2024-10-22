@@ -22,7 +22,13 @@ export const createMatch = async (roomID: string) => {
   const isFirstMatch = useMatchStatus.getState().value.isFirstMatch
   const isGameEnded = useMatchStatus.getState().value.matchCount === 10
 
-  console.log('matchCount: ', useMatchStatus.getState().value.matchCount)
+  console.log({
+    isGameEnded,
+    isFirstMatch,
+    matchCount: useMatchStatus.getState().value.matchCount,
+    playersIDs,
+    players,
+  })
   if (isGameEnded) {
     const {
       useCoins,
@@ -69,24 +75,40 @@ export const createMatch = async (roomID: string) => {
     return
   }
 
-  if (isFirstMatch && players().count >= 2) {
-    useGuessedPlayers.getState().reset()
-    const painterID = playersIDs[0]!
-    setCurrentPainter({
-      nextPainterI: 1,
-      painterID,
-      amIPainter: false,
-    })
+  // if (isFirstMatch && players().count >= 2) {
+  //   useGuessedPlayers.getState().reset()
+  //   const painterID = playersIDs[0]!
+  //   setCurrentPainter({
+  //     nextPainterI: 1,
+  //     painterID,
+  //     amIPainter: false,
+  //   })
 
-    useHostPainterData.getState().reset()
-    usePixelHistory.getState().reset()
-    updatePainterToPlayers(roomID)
-  } else if (players().count >= 2) {
+  //   useHostPainterData.getState().reset()
+  //   usePixelHistory.getState().reset()
+  //   updatePainterToPlayers(roomID)
+  // } else
+  if (players().count >= 2) {
     useGuessedPlayers.getState().reset()
     const whoIsPainter = useWhoIsPainter.getState().value
 
     if (whoIsPainter.status === 'thereIsNoPainter') {
-      console.error('-_-')
+      const nextPainterI = 0
+      const { index: newNextPainterI } = getNextArrElmI(
+        playersIDs,
+        nextPainterI,
+      )
+
+      setCurrentPainter({
+        amIPainter: false,
+        nextPainterI: newNextPainterI,
+        painterID: playersIDs[nextPainterI]!,
+      })
+
+      useHostPainterData.getState().reset()
+      usePixelHistory.getState().reset()
+      updatePainterToPlayers(roomID)
+
       return
     }
 

@@ -2,8 +2,9 @@ import type { User } from 'lucia'
 import { filterObj } from '@/utils/filterObj'
 import { create } from 'zustand'
 import { usePeers } from './peers'
+import type { Guest } from '@/types'
 
-export type Player = User
+export type Player = User | Guest
 
 type UserID = string
 
@@ -47,7 +48,9 @@ export const usePlayers = create<State & Action>((set, get) => ({
           string,
           Player
         >,
-        arr: get().value.arr.filter((p) => p.id !== userID),
+        arr: get().value.arr.filter((p) =>
+          'id' in p ? p.id !== userID : p.ID !== userID,
+        ),
       },
     })
   },

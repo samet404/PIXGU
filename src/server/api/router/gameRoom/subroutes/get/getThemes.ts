@@ -10,29 +10,19 @@ export const getThemes = joinedUserProducure
   )
   .query(async ({ input, ctx }) => {
     const { roomID } = input
+    const clientID = ctx.isGuest ? ctx.guest!.ID : ctx.user!.id
 
     const isRoomExists =
-      (await ctx.redisDb.sismember('dactive_rooms', roomID)) === 1
+      (await ctx.redisDb.sismember('active_rooms', roomID)) === 1
     if (!isRoomExists)
       throw new TRPCError({
         code: 'NOT_FOUND',
         message: 'Room not found',
       })
 
-    const amIInRoom =
-      (await ctx.redisDb.sismember(
-        `room:${roomID}:active_players`,
-        ctx.user.id,
-      )) === 1
-    if (!amIInRoom)
-      throw new TRPCError({
-        code: 'UNAUTHORIZED',
-        message: 'You are not in this room',
-      })
-
     const hostID = await ctx.redisDb.get(`room:${roomID}:host_ID`)
 
-    if (hostID !== ctx.user.id)
+    if (hostID !== clientID)
       throw new TRPCError({
         code: 'UNAUTHORIZED',
         message: 'You are not the host of this room',

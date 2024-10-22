@@ -6,6 +6,8 @@ import {
   useGuessedPlayers,
   useIsGameStopped,
   useMatchStatusClient,
+  useNewPainterPanel,
+  useSelectThemePanel,
   useWhoIsPainterClient,
   useWinnersChatLayout,
 } from '@/zustand/store'
@@ -40,16 +42,17 @@ export const getPainter = async (
   useGuessedPlayers.getState().reset()
   useAmIGuessed.getState().noIMNotGuessed()
 
+  console.log('AM I PAINTER: ', amIPainter)
   if (amIPainter) {
-    const { useSelectThemePanel } = await import('@/zustand/store')
-
     useSelectThemePanel.getState().open()
+    useNewPainterPanel.getState().close()
+
     useWinnersChatLayout.getState().setPainterLayout()
     useGuessChatLayout.getState().setPainterLayout()
   } else {
-    const { useNewPainterPanel } = await import('@/zustand/store')
-
     useNewPainterPanel.getState().open({ painterID: data })
+    useSelectThemePanel.getState().close()
+
     useWinnersChatLayout.getState().setImNotGuessed()
     useGuessChatLayout.getState().setImNotGuessed()
   }

@@ -3,10 +3,13 @@ import { usePlayers } from '@/zustand/store'
 
 export const Player = ({ ID, myUserID, index, coin }: Props) => {
   const isMe = myUserID === ID
-  const username = isMe
-    ? 'You'
-    : usePlayers.getState().getPlayer(ID)?.usernameWithUsernameID
-
+  const username = (() => {
+    if (isMe) return 'You'
+    const p = usePlayers.getState().getPlayer(ID)
+    if (!p) return 'error'
+    const isGuest = 'ID' in p
+    return isGuest ? p?.name : p?.usernameWithUsernameID
+  })()
   return (
     <div
       className={clsxMerge(

@@ -6,8 +6,11 @@ import { UserPfp } from '@/components/UserPfp'
 
 export const Msg = ({ ID, msg }: Props) => {
   const player = usePlayers((s) => s.getPlayer(ID))
-  const pfp = player?.profilePicture
-  const name = player?.usernameWithUsernameID
+  if (!player) return null
+
+  const isGuest = 'ID' in player
+  const name = isGuest ? player?.name : player?.usernameWithUsernameID
+  const pfp = isGuest ? null : player?.profilePicture
 
   useEffectOnce(() => {
     const messageList = document.getElementById('winnersChatMsgContainer')

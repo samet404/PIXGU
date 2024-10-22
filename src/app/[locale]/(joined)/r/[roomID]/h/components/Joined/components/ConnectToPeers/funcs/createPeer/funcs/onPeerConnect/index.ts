@@ -11,12 +11,13 @@ import { handlePeerDatas } from './funcs/handlePeerDatas'
 import { sendEveryoneNewPlayer } from './funcs/sendEveryoneNewPlayer'
 import { sendPrevPlayersToNewPlayer } from './funcs/sendPrevPlayersToNewPlayer'
 import { sendToPeer } from '@/utils/sendToPeer'
+import type { Guest } from '@/types'
 
 export const onPeerConnect = (
   peer: SimplePeer.Instance,
   userID: string,
   roomID: string,
-  user: User,
+  user: User | Guest,
 ) =>
   peer.on('connect', () => {
     positiveLog(`CONNECTED TO ${userID}`)

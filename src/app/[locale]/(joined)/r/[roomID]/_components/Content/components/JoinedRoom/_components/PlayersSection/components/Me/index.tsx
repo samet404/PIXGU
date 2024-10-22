@@ -25,7 +25,12 @@ const Me = () => {
   const amISpectator = useAmISpectator((s) => s.amISpectator)
   const whoIsPainter = useWhoIsPainterClient((s) => s.value)
   const amIGuessed = useAmIGuessed((s) => s.amIGuessed)
+  const isGuest = 'ID' in user
+  const ID = isGuest ? user?.ID : user?.id
+  const name = isGuest ? user?.name : user?.usernameWithUsernameID
+  const pfp = isGuest ? null : user?.profilePicture
 
+  console.log('my user info: ', user)
   useEffect(() => {
     if (!amIGuessed) return
 
@@ -48,17 +53,17 @@ const Me = () => {
       <div className={`flex w-full flex-row items-center justify-between p-2`}>
         <div className="flex w-full flex-row items-center gap-2 peer-hover:bg-red-200 ">
           <UserPfp
-            ID={user.type === 'guest' ? user.ID : user.id}
+            ID={ID}
             width={46}
             height={46}
-            src={user.type === 'guest' ? null : user.profilePicture}
+            src={pfp}
             sizes="calc(1.15vw + 46px)"
             alt="profilePicture"
             className="size-8 h-full flex-shrink-0 select-none rounded-full drop-shadow-[0_0px_5px_rgba(0,0,0,0.3)]"
           />
 
           <div className="line-clamp-1 w-[70%] break-all pr-1 text-sm tracking-wide text-[#ffffffd4] drop-shadow-[0_0px_2px_rgba(0,0,0,0.55)]">
-            {user.type === 'guest' ? user.name : user.usernameWithUsernameID}
+            {name}
           </div>
         </div>
         <div

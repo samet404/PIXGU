@@ -20,6 +20,7 @@ export const Providers = ({
   guest,
   children,
 }: Props) => {
+  console.log('providers: ', user, guest)
   return (
     <SocketIOProvider roomID={roomID}>
       <HostInfoStoreProvider
@@ -31,7 +32,7 @@ export const Providers = ({
       >
         <UserIDStoreProvider
           initState={{
-            userID,
+            userID: user ? user.id : guest!.ID,
           }}
         >
           <RoomIDStoreProvider
@@ -41,9 +42,7 @@ export const Providers = ({
           >
             <MyUserInfoForRoomStoreProvider
               initState={{
-                user: user
-                  ? { ...user, type: 'user' }
-                  : { ...guest!, type: 'guest' },
+                user: user ?? guest!,
               }}
             >
               {children}
@@ -61,4 +60,5 @@ type Props = {
   hostID: string
   user: User | null
   guest: Guest | null
+  guestID: string
 } & PropsWithChildren

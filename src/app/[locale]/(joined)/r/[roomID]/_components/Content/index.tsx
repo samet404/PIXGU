@@ -10,6 +10,8 @@ const Content = async ({ params }: Props) => {
   const roomID = params.roomID
   const user = await api.auth.getUser.query()
   const guest = await api.auth.getGuest.query()
+  console.log('user: ', user)
+  console.log('guest: ', guest)
   if (!user && !guest)
     return (
       <ErrDisplay

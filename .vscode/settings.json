@@ -4,5 +4,6 @@
   "search.exclude": {
     "**/node_modules": false,
     "**/node_modules2": true
-  }
+  },
+  "typescript.tsserver.experimental.enableProjectDiagnostics": true
 }

@@ -7,7 +7,11 @@ export const onPeerSignal = (peer: SimplePeer.Instance, userID: string) => {
   peer.on('signal', async (signal: WebRTCSignalData) => {
     goldLog(`${signal.type.toUpperCase()} SENT TO ${userID}`, signal)
 
-    console.log('sending signal data to player ' + userID)
+    console.log('send-webrtc-signal input: ', {
+      userID,
+      signal,
+    })
+
     useSocketIO.getState().io!.emit('send-webrtc-signal', {
       userID,
       signal,

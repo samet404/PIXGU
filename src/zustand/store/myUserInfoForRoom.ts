@@ -3,13 +3,7 @@ import type { User } from 'lucia'
 import { createStore } from 'zustand'
 
 export type MyUserInfoForRoomStoreState = {
-  user:
-    | ({
-        type: 'guest'
-      } & Guest)
-    | ({
-        type: 'user'
-      } & User)
+  user: Guest | User
 }
 
 // export type MyUserInfoForRoomStoreAction = {}

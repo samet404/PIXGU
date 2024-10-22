@@ -15,18 +15,19 @@ import { handlePeerDatas } from './handlePeerDatas'
 export const createHostPeer = (roomID: string, myUserID: string) => {
   const io = useSocketIO.getState().io
   const setHostPeer = useHostPeer.getState().set
-  const peer = simplePeer()
 
   setHostPeer({
-    peer,
+    peer: simplePeer(),
   })
 
-  peer.on('signal', async (signalData: WebRTCSignalData) => {
-    goldLog(`${signalData.type.toUpperCase()} SENT TO HOST`)
-    io!.emit('send-webrtc-signal', signalData)
-  })
+  useHostPeer
+    .getState()
+    .peer!.on('signal', async (signalData: WebRTCSignalData) => {
+      goldLog(`${signalData.type.toUpperCase()} SENT TO HOST`)
+      io!.emit('send-webrtc-signal', signalData)
+    })
 
-  peer.on('error', (err) => {
+  useHostPeer.getState().peer!.on('error', (err) => {
     console.error(err)
     usePlayers.getState().reset()
 
@@ -35,7 +36,7 @@ export const createHostPeer = (roomID: string, myUserID: string) => {
     })
   })
 
-  peer.on('connect', () => {
+  useHostPeer.getState().peer!.on('connect', () => {
     positiveLog(`CONNECTED TO HOST`)
 
     useIsGameStopped.getState().removeCode('connectingToHost')

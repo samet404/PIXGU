@@ -8,6 +8,7 @@ import {
   setRoomID,
   setGuestID,
   setIsGuest,
+  setGuest,
 } from '@/context/server'
 import type { Guest, Locale } from '@/types'
 import type { User } from 'lucia'
@@ -24,6 +25,7 @@ export const setServerContexts = async (
   setUser(user)
   setRoomID(roomID)
   setUserID(user?.id ?? '')
+  setGuest(guest)
   setGuestID(guest?.ID ?? '')
   isGuest ? setIsGuest(true) : setIsGuest(false)
 }

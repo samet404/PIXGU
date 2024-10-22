@@ -58,7 +58,7 @@ export const SocketIOProvider = ({ roomID, children }: Props) => {
       setStatus({
         error: [],
         isLoading: false,
-        isConnected: true,
+        isConnected: false,
         isDisconnected: false,
       })
       useSocketIO.getState().io!.emit('auth')
@@ -84,7 +84,15 @@ export const SocketIOProvider = ({ roomID, children }: Props) => {
       .getState()
       .io!.once('player-auth', (authStatus: PlayerAuthStatus) => {
         console.log('player-auth: ', authStatus)
-        if (!authStatus.isSuccess)
+        if (authStatus.isSuccess)
+          setStatus((prev) => {
+            return {
+              ...prev,
+              isLoading: false,
+              isConnected: true,
+            }
+          })
+        else
           setStatus((prev) => {
             return {
               ...prev,
@@ -136,7 +144,7 @@ export const SocketIOProvider = ({ roomID, children }: Props) => {
       console.log('reconnecting')
       setStatus(initStatusState)
     })
-
+    true
     if (!OPTS?.autoConnect) useSocketIO.getState().io!.connect()
     return () => {
       setStatus(initStatusState)

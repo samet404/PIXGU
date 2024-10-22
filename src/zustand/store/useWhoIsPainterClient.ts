@@ -42,7 +42,7 @@ export const useWhoIsPainterClient = create<State & Action>((set, get) => ({
     if (value.status === 'currentPainter') {
       return value.painterID === ID
     } else {
-      console.error('No painter')
+      console.log('No painter')
       return false
     }
   },

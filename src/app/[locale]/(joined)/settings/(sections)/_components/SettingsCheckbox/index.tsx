@@ -34,6 +34,7 @@ export const SettingsCheckbox = ({
                   `absolute inset-0 cursor-pointer rounded-lg bg-[#eee] shadow-[0_0px_0.2rem_1px_#dfd9d9] transition-[0.4s] before:absolute before:bottom-[0.7rem] before:left-[0.3rem] before:h-[1.5rem] before:w-[1.4rem] before:rounded-md before:bg-rose-400 before:shadow-[0_0px_0.3rem_1px_#bcb4b4] before:transition-[0.4s] before:content-[''] hover:before:bottom-[0.5rem] hover:before:shadow-[0_0px_0.2rem_0px_#bcb4b4] `,
                   {
                     'before:translate-x-8 before:bg-emerald-400': isChecked,
+                    'cursor-not-allowed': isLoading || isChecked === undefined,
                   },
                 )}
               ></span>

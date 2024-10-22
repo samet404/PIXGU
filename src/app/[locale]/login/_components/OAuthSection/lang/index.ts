@@ -15,6 +15,6 @@ export const getLangObj = (locale: Locale) => {
   return langJson()
 }
 
-type keys = 'passwordArticleDesc' | 'oauthDesc'
+type keys = 'oauthDesc'
 
 type LangObj = Record<keys, string>

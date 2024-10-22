@@ -1,6 +1,7 @@
 import './_styles/scrollbars.css'
 import {
   getGuest,
+  getGuestID,
   getHostID,
   getRoomID,
   getUser,
@@ -25,6 +26,7 @@ import { GameEnd } from './_components/GameEnd'
 import { Powerups } from './_components/Powerups'
 import Image from 'next/image'
 import CanvasTools from './_components/CanvasTools'
+import Spinner from '@/components/Spinner'
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -34,6 +36,7 @@ const outfit = Outfit({
 const JoinedRoom = () => {
   const userID = getUserID()
   const hostID = getHostID()
+  const guestID = getGuestID()
   const roomID = getRoomID()
   const user = getUser()
   const guest = getGuest()

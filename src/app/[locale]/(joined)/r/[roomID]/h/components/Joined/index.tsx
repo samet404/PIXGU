@@ -4,7 +4,7 @@ import { Outfit } from 'next/font/google'
 import { PlayersSection } from './components/PlayersSection'
 import { ConnectToPeers } from './components/ConnectToPeers'
 import { Providers } from './components/Providers'
-import { getRoomID, getUser, getUserID } from '@/context/server'
+import { getGuest, getRoomID, getUser, getUserID } from '@/context/server'
 import { States } from './components/States'
 import { ResetStates } from './components/ResetStates'
 
@@ -16,10 +16,11 @@ const outfit = Outfit({
 const userID = getUserID()
 const roomID = getRoomID()
 const user = getUser()!
+const guest = getGuest()
 
 const Joined = () => {
   return (
-    <Providers userID={userID} roomID={roomID} user={user}>
+    <Providers userID={userID} roomID={roomID} user={user ?? guest!}>
       <div
         id="root"
         className={`${outfit.className} h-full w-full overflow-y-scroll`}

@@ -111,12 +111,7 @@ export type PlayerLeft = {
 
 export type PlayerJoined = {
   event: 'playerJoined'
-  data: {
-    ID: string
-    username: string
-    usernameID: string
-    usernameWithUsernameID: string
-    profilePicture: string | null
+  data: Player & {
     isSpectator: boolean
   }
 }

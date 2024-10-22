@@ -9,6 +9,7 @@ export const NewPainter = () => {
   const newPainterSfxRef = useRef<HTMLAudioElement>(
     new Audio('/sound/sfx/newPainter.mp3'),
   )
+
   const panelValues = useNewPainterPanel((s) => s.value)
 
   const content = (() => {

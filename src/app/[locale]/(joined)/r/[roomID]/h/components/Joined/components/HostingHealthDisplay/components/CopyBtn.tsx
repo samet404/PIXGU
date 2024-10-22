@@ -51,7 +51,7 @@ export const CopyBtn = () => {
     })
   }
 
-  if (hostStatus !== 'networkError' && hostStatus !== 'loading')
+  if (hostStatus !== 'readyToStart')
     return (
       <animated.button
         onClick={handleClick}

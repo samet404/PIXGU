@@ -4,6 +4,7 @@ import { useSelectThemePanel } from '@/zustand/store'
 
 export const SelectTheme = () => {
   const panelValues = useSelectThemePanel((s) => s.value)
+  console.log('panelValues: ', panelValues)
 
   if (panelValues.isOpen && panelValues.status === 'selectingTheme')
     return (

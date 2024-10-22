@@ -33,7 +33,7 @@ export const Blur = ({ children }: PropsWithChildren) => {
       case 'finding host':
         return (
           <div className="flex flex-row gap-4">
-            <div>finding host</div>
+            <div>Finding host</div>
           </div>
         )
       case 'disconnected':
@@ -56,35 +56,35 @@ export const Blur = ({ children }: PropsWithChildren) => {
   const bgColor = (() => {
     switch (hostPeerStatus) {
       case 'connecting':
-        return 'from-[#eed03bd7] to-[#f5cb27d7]'
+        return 'from-[#ffe14cff] to-[#ffd428ff]'
       case 'disconnected':
-        return 'from-[#d9538d] to-[#ee0351]'
+        return 'from-[#ff5ea4] to-[#ee0351]'
       case 'failed':
-        return 'from-[#d9538dbd] to-[#ee0351b7]'
+        return 'from-[#ff62a6ff] to-[#ee0351b7]'
       case 'finding host':
-        return 'from-[#fef08ad9] to-[#ffef77bf]'
+        return 'from-[#e6d240ff] to-[#ffef77ff]'
     }
 
     switch (code[0]) {
       case 'waitingForHost':
-        return 'from-[#47d69ac2] to-[#47d6b7c2]'
+        return 'from-[#47d69aff] to-[#47d6b7ff]'
       case 'waitingForPlayers':
-        return 'from-[#47d69ac2] to-[#47d6b7c2]'
+        return 'from-[#63e6afff] to-[#2ddcb6ff]'
     }
   })()
 
   return (
     <div
       className={clsxMerge(
-        'absolute z-40 flex h-full w-full animate-fade-down items-center justify-center duration-1000',
+        `absolute z-40 flex h-full w-full animate-fade-down items-center justify-center bg-gradient-to-tr ${bgColor} duration-1000`,
         {
-          'backdrop-blur-lg': !inDeveloperMode,
+          '': !inDeveloperMode,
         },
       )}
     >
       <div
         className={clsxMerge(
-          `flex items-center justify-center rounded-lg bg-gradient-to-tr px-2 py-1 text-[2rem] font-[500] text-white drop-shadow-[0_0px_2px_rgba(0,0,0,0.)] ${bgColor}`,
+          `flex items-center justify-center rounded-lg px-2 py-1 text-[2rem] font-[500] text-white`,
         )}
       >
         {text}
