@@ -60,5 +60,4 @@ type Props = {
   hostID: string
   user: User | null
   guest: Guest | null
-  guestID: string
 } & PropsWithChildren
