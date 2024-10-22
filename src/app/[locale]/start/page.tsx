@@ -23,6 +23,7 @@ const Start = () => {
           src={bg}
           alt="bg"
           sizes="200vw"
+          placeholder="blur"
           className=" aspect-video w-full"
         />
         <div className="absolute bottom-0 left-0 flex h-[20%] w-full  justify-center p-4">
