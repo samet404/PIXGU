@@ -12,6 +12,7 @@ import './_styles/globals.css'
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import { Adsense } from './_components/Adsense'
+import { SmallScreenAlert } from './_components/SmallScreenAlert'
 config.autoAddCss = false
 
 export const metadata: Metadata = {
@@ -66,6 +67,7 @@ const RootLayout = async (props: {
             'radial-gradient(at 80% 100%, hsla(222,47%,16%,1) 0px, transparent 50%),radial-gradient(at 0% 0%, hsla(222,48%,19%,1) 0px, transparent 50%)',
         }}
       >
+        <SmallScreenAlert />
         <Adsense />
         <TRPCReactProvider cookies={cookies().toString()}>
           {/* <CustomCursor /> */}
