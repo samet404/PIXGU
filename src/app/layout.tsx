@@ -67,16 +67,17 @@ const RootLayout = async (props: {
             'radial-gradient(at 80% 100%, hsla(222,47%,16%,1) 0px, transparent 50%),radial-gradient(at 0% 0%, hsla(222,48%,19%,1) 0px, transparent 50%)',
         }}
       >
-        <SmallScreenAlert />
-        <Adsense />
-        <TRPCReactProvider cookies={cookies().toString()}>
-          {/* <CustomCursor /> */}
-          <Providers>
-            <BuyMeCoffee />
-            {props.children}
-            <Version />
-          </Providers>
-        </TRPCReactProvider>
+        <SmallScreenAlert>
+          <Adsense />
+          <TRPCReactProvider cookies={cookies().toString()}>
+            {/* <CustomCursor /> */}
+            <Providers>
+              <BuyMeCoffee />
+              {props.children}
+              <Version />
+            </Providers>
+          </TRPCReactProvider>
+        </SmallScreenAlert>
       </body>
     </html>
   )

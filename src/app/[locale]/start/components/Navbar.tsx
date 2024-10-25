@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 export const Navbar = () => {
   return (
-    <nav className="absolute left-0 top-0 z-50 flex w-full flex-row justify-end p-5">
+    <nav className="absolute left-0 top-0 z-40 flex w-full flex-row justify-end p-5">
       <div className="flex flex-row justify-end">
         <Link
           href={'/login'}

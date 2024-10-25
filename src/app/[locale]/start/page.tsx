@@ -2,7 +2,7 @@ import { Outfit } from 'next/font/google'
 import Image from 'next/image'
 import Link from 'next/link'
 import bg from '@/png/startbg.png'
-import { Navbar } from './components/Navbar'
+// import { Navbar } from './components/Navbar'
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -17,7 +17,7 @@ const Start = () => {
       }}
       className={`${outfit.className} h-full w-full flex-col gap-2 overflow-y-scroll`}
     >
-      <Navbar />
+      {/* <Navbar /> */}
       <div className=" relative flex w-full">
         <Image
           src={bg}

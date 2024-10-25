@@ -1,3 +1,3 @@
 import { atom } from 'jotai';
 
-export const isClosedAtom = atom<boolean | null>(null) 
+export const isClosedAtom = atom<boolean | null | undefined>(undefined) 
