@@ -1,10 +1,10 @@
-import { loggedUserProducure } from '@/procedure'
+import { joinedUserProducure } from '@/procedure'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 import haversine from 'haversine-distance'
 import { lookupCity } from '@/db/geoIP'
 
-export const getRoomByID = loggedUserProducure
+export const getRoomByID = joinedUserProducure
   .input(z.string())
   .query(async ({ ctx, input: ID }) => {
     const geoIP = await lookupCity(ctx.clientIP)

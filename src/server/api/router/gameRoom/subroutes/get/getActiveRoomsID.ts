@@ -1,8 +1,8 @@
-import { loggedUserProducure } from '@/procedure'
+import { joinedUserProducure } from '@/procedure'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
-export const getActiveRoomsID = loggedUserProducure
+export const getActiveRoomsID = joinedUserProducure
   .input(
     z.object({
       sortBy: z.object({
@@ -13,7 +13,7 @@ export const getActiveRoomsID = loggedUserProducure
   )
   .query(async ({ input, ctx }) => {
     const roomsIDs = await ctx.redisDb.smembers('active_rooms')
-
+    console.log(roomsIDs)
     const sortBy = input.sortBy
 
     switch (sortBy.type) {
@@ -39,7 +39,7 @@ export const getActiveRoomsID = loggedUserProducure
             if (!hostLL)
               throw new TRPCError({
                 code: 'NOT_FOUND',
-                message: 'Room not found',
+                message: `HOST LL AT NOT FOUND FOR ${ID}`,
               })
 
             const parsedHostLL: [number, number] = JSON.parse(hostLL)
@@ -72,7 +72,7 @@ export const getActiveRoomsID = loggedUserProducure
             if (!createdAt)
               throw new TRPCError({
                 code: 'NOT_FOUND',
-                message: 'Room not found',
+                message: `CREATED AT NOT FOUND FOR ${ID}`,
               })
 
             return {

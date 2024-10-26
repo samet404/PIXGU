@@ -21,7 +21,7 @@ const Home = async ({ params }: Props) => {
       style={{
         backgroundColor: 'hsla(220,39%,10%,1)',
         backgroundImage:
-          'radial-gradient(at 100% 100%, hsla(142,7%,70%,0.1) 0px, transparent 50%), radial-gradient(at 2% 0%, hsla(177, 100%, 50%, 0.1) 0px, transparent 50%)',
+          'radial-gradient(at 100% 100%, hsla(142,7%,70%,0.1) 0px, transparent 50%), radial-gradient(at 2% 0%, hsla(177, 100%, 50%, 0.475) 0px, transparent 50%)',
       }}
       id="home-root"
       className={`flex h-full w-full flex-col items-center overflow-y-scroll pb-20 pt-2`}
