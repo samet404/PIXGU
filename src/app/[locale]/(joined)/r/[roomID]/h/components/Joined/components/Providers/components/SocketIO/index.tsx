@@ -37,6 +37,7 @@ export const SocketIOProvider = ({ roomID, children }: Props) => {
   }
 
   const [status, setStatus] = useState<StatusState>(initStatusState)
+  console.log('io: ', useSocketIO.getState().io)
   const {
     error,
     isConnected,
@@ -204,22 +205,22 @@ type Props = PropsWithChildren<{
 
 type HostAuthStatus =
   | {
-      isSuccess: true
-    }
+    isSuccess: true
+  }
   | {
-      isSuccess: false
-      reason: string
-    }
+    isSuccess: false
+    reason: string
+  }
 
 type AuthStatus =
   | {
-      isSuccess: true
-      as: string
-    }
+    isSuccess: true
+    as: string
+  }
   | {
-      isSuccess: false
-      required: string[]
-    }
+    isSuccess: false
+    required: string[]
+  }
 
 type StatusState = {
   error: string[]
