@@ -28,6 +28,9 @@ type Action = {
 
 const initValue: State = {}
 
+/**
+ * History of all pixels drawn
+ */
 export const usePixelHistory = create<State & Action>((set, get) => ({
   ...initValue,
   get: ([x, y]) => get()[`${x}_${y}`],

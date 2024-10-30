@@ -1,5 +1,6 @@
 // https://million.dev
 // import million from 'million/compiler';
+import createMDX from '@next/mdx';
 import { fileURLToPath } from 'node:url';
 import createJiti from 'jiti';
 const jiti = createJiti(fileURLToPath(import.meta.url));
@@ -10,6 +11,8 @@ jiti('./src/env/client');
 
 /** @type {import("next").NextConfig} */
 const config = {
+  pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
+
   webpack: (
     config,
     // { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack },
@@ -64,5 +67,9 @@ const config = {
 
 // const millionConfig = { auto: { rsc: false } };
 
-export default config;
+const withMDX = createMDX({
+  // Add markdown plugins here, as desired
+});
+
+export default withMDX(config);
 // export default million.next(config, millionConfig);

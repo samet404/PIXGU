@@ -162,10 +162,11 @@ export default {
   },
   plugins: [
     require('tailwindcss-textshadow'),
+    require('@tailwindcss/typography'),
+    require('tailwindcss-animated'),
     plugin(function ({ addVariant }) {
       addVariant('feelingCyan', `:is(.feelingCyan &)`)
       addVariant('dark-feelingCyan', `:is(.dark-feelingCyan &)`)
     }),
-    require('tailwindcss-animated'),
   ],
 } satisfies Config

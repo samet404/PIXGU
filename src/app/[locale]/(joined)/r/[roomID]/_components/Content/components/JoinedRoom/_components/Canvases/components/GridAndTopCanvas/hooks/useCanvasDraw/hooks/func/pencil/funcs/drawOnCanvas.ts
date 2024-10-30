@@ -2,7 +2,8 @@ import type { RGBAObj } from '@/types'
 import { calculatePixelsBetween } from '@/utils/calculatePixelsBetween'
 import { fillOnePixel } from '@/utils/room'
 import { sendToHostPeer } from '@/utils/sendToHostPeer'
-import { usePixelsOnDraw } from '@/zustand/store'
+import { usePixelHistory, usePixelsOnDraw } from '@/zustand/store'
+import { addToHistory } from './addToHistory'
 
 export const drawOnCanvas = (
   newX: number,
@@ -24,8 +25,11 @@ export const drawOnCanvas = (
 
   const lastPixelOnDraw =
     usePixelsOnDraw.getState().value[
-      usePixelsOnDraw.getState().value.length - 1
+    usePixelsOnDraw.getState().value.length - 1
     ]
+
+  addToHistory(newX, newY)
+
 
   if (lastPixelOnDraw) {
     const prevX = lastPixelOnDraw[0]
@@ -39,6 +43,7 @@ export const drawOnCanvas = (
     console.log('pixelsBetween: ', pixelsBetween, newX, newY)
 
     for (let pixel of pixelsBetween) {
+
       sendToHostPeer({
         from: 'client',
         event: 'painterDraw',
@@ -51,6 +56,8 @@ export const drawOnCanvas = (
       })
 
       fillOnePixel(pixel.x, pixel.y, rgba)
+
+      addToHistory(newX, newY)
     }
   }
 

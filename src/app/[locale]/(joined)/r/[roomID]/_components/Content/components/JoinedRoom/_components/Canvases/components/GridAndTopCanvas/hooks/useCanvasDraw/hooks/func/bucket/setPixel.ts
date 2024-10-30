@@ -1,6 +1,6 @@
 export const setPixel = (
   imageData: ImageData,
-  cellSideCount: number,
+  cellPixelLength: number,
   x: number,
   y: number,
   r: number,
@@ -8,11 +8,11 @@ export const setPixel = (
   b: number,
   a: number,
 ) => {
-  for (let dy = 0; dy < cellSideCount; dy++) {
-    for (let dx = 0; dx < cellSideCount; dx++) {
+  for (let dy = 0; dy < cellPixelLength; dy++) {
+    for (let dx = 0; dx < cellPixelLength; dx++) {
       const index =
-        ((Math.floor(y * cellSideCount) + dy) * imageData.width +
-          (Math.floor(x * cellSideCount) + dx)) *
+        ((Math.floor(y * cellPixelLength) + dy) * imageData.width +
+          (Math.floor(x * cellPixelLength) + dx)) *
         4
       imageData.data[index] = r
       imageData.data[index + 1] = g
