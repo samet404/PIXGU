@@ -11,7 +11,7 @@ export const GuessChat = () => {
 
   if (layout.isOpen)
     return (
-      <div className="flex w-full animate-fade flex-col gap-2 rounded-lg bg-gradient-to-tr from-[#8acc87] to-[#65cfb9]">
+      <div className="flex w-full animate-fade flex-col gap-2 rounded-lg bg-gradient-to-tr from-[#ffffff3d] to-[#ffffff4b]">
         <div className="relative flex h-full w-full flex-col gap-2 rounded-lg p-2">
           <div className="flex w-full flex-row justify-end gap-2">
             {layout.change ? <Change to="winnersChat" /> : null}

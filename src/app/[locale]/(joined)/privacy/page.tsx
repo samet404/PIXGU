@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { archiveTimestamps } from './_archive'
-import type { MDXContentProps } from './archive/Introduction.mdx'
 import Template from './_components/Template'
+import type { MDXProps } from 'mdx/types'
 const lastArchive = archiveTimestamps[archiveTimestamps.length - 1]!
 
 const Content: MDXComponent = (await import(`./_archive/${lastArchive}.mdx`)).default
@@ -34,4 +34,4 @@ const Privacy = () => {
 
 export default Privacy
 
-type MDXComponent = (props: { readonly [K in keyof MDXContentProps]: MDXContentProps[K] }) => JSX.Element
+type MDXComponent = (props: { readonly [K in keyof MDXProps]: MDXProps[K] }) => JSX.Element

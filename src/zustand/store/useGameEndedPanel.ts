@@ -10,22 +10,21 @@ import { useGuessedPlayers } from './useGuessedPlayers'
 import { useMyCoin } from './useMyCoin'
 import { useCoins } from './useCoins'
 import { useLastPixel } from './useLastPixel'
-import { usePixelHistory } from './usePixelHistory'
 import { useSpectators } from './useSpectators'
 import { useAmISpectator } from './useAmISpectator'
-import { usePixelsOnDraw } from './usePixelsOnDraw'
 import { useSelectThemePanel } from './useSelectThemePanel'
 import { useNewPainterPanel } from './useNewPainterPanel'
 import { useMatchStatusClient } from './useMatchStatusClient'
+import { storePixelHistory, storePixelsOnDraw } from '@/store'
 
 type State = {
   value:
-    | ({
-        isOpen: true
-      } & GameEnded['data'])
-    | {
-        isOpen: false
-      }
+  | ({
+    isOpen: true
+  } & GameEnded['data'])
+  | {
+    isOpen: false
+  }
 }
 
 type Action = {
@@ -61,10 +60,10 @@ export const useGameEndedPanel = create<State & Action>((set, get) => ({
     useMyCoin.getState().reset()
     useCoins.getState().reset()
     useLastPixel.getState().reset()
-    usePixelHistory.getState().reset()
+    storePixelHistory.reset()
     useSpectators.getState().reset()
     useAmISpectator.getState().reset()
-    usePixelsOnDraw.getState().reset()
+    storePixelsOnDraw.reset()
     useNewPainterPanel.getState().reset()
     useMatchStatusClient.getState().reset()
     useSelectThemePanel.getState().reset()

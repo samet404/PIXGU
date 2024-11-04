@@ -1,125 +1,125 @@
-// import { useCanvasesMainData, usePainterTool } from '@/zustand/store'
 import { fillOnePixel } from '@/utils/room/fillOnePixel'
-import { spanFill } from '@/utils/spanFill'
-// import type { WorkerMessage } from './worker'
-// import { setPixel } from './setPixel'
+import { useCanvasesMainData } from '@/zustand/store'
+import { addToHistory } from './addToHistory'
+import { storePixelHistory, storePixelsOnBucket } from '@/store'
 
-import { useCanvasesMainData, usePainterTool, usePixelHistory } from '@/zustand/store'
+const DEFAULT_COLOR = [
+  255,
+  255,
+  255,
+  255
+]
+const COLOR_TO_FILL = {
+  r: 0,
+  g: 100,
+  b: 0,
+  a: 100,
+}
 
-// export const bucket = (e: PointerEvent) => {
-//   console.log('bucket')
+type WorkerMessage = {
+  smoothX: number
+  smoothY: number
+  imageData: ImageData
+  cellPixelLength: number
+  cellSideCount: number
+}
 
-//   const { main, draft, zoom, cellPixelLength, cellSideCount } =
-//     useCanvasesMainData.getState()
-//   if (!main) {
-//     console.log('main not found')
-//     return
-//   }
+export const bucket = async (e: PointerEvent) => {
 
-//   const mctx = main.getContext('2d', {
-//     willReadFrequently: true,
-//     desynchronized: true,
-//   })!
-//   const dctx = draft!.getContext('2d', {
-//     willReadFrequently: true,
-//     desynchronized: true,
-//   })!
-//   const bounding = main.getBoundingClientRect()
-//   const exactX = (e.clientX - bounding.left) * zoom
-//   const exactY = (e.clientY - bounding.top) * zoom
-//   const smoothX = Math.floor(exactX / cellPixelLength!)
-//   const smoothY = Math.floor(exactY / cellPixelLength!)
-
-//   const imageData = mctx.getImageData(0, 0, main.width, main.height)
-
-//   const worker = new Worker(new URL('./worker/index.ts', import.meta.url), {
-//     type: 'module',
-//   })
+  const worker = new Worker(new URL('./worker.ts', import.meta.url), {
+    type: 'module',
+  })
 
 
-//   const message: WorkerMessage = {
-//     smoothX,
-//     smoothY,
-//     imageData,
-//     cellPixelLength: cellPixelLength!,
-//     cellSideCount,
-//   }
-//   worker.postMessage(message)
 
-//   worker.onmessage = (e) => {
-//     console.log('worker onmessage', e)
-//   }
-// }
+  const message: WorkerMessage = {
+    smoothX,
+    smoothY,
+    imageData,
+    cellPixelLength: cellPixelLength!,
+    cellSideCount,
+  }
+  worker.postMessage(message)
 
+  //   worker.onmessage = (e) => {
+  //     console.log('worker onmessage', e)
+  //   }
+  // }
 
-export const bucket = (e: PointerEvent) => {
   console.log('bucket')
-  const DEFAULT_COLOR = {
-    r: 255,
-    g: 255,
-    b: 255,
-    a: 255,
-  }
-  const COLOR_TO_FILL = {
-    r: 255,
-    g: 100,
-    b: 0,
-    a: 255,
-  }
-
   const { main, draft, zoom, cellPixelLength, cellSideCount } =
     useCanvasesMainData.getState()
-  if (!main) {
-    console.log('main not found')
-    return
-  }
 
-  const mctx = main.getContext('2d', {
-    willReadFrequently: true,
-    desynchronized: true,
-  })!
-  const dctx = draft!.getContext('2d', {
-    willReadFrequently: true,
-    desynchronized: true,
-  })!
-  const bounding = main.getBoundingClientRect()
+  const mctx = main!.getContext('2d')!
+  const dctx = draft!.getContext('2d')!
+  const bounding = main!.getBoundingClientRect()
   const exactX = (e.clientX - bounding.left) * zoom
   const exactY = (e.clientY - bounding.top) * zoom
   const smoothX = Math.floor(exactX / cellPixelLength!)
   const smoothY = Math.floor(exactY / cellPixelLength!)
 
-  const targetColor = (() => {
-    const color = usePixelHistory.getState()[`${smoothX}_${smoothY}`]?.rgba
+  const [rt, gt, bt, at] = (() => {
+    const color = storePixelHistory.get([smoothX, smoothY])?.rgba
     if (!color) return DEFAULT_COLOR
     return color
   })()
 
   const isInside = (x: number, y: number) => {
-    console.log('isInside: ', x, y, cellSideCount)
+    if (x < 0 || y < 0 || x >= cellSideCount || y >= cellSideCount) return false
 
-    if (x >= 0 && y >= 0 && x < cellSideCount && y < cellSideCount) {
-      console.log('isInside1: ', true)
+    if (storePixelsOnBucket.isExits([x, y])) return false
 
-
-      const pixelData = usePixelHistory.getState()[`${x}_${y}`]?.rgba
-      if (!pixelData) return false
-
-      const [r, g, b, a] = pixelData
-
-
-      const isColorEqual = r === rt && g === gt && b === bt && a === at
-      console.log('isColorEqual: ', isColorEqual)
-      console.log({ r, g, b, a, rt, gt, bt, at })
-
-      console.log('isInside2: ', isColorEqual)
-      return isColorEqual
-    }
-
-    console.log('isInside1: ', false)
-    return false
+    const pixelData = storePixelHistory.get([x, y])?.rgba
+    const [r, g, b, a] = pixelData ?? DEFAULT_COLOR
+    return r === rt && g === gt && b === bt && a === at
   }
 
-  spanFill(smoothX, smoothY, isInside, (x, y) => {
-    fillOnePixel(x, y, COLOR_TO_FILL)
-  })
+  const set = (x: number, y: number) => {
+    const { pixelImageData } = fillOnePixel(x, y, COLOR_TO_FILL, {
+      pixelImageData: true
+    })
+    addToHistory(pixelImageData, x, y)
+    storePixelsOnBucket.add([x, y])
+  }
+
+  const queue: [number, number][] = [[smoothX, smoothY]]
+  const directions = [[-1, 0], [1, 0], [0, -1], [0, 1]]
+
+  const processChunk = async () => {
+    const CHUNK_SIZE = 10
+    let processed = 0
+
+    while (queue.length > 0 && processed < CHUNK_SIZE) {
+      const [x, y] = queue.shift()!
+      if (isInside(x, y)) {
+        set(x, y)
+        processed++
+
+        for (const [dx, dy] of directions) {
+          const newX = x + dx!
+          const newY = y + dy!
+          if (isInside(newX, newY)) {
+            queue.push([newX, newY])
+          }
+        }
+      }
+    }
+
+    // Update canvas
+    mctx.drawImage(draft!, 0, 0)
+
+    if (queue.length > 0) {
+      // Process next chunk in next frame
+      requestAnimationFrame(processChunk)
+    } else {
+      // Clear draft when done
+      dctx.clearRect(0, 0, draft!.width, draft!.height)
+    }
+  }
+
+  // Start processing
+  requestAnimationFrame(processChunk)
 }
+
+
+

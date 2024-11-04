@@ -1,6 +1,9 @@
 import { create } from 'zustand'
 
-type State = { amIPainting: boolean }
+type State = {
+  amIPainting: boolean
+  startCoords: [x: number, y: number] | null
+}
 
 type Action = {
   imPainting: () => void
@@ -10,6 +13,7 @@ type Action = {
 
 const initValue: State = {
   amIPainting: false,
+  startCoords: null
 }
 
 export const useAmIPainting = create<State & Action>((set) => ({

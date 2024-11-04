@@ -18,6 +18,7 @@
     "noUncheckedIndexedAccess": true,
     "baseUrl": "./",
     "paths": {
+      "@/store": ["./src/store/index.ts"],
       "@/middlewares": ["./src/middlewares/index.ts"],
       "@/helpers": ["./src/helpers/index.ts"],
       "@/xata": ["./src/xata/"],

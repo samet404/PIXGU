@@ -3,9 +3,9 @@ import {
   useAmIPainting,
   useCanvasesMainData,
   usePainterTool,
-  usePixelsOnDraw,
 } from '@/zustand/store'
 import { amIPainter } from './func'
+import { storePixelsOnDraw } from '@/store'
 
 export const useMouseUp = () => {
   console.log('mouse up')
@@ -17,18 +17,17 @@ export const useMouseUp = () => {
     const dctx = draft!.getContext('2d')!
     const mctx = main!.getContext('2d')!
 
-    mctx.drawImage(draft!, 0, 0) // copy drawing to main
-    dctx.clearRect(0, 0, draft!.width, draft!.height) // clear draft
 
+    storePixelsOnDraw.setLastPixel(null)
     useAmIPainting.getState().imNotPainting()
-    usePixelsOnDraw.getState().reset()
+    storePixelsOnDraw.reset()
 
     const tool = usePainterTool.getState().current
 
     switch (tool) {
       case 'pencil':
         dctx.beginPath()
-        usePixelsOnDraw.getState().reset()
+        storePixelsOnDraw.reset()
         break
     }
   }

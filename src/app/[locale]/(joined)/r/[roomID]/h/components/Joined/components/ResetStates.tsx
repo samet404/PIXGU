@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffectOnce } from '@/hooks/useEffectOnce'
+import { storePixelHistory } from '@/store'
 import {
   useHostingHealth,
   useHostPainterData,
@@ -9,7 +10,6 @@ import {
   usePeers,
   usePlayers,
   useWhoIsPainter,
-  usePixelHistory,
   useCoins,
   useSpectators,
   useLastPixel,
@@ -26,7 +26,7 @@ export const ResetStates = () => {
       usePlayers.getState().reset()
       useWhoIsPainter.getState().reset()
       useIsGameStopped.getState().reset()
-      usePixelHistory.getState().reset()
+      storePixelHistory.reset()
       useCoins.getState().reset()
       useSpectators.getState().reset()
       useLastPixel.getState().reset()

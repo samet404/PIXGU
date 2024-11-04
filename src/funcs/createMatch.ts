@@ -5,11 +5,11 @@ import {
   useGuessedPlayers,
   useHostingHealth,
   useHostPainterData,
-  usePixelHistory,
   usePlayers,
   useSpectators,
   useWhoIsPainter,
 } from '@/zustand/store'
+import { storePixelHistory } from '@/store'
 
 export const createMatch = async (roomID: string) => {
   const isSpectator = useSpectators.getState().isSpectator
@@ -34,7 +34,6 @@ export const createMatch = async (roomID: string) => {
       useCoins,
       useSpectators,
       useLastPixel,
-      usePixelHistory,
       useGuessedPlayers,
       useHostPainterData,
       useMatchStatus,
@@ -57,7 +56,7 @@ export const createMatch = async (roomID: string) => {
     useSpectators.getState().reset()
     useCoins.getState().reset()
     useLastPixel.getState().reset()
-    usePixelHistory.getState().reset()
+    storePixelHistory.reset()
     useGuessedPlayers.getState().reset()
 
     const intervalStartedAt = Date.now()
@@ -106,7 +105,7 @@ export const createMatch = async (roomID: string) => {
       })
 
       useHostPainterData.getState().reset()
-      usePixelHistory.getState().reset()
+      storePixelHistory.reset()
       updatePainterToPlayers(roomID)
 
       return
@@ -123,7 +122,7 @@ export const createMatch = async (roomID: string) => {
     })
 
     useHostPainterData.getState().reset()
-    usePixelHistory.getState().reset()
+    storePixelHistory.reset()
     updatePainterToPlayers(roomID)
   }
 }

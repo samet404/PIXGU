@@ -3,9 +3,9 @@ import {
   useAmIPainting,
   useCanvasesMainData,
   usePainterTool,
-  usePixelsOnDraw,
 } from '@/zustand/store'
 import { amIPainter } from './func'
+import { storePixelsOnDraw } from '@/store'
 
 export const useMouseOut = () => {
   const handler = () => {
@@ -24,7 +24,7 @@ export const useMouseOut = () => {
           const dctx = canvasesMainData.grid!.getContext('2d')!
           dctx.beginPath()
 
-          usePixelsOnDraw.getState().reset()
+          storePixelsOnDraw.reset()
         }
         break
     }
@@ -33,14 +33,11 @@ export const useMouseOut = () => {
   useEffectOnce(() => {
     const { grid } = useCanvasesMainData.getState().get()
 
-    if (!grid) {
-      return
-    }
 
-    grid.addEventListener('pointerout', handler)
+    grid!.addEventListener('pointerout', handler)
 
     return () => {
-      grid.removeEventListener('pointerout', handler)
+      grid!.removeEventListener('pointerout', handler)
     }
   })
 }

@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 import Template from '../../_components/Template'
-import type { MDXContentProps } from '../Introduction.mdx'
 import Link from 'next/link'
+import type { MDXProps } from 'mdx/types'
 
 
 const SpesificArchive = async ({ params }: {
@@ -47,4 +47,4 @@ const SpesificArchive = async ({ params }: {
 
 export default SpesificArchive
 
-type MDXComponent = (props: { readonly [K in keyof MDXContentProps]: MDXContentProps[K] }) => JSX.Element
+type MDXComponent = (props: { readonly [K in keyof MDXProps]: MDXProps[K] }) => JSX.Element
