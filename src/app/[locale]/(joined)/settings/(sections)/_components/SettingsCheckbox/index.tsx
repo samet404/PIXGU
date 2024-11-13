@@ -8,7 +8,7 @@ export const SettingsCheckbox = ({
   name,
   description,
   className,
-  isLoading,
+  isLoading = false,
   isChecked,
   ...rest
 }: Props) => {
@@ -44,17 +44,17 @@ export const SettingsCheckbox = ({
         </div>
       </div>
 
-      <div className="rounded-md bg-[#ffffff5e] p-2 text-sm text-[#0000009b]">
+      {description && <div className="rounded-md bg-[#ffffff5e] p-2 text-sm text-[#0000009b]">
         {description}
-      </div>
+      </div>}
     </div>
   )
 }
 
 type Props = {
-  isLoading: boolean
+  isLoading?: boolean
   name: string
-  description: string
+  description?: string
   className?: string
   isChecked: boolean | undefined
 } & ComponentProps<'button'>

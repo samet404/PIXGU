@@ -8,7 +8,7 @@ const JoinRoom = ({ name, description }: Props) => {
 
   return (
     <MainButton
-      link="/join-room"
+      link="/join"
       icon={
         <Image
           src={magnify}

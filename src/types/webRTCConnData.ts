@@ -1,6 +1,7 @@
 import type { Player } from '@/zustand/store'
 import type { User } from 'lucia'
 import type { Powerup } from './powerups'
+import type { PixelHistoryStoreValueHistory } from '@/store'
 
 /**
  * WebRTCConnData is the type of data that
@@ -56,18 +57,26 @@ export type WinnersChatFromClient = {
   }
 }
 
-export type PainterDrawFromHostAndClient = {
-  event: 'painterDraw'
+export type PainterPencil = {
+  event: 'painterPencil'
   data: {
-    painterID: string
     x: number
     y: number
-    rgba: {
-      r: number
-      g: number
-      b: number
-      a: number
-    }
+    color: Uint8ClampedArray
+    size: number
+  }
+}
+
+export type PainterEraserOrPencilOut = {
+  event: 'painterEraserOrPencilOut'
+}
+
+export type PainterEraser = {
+  event: 'painterEraser'
+  data: {
+    x: number
+    y: number
+    size: number
   }
 }
 
@@ -75,21 +84,19 @@ export type PainterTrash = {
   event: 'painterTrash'
 }
 
-export type PrevPainterDraw = {
-  event: 'prevPainterDraw'
+export type PainterBucket = {
+  event: 'painterBucket'
   data: {
-    painterID: string
-    pixels: {
-      x: number
-      y: number
-      rgba: {
-        r: number
-        g: number
-        b: number
-        a: number
-      }
-    }[]
+    x: number
+    y: number
+    color: Uint8ClampedArray
   }
+}
+
+export type PrevCanvas = {
+  event: 'prevCanvas'
+  data: PixelHistoryStoreValueHistory['rgb']
+
 }
 
 export type PrevPlayers = {
@@ -234,7 +241,6 @@ export type MarketItemPurchased = {
 export type WebRTCConnDataFromHost = (
   | PlayerLeft
   | PlayerJoined
-  | PainterDrawFromHostAndClient
   | PrevPlayers
   | CurrentPainter
   | GuessChatFromHost
@@ -256,10 +262,14 @@ export type WebRTCConnDataFromHost = (
   | PrevSpectators
   | GameIsStopped
   | EveryoneGuessed
-  | PrevPainterDraw
+  | PainterBucket
   | GameEnded
   | PainterTrash
+  | PainterEraser
+  | PainterPencil
   | MarketItemPurchased
+  | PrevCanvas
+  | PainterEraserOrPencilOut
 ) & {
   from: 'host'
 }
@@ -268,9 +278,12 @@ export type WebRTCConnDataFromHost = (
  * DirectlyFromClient is the type of data that is sent directly from the client.
  */
 export type WebRTCConnDataFromClient = (
+  | PainterEraserOrPencilOut
   | WinnersChatFromClient
   | GuessChatFromClient
-  | PainterDrawFromHostAndClient
+  | PainterPencil
+  | PainterEraser
+  | PainterBucket
   | Ping
   | PainterTrash
   | SelectThemeFromClient

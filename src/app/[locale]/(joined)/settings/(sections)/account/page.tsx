@@ -4,6 +4,7 @@ import { api } from '@/trpc/server'
 import SectionWrapper from '../_components/SectionWrapper'
 import { LogoutBtn } from './components/LogoutBtn'
 import dynamic from 'next/dynamic'
+import { ChangesApplyAllTabs } from '../_components/ChangesApplyAllTabs'
 
 const GuestAccount = dynamic(() =>
   import('./components/GuestAccount').then((m) => m.GuestAccount),
@@ -15,6 +16,8 @@ const Account = async () => {
   if (user)
     return (
       <SectionWrapper text="Account">
+        <ChangesApplyAllTabs />
+
         <div className="flex flex-col gap-2">
           <Pfp ID={user.id} profilePicture={user.profilePicture} />
           <Username username={user.username} />

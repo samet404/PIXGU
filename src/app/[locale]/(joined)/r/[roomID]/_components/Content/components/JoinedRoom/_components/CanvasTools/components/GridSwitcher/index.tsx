@@ -1,9 +1,8 @@
 'use client'
 
-import { drawGrid } from '@/utils/room/drawGrid'
+import { drawGrid, clearGrid } from '@/helpers/room'
 import { Tool } from '../Tool'
 import { useEffect } from 'react'
-import { clearGrid } from '@/utils/room/clearGrid'
 import { usePainterTool } from '@/zustand/store'
 import gridIcon from '@/svg/grid-svgrepo-com.svg'
 import Image from 'next/image'

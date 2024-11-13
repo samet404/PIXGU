@@ -2,8 +2,9 @@ import type { PrevCoins } from '@/types/webRTCConnData'
 import { useCoins } from '@/zustand/store'
 
 export const getPrevCoins = (data: PrevCoins['data']) => {
-  Object.keys(data).forEach((ID) => {
-    const amount = data[ID]
+  const entries = Object.entries(data)
+  for (let i = 0; i < entries.length; i++) {
+    const [ID, amount] = entries[i]!
     if (amount) useCoins.getState().add(ID, amount)
-  })
+  }
 }

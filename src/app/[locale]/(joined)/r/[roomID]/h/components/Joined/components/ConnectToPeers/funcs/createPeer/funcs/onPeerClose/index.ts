@@ -1,5 +1,5 @@
 import type SimplePeer from 'simple-peer'
-import { playerLeaved } from './funcs/playerLeaved'
+// import { playerLeaved } from './funcs/playerLeaved'
 
 export const onPeerClose = (
   peer: SimplePeer.Instance,
@@ -7,5 +7,6 @@ export const onPeerClose = (
   roomID: string,
 ) =>
   peer.on('close', () => {
-    playerLeaved(userID, roomID)
+    console.error('PEER CLOSED', userID)
+    // playerLeaved(userID, roomID)
   })

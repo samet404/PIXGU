@@ -7,7 +7,6 @@ import {
   getThemes,
   getCreatedRoom,
   getCreatedRoomsIDs,
-  killRoom,
   getRandomRoomID,
   getRandomPublicRoomID,
   getActiveRoomsID,
@@ -15,7 +14,6 @@ import {
 } from './subroutes'
 
 export const gameRoomRouter = createTRPCRouter({
-  killRoom,
 
   getByID: getRoomByID,
   getActiveRoomsID,

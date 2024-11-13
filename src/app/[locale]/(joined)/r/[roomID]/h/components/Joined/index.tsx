@@ -7,29 +7,36 @@ import { Providers } from './components/Providers'
 import { getGuest, getRoomID, getUser, getUserID } from '@/context/server'
 import { States } from './components/States'
 import { ResetStates } from './components/ResetStates'
+import { Navbar } from './components/Navbar'
+import { Canvases } from './components/Canvases'
+import type { MyUserInfoForRoomStoreState } from '@/zustand/store'
+import type { Guest } from '@/types/guest'
+import type { User } from 'lucia'
 
 const outfit = Outfit({
   subsets: ['latin'],
-  weight: ['600', '500'],
+  weight: ['600', '700', '500', '400', '300',],
 })
 
-const userID = getUserID()
-const roomID = getRoomID()
-const user = getUser()!
-const guest = getGuest()
+const Joined = ({ roomID, user, guest }: Props) => {
+  const userID = user?.id ? user.id : guest!.ID
 
-const Joined = () => {
   return (
     <Providers userID={userID} roomID={roomID} user={user ?? guest!}>
       <div
         id="root"
-        className={`${outfit.className} h-full w-full overflow-y-scroll`}
+        className={`${outfit.className}  h-full w-full overflow-y-scroll`}
       >
         <ResetStates />
         <ConnectToPeers />
         <HostingHealthDisplay />
-        <div className="flex flex-col items-center gap-4 py-14">
+        <div style={{
+          backgroundImage: 'radial-gradient(at 100% 0%, hsla(210,53%,50%,0.3) 0px, transparent 50%), radial-gradient(at 0% 0%, hsla(210,73%,57%,0.6) 0px, transparent 50%)'
+        }} className="flex flex-col items-center gap-4 py-5 min-h-[70rem]">
+          <Navbar />
           <PlayersSection />
+          <Canvases />
+
           <States />
         </div>
       </div>
@@ -38,3 +45,10 @@ const Joined = () => {
 }
 
 export default Joined
+
+type Props = {
+  roomID: string
+  guest: Guest | null
+  user: User | null
+}
+

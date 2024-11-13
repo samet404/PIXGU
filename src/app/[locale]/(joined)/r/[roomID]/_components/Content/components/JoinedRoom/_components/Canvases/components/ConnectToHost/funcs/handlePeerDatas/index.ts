@@ -2,7 +2,6 @@ import { onPeerData, grayLog, negativeLog } from '@/utils'
 import { useHostPeer } from '@/zustand/store'
 import {
   getJoinedPlayers,
-  getPainterDraw,
   getLeftPlayers,
   getPainter,
   getGuessChat,
@@ -26,9 +25,12 @@ import {
   getEveryoneGuessed,
   gameEnded,
   getPrevCoins,
-  getPrevPainterDraw,
+  getPainterEraser,
+  getPainterPencil,
+  getPainterTrash,
+  getPainterBucket,
+  getPrevCanvas,
 } from './funcs'
-import { getPainterTrash } from './funcs/getPainterTrash'
 
 /**
  * This function handles different peer datas.
@@ -41,8 +43,11 @@ export const handlePeerDatas = (userID: string) => {
     grayLog(`RECEIVED ${event} DATA FROM HOST`, rtcData)
 
     switch (event) {
-      case 'painterDraw':
-        getPainterDraw(rtcData.data)
+      case 'painterEraser':
+        getPainterEraser(rtcData.data)
+        break
+      case 'painterPencil':
+        getPainterPencil(rtcData.data)
         break
       case 'painterCouldNotSelectTheme':
         getPainterCouldNotSelectTheme(rtcData.data, userID)
@@ -116,13 +121,14 @@ export const handlePeerDatas = (userID: string) => {
       case 'prevCoins':
         getPrevCoins(rtcData.data)
         break
-      case 'prevPainterDraw':
-        getPrevPainterDraw(rtcData.data)
-        break
-      case 'marketItemPurchased':
-        break
       case 'painterTrash':
         getPainterTrash()
+        break
+      case 'painterBucket':
+        getPainterBucket(rtcData.data)
+        break
+      case 'prevCanvas':
+        getPrevCanvas(rtcData.data)
         break
       default:
         negativeLog('RECEIVED NOT UNKNOWN EVENT FROM HOST', rtcData)

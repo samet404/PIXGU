@@ -20,7 +20,7 @@ export const ClearLocalstorage = () => {
       }}
       className="bg-rose-500"
       name={isClicked ? 'Cleaned' : 'Clear local storage'}
-      description="Clears all local data on browser"
+      description="Clears all local data on browser such as music links, control settings, etc."
     />
   )
 }

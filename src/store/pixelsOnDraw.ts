@@ -51,6 +51,9 @@ export const storePixelsOnDraw: Store = {
 
         return isExits
     },
+    init: function (history) {
+        this.value = history
+    },
     reset: function () { this.value = initValue },
 }
 
@@ -79,6 +82,7 @@ type Action = {
     isExits: (input: [x: number, y: number]) => boolean
     setLastPixel: (input: [x: number, y: number] | null) => void
     reset: () => void
+    init: (history: Value) => void
 }
 
 type Store = { value: Value } & Action

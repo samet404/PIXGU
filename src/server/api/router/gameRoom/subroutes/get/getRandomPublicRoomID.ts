@@ -1,5 +1,5 @@
-import { loggedUserProducure } from '@/procedure'
+import { joinedUserProducure } from '@/procedure'
 
-export const getRandomPublicRoomID = loggedUserProducure.query(
+export const getRandomPublicRoomID = joinedUserProducure.query(
   async ({ ctx }) => await ctx.redisDb.srandmember(`active_public_rooms`),
 )

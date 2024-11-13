@@ -1,11 +1,10 @@
 'use client'
 
 import { useSpring, animated } from '@react-spring/web'
-import { useEventListener } from 'usehooks-ts'
 import { useRef, type ReactNode } from 'react'
 
 // @ts-nocheck
-export const Button = ({ onKeyDown, className, onMouseDown, icon }: Props) => {
+export const Button = ({ className, onMouseDown, icon }: Props) => {
   const clickSfxRef = useRef<HTMLAudioElement>(
     new Audio('/sound/sfx/button/crystal_panel_button.mp3'),
   )
@@ -29,16 +28,6 @@ export const Button = ({ onKeyDown, className, onMouseDown, icon }: Props) => {
       },
     })
 
-  useEventListener(
-    'keydown',
-    (e) => {
-      onKeyDown(e, () => {
-        clickAnimation()
-        clickSfxRef.current.play()
-      })
-    },
-    documentRef,
-  )
 
   const handleClick = () => {
     clickSfxRef.current.play()
@@ -58,7 +47,6 @@ export const Button = ({ onKeyDown, className, onMouseDown, icon }: Props) => {
 }
 
 type Props = {
-  onKeyDown: (e: KeyboardEvent, afterCallback: () => void) => void
   className?: string
   onMouseDown?: () => void
   icon: ReactNode

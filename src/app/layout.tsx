@@ -4,7 +4,6 @@ import { cookies } from 'next/headers'
 import { TRPCReactProvider } from '../trpc/react'
 import type { Locale } from '@/types'
 import { type Metadata } from 'next'
-import { BuyMeCoffee } from './_components/BuyMeCoffee'
 import { Version } from './_components/Version'
 import './_styles/globals.css'
 
@@ -13,6 +12,8 @@ import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import { Adsense } from './_components/Adsense'
 import { SmallScreenAlert } from './_components/SmallScreenAlert'
+import { DefaultShortcuts } from './_components/DefaultShortcuts'
+import { RefreshAlert } from './_components/RefreshAlert'
 config.autoAddCss = false
 
 export const metadata: Metadata = {
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
   },
   creator: '404',
   description:
-    'Welcome to PIXGU, where your terrible stick figures become legendary masterpieces! Grab your virtual pixelated pencil and prepare for a wild ride of artistic mayhem. Draw and guess the words as fast as you can!. Can you draw a underwater fire station? Of course you can.',
+    'Welcome to PIXGU, where people draw and guess as fast as they can.',
   keywords: [
     'pixgu',
     'PIXGU',
@@ -43,7 +44,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'PIXGU',
     description:
-      'Welcome to PIXGU, where your terrible stick figures become legendary masterpieces! Grab your virtual pixelated pencil and prepare for a wild ride of artistic mayhem. Draw and guess the words as fast as you can!. Can you draw a underwater fire station? Of course you can.',
+      'Welcome to PIXGU, where people draw and guess as fast as they can.',
   },
   icons: {
     icon: '/image/png/logo.png',
@@ -61,6 +62,7 @@ const RootLayout = async (props: {
   return (
     <html lang="en">
       <body
+        className='relative'
         style={{
           backgroundColor: 'hsla(222,47%,11%,1)',
           backgroundImage:
@@ -72,7 +74,9 @@ const RootLayout = async (props: {
           <TRPCReactProvider cookies={cookies().toString()}>
             {/* <CustomCursor /> */}
             <Providers>
-              <BuyMeCoffee />
+              <RefreshAlert />
+              <DefaultShortcuts />
+
               {props.children}
               <Version />
             </Providers>

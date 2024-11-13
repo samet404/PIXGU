@@ -7,7 +7,12 @@ export const calculatePixelsBetween = (
   // Pre-calculate length to avoid unnecessary calculations
   const dx = Math.abs(nextX - prevX)
   const dy = Math.abs(nextY - prevY)
-  const pixels = new Array(Math.max(dx, dy) - 1)
+
+  // Return empty array if points are the same
+  if (dx === 0 && dy === 0) return []
+
+  // Create array with correct length
+  const pixels = new Array(Math.max(dx, dy))
 
   const sx = prevX < nextX ? 1 : -1
   const sy = prevY < nextY ? 1 : -1
@@ -18,7 +23,7 @@ export const calculatePixelsBetween = (
   let y = prevY
 
   while (x !== nextX || y !== nextY) {
-    const e2 = err << 1 // Faster than 2 * err
+    const e2 = err << 1
 
     if (e2 > -dy) {
       err -= dy
@@ -29,10 +34,10 @@ export const calculatePixelsBetween = (
       y += sy
     }
 
-    if (x !== nextX || y !== nextY) { // Don't add last point
+    if (x !== nextX || y !== nextY) {
       pixels[index++] = { x, y }
     }
   }
 
-  return pixels.slice(0, index) // Return only filled positions
+  return pixels.slice(0, index)
 }

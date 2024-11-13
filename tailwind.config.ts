@@ -46,6 +46,7 @@ export default {
     },
     extend: {
       animation: {
+        'throw': 'throw .5s ease-in-out',
         'fade-blur-bright': 'fade-blur-bright .5 both ease-in',
         'fade-blur': 'fade-blur .5s both ease-in',
         hide: 'hide 0.2s',
@@ -57,6 +58,21 @@ export default {
         'animate-err-pulse-shadow': 'err-pulse-shadow 3s ease-in-out infinite',
       },
       keyframes: {
+        throw: {
+          '0%': {
+            transform: 'translateY(100%) translateX(50%) rotate(90deg) scale(2)',
+            opacity: '0',
+          },
+
+          '80%': {
+            transform: 'translateY(0) translateX(0) rotate(-5deg)  scale(1)',
+            opacity: '1',
+          },
+
+          '100%': {
+            boxShadow: 'box-shadow: 0px 0px 50px -11px #000000;'
+          },
+        },
         hide: {
           from: {
             display: 'flex',

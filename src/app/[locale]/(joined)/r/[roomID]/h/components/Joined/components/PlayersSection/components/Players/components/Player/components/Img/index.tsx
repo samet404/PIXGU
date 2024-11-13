@@ -17,13 +17,13 @@ export const Img = ({ ID, src }: Props) => {
 
   if (isPfpBroken(ID) || hasError || !src)
     return (
-      <div className="flex items-center justify-center rounded-full border-[0.4rem] border-[#ffffff6b] bg-[#ffffff67]">
+      <div className="flex items-center justify-center rounded-full border-[0.2rem] border-[#ffffff6b]  bg-[#ffffff67]">
         <Default />
       </div>
     )
   if (!isPfpBroken(ID) && !hasError && src)
     return (
-      <div className="flex items-center justify-center rounded-full border-[0.4rem] border-[#ffffff6b] bg-[#ffffff67]">
+      <div className="flex items-center justify-center rounded-full border-[0.2rem] border-[#ffffff6b] bg-[#ffffff67]">
         <Image
           src={src}
           width={200}
@@ -31,7 +31,7 @@ export const Img = ({ ID, src }: Props) => {
           alt="pfp"
           sizes="sizes"
           onError={() => setHasError(true)}
-          className={'size-16 rounded-full'}
+          className={'size-12 rounded-full'}
         />
       </div>
     )

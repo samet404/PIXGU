@@ -27,6 +27,8 @@ import { Powerups } from './_components/Powerups'
 import Image from 'next/image'
 import CanvasTools from './_components/CanvasTools'
 import Spinner from '@/components/Spinner'
+import { Shortcuts } from './_components/Shortcuts'
+import { ToolAlert } from './_components/ToolAlert'
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -58,14 +60,16 @@ const JoinedRoom = () => {
       <div
         className={`${outfit.className} relative flex h-full w-full flex-col`}
       >
-        <ResetStates />
         <AnimatedDiv />
         <Nav />
         <div className="h-full w-full">
+          <ToolAlert />
+          <ResetStates />
           <GameEnd userID={userID} />
           <Suspense>
             <Blur />
           </Suspense>
+          <Shortcuts />
           <div className="h-[100vh] w-full">
             <Suspense>
               <Marketplace />

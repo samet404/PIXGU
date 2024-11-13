@@ -9,41 +9,48 @@ import {
 
 export const useMouseDown = (myUserID: string) => {
   const handler = (e: PointerEvent) => {
-    console.log('startPosition')
+    if (!amIPainter() || e.button !== 0) return
 
-    if (!amIPainter()) return
-    if (e.button !== 0) return null
     const {
-      draft: dc,
+      main,
       zoom,
       cellPixelLength,
-    } = useCanvasesMainData.getState().get()
-    if (!dc || !cellPixelLength || !zoom) return
-    const dcBoundingRect = dc.getBoundingClientRect()
+      mctx,
+      dpctx,
+      draft_pencil
 
-    const x = Math.floor(
+    } = useCanvasesMainData.getState()
+    if (!main || !cellPixelLength || !zoom) return
+
+    const dcBoundingRect = main.getBoundingClientRect()
+    const smoothX = Math.floor(
       ((e.clientX - dcBoundingRect.left) * zoom) / cellPixelLength,
     )
-    const y = Math.floor(
+    const smoothY = Math.floor(
       ((e.clientY - dcBoundingRect.top) * zoom) / cellPixelLength,
     )
-    useXY.getState().set(x, y)
+    useXY.getState().set(smoothX, smoothY)
 
     const toolName = usePainterTool.getState().current
     console.log('toolName', toolName)
     switch (toolName) {
       case 'pencil':
         useAmIPainting.getState().imPainting()
-        pencil(e, myUserID, x, y)
+
+        mctx!.drawImage(draft_pencil!, 0, 0)
+        dpctx!.clearRect(0, 0, dpctx!.canvas.width, dpctx!.canvas.height)
+
+        pencil(smoothX, smoothY)
+        break
+      case 'eraser':
+        useAmIPainting.getState().imPainting()
+        eraser(smoothX, smoothY)
         break
       case 'bucket':
         bucket(e)
         break
       case 'eyedropper':
-        eyedropper(e)
-        break
-      case 'eraser':
-        eraser(e)
+        eyedropper(e, smoothX, smoothY)
         break
     }
   }

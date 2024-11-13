@@ -6,27 +6,40 @@ import {
 } from '@/zustand/store'
 import { amIPainter } from './func'
 import { storePixelsOnDraw } from '@/store'
+import { sendToHostPeer } from '@/utils/sendToHostPeer'
 
 export const useMouseUp = () => {
   console.log('mouse up')
   const handler = () => {
     if (!amIPainter()) return
 
-    const { draft, main } = useCanvasesMainData.getState().get()
-
-    const dctx = draft!.getContext('2d')!
-    const mctx = main!.getContext('2d')!
-
-
-    storePixelsOnDraw.setLastPixel(null)
-    useAmIPainting.getState().imNotPainting()
-    storePixelsOnDraw.reset()
+    const { dpctx } = useCanvasesMainData.getState().get()
 
     const tool = usePainterTool.getState().current
 
     switch (tool) {
       case 'pencil':
-        dctx.beginPath()
+        sendToHostPeer({
+          from: 'client',
+          event: 'painterEraserOrPencilOut'
+        })
+        dpctx!.beginPath()
+        storePixelsOnDraw.reset()
+
+        storePixelsOnDraw.setLastPixel(null)
+        useAmIPainting.getState().imNotPainting()
+        storePixelsOnDraw.reset()
+        break
+      case 'eraser':
+        sendToHostPeer({
+          from: 'client',
+          event: 'painterEraserOrPencilOut'
+        })
+        dpctx!.beginPath()
+        storePixelsOnDraw.reset()
+
+        storePixelsOnDraw.setLastPixel(null)
+        useAmIPainting.getState().imNotPainting()
         storePixelsOnDraw.reset()
         break
     }

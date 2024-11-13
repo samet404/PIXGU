@@ -1,3 +1,4 @@
+// TODO: optimize this component
 'use client'
 
 import { clsxMerge } from '@/utils/clsxMerge'
@@ -8,6 +9,8 @@ import { useHostingHealth } from '@/zustand/store'
 import { useRoomIDStore } from '@/zustand/provider'
 import { StopBtn } from './components/StopBtn'
 import { HavingIssuesBtn } from './components/HavingIssuesBtn'
+import Image from 'next/image'
+import scrollDown from '@/svg/scroll-down-svgrepo-com.svg'
 
 export const HostingHealthDisplay = () => {
   const status = useHostingHealth((s) => s.status)
@@ -82,7 +85,7 @@ export const HostingHealthDisplay = () => {
         backgroundImage: `radial-gradient(20rem at center, ${radialGradientColor}, transparent)`,
       }}
       className={clsxMerge(
-        `relative flex h-full w-full select-none flex-col items-center justify-center gap-5 border-b-8  text-center drop-shadow-[0_0px_2px_rgba(0,0,0,0.55)] ease-in-out animate-delay-700`,
+        `relative flex h-full w-full font-[500] select-none flex-col items-center justify-center gap-5 border-b-8  text-center drop-shadow-[0_0px_2px_rgba(0,0,0,0.55)] ease-in-out animate-delay-700`,
         {
           'animate-pulse border-b-[#34d399ff] text-emerald-400':
             status === 'gameIsStarted',
@@ -121,7 +124,10 @@ export const HostingHealthDisplay = () => {
         {copyBtn}
         <HavingIssuesBtn />
       </div>
-      <div className="absolute bottom-4 w-[90%] text-[0.9rem] text-[#ffffff63]"></div>
+      <div className='absolute bottom-2 w-full flex items-center justify-center animate-fade-down aniamte-delay-[1000ms]'>
+        <Image src={scrollDown} alt="scroll-down" className="size-10 opacity-30" />
+
+      </div>
     </div>
   )
 }

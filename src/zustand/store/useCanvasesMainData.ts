@@ -4,9 +4,16 @@ export type CanvasesMainData = {
   readonly cellSideCount: number
   cellPixelLength?: number
 
-  draft?: HTMLCanvasElement
+  draft_pencil?: HTMLCanvasElement
+  draft_bucket?: HTMLCanvasElement
+
   main?: HTMLCanvasElement
   grid?: HTMLCanvasElement
+
+  mctx?: CanvasRenderingContext2D
+  dpctx?: CanvasRenderingContext2D
+  dbctx?: CanvasRenderingContext2D
+  gctx?: CanvasRenderingContext2D
 
   isGridsInitialized?: boolean
   zoom: number

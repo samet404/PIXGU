@@ -14,7 +14,7 @@ export const Player = ({
   const coin = useCoins((s) => s.get(ID))
 
   return (
-    <div className="flex w-full animate-fade flex-col gap-1 rounded-full bg-gradient-to-tr from-[#ffffff7c] to-[#ffffffbd] p-1 shadow-[0_0px_10px_1px_rgba(255,255,255,0.5)]">
+    <div className="flex w-full animate-fade flex-col gap-1 rounded-l-full bg-gradient-to-r from-[#ffffff7c] to-[95%] to-transparent p-1 ">
       <div className="flex flex-row gap-2">
         <Img ID={ID} src={profilePicture} />
         <div className="flex grow flex-row items-center justify-between gap-4 pr-2">
@@ -37,7 +37,7 @@ export const Player = ({
             <div className="rounded-full bg-[#ffffffa7] p-1 duration-300">
               <Image src={eye} alt="eye" className="size-7 opacity-30" />
             </div>
-            <button className="rounded-full bg-[#ff8a9f] p-1 duration-300 hover:opacity-80">
+            <button className="rounded-full bg-[#ff6884] p-1 duration-300 hover:opacity-80">
               <Image src={blockImg} alt="block" className="size-7 opacity-65" />
             </button>
             <button className="rounded-full bg-[#7f7f7f96] p-[0.30rem] duration-300 hover:opacity-80">

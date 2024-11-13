@@ -9,10 +9,10 @@ const HomeBtn = () => {
 
   return (
     <div
-      className="cursor-pointer rounded-lg bg-[#ffffff24] p-2 text-[#ffffff9c]"
+      className="cursor-pointer rounded-lg p-2 text-[#ffffff9c]"
       onClick={handleClick}
     >
-      Go to Home
+      {`Home`}
     </div>
   )
 }

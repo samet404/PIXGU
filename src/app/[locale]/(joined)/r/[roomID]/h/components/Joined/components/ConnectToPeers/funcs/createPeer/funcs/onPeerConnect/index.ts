@@ -1,17 +1,18 @@
-import type { User } from 'lucia'
-import type SimplePeer from 'simple-peer'
-import { positiveLog } from '@/utils/positiveLog'
 import {
   useCoins,
   useHostingHealth,
   usePlayers,
   useSpectators,
 } from '@/zustand/store'
+import type { User } from 'lucia'
+import type { Guest } from '@/types'
+import type SimplePeer from 'simple-peer'
+import { storePixelHistory } from '@/store'
+import { sendToPeer } from '@/utils/sendToPeer'
+import { positiveLog } from '@/utils/positiveLog'
 import { handlePeerDatas } from './funcs/handlePeerDatas'
 import { sendEveryoneNewPlayer } from './funcs/sendEveryoneNewPlayer'
 import { sendPrevPlayersToNewPlayer } from './funcs/sendPrevPlayersToNewPlayer'
-import { sendToPeer } from '@/utils/sendToPeer'
-import type { Guest } from '@/types'
 
 export const onPeerConnect = (
   peer: SimplePeer.Instance,
@@ -44,6 +45,12 @@ export const onPeerConnect = (
             amount: useCoins.getState().coins[ID]!,
           },
         })
+      })
+
+      sendToPeer(peer, {
+        from: 'host',
+        event: 'prevCanvas',
+        data: storePixelHistory.get().rgb
       })
     }
 

@@ -1,0 +1,52 @@
+.sound-range {
+  /* removing default appearance */
+  -webkit-appearance: none;
+  appearance: none;
+  /* creating a custom design */
+  width: 100%;
+  cursor: pointer;
+  outline: none;
+  /*  slider progress trick  */
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+/* Track: webkit browsers */
+.sound-range::-webkit-slider-runnable-track {
+  height: 1.2rem;
+  background: #30303076;
+  border-radius: 16px;
+}
+s
+/* Track: Mozilla Firefox */
+.sound-range::-moz-range-track {
+  height: 15px;
+  background: #3030309d;
+  border-radius: 16px;
+}
+
+/* Thumb: webkit */
+.sound-range::-webkit-slider-thumb {
+  /* removing default appearance */
+  -webkit-appearance: none;
+  appearance: none;
+  /* creating a custom design */
+  height: 1.2rem;
+  width: 1.2rem;
+  background-color: #aeaeae;
+  border-radius: 50%;
+  border: 2px solid rgb(87, 87, 87);
+  /*  slider progress trick  */
+  box-shadow: -407px 0 0 400px rgba(87, 87, 87, 0.788);
+}
+
+/* Thumb: Firefox */
+.sound-range::-moz-range-thumb {
+  height: 15px;
+  width: 15px;
+  background-color: #232323;
+  border-radius: 50%;
+  border: 1px solid rgb(87, 87, 87);
+  /*  slider progress trick  */
+  box-shadow: -407px 0 0 400px rgba(87, 87, 87, 0.444);
+}

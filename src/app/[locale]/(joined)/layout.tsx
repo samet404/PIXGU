@@ -1,7 +1,8 @@
 import { setIsJoined, setIsLogged } from '@/context/server'
 import { api } from '@/trpc/server'
 import type { PropsWithChildren } from 'react'
-import { ServersidePreferences } from './_components/ServersidePreferences'
+import { LeftBottom } from './_components/LeftBottom'
+import { Providers } from './_components/Providers'
 
 const Layout = async ({ children }: PropsWithChildren) => {
   const isJoined = await api.auth.isJoined.query()
@@ -9,7 +10,10 @@ const Layout = async ({ children }: PropsWithChildren) => {
   setIsJoined(isJoined)
   setIsLogged(isLogged)
 
-  return <ServersidePreferences>{children}</ServersidePreferences>
+  return <Providers>
+    <LeftBottom />
+    {children}
+  </Providers>
 }
 
 export default Layout

@@ -3,13 +3,12 @@
 import { DraftCanvas } from './components/DraftCanvas'
 import { GridAndTopCanvas } from './components/GridAndTopCanvas'
 import { MainCanvas } from './components/MainCanvas'
-import { Suspense, useRef } from 'react'
+import { Suspense } from 'react'
 import { ConnectToHost } from './components/ConnectToHost'
 import { NewPainter } from './components/NewPainter'
 import { SelectTheme } from './components/SelectTheme'
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
 import { useAmIPainting, useCanvasesMainData } from '@/zustand/store'
-import { A } from './A'
 
 const Canvases = () => {
   const updateZoom = (scale: number) => {
@@ -46,7 +45,8 @@ const Canvases = () => {
                 className={`relative flex  rounded-[0.7rem] border-[0.2rem] border-[#ffffff37]`}
               >
                 <MainCanvas key={'MainCanvas'} />
-                <DraftCanvas key={'DraftCanvas'} />
+                <DraftCanvas key={'DraftCanvas'} name='pencil' code='p' />
+                <DraftCanvas key={'DraftBucket'} name='bucket' code='b' />
                 <GridAndTopCanvas key={'GridAndTopCanvas'} />
                 <NewPainter key={'NewPainter'} />
                 <SelectTheme key={'SelectTheme'} />

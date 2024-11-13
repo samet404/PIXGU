@@ -1,22 +1,22 @@
 import { useEffectOnce } from '@/hooks/useEffectOnce'
-import { useCanvasesMainData, usePainterTool, useXY } from '@/zustand/store'
-import { amIPainter, bucket, eraser, pencil } from './func'
+import { useAmIPainting, useCanvasesMainData, usePainterTool, useXY } from '@/zustand/store'
+import { amIPainter, eraser, pencil } from './func'
 
 export const useMouseMove = (myUserID: string) => {
   const handler = (e: PointerEvent) => {
     const {
-      draft: dc,
+      main,
       zoom,
       cellPixelLength,
     } = useCanvasesMainData.getState().get()
-    if (!dc || !cellPixelLength || !zoom) return
-    const dcBoundingRect = dc.getBoundingClientRect()
+    if (!main || !cellPixelLength || !zoom) return
+    const mBoundingRect = main.getBoundingClientRect()
 
-    const x = (e.clientX - dcBoundingRect.left) * zoom
-    const y = (e.clientY - dcBoundingRect.top) * zoom
-    const newX = Math.floor(x / cellPixelLength)
-    const newY = Math.floor(y / cellPixelLength)
-    useXY.getState().set(newX, newY)
+    const x = (e.clientX - mBoundingRect.left) * zoom
+    const y = (e.clientY - mBoundingRect.top) * zoom
+    const smoothX = Math.floor(x / cellPixelLength)
+    const smoothY = Math.floor(y / cellPixelLength)
+    useXY.getState().set(smoothX, smoothY)
 
     const toolName = usePainterTool.getState().current
 
@@ -24,12 +24,12 @@ export const useMouseMove = (myUserID: string) => {
 
     switch (toolName) {
       case 'pencil':
-        pencil(e, myUserID, newX, newY)
+        pencil(smoothX, smoothY)
+        break
+      case 'eraser':
+        eraser(smoothX, smoothY)
         break
 
-      case 'eraser':
-        eraser(e)
-        break
     }
   }
 

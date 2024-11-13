@@ -1,11 +1,10 @@
 import { useCanvasesMainData } from '@/zustand/store'
 
 export const getPainterTrash = () => {
-  const main = useCanvasesMainData.getState().get().main!
-  const mctx = main.getContext('2d')!
+  const { main } = useCanvasesMainData.getState().get()
 
-  mctx.beginPath()
-  mctx.fillStyle = '#ffffff'
-  mctx.fillRect(0, 0, main.width, main.height)
-  mctx.beginPath()
+  const ctx = main!.getContext('2d')!
+  ctx.beginPath()
+  ctx.clearRect(0, 0, main!.width, main!.height)
+  ctx.beginPath()
 }

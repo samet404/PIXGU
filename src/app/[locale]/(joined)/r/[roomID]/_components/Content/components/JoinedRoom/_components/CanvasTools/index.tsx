@@ -3,11 +3,12 @@ import { GridSwitcher } from './components/GridSwitcher'
 import { Wrapper } from './components/Wrapper'
 import { EyeDropper } from './components/EyeDropper'
 import { Trash } from './components/Trash'
-import { Rectangle } from './components/Rectangle'
-import { Circle } from './components/Circle'
+// import { Rectangle } from './components/Rectangle'
+// import { Circle } from './components/Circle'
 import { XY } from './components/XY'
 import { Bucket } from './components/Bucket'
 import { Pencil } from './components/Pencil'
+import { Eraser } from './components/Eraser'
 
 const CanvasTools = () => {
   return (
@@ -19,11 +20,12 @@ const CanvasTools = () => {
         >
           <ColorPicker />
           <Pencil />
+          <Eraser />
           <EyeDropper />
           <Bucket />
           <Trash />
-          <Rectangle />
-          <Circle />
+          {/* <Rectangle /> */}
+          {/* <Circle /> */}
           <GridSwitcher />
         </div>
       </div>

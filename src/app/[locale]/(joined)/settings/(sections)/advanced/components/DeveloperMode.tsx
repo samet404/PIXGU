@@ -1,12 +1,12 @@
 'use client'
 
 import { api } from '@/trpc/react'
-import { useSettings } from '@/zustand/store'
+import { useDeveloperSettings } from '@/zustand/store'
 import { SettingsCheckbox } from '../../_components/SettingsCheckbox'
 
 export const DeveloperMode = () => {
-  const checked = useSettings((s) => s.developerMode)
-  const setChecked = useSettings((s) => s.setDeveloperMode)
+  const checked = useDeveloperSettings((s) => s.developerMode)
+  const setChecked = useDeveloperSettings((s) => s.setDeveloperMode)
   const { mutate, isLoading } = api.settings.setDeveloperMode.useMutation({
     onSuccess: () => setChecked(!checked),
     onError: (e) => {

@@ -17,7 +17,7 @@ const Content = async ({ params }: Props) => {
 
   setServerContexts(params.locale, roomID, user, guest, !!guest)
 
-  return <JoinedRoom />
+  return <JoinedRoom roomID={roomID} user={user} guest={guest} />
 }
 
 export default Content

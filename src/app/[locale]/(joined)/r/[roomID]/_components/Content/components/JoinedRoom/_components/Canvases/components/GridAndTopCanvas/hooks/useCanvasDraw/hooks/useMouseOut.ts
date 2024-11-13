@@ -27,6 +27,15 @@ export const useMouseOut = () => {
           storePixelsOnDraw.reset()
         }
         break
+      case 'eraser':
+        {
+          const dctx = canvasesMainData.grid!.getContext('2d')!
+          dctx.beginPath()
+
+          storePixelsOnDraw.reset()
+        }
+        break
+
     }
   }
 

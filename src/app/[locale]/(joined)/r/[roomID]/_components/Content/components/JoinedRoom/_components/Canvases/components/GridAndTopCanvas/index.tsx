@@ -2,35 +2,23 @@
 
 import { clsxMerge } from '@/utils/clsxMerge'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
-import { useRef, type MouseEvent } from 'react'
+import { useRef } from 'react'
 import { useCanvasesMainData } from '@/zustand/store'
 import { useCanvasDraw } from './hooks/useCanvasDraw'
-import { roundDownToNearest } from '@/utils/roundDownToNearest'
-import { calcPercentage } from '@/utils/calcPercentage'
 
 export const GridAndTopCanvas = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const cellSideCount = useCanvasesMainData.getState().get().cellSideCount
 
-  const setHeightAndWidth = () => {
-    if (!canvasRef.current) return
-
-    useCanvasesMainData.getState().add({
-      cellPixelLength: canvasRef.current.width / cellSideCount,
-    })
-  }
 
   useEffectOnce(() => {
-    if (!canvasRef.current) return
-    useCanvasesMainData.getState().add({
-      grid: canvasRef.current,
-    })
-    setHeightAndWidth()
+    const gctx = canvasRef.current!.getContext('2d')!
 
-    // window.addEventListener('resize', () => setHeightAndWidth())
-    // return () => {
-    //   window.removeEventListener('resize', () => setHeightAndWidth())
-    // }
+    useCanvasesMainData.getState().add({
+      gctx,
+      cellPixelLength: canvasRef.current!.width / cellSideCount,
+      grid: canvasRef.current!,
+    })
   })
 
   useCanvasDraw()

@@ -31,7 +31,7 @@ export const getCreatedRoom = joinedUserProducure
     return {
       ID,
       name,
-      isPublic: !password,
+      password,
       createdAt: new Date(createdAt),
     }
   })

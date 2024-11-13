@@ -12,14 +12,6 @@ export const Powerups = () => {
   return (
     <Button
       key={'powerups'}
-      onKeyDown={(e, after) => {
-        if (e.key === 'p' && (e.target as HTMLElement).tagName !== 'INPUT') {
-          e.preventDefault()
-          if (openPanel === 'power-ups') setOpenPanel(null)
-          else setOpenPanel('power-ups')
-          after()
-        }
-      }}
       onMouseDown={() => {
         if (openPanel === 'power-ups') setOpenPanel(null)
         else setOpenPanel('power-ups')

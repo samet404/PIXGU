@@ -1,5 +1,4 @@
 'use client'
-
 import { useWhoIsPainterClient } from '@/zustand/store'
 import type { PropsWithChildren } from 'react'
 

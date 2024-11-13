@@ -7,8 +7,18 @@ export const storePixelsOnBucket: Store = {
 
     get: function () { return this.value },
 
-    add: function ([x, y]) {
-        this.value.coors.push([x, y])
+    add: function (coors) {
+        this.value.coors.push(coors)
+    },
+    addMany: function (input) {
+        this.value.coors.push(...input)
+    },
+
+    init: function (coors) {
+        this.value = {
+            ...this.value,
+            coors
+        }
     },
 
     isExits: function ([x, y]) {
@@ -26,9 +36,9 @@ export const storePixelsOnBucket: Store = {
 
 
 // #region Types
-type Coordinate = [x: number, y: number];
+type Coordinate = Uint16Array
 type Value = {
-    coors: [x: number, y: number][]
+    coors: Coordinate[]
 }
 
 type InitValue = {
@@ -37,9 +47,11 @@ type InitValue = {
 
 
 type Action = {
-    add: (input: [x: number, y: number]) => void
+    add: (input: Coordinate) => void
+    addMany: (input: Coordinate[]) => void
     get: () => Value
-    isExits: (input: [x: number, y: number]) => boolean
+    init: (coors: Coordinate[]) => void
+    isExits: (input: Coordinate) => boolean
     reset: () => void
 }
 

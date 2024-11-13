@@ -11,8 +11,7 @@ export const getSelectedTheme = (
   userID: string,
   roomID: string,
 ) => {
-  const isPainter = useWhoIsPainter.getState().isPainter(userID)
-  if (!isPainter) return
+  if (!useWhoIsPainter.getState().isPainter(userID)) return
 
   const hostPainterData = useHostPainterData.getState().value
   if (hostPainterData.status !== 'painterSelectingTheme') return

@@ -22,3 +22,6 @@ export const useLastPixel = create<State & Action>((set, get) => ({
       value: null,
     }),
 }))
+
+
+export type LastPixelStateValue = State['value']

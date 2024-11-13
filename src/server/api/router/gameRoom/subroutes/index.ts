@@ -1,4 +1,3 @@
-export { killRoom } from './del/killRoom'
 
 export { getPlayingRooms } from './get/getPlayingRooms'
 export { getThemes } from './get/getThemes'

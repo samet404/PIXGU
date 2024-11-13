@@ -10,7 +10,7 @@ export const Default = () => {
       alt="pfp"
       sizes="sizes"
       onError={() => console.error('Error loading default pfp')}
-      className={'size-16 rounded-full'}
+      className={'size-12 rounded-full'}
     />
   )
 }

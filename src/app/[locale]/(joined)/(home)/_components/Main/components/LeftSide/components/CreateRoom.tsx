@@ -8,7 +8,7 @@ const CreateRoom = ({ name, description }: Props) => {
 
   return (
     <MainButton
-      link="/create-room"
+      link="/create"
       icon={
         <Image
           className="h-[3rem] w-[3rem] opacity-30 drop-shadow-[0_0px_8px_rgba(0,0,0,0.7)]"

@@ -1,8 +1,9 @@
-import BtnLeave from './components/BtnLeave'
+import BtnOptions from './components/BtnOptions'
 import { Ping } from './components/Ping'
 import { HostConnection } from './components/HostConnection'
 import { MatchCount } from './components/MatchCount'
 import { MatchTime } from './components/MatchTime'
+import { BtnOptionsShortcut } from './components/BtnOptionsShortcut'
 
 const Nav = () => {
   return (
@@ -17,7 +18,8 @@ const Nav = () => {
           <MatchTime />
         </div>
 
-        <BtnLeave />
+        <BtnOptionsShortcut />
+        <BtnOptions />
       </div>
     </div>
   )

@@ -4,6 +4,7 @@ import { LogoutGuest } from './components/LogoutGuest'
 import { GuestName } from './components/GuestName'
 import defaultPfp from '@/png/pfp2.png'
 import { Inter } from 'next/font/google'
+import { ChangesApplyAllTabs } from '../../../_components/ChangesApplyAllTabs'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -13,6 +14,8 @@ const inter = Inter({
 export const GuestAccount = () => {
   return (
     <SectionWrapper text="Account (Guest)">
+      <ChangesApplyAllTabs />
+
       <div className={`${inter.className} flex flex-col items-start gap-2`}>
         <div className="flex flex-row gap-2">
           <div className="size-20">

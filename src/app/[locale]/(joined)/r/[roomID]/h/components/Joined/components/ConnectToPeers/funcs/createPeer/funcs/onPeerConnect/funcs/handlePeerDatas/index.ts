@@ -1,10 +1,6 @@
+import { chat, getPainterBucket, getPainterEraser, getPainterPencil, getSelectedTheme, painterTrash, pong } from './funcs'
 import { onPeerData, grayLog, negativeLog } from '@/utils'
-import { chat } from './funcs/chat'
-import { usePeers, useSpectators } from '@/zustand/store'
-import { pong } from './funcs/pong'
-import { painterDraw } from './funcs/painterDraw'
-import { getSelectedTheme } from './funcs/getSelectedTheme'
-import { painterTrash } from './funcs/painterTrash'
+import { usePeers } from '@/zustand/store'
 
 export const handlePeerDatas = (userID: string, roomID: string) => {
   const peers = usePeers.getState().get()
@@ -13,9 +9,6 @@ export const handlePeerDatas = (userID: string, roomID: string) => {
     const { event } = rtcData
     // #region checking type
     grayLog(`RECEIVED ${event} DATA FROM ${userID}`, rtcData)
-    if (event !== 'ping' && useSpectators.getState().isSpectator(userID)) {
-      return
-    }
     // #endregion
 
     switch (event) {
@@ -31,11 +24,17 @@ export const handlePeerDatas = (userID: string, roomID: string) => {
       case 'selectTheme':
         getSelectedTheme(rtcData.data, userID, roomID)
         break
-      case 'painterDraw':
-        painterDraw(rtcData.data, userID)
-        break
       case 'painterTrash':
-        painterTrash()
+        painterTrash(userID)
+        break
+      case 'painterEraser':
+        getPainterEraser(rtcData.data, userID)
+        break
+      case 'painterPencil':
+        getPainterPencil(rtcData.data, userID)
+        break
+      case 'painterBucket':
+        getPainterBucket(rtcData.data, userID)
         break
       default:
         negativeLog('RECEIVED NOT UNKNOWN EVENT FROM CLIENT', rtcData)
