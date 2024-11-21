@@ -56,14 +56,14 @@ export const joinAsGuest = async (input: { name: string }) => {
   await redisDb.set(redisKeys.createdAt, now)
   await redisDb.set(redisKeys.validatedAt, now)
 
-  cookies().set('guest_auth_session', guestAuthToken, {
-    maxAge: wToMs(2),
-    httpOnly: true,
-    path: '/',
-    sameSite: 'lax',
-    secure: env.NODE_ENV === 'production',
-    domain: env.NODE_ENV === 'production' ? 'pixgu.com' : 'localhost',
-  })
+    ; (await cookies()).set('guest_auth_session', guestAuthToken, {
+      maxAge: wToMs(2),
+      httpOnly: true,
+      path: '/',
+      sameSite: 'lax',
+      secure: env.NODE_ENV === 'production',
+      domain: env.NODE_ENV === 'production' ? 'pixgu.com' : 'localhost',
+    })
 
   redirect('/')
 }

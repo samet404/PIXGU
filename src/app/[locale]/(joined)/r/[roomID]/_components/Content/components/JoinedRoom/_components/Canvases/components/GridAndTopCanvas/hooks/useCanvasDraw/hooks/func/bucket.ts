@@ -1,16 +1,26 @@
-import { bucket as runBucket } from '@/helpers/room'
-import { useCanvasesMainData, usePainterTool } from '@/zustand/store'
+import { sendToHostPeer } from '@/utils/sendToHostPeer'
+import { getCanvasWorker, type CanvasWorkerOnMsgData } from '@/workers'
+import { useAmIPainting, usePainterTool } from '@/zustand/store'
 
-export const bucket = (e: PointerEvent) => {
-    const { main, draft_bucket, mctx, dbctx, zoom, cellPixelLength, cellSideCount } =
-        useCanvasesMainData.getState()
+const canvasWorker = getCanvasWorker()
 
-    const bounding = main!.getBoundingClientRect()
-    const exactX = (e.clientX - bounding.left) * zoom
-    const exactY = (e.clientY - bounding.top) * zoom
-    const smoothX = Math.floor(exactX / cellPixelLength!)
-    const smoothY = Math.floor(exactY / cellPixelLength!)
-    const rgba = new Uint8ClampedArray(usePainterTool.getState().with.color)
+export const bucket = (smoothX: number, smoothY: number) => {
+    const button = useAmIPainting.getState().button
+    const color = new Uint8ClampedArray(usePainterTool.getState().with[button === 0 ? 'color1' : 'color2'])
+    canvasWorker.current.postMessage({
+        e: 0, data: {
+            x: smoothX,
+            y: smoothY,
+            color
+        }
+    } as CanvasWorkerOnMsgData)
+    sendToHostPeer({
 
-    runBucket(mctx!, dbctx!, draft_bucket!, smoothX, smoothY, cellSideCount, cellPixelLength!, rgba)
+        event: 'painterBucket',
+        data: {
+            x: smoothX,
+            y: smoothY,
+            color
+        }
+    })
 }

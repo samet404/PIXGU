@@ -1,13 +1,15 @@
 'use client'
 
+import { useShortcut } from '@/hooks/useShortcut'
+import type { ControlsState } from '@/zustand/store'
 import { useSpring, animated } from '@react-spring/web'
 import { useRef, type ReactNode } from 'react'
 
 // @ts-nocheck
-export const Button = ({ className, onMouseDown, icon }: Props) => {
-  const clickSfxRef = useRef<HTMLAudioElement>(
-    new Audio('/sound/sfx/button/crystal_panel_button.mp3'),
-  )
+export const Button = ({ className, onMouseDown, icon, shortcutName }: Props) => {
+  // const clickSfxRef = useRef<HTMLAudioElement>(
+  //   new Audio('/sound/sfx/button/crystal_panel_button.mp3'),
+  // )
   const documentRef = useRef(document)
   const [springs, api] = useSpring(() => ({
     from: {
@@ -30,16 +32,22 @@ export const Button = ({ className, onMouseDown, icon }: Props) => {
 
 
   const handleClick = () => {
-    clickSfxRef.current.play()
+    // clickSfxRef.current.play()
     clickAnimation()
     onMouseDown?.()
   }
+
+  useShortcut({
+    keyName: shortcutName,
+    onShortcut: handleClick
+  })
+
 
   return (
     <animated.button
       style={springs}
       onMouseDown={handleClick}
-      className={`flex size-9 flex-row items-center gap-2 rounded-lg bg-[#ffffff35] to-transparent p-1 ${className}`}
+      className={`flex size-9 flex-row items-center gap-2 rounded-lg bg-[#ffffff2f] to-transparent p-1 ${className}`}
     >
       {icon}
     </animated.button>
@@ -48,6 +56,7 @@ export const Button = ({ className, onMouseDown, icon }: Props) => {
 
 type Props = {
   className?: string
+  shortcutName: keyof ControlsState['keys']
   onMouseDown?: () => void
   icon: ReactNode
 }

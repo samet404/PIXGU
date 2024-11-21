@@ -2,24 +2,24 @@ import { create } from 'zustand'
 
 type State = {
   amIPainting: boolean
-  startCoords: [x: number, y: number] | null
+  button: number | null
 }
 
 type Action = {
-  imPainting: () => void
+  imPainting: (button: number) => void
   imNotPainting: () => void
   reset: () => void
 }
 
 const initValue: State = {
   amIPainting: false,
-  startCoords: null
+  button: null
 }
 
 export const useAmIPainting = create<State & Action>((set) => ({
   ...initValue,
 
-  imPainting: () => set({ amIPainting: true }),
+  imPainting: (button) => set({ amIPainting: true, button: button }),
   imNotPainting: () => set({ amIPainting: false }),
   reset: () => set(initValue),
 }))

@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffectReturnOnce } from '@/hooks/useEffectReturn'
+import { terminateCanvasWorker } from '@/workers'
 import {
   usePeers,
   usePlayers,
@@ -11,6 +12,9 @@ import {
   usePing,
   useCanvasesMainData,
   useHostPeer,
+  useOwnedPowerups,
+  useCoins,
+  useMatchStatus,
 } from '@/zustand/store'
 
 export const ResetStates = () => {
@@ -23,8 +27,13 @@ export const ResetStates = () => {
   const resetMyCoin = useMyCoin.getState().reset
   const resetCanvasesMainData = useCanvasesMainData.getState().reset
   const resetHostPeer = useHostPeer.getState().reset
+  const resetOwnedPowerups = useOwnedPowerups.getState().reset
+  const resetPlayersOwnedPowerups = useOwnedPowerups.getState().reset
+  const resetCoins = useCoins.getState().reset
+  const resetMatchStates = useMatchStatus.getState().reset
 
   useEffectReturnOnce(() => {
+    terminateCanvasWorker()
     resetPlayers()
     resetPeers()
     resetBrokenPlayersPfp()
@@ -34,6 +43,10 @@ export const ResetStates = () => {
     resetMyCoin()
     resetCanvasesMainData()
     resetHostPeer()
+    resetPlayersOwnedPowerups()
+    resetOwnedPowerups()
+    resetMatchStates()
+    resetCoins()
   })
 
   return null

@@ -28,10 +28,16 @@ export const getCreatedRoom = joinedUserProducure
     if (!createdAt)
       throw new TRPCError({ code: 'NOT_FOUND', message: 'Room not found' })
 
+    const playerCount = await ctx.redisDb.get(`room:${ID}:total_players`)
+    if (!playerCount)
+      throw new TRPCError({ code: 'NOT_FOUND', message: 'Room not found' })
+
+
     return {
       ID,
       name,
       password,
       createdAt: new Date(createdAt),
+      playerCount: parseInt(playerCount),
     }
   })

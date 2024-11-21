@@ -11,6 +11,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'CREATE',
+  description: 'Create and rule the room'
 }
 
 const CreateRoom = async () => {

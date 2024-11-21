@@ -27,7 +27,7 @@ export const main: NextMiddleware = async (req: NextRequest) => {
     return NextResponse.next()
 
   // if user is logged in
-  const sessionId = cookies().get(lucia.sessionCookieName)?.value ?? null
+  const sessionId = (await cookies()).get(lucia.sessionCookieName)?.value ?? null
   const isLoggedIn = sessionId !== null && sessionId !== undefined
 
   console.log('middleware logged: ', isLoggedIn)
@@ -96,12 +96,12 @@ export const main: NextMiddleware = async (req: NextRequest) => {
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`,
   )
 
-  console.log('cookies().toString(): ', cookies().toString())
+  console.log('(await cookies()).toString(): ', (await cookies()).toString())
   const isGuestValid = await fetch(
     `${env.BASE_URL}/api/validate-guest-auth-session`,
     {
       headers: {
-        cookie: cookies().toString(),
+        cookie: (await cookies()).toString(),
       },
     },
   ).then((res) => res.json())

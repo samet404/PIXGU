@@ -9,13 +9,13 @@ export async function GET(): Promise<Response> {
     scopes: ['read:user'],
   })
 
-  cookies().set('github_oauth_state', state, {
-    path: '/',
-    secure: env.NODE_ENV === 'production',
-    httpOnly: true,
-    maxAge: 60 * 10,
-    sameSite: 'lax',
-  })
+    ; (await cookies()).set('github_oauth_state', state, {
+      path: '/',
+      secure: env.NODE_ENV === 'production',
+      httpOnly: true,
+      maxAge: 60 * 10,
+      sameSite: 'lax',
+    })
 
   return Response.redirect(url)
 }

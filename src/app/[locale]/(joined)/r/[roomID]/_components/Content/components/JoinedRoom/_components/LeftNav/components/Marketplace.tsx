@@ -3,17 +3,21 @@
 import { useAtom } from 'jotai'
 import { Button } from './Button'
 import { openPanelAtom } from '../../atoms'
-import { Shop } from '@/components/svg/Shop'
+import { Svg } from '@/components/Svg'
 
 export const Marketplace = () => {
   const [openPanel, setOpenPanel] = useAtom(openPanelAtom)
 
   return (
     <Button
+      shortcutName='Marketplace'
       key={'marketplace'}
-      className="hover:from-[#cf076b]"
-      onMouseDown={() => setOpenPanel('marketplace')}
-      icon={<Shop className="h-full w-full fill-[#ffffff7e]" />}
+      className="hover:bg-[#cf076b]"
+      onMouseDown={() => {
+        if (openPanel === 'marketplace') setOpenPanel(null)
+        else setOpenPanel('marketplace')
+      }}
+      icon={<Svg src='shop.svg' alt="shop" className="h-full w-full opacity-60" />}
     />
   )
 }

@@ -21,7 +21,7 @@ export const RoomItem = ({ ID }: Props) => {
     return null
   }
 
-  const { country, createdAt, distanceInKm, isPublic, name } = data
+  const { country, createdAt, distanceInKm, isPublic, name, playerCount } = data
 
   return (
     <div className="flex w-full animate-fade flex-row flex-wrap gap-2 rounded-md bg-gradient-to-tr from-[#ffffff7e] via-[#ffffff40] to-[#ffffff7e] p-3 shadow-lg duration-300 hover:opacity-80">
@@ -30,6 +30,7 @@ export const RoomItem = ({ ID }: Props) => {
       <PinkValue value={isPublic ? 'Public' : 'Private'} />
       <PinkValue value={distanceInKm + ' km away'} />
       <PinkValue value={country} />
+      <PinkValue value={`${playerCount}/10`} />
       <PinkValue
         value={`${new Date(createdAt).toDateString()} ${new Date(createdAt).getHours()}:${new Date(createdAt).getMinutes()}:${new Date(createdAt).getSeconds()}`}
       />

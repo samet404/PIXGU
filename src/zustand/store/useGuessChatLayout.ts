@@ -1,5 +1,4 @@
 import { create } from 'zustand'
-import { useRoomGuessChatMsgsStore } from './useRoomGuessChatMsgs'
 
 type Value = {
   isOpen: boolean
@@ -35,22 +34,18 @@ export const useGuessChatLayout = create<State & Action>((set, get) => ({
     set({
       value: { isOpen: true, input: false, change: true, info: false },
     })
-    useRoomGuessChatMsgsStore.getState().reset()
   },
 
   setPainterLayout: () => {
     set({
       value: { isOpen: true, input: false, change: true, info: true },
     })
-
-    useRoomGuessChatMsgsStore.getState().reset()
   },
 
   setImNotGuessed: () => {
     set({
       value: { isOpen: true, input: true, change: false, info: true },
     })
-    useRoomGuessChatMsgsStore.getState().reset()
   },
 
   setIGuessed: () => {
@@ -58,7 +53,6 @@ export const useGuessChatLayout = create<State & Action>((set, get) => ({
       value: { isOpen: true, input: false, change: true, info: true },
     })
 
-    useRoomGuessChatMsgsStore.getState().reset()
   },
 
   reset: () => set(initValue),

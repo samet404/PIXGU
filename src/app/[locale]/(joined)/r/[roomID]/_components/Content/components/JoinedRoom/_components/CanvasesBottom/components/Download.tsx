@@ -1,9 +1,8 @@
 'use client'
 
+import { Svg } from '@/components/Svg'
 import { useCanvasesMainData } from '@/zustand/store'
-import Image from 'next/image'
 import { useEffect, useRef } from 'react'
-import img from '@/svg/download-svgrepo-com.svg'
 
 export const Download = () => {
   const linkRef = useRef<HTMLAnchorElement>()
@@ -35,7 +34,7 @@ export const Download = () => {
       onMouseDown={handleOnClick}
       className="size-9 rounded-lg bg-[#ffffff4a] p-1"
     >
-      <Image src={img} alt="download" className="opacity-60" />
+      <Svg src='download-svgrepo-com.svg' alt="download" className="opacity-60" />
     </button>
   )
 }

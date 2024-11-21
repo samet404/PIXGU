@@ -1,3 +1,2 @@
-export * from './pixelsOnDraw'
-export * from './pixelHistory'
-export * from './pixelsOnBucket'
+export * from './storeLastPixel'
+export * from './storeMouseDownStartAt'

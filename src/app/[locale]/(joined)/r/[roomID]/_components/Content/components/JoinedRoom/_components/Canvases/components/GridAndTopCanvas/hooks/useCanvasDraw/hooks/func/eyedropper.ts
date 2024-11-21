@@ -1,9 +1,9 @@
-import { storePixelHistory } from '@/store'
-import { usePainterTool } from '@/zustand/store'
+import { getCanvasWorker, type CanvasWorkerOnMsgData } from '@/workers'
 
-export const eyedropper = (e: PointerEvent, x: number, y: number) => {
-  const data = storePixelHistory.getRgb(new Uint8ClampedArray([x, y]))
-  usePainterTool.getState().setRGBA(
-    [data[0]!, data[1]!, data[2]!, 255]
-  )
-}
+const canvasWorker = getCanvasWorker()
+
+export const eyedropper = (x: number, y: number) => canvasWorker.current.postMessage({
+  e: 6,
+  data: [x, y]
+} as CanvasWorkerOnMsgData)
+

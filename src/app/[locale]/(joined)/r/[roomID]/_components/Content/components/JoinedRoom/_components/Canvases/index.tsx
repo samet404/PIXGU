@@ -9,6 +9,7 @@ import { NewPainter } from './components/NewPainter'
 import { SelectTheme } from './components/SelectTheme'
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
 import { useAmIPainting, useCanvasesMainData } from '@/zustand/store'
+import { UseCanvasWorker } from './components/UseCanvasWorker'
 
 const Canvases = () => {
   const updateZoom = (scale: number) => {
@@ -42,10 +43,11 @@ const Canvases = () => {
           <div className="relative h-full w-full">
             <TransformComponent>
               <div
-                className={`relative flex  rounded-[0.7rem] border-[0.2rem] border-[#ffffff37]`}
+                className={`relative flex select-none rounded-[0.7rem] border-[0.2rem] border-[#ffffff37]`}
               >
                 <MainCanvas key={'MainCanvas'} />
                 <DraftCanvas key={'DraftCanvas'} name='pencil' code='p' />
+                <DraftCanvas key={'DraftGradient'} name='gradient' code='g' />
                 <DraftCanvas key={'DraftBucket'} name='bucket' code='b' />
                 <GridAndTopCanvas key={'GridAndTopCanvas'} />
                 <NewPainter key={'NewPainter'} />
@@ -56,6 +58,7 @@ const Canvases = () => {
         )}
       </TransformWrapper>
       <Suspense>
+        <UseCanvasWorker />
         <ConnectToHost />
       </Suspense>
     </div>

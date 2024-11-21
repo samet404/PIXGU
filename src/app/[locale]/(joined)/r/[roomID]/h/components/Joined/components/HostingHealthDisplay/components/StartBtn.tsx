@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import { useHostingHealth } from '@/zustand/store'
-import { createMatch } from 'src/funcs/createMatch'
+import { createMatch } from '@/helpers/room'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
 
 export const StartBtn = ({ roomID }: Props) => {

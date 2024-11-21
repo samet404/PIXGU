@@ -9,3 +9,4 @@ export const amIPainter = () => {
   if (!whoIsPainter.amIPainter) return false
   return true
 }
+

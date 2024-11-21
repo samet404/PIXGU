@@ -18,7 +18,7 @@ export const Room = ({ ID, refetch }: Props) => {
     if (isLoading || !data) return <Spinner />
     if (error) return <div>{error.message}</div>
 
-    const { createdAt, password, name } = data
+    const { createdAt, password, name, playerCount } = data
 
     return (
         <div className="flex animate-fade flex-col gap-2 rounded-lg bg-gradient-to-tr from-[#ffffff40] via-[#ffffff17] to-[#ffffff40] p-2  backdrop-blur-md">
@@ -35,6 +35,10 @@ export const Room = ({ ID, refetch }: Props) => {
                 </div>
                 <div className="rounded-md bg-[#ffffff52] px-2 py-1 text-white">
                     Date: {createdAt.toString()}
+                </div>
+
+                <div className="rounded-md bg-[#ffffff52] px-2 py-1 text-white">
+                    Players: {playerCount}/10
                 </div>
             </div>
             <div className='drop-shadow-[0_0px_6px_rgba(0,0,0,0.55)] flex flex-row items-start gap-2'>

@@ -4,7 +4,7 @@ import { cookies } from 'next/headers'
 export const isJoined = publicProcedure.query(async ({ ctx }) => {
   if (ctx.user) return true
 
-  const guestAuthToken = cookies().get('guest_auth_session')?.value
+  const guestAuthToken = (await cookies()).get('guest_auth_session')?.value
   console.log('guestAuthToken: ', guestAuthToken)
   if (!guestAuthToken) return false
 

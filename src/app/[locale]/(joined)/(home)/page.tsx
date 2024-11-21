@@ -5,6 +5,10 @@ import { api } from '@/trpc/server'
 import type { Locale } from '@/types'
 import { setIsLogged, setLocale } from '@/context/server'
 import { redirect } from 'next/navigation'
+import { Outfit } from 'next/font/google'
+import Link from 'next/link'
+
+const outfit = Outfit({ subsets: ['latin'], weight: ['700', '500'] })
 
 const Home = async ({ params }: Props) => {
   const isJoined = await api.auth.isJoined.query()
@@ -13,8 +17,10 @@ const Home = async ({ params }: Props) => {
   const isLogged = await api.auth.isLogged.query()
 
   setIsLogged(isLogged)
-  console.log(`locale: ${params.locale} from Home`)
-  setLocale(params.locale)
+  setLocale(await params.locale)
+
+
+
 
   return (
     <div
@@ -24,11 +30,15 @@ const Home = async ({ params }: Props) => {
           'radial-gradient(at 100% 100%, hsla(142,7%,70%,0.1) 0px, transparent 50%), radial-gradient(at 2% 0%, hsla(177, 100%, 50%, 0.475) 0px, transparent 50%)',
       }}
       id="home-root"
-      className={`flex h-full w-full flex-col items-center overflow-y-scroll pb-20 pt-2`}
+      className={`${outfit.className} flex h-full w-full flex-col gap-[10rem] items-center justify-between overflow-y-scroll pt-2`}
     >
-      <div className="flex animate-fade flex-col items-center duration-[100ms] animate-duration-1000">
+      <div className="flex animate-fade flex-col items-center duration-[100ms]  animate-duration-1000">
         <Navbar />
         <Main />
+        <Link className='text-[#ffffff8d] hover:text-white font-[500] pt-6' href={'/privacy'} prefetch={false}>Privacy Policy</Link>
+      </div>
+      <div className='w-full flex h-[20rem] bg-green-400 p-2 items-center justify-center shadow-[0_0px_30px_1px_rgb(74,222,128)]'>
+        All systems are operational
       </div>
     </div>
   )

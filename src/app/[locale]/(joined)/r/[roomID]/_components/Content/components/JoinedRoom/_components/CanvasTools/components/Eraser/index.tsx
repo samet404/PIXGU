@@ -2,8 +2,7 @@
 
 import { usePainterTool } from '@/zustand/store'
 import { Tool } from '../Tool'
-import eraser from '@/svg/eraser-svgrepo-com.svg'
-import Image from 'next/image'
+import { Svg } from '@/components/Svg'
 
 export const Eraser = () => {
     const toolName = usePainterTool((s) => s.current)
@@ -12,6 +11,6 @@ export const Eraser = () => {
     return <Tool
         isActive={toolName === 'eraser'}
         onMouseDown={() => setTool('eraser')}
-        icon={<Image src={eraser} alt="eraser" className="opacity-50" />}
+        icon={<Svg src='eraser-svgrepo-com.svg' alt="eraser" className="opacity-50" />}
     />
 }

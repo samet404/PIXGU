@@ -3,13 +3,14 @@
 import { drawGrid, clearGrid } from '@/helpers/room'
 import { Tool } from '../Tool'
 import { useEffect } from 'react'
-import { usePainterTool } from '@/zustand/store'
-import gridIcon from '@/svg/grid-svgrepo-com.svg'
-import Image from 'next/image'
+import { useGameToolAlert, usePainterTool } from '@/zustand/store'
+import { useShortcut } from '@/hooks/useShortcut'
+import { Svg } from '@/components/Svg'
 
 export const GridSwitcher = () => {
   const isOpen = usePainterTool((s) => s.with.grid)
   const switchGrid = usePainterTool((s) => s.switchGrid)
+  const setToolAlert = useGameToolAlert((s) => s.setAlert)
 
   useEffect(() => {
     if (isOpen) {
@@ -18,11 +19,20 @@ export const GridSwitcher = () => {
     } else clearGrid()
   }, [isOpen])
 
+
+  useShortcut({
+    keyName: 'Grid', onShortcut: () => {
+      switchGrid()
+      setToolAlert(`Grid ${isOpen ? 'closed' : 'opened'}`)
+    }
+  })
+
+
   return (
     <Tool
       isActive={isOpen}
       icon={
-        <Image src={gridIcon} alt="grid" className="h-full w-full opacity-55" />
+        <Svg src='grid-svgrepo-com.svg' alt="grid" className="h-full w-full opacity-55" />
       }
       onMouseDown={switchGrid}
     />

@@ -4,7 +4,7 @@ import type { WebRTCConnData } from '@/types'
 
 export const sendManyToAllPeers = (
   datas: [
-    WebRTCConnData,
+    WebRTCConnData: WebRTCConnData,
     config?: {
       except?: string[]
     },

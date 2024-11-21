@@ -1,11 +1,9 @@
 'use client'
 
 import { useCanvasesMainData, useGameToolAlert } from '@/zustand/store'
-import Image from 'next/image'
 import { Fragment, useEffect, useRef } from 'react'
-import img from '@/svg/download-svgrepo-com.svg'
 import { Button } from './Button'
-import { UseShortcut } from '@/components/UseShortcut'
+import { Svg } from '@/components/Svg'
 
 export const Download = () => {
   const linkRef = useRef<HTMLAnchorElement>()
@@ -33,19 +31,17 @@ export const Download = () => {
     link.click()
   }
 
+
+
   return (
     <Fragment>
       <Button
+        shortcutName='Download'
         key={'download'}
         onMouseDown={download}
-        className="size-9 rounded-lg bg-[#ffffff4a] p-1"
-        icon={<Image src={img} alt="download" className="opacity-60" />}
+        className="hover:bg-[#ffffff45]"
+        icon={<Svg src='download-svgrepo-com.svg' alt="download" className="h-full w-full opacity-60" />}
       />
-
-      <UseShortcut keyName='Download' onShortcut={() => {
-        download()
-        setToolAlert('Download selected')
-      }} />
     </Fragment>
   )
 }

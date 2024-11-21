@@ -3,7 +3,7 @@ import { cookies } from 'next/headers'
 import { z } from 'zod'
 
 export async function GET(req: Request) {
-  const authToken = cookies().get('guest_auth_session')?.value
+  const authToken = (await cookies()).get('guest_auth_session')?.value
   console.log(req)
   console.log('authToken: ', authToken)
   try {

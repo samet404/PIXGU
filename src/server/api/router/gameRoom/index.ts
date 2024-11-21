@@ -24,6 +24,7 @@ export const gameRoomRouter = createTRPCRouter({
   getPlayingRooms,
   getThemes,
 
+
   isHavePass: isRoomHavePassword,
 
   knowPass: knowRoomPass,

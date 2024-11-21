@@ -1,14 +1,9 @@
-import { loggedUserProducure } from '@/procedure'
-import { z } from 'zod'
+import { joinedUserProducure } from '@/procedure';
+import { z } from 'zod';
 
-export const isRoomHavePassword = loggedUserProducure
-  .input(
-    z.object({
-      roomID: z.string().max(128),
-    }),
+export const isRoomHavePassword = joinedUserProducure
+  .input(z.object({ roomID: z.string().cuid2() }))
+  .query(async ({ ctx, input }) =>
+    // check if room has password
+    (await ctx.redisDb.exists(`room:${input.roomID}:password`) === 1)
   )
-  .query(async ({ input, ctx }) => {
-    const { roomID } = input
-
-    return (await ctx.redisDb.get(`room:${roomID}:password`)) ? true : false
-  })

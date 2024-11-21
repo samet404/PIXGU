@@ -1,7 +1,6 @@
 import { clsxMerge } from '@/utils/clsxMerge'
 import { useState } from 'react'
-import googleIcon from '@/svg/google-svgrepo-com.svg'
-import Image from 'next/image'
+import { Svg } from '@/components/Svg'
 
 export const Btn = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -16,7 +15,7 @@ export const Btn = () => {
         },
       )}
     >
-      <Image src={googleIcon} alt="google icon" sizes="lorem ipsum" />
+      <Svg src='google-svgrepo-com.svg' alt="google" className="h-full w-full opacity-50" />
     </button>
   )
 }

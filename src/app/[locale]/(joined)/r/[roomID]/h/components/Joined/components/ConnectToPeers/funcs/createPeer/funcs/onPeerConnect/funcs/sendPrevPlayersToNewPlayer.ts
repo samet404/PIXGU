@@ -17,7 +17,7 @@ export const sendPrevPlayersToNewPlayer = (userID: string) => {
 
   grayLog('SENDING PREV PLAYERS TO NEW PLAYER')
   sendToPeer(peer, {
-    from: 'host',
+
     event: 'prevPlayers',
     data: filterObj(playersDbInfo, ([k, v]) => k !== userID) as Record<
       string,

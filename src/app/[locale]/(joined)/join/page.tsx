@@ -14,6 +14,7 @@ const outfit = Outfit({
 
 export const metadata: Metadata = {
   title: 'JOIN',
+  description: 'Find rooms and start to play!'
 }
 
 

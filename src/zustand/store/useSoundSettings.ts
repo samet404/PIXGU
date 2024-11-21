@@ -1,7 +1,6 @@
 import { create } from 'zustand'
 import { subscribeWithSelector } from 'zustand/middleware'
 import { persistNSync } from "persist-and-sync";
-import { useTabs } from './useTabs';
 
 const initState: State = {
     music: false,
@@ -28,7 +27,8 @@ export const useSoundSettings = create<State & Action>()(
                         musicSoundLevel: level
                     })
                 },
-                toggleMusic: () => {
+                toggleMusic: async () => {
+                    const useTabs = (await import('@/zustand/store')).useTabs
                     const tabID = useTabs.getState().tabID
                     useTabs.getState().setMusicPlayerTabID(tabID)
 

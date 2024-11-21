@@ -5,7 +5,7 @@ import { cookies } from 'next/headers'
 import { z } from 'zod'
 
 export const killGuest = async () => {
-  const authToken = cookies().get('guest_auth_session')?.value
+  const authToken = (await cookies()).get('guest_auth_session')?.value
   if (authToken) {
     z.string().min(10).cuid2().parse(authToken)
 

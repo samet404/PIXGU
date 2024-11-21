@@ -1,14 +1,24 @@
 import type { PainterPencil } from '@/types/webRTCConnData';
-import { pencil } from './pencil';
 import { sendToAllPeers } from '@/utils/sendToAllPeers';
-import { useWhoIsPainter } from '@/zustand/store';
+import { getCanvasWorker, type CanvasWorkerOnMsgData } from '@/workers';
+
+const canvasWorker = getCanvasWorker()
 
 export const getPainterPencil = (data: PainterPencil['data'], userID: string) => {
-    // if (!useWhoIsPainter.getState().isPainter(userID)) return
+    const { x, y, color, size } = data
 
-    pencil(data)
+    canvasWorker.current.postMessage({
+        e: 1,
+        data: {
+            color,
+            startX: x,
+            startY: y,
+            size
+        }
+    } as CanvasWorkerOnMsgData)
+
     sendToAllPeers({
-        from: 'host',
+
         event: 'painterPencil',
         data
     }, {

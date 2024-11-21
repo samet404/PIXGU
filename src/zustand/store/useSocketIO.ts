@@ -6,12 +6,12 @@ export type SocketIOStoreState = {
 }
 
 export type SocketIOStoreAction = {
-  setIO: (io: Socket) => void
+  setIO: (io: Socket | null) => void
 }
 
 export type SocketIOStore = SocketIOStoreState & SocketIOStoreAction
 
 export const useSocketIO = create<SocketIOStore>((set, get) => ({
   io: null,
-  setIO: (io: Socket) => set({ io }),
+  setIO: (io) => set({ io })
 }))

@@ -1,5 +1,6 @@
-import { amIPainter, bucket, eraser, eyedropper, pencil } from './func'
+import { amIPainter, bucket, eraser, eyedropper, gradient, pencil } from './func'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
+import { storeMouseDownStartAt } from '@/store'
 import {
   useCanvasesMainData,
   useXY,
@@ -9,8 +10,10 @@ import {
 
 export const useMouseDown = (myUserID: string) => {
   const handler = (e: PointerEvent) => {
-    if (!amIPainter() || e.button !== 0) return
+    if (!amIPainter() || useAmIPainting.getState().amIPainting) return
 
+
+    e.preventDefault()
     const {
       main,
       zoom,
@@ -23,19 +26,26 @@ export const useMouseDown = (myUserID: string) => {
     if (!main || !cellPixelLength || !zoom) return
 
     const dcBoundingRect = main.getBoundingClientRect()
-    const smoothX = Math.floor(
-      ((e.clientX - dcBoundingRect.left) * zoom) / cellPixelLength,
-    )
-    const smoothY = Math.floor(
-      ((e.clientY - dcBoundingRect.top) * zoom) / cellPixelLength,
-    )
+    const exactX = Math.floor(
+      ((e.clientX - dcBoundingRect.left) * zoom))
+    const exactY = Math.floor(
+      ((e.clientY - dcBoundingRect.top) * zoom))
+    const smoothX = Math.floor(exactX / cellPixelLength)
+
+    const smoothY = Math.floor(exactY / cellPixelLength)
+
     useXY.getState().set(smoothX, smoothY)
+    storeMouseDownStartAt.set({
+      exact: [exactX, exactY],
+      smooth: [smoothX, smoothY]
+    })
+    console.log('start x, y: ', smoothX, smoothY)
 
     const toolName = usePainterTool.getState().current
-    console.log('toolName', toolName)
+
     switch (toolName) {
       case 'pencil':
-        useAmIPainting.getState().imPainting()
+        useAmIPainting.getState().imPainting(e.button)
 
         mctx!.drawImage(draft_pencil!, 0, 0)
         dpctx!.clearRect(0, 0, dpctx!.canvas.width, dpctx!.canvas.height)
@@ -43,15 +53,19 @@ export const useMouseDown = (myUserID: string) => {
         pencil(smoothX, smoothY)
         break
       case 'eraser':
-        useAmIPainting.getState().imPainting()
+        useAmIPainting.getState().imPainting(e.button)
         eraser(smoothX, smoothY)
         break
       case 'bucket':
-        bucket(e)
+        bucket(smoothX, smoothY)
         break
       case 'eyedropper':
-        eyedropper(e, smoothX, smoothY)
+        eyedropper(smoothX, smoothY)
         break
+      case 'gradient':
+        useAmIPainting.getState().imPainting(e.button)
+        break
+
     }
   }
 

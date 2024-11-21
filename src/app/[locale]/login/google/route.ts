@@ -10,13 +10,13 @@ export async function GET(): Promise<Response> {
   })
 
   url.searchParams.set('access_type', 'offline')
-  cookies().set('google_oauth_state', state, {
-    path: '/',
-    secure: env.NODE_ENV === 'production',
-    httpOnly: true,
-    maxAge: 60 * 10,
-    sameSite: 'lax',
-  })
+    ; (await cookies()).set('google_oauth_state', state, {
+      path: '/',
+      secure: env.NODE_ENV === 'production',
+      httpOnly: true,
+      maxAge: 60 * 10,
+      sameSite: 'lax',
+    })
 
   return Response.redirect(url)
 }

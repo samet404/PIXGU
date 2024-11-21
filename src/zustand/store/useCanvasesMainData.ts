@@ -6,6 +6,7 @@ export type CanvasesMainData = {
 
   draft_pencil?: HTMLCanvasElement
   draft_bucket?: HTMLCanvasElement
+  draft_gradient?: HTMLCanvasElement
 
   main?: HTMLCanvasElement
   grid?: HTMLCanvasElement
@@ -13,6 +14,7 @@ export type CanvasesMainData = {
   mctx?: CanvasRenderingContext2D
   dpctx?: CanvasRenderingContext2D
   dbctx?: CanvasRenderingContext2D
+  dgctx?: CanvasRenderingContext2D
   gctx?: CanvasRenderingContext2D
 
   isGridsInitialized?: boolean

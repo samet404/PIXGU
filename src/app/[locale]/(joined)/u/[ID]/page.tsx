@@ -6,7 +6,7 @@ type UserPageProps = {
 }
 
 const User = async ({ params }: UserPageProps) => {
-  const { ID } = params
+  const { ID } = await params
   const user = await api.user.getByID.query(ID)
   if (!user) return <h1 className="w-full pt-8 text-center">User not found</h1>
 

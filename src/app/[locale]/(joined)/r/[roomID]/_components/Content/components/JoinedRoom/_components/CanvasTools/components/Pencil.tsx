@@ -1,9 +1,8 @@
 'use client'
 
-import Image from 'next/image'
 import { Tool } from './Tool'
-import pencil from '@/svg/pencil-svgrepo-com.svg'
 import { usePainterTool } from '@/zustand/store'
+import { Svg } from '@/components/Svg'
 
 export const Pencil = () => {
   const toolName = usePainterTool((s) => s.current)
@@ -13,7 +12,7 @@ export const Pencil = () => {
     <Tool
       isActive={toolName === 'pencil'}
       onMouseDown={() => setTool('pencil')}
-      icon={<Image src={pencil} alt="eye-dropper" className="opacity-50" />}
+      icon={<Svg src='/pencil-svgrepo-com.svg' alt="eye-dropper" className="opacity-50" />}
     />
   )
 }

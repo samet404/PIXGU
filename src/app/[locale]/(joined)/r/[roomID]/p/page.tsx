@@ -6,7 +6,7 @@ const ErrDisplay = dynamic(() => import('@/components/ErrDisplay'))
 const PassBox = dynamic(() => import('./_components/PassBox'))
 
 const Password = async ({ params }: Props) => {
-  const roomID = params.roomID
+  const roomID = (await params).roomID
 
   const user = await api.auth.getUser.query()
   if (!user) throw new Error('UNAUTHORIZED')

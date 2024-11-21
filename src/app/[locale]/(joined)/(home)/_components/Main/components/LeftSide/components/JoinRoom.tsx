@@ -4,7 +4,6 @@ import MainButton from './MainButton'
 import { getIsLogged } from '@/context/server'
 
 const JoinRoom = ({ name, description }: Props) => {
-  const isLogged = getIsLogged()
 
   return (
     <MainButton
@@ -20,8 +19,7 @@ const JoinRoom = ({ name, description }: Props) => {
       name={name}
       description={description}
       keyName="1"
-      disabled={!isLogged}
-      className="rounded-tr-md hover:from-[#2de57a91] hover:to-[rgba(255,255,255,0.3)]"
+      className="rounded-tr-md hover:from-[rgba(254,51,180,0.55)] hover:to-[rgba(255,255,255,0.3)]"
     />
   )
 }

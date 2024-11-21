@@ -8,8 +8,8 @@ export const metadata: Metadata = {
   title: 'IN GAME',
 }
 
-const Room = ({ params }: Props) => {
-  return <Content params={params} />
+const Room = async ({ params }: Props) => {
+  return <Content params={await params} />
 }
 
 export default Room

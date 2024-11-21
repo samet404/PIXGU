@@ -5,8 +5,9 @@ import { type KeyboardEvent, useRef } from 'react'
 import { Urbanist } from 'next/font/google'
 import { Exit } from './components/Exit'
 import { Back } from './components/Back'
-import { Options } from './components/Options'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
+import { Controls } from './components/Controls'
+import { Sounds } from './components/Sounds'
 
 const urbanist = Urbanist({
   subsets: ['latin'],
@@ -33,7 +34,7 @@ const Modal = () => {
     <div
       className={`${urbanist.className} animate-fade absolute top-0 z-50 flex h-full w-full  items-center justify-center bg-[#000000a5] flex-col gap-5 backdrop-blur-md animate-duration-200`}
     >
-      <div className='text-[rgba(255,255,255,0.01)] text-[2rem] font-[900]'>Sometimes the deepest rivers are the quietest.</div>
+      <div className='hidden'>Sometimes the deepest rivers are the quietest.</div>
 
       <div
         onKeyDown={handleOnKeyDown}
@@ -41,7 +42,8 @@ const Modal = () => {
         className="flex flex-col rotate-[-5deg] animate-throw rounded-md bg-[#ffffffb2] shadow-[0_0px_20px_1px_rgba(0,0,0,0.4)]"
       >
         <Back />
-        <Options />
+        <Controls />
+        <Sounds />
         <Exit />
       </div>
     </div>

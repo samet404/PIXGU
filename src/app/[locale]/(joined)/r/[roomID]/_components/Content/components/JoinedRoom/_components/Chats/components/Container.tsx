@@ -15,14 +15,7 @@ export const Container = ({ children }: PropsWithChildren) => {
 
   return (
     <div
-      className={clsxMerge(
-        `${urbanist.className} sticky top-0 flex h-full w-full grow`,
-        {
-          'h-[50%]':
-            whoIsPainter.status !== 'thereIsNoPainter' &&
-            whoIsPainter.amIPainter,
-        },
-      )}
+      className={'h-[95%] overflow-y-auto flex flex-col gap-2'}
     >
       {children}
     </div>

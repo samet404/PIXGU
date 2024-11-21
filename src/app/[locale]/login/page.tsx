@@ -5,7 +5,6 @@ import OAuthSection from './_components/OAuthSection'
 import Logo from '@/png/logo.png'
 import { Inter } from 'next/font/google'
 import { GuestSection } from './_components/GuestSection'
-import { ChildrenAlert } from './_components/ChildrenAlert'
 import Link from 'next/link'
 
 const inter = Inter({
@@ -35,18 +34,16 @@ const Page = () => {
           className=" h-[auto] w-[6rem] pb-6 drop-shadow-[0_0px_8px_rgba(0,0,0,0.3)]"
           sizes="calc(1.96vw + 75px)"
         ></Image>
-        <ChildrenAlert>
-          <div className='h-full w-full flex flex-col justify-between'>
-            <div className='flex flex-col gap-2'>
-              <GuestSection />
-              <OAuthSection />
-            </div>
-
-            <div className='text-xs text-[#ffffffc4] text-center'>
-              By logging in, you agree to Pixgu's <Link className='text-blue-400' href="/privacy">Privacy Policy</Link>
-            </div>
+        <div className='h-full w-full flex flex-col justify-between'>
+          <div className='flex flex-col gap-2'>
+            <GuestSection />
+            <OAuthSection />
           </div>
-        </ChildrenAlert>
+
+          <div className='text-xs text-[#ffffffc4] text-center'>
+            By logging in, you agree to Pixgu's <Link className='text-blue-400' href="/privacy">Privacy Policy</Link>
+          </div>
+        </div>
       </main>
     </div>
   )

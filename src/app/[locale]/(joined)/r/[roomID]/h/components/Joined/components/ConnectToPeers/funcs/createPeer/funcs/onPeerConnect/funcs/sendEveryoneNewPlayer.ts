@@ -6,7 +6,7 @@ export const sendEveryoneNewPlayer = (ID: string, isSpectator: boolean) => {
 
   sendToAllPeers(
     {
-      from: 'host',
+
       event: 'playerJoined',
       data: {
         ...p,

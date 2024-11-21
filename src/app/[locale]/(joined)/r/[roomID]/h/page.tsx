@@ -3,6 +3,7 @@ import { api } from '@/trpc/server'
 import dynamic from 'next/dynamic'
 import type { Metadata } from 'next'
 import { setServerContexts } from './func'
+import { PreventRefresh } from '@/components/PreventRefresh'
 
 const JoinedRoom = dynamic(() => import('./components/Joined'))
 
@@ -17,7 +18,7 @@ const Content = async ({ params }: Props) => {
 
   setServerContexts(params.locale, roomID, user, guest, !!guest)
 
-  return <JoinedRoom roomID={roomID} user={user} guest={guest} />
+  return <PreventRefresh><JoinedRoom roomID={roomID} user={user} guest={guest} /></PreventRefresh>
 }
 
 export default Content

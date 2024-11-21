@@ -24,7 +24,6 @@ export const ToolAlert = () => {
         intervalStartedAt.current = Date.now()
         intervalRef.current = setInterval(() => {
             const passedMs = Date.now() - intervalStartedAt.current!
-            console.log('passedMs: ', passedMs)
             if (passedMs >= 2500) {
                 runClearInterval()
                 setAlert(null)
@@ -39,7 +38,7 @@ export const ToolAlert = () => {
 
     if (alert)
         return (
-            <div className='w-full bottom-0 left-0 p-2 z-40 flex absolute items-center justify-center'>
+            <div className='select-none pointer-events-none w-full bottom-0 left-0 p-2 z-40 flex absolute items-center justify-center'>
                 <div className='bg-[#ffffffd5] px-2 py-1 text-[#000000b1] text-[0.7rem] text-center rounded-md'>
                     {alert}
                 </div>

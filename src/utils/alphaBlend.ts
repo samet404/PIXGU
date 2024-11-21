@@ -1,25 +1,20 @@
-import { minmax } from './minmax';
+export const alphaBlendRGBA = (background: Uint8ClampedArray, foreground: Uint8ClampedArray) => {
+    const af = foreground[3]! / 255
 
-/**
- * @example
- * 
- * const background = new Uint8ClampedArray([255, 255, 255, 255])
- * const foreground = new Uint8ClampedArray([0, 100, 0, 255])
- * 
- * alphaBlendRGB(background, foreground)
- */
-export const alphaBlendRGBA = <I1 extends Uint8ClampedArray, I2 extends Uint8ClampedArray>(background: I1, foreground: I2) => {
-    const [rb, gb, bb, iAb] = background as unknown as [number, number, number, number]
-    const [rf, gf, bf, iAf] = foreground as unknown as [number, number, number, number]
-    const ab = iAb / 255
-    const af = iAf / 255
+    // Fast path: if foreground is fully opaque or background is fully transparent
+    if (af === 1 || background[3] === 0) return new Uint8ClampedArray(foreground)
 
-    const a = ab * (1 - af) + af;
-    if (a === 0) return new Uint8ClampedArray([0, 0, 0, 0]);
+    // Fast path: if foreground is fully transparent
+    if (af === 0) return new Uint8ClampedArray(background)
 
-    const r = minmax(0, (ab * (1 - af) * rb + rf * af) / a, 255);
-    const g = minmax(0, (ab * (1 - af) * gb + gf * af) / a, 255);
-    const b = minmax(0, (ab * (1 - af) * bb + bf * af) / a, 255);
+    const ab = background[3]! / 255
+    const a = (ab * (1 - af) + af)
 
-    return new Uint8ClampedArray([r, g, b, a]);
-};
+    const blend = 1 / a
+    const r = Math.round((ab * (1 - af) * background[0]! + foreground[0]! * af) * blend)
+    const g = Math.round((ab * (1 - af) * background[1]! + foreground[1]! * af) * blend)
+    const b = Math.round((ab * (1 - af) * background[2]! + foreground[2]! * af) * blend)
+    const alpha = Math.round(a * 255)
+
+    return new Uint8ClampedArray([r, g, b, alpha])
+}

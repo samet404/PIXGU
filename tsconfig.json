@@ -32,6 +32,7 @@
       "@/geoIP": ["./src/server/db/geoIP"],
       "@/redis/*": ["./src/server/db/redis/*"],
       "@/context/*": ["./src/context/*"],
+      "@/scripts/*": ["./src/scripts/*"],
       "@/redis": ["./src/server/db/redis/"],
       "@/auth/*": ["./src/auth/*"],
       "@/api/*": ["./src/app/api/*"],
@@ -60,7 +61,9 @@
       "@/fonts/*": ["public/fonts/*"],
       "@/lib/*": ["./src/lib*"],
       "@/actions/*": ["./src/actions/*"],
-      "@/constants": ["./src/constants/index.ts"]
+      "@/constants": ["./src/constants/index.ts"],
+      "@/constants/server": ["./src/constants/server/index.ts"],
+      "@/workers": ["./src/workers/index.ts"]
     },
     "plugins": [{ "name": "next" }]
   },

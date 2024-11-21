@@ -9,8 +9,7 @@ import { useHostingHealth } from '@/zustand/store'
 import { useRoomIDStore } from '@/zustand/provider'
 import { StopBtn } from './components/StopBtn'
 import { HavingIssuesBtn } from './components/HavingIssuesBtn'
-import Image from 'next/image'
-import scrollDown from '@/svg/scroll-down-svgrepo-com.svg'
+import { Svg } from '@/components/Svg'
 
 export const HostingHealthDisplay = () => {
   const status = useHostingHealth((s) => s.status)
@@ -25,7 +24,7 @@ export const HostingHealthDisplay = () => {
       case 'waitingForPlayers':
         return '#348bd370'
       case 'gameEnded':
-        return '#bef06066'
+        return '#ffffff29'
     }
   })()
 
@@ -85,13 +84,13 @@ export const HostingHealthDisplay = () => {
         backgroundImage: `radial-gradient(20rem at center, ${radialGradientColor}, transparent)`,
       }}
       className={clsxMerge(
-        `relative flex h-full w-full font-[500] select-none flex-col items-center justify-center gap-5 border-b-8  text-center drop-shadow-[0_0px_2px_rgba(0,0,0,0.55)] ease-in-out animate-delay-700`,
+        `relative flex h-full w-full font-[500] animate-fade select-none flex-col items-center justify-center gap-5 border-b-8  text-center drop-shadow-[0_0px_2px_rgba(0,0,0,0.55)] ease-in-out animate-delay-700`,
         {
           'animate-pulse border-b-[#34d399ff] text-emerald-400':
             status === 'gameIsStarted',
           'border-b-[#34d3cb] text-[#34d3cb]': status === 'readyToStart',
           'border-b-[#348bd3] text-[#348bd3]': status === 'waitingForPlayers',
-          'border-b-[#b9f746] text-[#b9f746]': status === 'gameEnded',
+          'border-b-[#ffffffa4] text-[#ffffffa4]': status === 'gameEnded',
         },
       )}
     >
@@ -106,7 +105,7 @@ export const HostingHealthDisplay = () => {
                 status === 'readyToStart',
               'inline-block bg-gradient-to-r from-[#348bd3] to-[#348bd3] bg-clip-text text-transparent':
                 status === 'waitingForPlayers',
-              'inline-block bg-gradient-to-r from-[#b9f746] to-[#b9f746] bg-clip-text text-transparent':
+              'inline-block bg-gradient-to-r from-[#ffffffcc] to-[#ffffffcc] bg-clip-text text-transparent':
                 status === 'gameEnded',
             },
           )}
@@ -125,8 +124,7 @@ export const HostingHealthDisplay = () => {
         <HavingIssuesBtn />
       </div>
       <div className='absolute bottom-2 w-full flex items-center justify-center animate-fade-down aniamte-delay-[1000ms]'>
-        <Image src={scrollDown} alt="scroll-down" className="size-10 opacity-30" />
-
+        <Svg src='scroll-down-svgrepo-com.svg' alt="star" className="h-10 w-full opacity-20" />
       </div>
     </div>
   )

@@ -1,5 +1,5 @@
 import { mToMs } from '@/utils/mToMs'
-import { createMatch } from 'src/funcs/createMatch'
+import { createMatch } from '@/helpers/room'
 import { create } from 'zustand'
 
 type State = {

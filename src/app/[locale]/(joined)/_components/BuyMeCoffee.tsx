@@ -11,7 +11,7 @@ const ubuntu = Ubuntu({
 export const BuyMeCoffee = () => {
   return (
     <div
-      className={`${ubuntu.className} group z-[30] flex animate-fade flex-row items-center rounded-full bg-gradient-to-r from-[#fcdf24] to-[#fff200] to-[50%] drop-shadow-[0_0px_6px_#fcdf23c3] backdrop-blur-lg`}
+      className={`${ubuntu.className} group z-[50] flex animate-fade flex-row items-center rounded-full bg-gradient-to-r from-[#fcdf24] to-[#fff200] to-[50%] drop-shadow-[0_0px_6px_#fcdf23c3] backdrop-blur-lg`}
     >
       <Link
         href="https://buymeacoffee.com/pixgu"

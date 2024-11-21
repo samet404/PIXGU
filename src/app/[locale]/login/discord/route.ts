@@ -9,13 +9,13 @@ export async function GET(): Promise<Response> {
     scopes: ['identify'],
   })
 
-  cookies().set('discord_oauth_state', state, {
-    path: '/',
-    secure: env.NODE_ENV === 'production',
-    httpOnly: true,
-    maxAge: 60 * 10,
-    sameSite: 'lax',
-  })
+    ; (await cookies()).set('discord_oauth_state', state, {
+      path: '/',
+      secure: env.NODE_ENV === 'production',
+      httpOnly: true,
+      maxAge: 60 * 10,
+      sameSite: 'lax',
+    })
 
   return Response.redirect(url)
 }

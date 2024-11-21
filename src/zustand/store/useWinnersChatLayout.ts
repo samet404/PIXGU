@@ -1,18 +1,18 @@
 import { create } from 'zustand'
-import { useRoomWinnersChatMsgsStore } from './useRoomWinnersChatMsgs'
+// import { useRoomWinnersChatMsgsStore } from './useRoomWinnersChatMsgs'
 
 type Value =
   | {
-      haveAccess: false
-      isOpen: false
-    }
+    haveAccess: false
+    isOpen: false
+  }
   | {
-      haveAccess: true
-      isOpen: boolean
-      input: boolean
-      change: boolean
-      info: boolean
-    }
+    haveAccess: true
+    isOpen: boolean
+    input: boolean
+    change: boolean
+    info: boolean
+  }
 
 type State = {
   value: Value
@@ -67,7 +67,6 @@ export const useWinnersChatLayout = create<State & Action>((set, get) => ({
       },
     })
 
-    useRoomWinnersChatMsgsStore.getState().reset()
   },
 
   setImNotGuessed: () => {
@@ -75,7 +74,6 @@ export const useWinnersChatLayout = create<State & Action>((set, get) => ({
       value: { isOpen: false, haveAccess: false },
     })
 
-    useRoomWinnersChatMsgsStore.getState().reset()
   },
 
   setIGuessed: () => {
@@ -89,7 +87,6 @@ export const useWinnersChatLayout = create<State & Action>((set, get) => ({
       },
     })
 
-    useRoomWinnersChatMsgsStore.getState().reset()
   },
 
   reset: () => set(initValue),

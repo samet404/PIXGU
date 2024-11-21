@@ -25,14 +25,16 @@ const Joined = ({ roomID, user, guest }: Props) => {
     <Providers userID={userID} roomID={roomID} user={user ?? guest!}>
       <div
         id="root"
-        className={`${outfit.className}  h-full w-full overflow-y-scroll`}
+        className={`${outfit.className} h-full w-full overflow-y-scroll`}
       >
         <ResetStates />
         <ConnectToPeers />
         <HostingHealthDisplay />
-        <div style={{
-          backgroundImage: 'radial-gradient(at 100% 0%, hsla(210,53%,50%,0.3) 0px, transparent 50%), radial-gradient(at 0% 0%, hsla(210,73%,57%,0.6) 0px, transparent 50%)'
-        }} className="flex flex-col items-center gap-4 py-5 min-h-[70rem]">
+        <div
+          style={{
+            backgroundImage: 'radial-gradient(at 100% 0%, hsla(210,53%,50%,0.3) 0px, transparent 50%), radial-gradient(at 0% 0%, hsla(210,73%,57%,0.6) 0px, transparent 50%)'
+          }}
+          className="flex flex-col items-center gap-4 py-5 min-h-[70rem]">
           <Navbar />
           <PlayersSection />
           <Canvases />

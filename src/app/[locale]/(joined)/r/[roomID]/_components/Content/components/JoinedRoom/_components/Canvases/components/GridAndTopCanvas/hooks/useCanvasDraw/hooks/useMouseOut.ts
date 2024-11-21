@@ -5,37 +5,46 @@ import {
   usePainterTool,
 } from '@/zustand/store'
 import { amIPainter } from './func'
-import { storePixelsOnDraw } from '@/store'
+import { getCanvasWorker, type CanvasWorkerOnMsgData } from '@/workers'
+import { sendToHostPeer } from '@/utils/sendToHostPeer'
+import { clearAndPasteToMainCanvas } from '@/helpers/room'
+
+const canvasWorker = getCanvasWorker()
 
 export const useMouseOut = () => {
   const handler = () => {
-    console.log('mouse out')
-
     if (!amIPainter()) return
 
-    const canvasesMainData = useCanvasesMainData.getState().get()
-    const toolName = usePainterTool.getState().current
+    const tool = usePainterTool.getState().current
 
-    useAmIPainting.getState().imNotPainting()
+    switch (tool) {
+      case 'pencil': {
+        const { dpctx, mctx } = useCanvasesMainData.getState().get()
+        sendToHostPeer({
 
-    switch (toolName) {
-      case 'pencil':
-        {
-          const dctx = canvasesMainData.grid!.getContext('2d')!
-          dctx.beginPath()
+          event: 'painterEraserOrPencilOut'
+        })
+        canvasWorker.current.postMessage({ e: 4 } as CanvasWorkerOnMsgData)
+        clearAndPasteToMainCanvas(dpctx!, mctx!)
+        useAmIPainting.getState().imNotPainting()
+      }
+      case 'eraser': {
+        const { dpctx, mctx } = useCanvasesMainData.getState().get()
+        sendToHostPeer({
 
-          storePixelsOnDraw.reset()
-        }
+          event: 'painterEraserOrPencilOut'
+        })
+        canvasWorker.current.postMessage({ e: 4 } as CanvasWorkerOnMsgData)
+        clearAndPasteToMainCanvas(dpctx!, mctx!)
+        useAmIPainting.getState().imNotPainting()
         break
-      case 'eraser':
-        {
-          const dctx = canvasesMainData.grid!.getContext('2d')!
-          dctx.beginPath()
-
-          storePixelsOnDraw.reset()
-        }
+      }
+      case 'gradient': {
+        const { dgctx, mctx } = useCanvasesMainData.getState().get()
+        useAmIPainting.getState().imNotPainting()
+        clearAndPasteToMainCanvas(dgctx!, mctx!)
         break
-
+      }
     }
   }
 

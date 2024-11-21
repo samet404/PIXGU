@@ -1,21 +1,19 @@
-import { bucket } from '@/helpers/room'
-import { sendToAllPeers } from '@/utils/sendToAllPeers'
 import type { PainterBucket } from '@/types/webRTCConnData'
-import { useHostCanvasesData, useWhoIsPainter } from '@/zustand/store'
+import { getCanvasWorker, type CanvasWorkerOnMsgData } from '@/workers'
+import { useWhoIsPainter } from '@/zustand/store'
+
+const canvasWorker = getCanvasWorker()
 
 export const getPainterBucket = (data: PainterBucket['data'], userID: string) => {
     if (!useWhoIsPainter.getState().isPainter(userID)) return
-
-    const { dbctx, mctx, draft_bucket, cellSideCount, cellPixelLength } = useHostCanvasesData.getState()
     const { x, y, color } = data
 
 
-    bucket(mctx!, dbctx!, draft_bucket!, x, y, cellPixelLength!, cellSideCount, color)
-    sendToAllPeers({
-        from: 'host',
-        event: 'painterBucket',
-        data,
-    }, {
-        except: [userID]
-    })
+    canvasWorker.current.postMessage({
+        e: 0, data: {
+            x,
+            y,
+            color
+        }
+    } as CanvasWorkerOnMsgData)
 }

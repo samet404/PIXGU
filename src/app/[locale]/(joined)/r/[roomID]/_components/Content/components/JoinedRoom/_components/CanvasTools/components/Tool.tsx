@@ -39,9 +39,9 @@ export const Tool = ({
       }}
       style={springs}
       className={clsxMerge(
-        `group flex h-full w-full items-center justify-center gap-2 rounded-md bg-[rgba(255,255,255,0.2)] p-1 duration-300 ${className} `,
+        `group flex h-full w-full items-center justify-center gap-2 rounded-md p-1 duration-300 ${className} `,
         {
-          'bg-[rgba(255,255,255,0.4)]': isActive,
+          'drop-shadow-[0_0px_10px_rgba(255,255,255,0.8)]': isActive,
         },
       )}
       {...rest}

@@ -41,6 +41,11 @@ export const getRoomByID = joinedUserProducure
         message: 'Room not found',
       })
 
+    const playerCount = await ctx.redisDb.get(`room:${ID}:total_players`)
+    if (!playerCount)
+      throw new TRPCError({ code: 'NOT_FOUND', message: 'Room not found' })
+
+
     return {
       ID,
       name,
@@ -48,5 +53,6 @@ export const getRoomByID = joinedUserProducure
       createdAt: new Date(createdAt),
       distanceInKm,
       country: hostCountry,
+      playerCount: parseInt(playerCount),
     }
   })

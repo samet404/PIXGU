@@ -4,8 +4,6 @@ import login from '@/png/login.png'
 import Image from 'next/image'
 
 const Login = ({ name, description }: Props) => {
-  const isLogged = getIsLogged()
-  if (isLogged) return null
 
   return (
     <MainButton
@@ -20,7 +18,7 @@ const Login = ({ name, description }: Props) => {
       name={name}
       description={description}
       keyName="4"
-      className="rounded-br-md hover:from-[rgba(59,164,255,0.4)] hover:to-[rgba(255,255,255,0.3)]"
+      className="rounded-br-md hover:from-[rgba(42,255,223,0.55)] hover:to-[rgba(255,255,255,0.3)]"
     />
   )
 }

@@ -1,47 +1,54 @@
-import { useEffectOnce } from '@/hooks/useEffectOnce'
 import {
   useAmIPainting,
   useCanvasesMainData,
   usePainterTool,
 } from '@/zustand/store'
 import { amIPainter } from './func'
-import { storePixelsOnDraw } from '@/store'
+import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { sendToHostPeer } from '@/utils/sendToHostPeer'
+import { getCanvasWorker, type CanvasWorkerOnMsgData } from '@/workers'
+import { clearAndPasteToMainCanvas } from '@/helpers/room'
+
+const canvasWorker = getCanvasWorker()
 
 export const useMouseUp = () => {
-  console.log('mouse up')
   const handler = () => {
     if (!amIPainter()) return
-
-    const { dpctx } = useCanvasesMainData.getState().get()
 
     const tool = usePainterTool.getState().current
 
     switch (tool) {
-      case 'pencil':
+      case 'pencil': {
+        const { mctx, dpctx } = useCanvasesMainData.getState().get()
+
         sendToHostPeer({
-          from: 'client',
+
           event: 'painterEraserOrPencilOut'
         })
-        dpctx!.beginPath()
-        storePixelsOnDraw.reset()
-
-        storePixelsOnDraw.setLastPixel(null)
+        canvasWorker.current.postMessage({ e: 4 } as CanvasWorkerOnMsgData)
         useAmIPainting.getState().imNotPainting()
-        storePixelsOnDraw.reset()
+        clearAndPasteToMainCanvas(dpctx!, mctx!)
         break
-      case 'eraser':
+      }
+      case 'eraser': {
+        const { mctx, dpctx } = useCanvasesMainData.getState().get()
+
         sendToHostPeer({
-          from: 'client',
+
           event: 'painterEraserOrPencilOut'
         })
-        dpctx!.beginPath()
-        storePixelsOnDraw.reset()
-
-        storePixelsOnDraw.setLastPixel(null)
+        canvasWorker.current.postMessage({ e: 4 } as CanvasWorkerOnMsgData)
         useAmIPainting.getState().imNotPainting()
-        storePixelsOnDraw.reset()
+        clearAndPasteToMainCanvas(dpctx!, mctx!)
         break
+      }
+      case 'gradient': {
+        const { dgctx, mctx } = useCanvasesMainData.getState().get()
+
+        useAmIPainting.getState().imNotPainting()
+        clearAndPasteToMainCanvas(dgctx!, mctx!)
+        break
+      }
     }
   }
 

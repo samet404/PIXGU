@@ -1,10 +1,14 @@
-import { pencil as runPencil } from '@/helpers/room'
+import { fillOnePixel } from '@/helpers/room'
 import { sendToHostPeer } from '@/utils/sendToHostPeer'
+import { getCanvasWorker, type CanvasWorkerOnMsgData, type CanvasWorkerPostMsgData } from '@/workers'
 import {
     useAmIPainting,
     useCanvasesMainData,
     usePainterTool,
 } from '@/zustand/store'
+import type { MouseEvent } from 'react'
+
+const canvasWorker = getCanvasWorker()
 
 export const pencil = (
     smoothX: number,
@@ -12,20 +16,27 @@ export const pencil = (
 ) => {
     if (!useAmIPainting.getState().amIPainting) return
 
-    const color = new Uint8ClampedArray(usePainterTool.getState().with.color)
-    const { draft_pencil, cellPixelLength, cellSideCount } = useCanvasesMainData.getState().get()
-    const dpctx = draft_pencil!.getContext('2d')!
+    const button = useAmIPainting.getState().button
+    const color = new Uint8ClampedArray(usePainterTool.getState().with[button === 0 ? 'color1' : 'color2'])
     const size = usePainterTool.getState().options.pencil.size
 
-    const processed = runPencil(smoothX, smoothY)
+    canvasWorker.current.postMessage({
+        e: 1,
+        data: {
+            color,
+            startX: smoothX,
+            startY: smoothY,
+            size
+        }
+    } as CanvasWorkerOnMsgData)
     sendToHostPeer({
-        from: 'client',
+
         event: 'painterPencil',
         data: {
             x: smoothX,
             y: smoothY,
             color,
-            size,
-        },
+            size
+        }
     })
 }

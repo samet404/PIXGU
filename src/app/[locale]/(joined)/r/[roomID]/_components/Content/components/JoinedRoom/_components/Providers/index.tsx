@@ -11,6 +11,7 @@ import {
 import { SocketIOProvider } from './components/SocketIO'
 import type { Guest } from '@/types/guest'
 import type { User } from 'lucia'
+import { Password } from './components/Password'
 
 export const Providers = ({
   roomID,
@@ -18,39 +19,42 @@ export const Providers = ({
   hostID,
   user,
   guest,
+  havePassword,
   children,
 }: Props) => {
   console.log('providers: ', user, guest)
   return (
-    <SocketIOProvider roomID={roomID}>
-      <HostInfoStoreProvider
-        initState={{
-          amIHost: userID === hostID,
-          hostID,
-          isPlayer: true,
-        }}
-      >
-        <UserIDStoreProvider
+    <Password havePassword={havePassword}>
+      <SocketIOProvider roomID={roomID}>
+        <HostInfoStoreProvider
           initState={{
-            userID: user ? user.id : guest!.ID,
+            amIHost: userID === hostID,
+            hostID,
+            isPlayer: true,
           }}
         >
-          <RoomIDStoreProvider
+          <UserIDStoreProvider
             initState={{
-              roomID,
+              userID: user ? user.id : guest!.ID,
             }}
           >
-            <MyUserInfoForRoomStoreProvider
+            <RoomIDStoreProvider
               initState={{
-                user: user ?? guest!,
+                roomID,
               }}
             >
-              {children}
-            </MyUserInfoForRoomStoreProvider>
-          </RoomIDStoreProvider>
-        </UserIDStoreProvider>
-      </HostInfoStoreProvider>
-    </SocketIOProvider>
+              <MyUserInfoForRoomStoreProvider
+                initState={{
+                  user: user ?? guest!,
+                }}
+              >
+                {children}
+              </MyUserInfoForRoomStoreProvider>
+            </RoomIDStoreProvider>
+          </UserIDStoreProvider>
+        </HostInfoStoreProvider>
+      </SocketIOProvider>
+    </Password>
   )
 }
 
@@ -60,4 +64,5 @@ type Props = {
   hostID: string
   user: User | null
   guest: Guest | null
+  havePassword: boolean
 } & PropsWithChildren

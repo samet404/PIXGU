@@ -1,20 +1,4 @@
 import { create } from 'zustand'
-import { useWhoIsPainterClient } from './useWhoIsPainterClient'
-import { useAmIPainting } from './useAmIPainting'
-import { useWinnersChatLayout } from './useWinnersChatLayout'
-import { useGuessChatLayout } from './useGuessChatLayout'
-import { useRoomWinnersChatMsgsStore } from './useRoomWinnersChatMsgs'
-import { useRoomGuessChatMsgsStore } from './useRoomGuessChatMsgs'
-import { useGuessedPlayers } from './useGuessedPlayers'
-import { useMyCoin } from './useMyCoin'
-import { useCoins } from './useCoins'
-import { useLastPixel } from './useLastPixel'
-import { useSpectators } from './useSpectators'
-import { useAmISpectator } from './useAmISpectator'
-import { useSelectThemePanel } from './useSelectThemePanel'
-import { useNewPainterPanel } from './useNewPainterPanel'
-import { useMatchStatusClient } from './useMatchStatusClient'
-import { storePixelHistory, storePixelsOnDraw } from '@/store'
 
 type Code = 'connectingToHost' | 'waitingForHost' | 'waitingForPlayers'
 
@@ -72,23 +56,7 @@ export const useIsGameStopped = create<State & Action>((set, get) => ({
       },
     })
 
-    useWhoIsPainterClient.getState().reset()
-    useAmIPainting.getState().reset()
-    useWinnersChatLayout.getState().reset()
-    useGuessChatLayout.getState().reset()
-    useRoomWinnersChatMsgsStore.getState().reset()
-    useRoomGuessChatMsgsStore.getState().reset()
-    useGuessedPlayers.getState().reset()
-    useMyCoin.getState().reset()
-    useCoins.getState().reset()
-    useLastPixel.getState().reset()
-    storePixelHistory.reset()
-    useSpectators.getState().reset()
-    useAmISpectator.getState().reset()
-    storePixelsOnDraw.reset()
-    useNewPainterPanel.getState().reset()
-    useMatchStatusClient.getState().reset()
-    useSelectThemePanel.getState().reset()
+
   },
   reset: () => set(initState),
 }))

@@ -37,7 +37,7 @@ const QuickMatch = ({ name, description }: Props) => {
       name={name}
       description={description}
       keyName="3"
-      className="h-full w-full rounded-tl-md hover:from-[rgba(53,255,147,0.4)] hover:to-[rgba(255,255,255,0.3)]"
+      className="h-full w-full rounded-tl-md hover:from-[rgba(5,255,121,0.63)] hover:to-[rgba(255,255,255,0.3)]"
     >
       <NoPublicRoom />
     </MainButton>

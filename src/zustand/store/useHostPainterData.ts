@@ -1,25 +1,24 @@
 import { negativeLog } from '@/utils/negativeLog'
 import { sendToAllPeers } from '@/utils/sendToAllPeers'
 import { create } from 'zustand'
-import { createMatch } from 'src/funcs/createMatch'
+import { createMatch } from '@/helpers/room'
 import { sToMs } from '@/utils/sToMs'
-import { useMatchStatus } from './useMatchStatus'
 
 type Value =
   | {
-      status: 'painterSelectedTheme'
-      themes: [string, string]
-      selectedTheme: string
-    }
+    status: 'painterSelectedTheme'
+    themes: [string, string]
+    selectedTheme: string
+  }
   | {
-      status: 'painterSelectingTheme'
-      themes: [string, string]
-      timeIsUpIntervalStartedAt: number
-      timeIsUpInterval: ReturnType<typeof setInterval>
-    }
+    status: 'painterSelectingTheme'
+    themes: [string, string]
+    timeIsUpIntervalStartedAt: number
+    timeIsUpInterval: ReturnType<typeof setInterval>
+  }
   | {
-      status: 'waitingForPlayers'
-    }
+    status: 'waitingForPlayers'
+  }
 
 type State = {
   value: Value
@@ -76,7 +75,6 @@ export const useHostPainterData = create<State & Action>((set, get) => ({
               clearInterval(data.timeIsUpInterval)
 
               sendToAllPeers({
-                from: 'host',
                 event: 'painterCouldNotSelectTheme',
                 data: 'timeIsUp',
               })

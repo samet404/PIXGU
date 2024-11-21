@@ -11,9 +11,7 @@ import { Providers } from './_components/Providers'
 import { Suspense } from 'react'
 import AnimatedDiv from './_components/AnimatedDiv'
 import { Blur } from './_components/Blur'
-import bgImg from '@/png/gamebg.png'
 import Canvases from './_components/Canvases'
-// import CanvasTools from './_components/CanvasTools'
 import { Chats } from './_components/Chats'
 import Nav from './_components/Nav'
 import PlayersSection from './_components/PlayersSection'
@@ -24,79 +22,85 @@ import { Spectator } from './_components/Spectator'
 import { Outfit } from 'next/font/google'
 import { GameEnd } from './_components/GameEnd'
 import { Powerups } from './_components/Powerups'
-import Image from 'next/image'
 import CanvasTools from './_components/CanvasTools'
-import Spinner from '@/components/Spinner'
 import { Shortcuts } from './_components/Shortcuts'
 import { ToolAlert } from './_components/ToolAlert'
+import { CanvasToolsShadow } from './_components/CanvasToolsShadow'
+import { LetterHint } from './_components/Letterhint'
+import { api } from '@/trpc/server'
 
 const outfit = Outfit({
   subsets: ['latin'],
-  weight: ['700', '600', '500', '400', '300', '200', '100'],
+  weight: ['700', '600', '500', '400', '800', '300', '200', '900', '100'],
 })
 
-const JoinedRoom = () => {
+const JoinedRoom = async () => {
   const userID = getUserID()
   const hostID = getHostID()
   const guestID = getGuestID()
   const roomID = getRoomID()
   const user = getUser()
   const guest = getGuest()
-
-  console.log({
-    user,
-    guest,
-  })
   const isHost = userID === hostID
 
+  const havePassword = await api.gameRoom.isHavePass.query({
+    roomID,
+  })
+
   return (
-    <Providers
+    <div
+      className={`${outfit.className} relative flex h-full w-full flex-col`}
+    >    <Providers
+      havePassword={havePassword}
       userID={userID}
       roomID={roomID}
       hostID={hostID}
       user={user}
       guest={guest}
     >
-      <div
-        className={`${outfit.className} relative flex h-full w-full flex-col`}
-      >
-        <AnimatedDiv />
-        <Nav />
-        <div className="h-full w-full">
-          <ToolAlert />
-          <ResetStates />
-          <GameEnd userID={userID} />
-          <Suspense>
-            <Blur />
-          </Suspense>
-          <Shortcuts />
-          <div className="h-[100vh] w-full">
+        <div
+          className='relative flex h-full w-full flex-col'
+        >
+          <AnimatedDiv />
+          <Nav />
+          <div className="h-full w-full">
+            <CanvasToolsShadow />
+            <ToolAlert />
+            <ResetStates />
+            <CanvasTools />
+            <GameEnd userID={userID} />
             <Suspense>
-              <Marketplace />
-              <Powerups />
+              <Blur />
             </Suspense>
-            <div
-              id="rootDiv"
-              className="relative flex h-full w-full animate-fade-down flex-row items-start justify-between gap-2 overflow-y-scroll px-2 pb-24 pt-2"
-            >
-              <Spectator />
+            <Shortcuts />
+            <div className="h-[100vh] w-full">
+              <Suspense>
+                <LetterHint />
+                <Marketplace />
+                <Powerups />
+              </Suspense>
+              <div
+                id="rootDiv"
+                className="relative flex h-full w-full animate-fade-down flex-row items-start justify-between gap-2 overflow-y-scroll px-2 pb-24 pt-2"
+              >
+                <Spectator />
 
-              <div className="z-10 flex h-[90vh] flex-col gap-2 lg:w-[12rem] xl:w-[15rem]">
-                <LeftNav />
-                <PlayersSection />
-              </div>
-              <div className="z-10 flex grow flex-col items-center gap-2 rounded-lg">
-                <Canvases />
-              </div>
-              <div className="flex h-[90vh] max-w-[20rem] flex-col gap-2 lg:w-[12rem] xl:w-[15rem]">
-                <CanvasTools />
-                <Chats />
+                <div className="z-10 flex h-[90vh] flex-col gap-2 lg:w-[12rem] xl:w-[15rem]">
+                  <PlayersSection />
+                </div>
+                <div className="z-10 flex grow flex-col items-center gap-2 rounded-lg">
+                  <Canvases />
+                </div>
+                <div className="flex h-[90vh] max-w-[20rem] flex-col gap-2 lg:w-[12rem] xl:w-[15rem]">
+                  <LeftNav />
+                  <Chats />
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </Providers>
+      </Providers>
+    </div>
   )
 }
 

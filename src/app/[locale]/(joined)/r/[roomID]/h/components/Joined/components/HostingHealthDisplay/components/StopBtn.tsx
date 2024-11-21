@@ -42,7 +42,7 @@ export const StopBtn = ({ roomID }: Props) => {
     useHostPainterData.getState().reset()
 
     sendToAllPeers({
-      from: 'host',
+
       event: 'gameIsStopped',
     })
   }

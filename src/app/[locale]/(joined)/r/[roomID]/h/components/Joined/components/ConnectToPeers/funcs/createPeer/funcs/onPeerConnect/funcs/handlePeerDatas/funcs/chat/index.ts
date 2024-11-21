@@ -1,4 +1,7 @@
 import type { GuessChatFromClient, WinnersChatFromClient } from '@/types'
+import { guessChat } from './funcs/guessChat'
+import { winnersChat } from './funcs/winnersChat'
+import { useHostPlayersMsgs } from '@/zustand/store'
 
 export const chat = async (
   data: (GuessChatFromClient | WinnersChatFromClient)['data'],
@@ -7,34 +10,16 @@ export const chat = async (
   roomID: string,
 ) => {
   if (data.msg.trim() === '') return
+  const msgID = useHostPlayersMsgs.getState().addMsg(userID, data.msg)
 
-  if (event === 'guessChat')
-    import('./funcs/guessChat').then((m) => m.guessChat(data, userID, roomID))
+  switch (event) {
+    case 'winnersChat':
+      winnersChat(data, userID, msgID)
+      break
+    case 'guessChat':
+      guessChat(data, userID, msgID, roomID)
+      break
+  }
 
-  const { sendToAllPeers, sendToPeerWithID } = await import('@/utils')
-  const { createId } = await import('@paralleldrive/cuid2')
 
-  sendToAllPeers(
-    {
-      from: 'host',
-      event: event,
-      data: {
-        from: userID,
-        msgID: `${createId()}-${userID}`,
-        msg: data.msg,
-      },
-    },
-    { except: [userID] },
-  )
-
-  sendToPeerWithID(userID, {
-    from: 'host',
-    event: `your${event.charAt(0).toUpperCase() + event.slice(1)}` as
-      | 'yourGuessChat'
-      | 'yourWinnersChat',
-    data: {
-      msgID: `${createId()}-${userID}`,
-      msg: data.msg,
-    },
-  })
 }

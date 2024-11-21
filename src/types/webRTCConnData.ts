@@ -1,7 +1,6 @@
 import type { Player } from '@/zustand/store'
 import type { User } from 'lucia'
 import type { Powerup } from './powerups'
-import type { PixelHistoryStoreValueHistory } from '@/store'
 
 /**
  * WebRTCConnData is the type of data that
@@ -13,16 +12,18 @@ export type GuessChatFromHost = {
   event: 'guessChat'
   data: {
     from: string
-    msgID: string
+    msgID: number
     msg: string
+    similarity: number
   }
 }
 
 export type YourGuessChatFromHost = {
   event: 'yourGuessChat'
   data: {
-    msgID: string
+    msgID: number
     msg: string
+    similarity: number
   }
 }
 
@@ -36,7 +37,7 @@ export type GuessChatFromClient = {
 export type WinnersChatFromHost = {
   event: 'winnersChat'
   data: {
-    msgID: string
+    msgID: number
     from: string
     msg: string
   }
@@ -45,7 +46,7 @@ export type WinnersChatFromHost = {
 export type YourWinnersChatFromHost = {
   event: 'yourWinnersChat'
   data: {
-    msgID: string
+    msgID: number
     msg: string
   }
 }
@@ -95,7 +96,7 @@ export type PainterBucket = {
 
 export type PrevCanvas = {
   event: 'prevCanvas'
-  data: PixelHistoryStoreValueHistory['rgb']
+  data: Uint8ClampedArray[][]
 
 }
 
@@ -127,6 +128,7 @@ type PingPongData = {
   data: {
     date: number
     something: 'Ad eiusmod qui in aliqua irure. Ipsum eu elit enim mollit adipisicing incididunt.'
+    ping: number
   }
 }
 
@@ -223,18 +225,50 @@ export type GameEnded = {
   }
 }
 
-export type MarketItem = {
-  event: 'marketItem'
+export type BuyMarketItem = {
+  event: 'buyMarketItem'
   data: {
     name: Powerup
   }
 }
 
-export type MarketItemPurchased = {
-  event: 'marketItemPurchased'
+export type YouPurchasedMarketItem = {
+  event: 'youPurchasedMarketItem'
+  data: {
+    name: Powerup
+    price: number
+  }
+}
+
+export type PurchasedMarketItem = {
+  event: 'purchasedMarketItem'
   data: {
     userID: string
+    price: number
+    name: Powerup
+  }
+}
+
+export type UsePowerup = {
+  event: 'usePowerup'
+  data: {
+    name: Powerup
+  }
+}
+
+export type PowerupUsed = {
+  event: 'powerupUsed'
+  data: {
+    name: Powerup
+    userID: string
+  }
+}
+
+export type YouUsedPowerup = {
+  event: 'youUsedPowerup'
+  data: {
     name: 'letterHint'
+    data: string
   }
 }
 
@@ -267,13 +301,13 @@ export type WebRTCConnDataFromHost = (
   | PainterTrash
   | PainterEraser
   | PainterPencil
-  | MarketItemPurchased
   | PrevCanvas
   | PainterEraserOrPencilOut
-) & {
-  from: 'host'
-}
-
+  | YouPurchasedMarketItem
+  | PurchasedMarketItem
+  | PowerupUsed
+  | YouUsedPowerup
+)
 /**
  * DirectlyFromClient is the type of data that is sent directly from the client.
  */
@@ -287,7 +321,6 @@ export type WebRTCConnDataFromClient = (
   | Ping
   | PainterTrash
   | SelectThemeFromClient
-  | MarketItem
-) & {
-  from: 'client'
-}
+  | BuyMarketItem
+  | UsePowerup
+) 

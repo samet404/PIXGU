@@ -2,9 +2,10 @@ import { create } from 'zustand'
 import { subscribeWithSelector } from 'zustand/middleware'
 import { persistNSync } from "persist-and-sync";
 import { arrsEqual } from '@/utils';
+import { MODIFIER_KEYS } from '@/constants';
 
 const initState: State = {
-    queue: [],
+    combination: [],
     keys: {
         Pencil: ['P'],
         Bucket: ['B'],
@@ -19,6 +20,10 @@ const initState: State = {
         Marketplace: ['M'],
         Escape: ['ESCAPE'],
         Refresh: ['CONTROL', 'R'],
+        Undo: ['CONTROL', 'Z'],
+        Redo: ['CONTROL', 'Y'],
+        "Change Undo/Redo type": ['CONTROL', 'SHIFT', 'V'],
+        "Change in-game chat": ['CONTROL', 'C'],
     }
 }
 
@@ -47,27 +52,44 @@ export const useControls = create<State & Action>()(
 
                 getKeys: () => Object.keys(get().keys),
                 getKeyValue: (key) => get().keys[key],
-                addToQueue: (key) => {
-                    console.log('adding to queue', key)
+                clearOneCombinationKey: (key) => {
                     set({
                         ...get(),
-                        queue: [...get().queue, key]
+                        combination: get().combination.filter(k => k !== key)
                     })
+                    console.log('clearOneCombinationKey: ', get().combination)
                 },
+                addToCombination: (key) =>
+                    set({
+                        ...get(),
+                        combination: [...get().combination, key]
+                    }),
 
-                clearQueue: () => set({
+                clearCombinationExceptModifiers: () =>
+                    set({
+                        ...get(),
+                        combination: get().combination.filter(key => !MODIFIER_KEYS.has(key))
+                    }),
+
+                setSameCombination: () => set({
                     ...get(),
-                    queue: []
-                })
+                    combination: [...get().combination]
+                }),
+
+                clearCombination: () =>
+                    set({
+                        ...get(),
+                        combination: []
+                    }),
             }),
-            { name: 'controls' },
+            { name: 'controls', exclude: ['combination'] },
         ),
     ),
 )
 
 type State = {
-    queue: string[]
-    keys: Record<'Pencil' | 'Bucket' | 'Eyedropper' | 'Powerups' | 'Marketplace' | 'Escape' | 'Grid' | 'Increase tool size' | 'Decrease tool size' | 'Eraser' | 'Trash' | 'Download' | 'Refresh', Key>
+    combination: string[]
+    keys: Record<'Pencil' | 'Bucket' | 'Eyedropper' | 'Powerups' | 'Marketplace' | 'Escape' | 'Grid' | 'Increase tool size' | 'Decrease tool size' | 'Eraser' | 'Trash' | 'Download' | 'Refresh' | 'Undo' | 'Redo' | 'Change Undo/Redo type' | 'Change in-game chat', Key>
 }
 
 export type ControlsState = State
@@ -79,8 +101,11 @@ type Action = {
     } | void
     getKeys: () => string[]
     getKeyValue: (key: keyof State['keys']) => string[]
-    addToQueue: (keyy: string) => void
-    clearQueue: () => void
+    addToCombination: (key: string) => void
+    setSameCombination: () => void
+    clearOneCombinationKey: (key: string) => void
+    clearCombinationExceptModifiers: () => void
+    clearCombination: () => void
 }
 
 type Key = [string] | [string, string] | [string, string, string]

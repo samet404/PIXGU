@@ -5,6 +5,7 @@ type State = { coin: number }
 type Action = {
   add: (input: number) => void
   get: () => number
+  minus: (input: number) => void
   reset: () => void
 }
 
@@ -18,6 +19,10 @@ export const useMyCoin = create<State & Action>((set, get) => ({
       coin: parseFloat((get().coin + input).toFixed(2)),
     }),
 
+  minus: (input) =>
+    set({
+      coin: parseFloat((get().coin - input).toFixed(2)),
+    }),
   get: () => get().coin,
   reset: () => set({ coin: initValue }),
 }))

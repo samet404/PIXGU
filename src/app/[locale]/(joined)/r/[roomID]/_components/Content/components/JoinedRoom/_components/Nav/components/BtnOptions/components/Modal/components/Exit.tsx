@@ -11,5 +11,5 @@ export const Exit = () => {
     router.push('/')
   }
 
-  return <Btn isLoading={isLoading} className="bg-rose-300" text="EXIT" onMouseDown={() => leaveRoom()} />
+  return <Btn isLoading={isLoading} className="bg-rose-500" text="EXIT" onMouseDown={() => leaveRoom()} />
 }

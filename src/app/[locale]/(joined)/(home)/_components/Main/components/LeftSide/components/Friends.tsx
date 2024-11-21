@@ -4,8 +4,6 @@ import friends from '@/png/friends.png'
 import { getIsLogged } from '@/context/server'
 
 const Friends = ({ name, description }: Props) => {
-  const isLogged = getIsLogged()
-
   return (
     <div>
       <MainButton
@@ -18,7 +16,6 @@ const Friends = ({ name, description }: Props) => {
           />
         }
         name={name}
-        disabled={!isLogged}
         description={description}
         keyName="3"
         className="h-full w-full rounded-bl-md hover:from-[#00aaff9c] hover:to-[rgba(255,255,255,0.3)]"

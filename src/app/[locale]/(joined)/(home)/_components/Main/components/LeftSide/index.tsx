@@ -6,9 +6,6 @@ import QuickMatch from './components/QuickMatch'
 import Friends from './components/Friends'
 import { getLangObj } from './lang'
 import { getLocale } from '@/context/server'
-import { Outfit } from 'next/font/google'
-
-const outfit = Outfit({ subsets: ['latin'], weight: ['700', '500'] })
 
 const LeftSide = async () => {
   const locale = getLocale()
@@ -17,7 +14,7 @@ const LeftSide = async () => {
   return (
     <div
       id="main-left-side"
-      className={`${outfit.className} grid h-full w-full gap-2 overflow-y-scroll rounded-md bg-[rgba(0,0,0,0.7)] p-2 xs:grid-cols-1 md:grid-cols-2`}
+      className='grid h-full w-full gap-2 overflow-y-scroll rounded-md bg-[rgba(0,0,0,0.7)] p-2 xs:grid-cols-1 md:grid-cols-2'
     >
       <QuickMatch
         name={langObj.quick_match.name}

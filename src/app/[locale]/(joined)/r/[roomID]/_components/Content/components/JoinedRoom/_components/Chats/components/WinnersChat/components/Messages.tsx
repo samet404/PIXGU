@@ -1,8 +1,8 @@
 'use client'
 
 import { useRoomWinnersChatMsgsStore } from '@/zustand/store/useRoomWinnersChatMsgs'
-import { Msg } from './Msg'
-import { MyMsg } from './MyMsg'
+import { Msg } from '../../Msg'
+import { MyMsg } from '../../MyMsg'
 
 export const Messages = () => {
   const messages = useRoomWinnersChatMsgsStore((state) => state.msgs)

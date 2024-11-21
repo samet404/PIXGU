@@ -13,7 +13,6 @@ import '@fortawesome/fontawesome-svg-core/styles.css'
 import { Adsense } from './_components/Adsense'
 import { SmallScreenAlert } from './_components/SmallScreenAlert'
 import { DefaultShortcuts } from './_components/DefaultShortcuts'
-import { RefreshAlert } from './_components/RefreshAlert'
 config.autoAddCss = false
 
 export const metadata: Metadata = {
@@ -71,10 +70,9 @@ const RootLayout = async (props: {
       >
         <SmallScreenAlert>
           <Adsense />
-          <TRPCReactProvider cookies={cookies().toString()}>
+          <TRPCReactProvider cookies={(await cookies()).toString()}>
             {/* <CustomCursor /> */}
             <Providers>
-              <RefreshAlert />
               <DefaultShortcuts />
 
               {props.children}

@@ -1,23 +1,23 @@
 'use client'
 
-import Image from 'next/image'
-import img from '@/svg/thunder-f-svgrepo-com.svg'
 import { Button } from './Button'
 import { openPanelAtom } from '../../atoms'
 import { useAtom } from 'jotai'
+import { Svg } from '@/components/Svg'
 
 export const Powerups = () => {
   const [openPanel, setOpenPanel] = useAtom(openPanelAtom)
 
   return (
     <Button
+      shortcutName='Powerups'
       key={'powerups'}
       onMouseDown={() => {
         if (openPanel === 'power-ups') setOpenPanel(null)
         else setOpenPanel('power-ups')
       }}
-      className="hover size-9 rounded-lg bg-[#ffffff4a] p-1 hover:bg-[rgba(255,230,0,0.62)]"
-      icon={<Image src={img} alt="download" className="opacity-60" />}
+      className="hover:bg-[rgba(255,230,0,0.62)]"
+      icon={<Svg src='thunder-f-svgrepo-com.svg' alt="star" className="h-full w-full opacity-60" />}
     />
   )
 }

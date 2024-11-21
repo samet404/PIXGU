@@ -1,34 +1,60 @@
-import Image from 'next/image'
+'use client'
 
-export const Msg = ({ ID, msg, name, pfp }: Props) => {
-  return (
-    <div className="flex flex-row gap-[0.40rem]">
-      <div className="pt-2">
-        {pfp ? (
-          <Image
-            src={pfp}
-            alt="pfp"
-            className="size-8 rounded-full"
-            sizes="2w32"
-          />
-        ) : (
-          <div className="flex size-8 flex-shrink-0 rounded-full bg-white"></div>
-        )}
-      </div>
-      <div className="flex w-[90%] flex-col gap-2">
-        <div className="pt-2 text-[1.2rem] leading-3 text-white">404</div>
-        <div className="flex break-all rounded-md bg-gradient-to-r from-[#ffffff5f] to-transparent px-2 py-1 leading-5 text-[#0000006d]">
-          {msg}
+import { usePlayers } from '@/zustand/store'
+import { useEffectOnce } from '@/hooks/useEffectOnce'
+import { UserPfp } from '@/components/UserPfp'
+
+export const Msg = ({ ID, msg, similarity }: Props) => {
+    const player = usePlayers((s) => s.getPlayer(ID))
+    if (!player) return null
+
+    const isGuest = 'ID' in player
+    const name = isGuest ? player?.name : player?.usernameWithUsernameID
+    const pfp = isGuest ? null : player?.profilePicture
+
+    useEffectOnce(() => {
+        const messageList = document.getElementById('guessChatMsgContainer')
+        const scrollHeight = messageList!.scrollHeight
+        const clientHeight = messageList!.clientHeight
+
+        messageList!.scrollTop = scrollHeight - clientHeight
+    })
+
+    return (
+        <div className="flex flex-row justify-start gap-[0.40rem] first:!mt-auto">
+            <UserPfp
+                ID={ID}
+                src={pfp}
+                width={32}
+                height={32}
+                alt="pfp"
+                // TODO sizes here pls
+                sizes="TODO"
+                className="flex-shrink-1 flex size-8 rounded-full border-[0.1rem] border-white bg-white"
+            />
+            <div className="flex flex-col gap-1 items-start">
+                <div className="overflow-ellipsis text-[1rem] leading-3 text-white">
+                    {name ?? ID}
+                </div>
+                <div className="flex break-all rounded-md bg-gradient-to-r from-[#ffffff5f] to-transparent px-2 py-1 leading-5 text-[#0000006d]">
+                    {msg}
+                </div>
+
+                {similarity && <div className='bg-rose-500 flex rounded-md drop-shadow-md'>
+                    <div style={{
+                        backgroundColor: `rgba(2,255,167,${similarity.toFixed(2)})`,
+                    }} className='text-[#ffffffb4] flex text-xs px-[0.2rem] py-[0.1rem] rounded-md'>
+                        {(similarity * 100).toFixed(2)} %
+                    </div>
+                </div>}
+            </div>
+
         </div>
-        <div className="text-[0.4rem] leading-3 text-white">{ID}</div>
-      </div>
-    </div>
-  )
+    )
 }
 
 type Props = {
-  ID: string
-  name: string
-  msg: string
-  pfp: string | null
+    ID: string
+    msg: string
+    similarity?: number
 }

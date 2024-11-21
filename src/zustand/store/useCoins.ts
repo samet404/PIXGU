@@ -8,6 +8,7 @@ type State = {
 type Action = {
   add: (userID: string, amount: number) => void
   get: (userID: string) => number
+  decrease: (userID: string, amount: number) => void
   getSortedByAmount: () => [string, number][]
   reset: () => void
 }
@@ -24,6 +25,14 @@ export const useCoins = create<State & Action>((set, get) => ({
       coins: {
         ...get().coins,
         [userID]: parseFloat(((get().coins[userID] ?? 0) + amount).toFixed(2)),
+      },
+    }),
+
+  decrease: (userID, amount) =>
+    set({
+      coins: {
+        ...get().coins,
+        [userID]: parseFloat(((get().coins[userID] ?? 0) - amount).toFixed(2)),
       },
     }),
   getSortedByAmount: () => {

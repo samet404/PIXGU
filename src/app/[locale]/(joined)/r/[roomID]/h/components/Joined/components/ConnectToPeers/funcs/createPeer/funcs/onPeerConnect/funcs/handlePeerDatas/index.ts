@@ -1,6 +1,7 @@
-import { chat, getPainterBucket, getPainterEraser, getPainterPencil, getSelectedTheme, painterTrash, pong } from './funcs'
+import { env } from '@/env/client'
+import { chat, getBuyMarketItem, getPainterBucket, getPainterEraser, getPainterPencil, getSelectedTheme, getUsePowerup, painterTrash, pong } from './funcs'
 import { onPeerData, grayLog, negativeLog } from '@/utils'
-import { usePeers } from '@/zustand/store'
+import { usePeers, useSocketIO } from '@/zustand/store'
 
 export const handlePeerDatas = (userID: string, roomID: string) => {
   const peers = usePeers.getState().get()
@@ -36,8 +37,16 @@ export const handlePeerDatas = (userID: string, roomID: string) => {
       case 'painterBucket':
         getPainterBucket(rtcData.data, userID)
         break
+      case 'buyMarketItem':
+        getBuyMarketItem(rtcData.data, userID)
+        break
+      case 'usePowerup':
+        getUsePowerup(rtcData.data, userID)
+        break
       default:
         negativeLog('RECEIVED NOT UNKNOWN EVENT FROM CLIENT', rtcData)
+        if (env.NEXT_PUBLIC_NODE_ENV === 'production') useSocketIO.getState().io!.emit('block-user', userID)
+
         break
     }
   })

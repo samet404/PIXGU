@@ -7,7 +7,7 @@ import { z } from 'zod'
 import { wToMs } from '@/utils'
 
 export const validateGuest = async (): Promise<Guest | null> => {
-  const authToken = cookies().get('guest_auth_session')?.value
+  const authToken = (await cookies()).get('guest_auth_session')?.value
   if (!authToken) return null
 
   const ID = await redisDb.get(`guest:session:${authToken}:ID`)

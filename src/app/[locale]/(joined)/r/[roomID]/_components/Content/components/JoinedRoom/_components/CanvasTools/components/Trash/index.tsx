@@ -1,38 +1,55 @@
 'use client'
 
-import Image from 'next/image'
 import { Tool } from '../Tool'
-import trash from '@/svg/trash-svgrepo-com.svg'
 import { sendToHostPeer } from '@/utils/sendToHostPeer'
 import { useCanvasesMainData, useGameToolAlert } from '@/zustand/store'
-import { UseShortcut } from '@/components/UseShortcut'
+import { useShortcut } from '@/hooks'
 import { Fragment } from 'react'
-import { trash as trashFunc } from '@/helpers/room'
+import { getCanvasWorker, type CanvasWorkerOnMsgData } from '@/workers'
+import { Svg } from '@/components/Svg'
 
 export const Trash = () => {
-  const setToolAlert = useGameToolAlert((s) => s.setAlert)
+
+  const trashFunc = async () => {
+    const canvasWorker = getCanvasWorker()
+    const { mctx, main, dbctx, dpctx } = useCanvasesMainData.getState()
+
+    mctx!.beginPath()
+    mctx!.fillStyle = '#ffffff'
+    mctx!.fillRect(0, 0, main!.width, main!.height)
+    mctx!.closePath()
+    dpctx!.clearRect(0, 0, dpctx!.canvas.width, dpctx!.canvas.height)
+    dbctx!.clearRect(0, 0, dbctx!.canvas.width, dbctx!.canvas.height)
+
+    canvasWorker.current.postMessage({
+      e: 3
+    } as CanvasWorkerOnMsgData)
+  }
 
   const runTrash = () => {
-    const { main, mctx, draft_pencil, draft_bucket, dbctx, dpctx } = useCanvasesMainData.getState()
-    trashFunc(main!, draft_pencil!, draft_bucket!, mctx!, dbctx!, dpctx!)
+    console.log('runTrash')
+    sendToHostPeer({
+
+      event: 'painterTrash',
+    })
+    useGameToolAlert.getState().setAlert('Canvas cleared')
+    trashFunc()
   }
+
+  useShortcut({
+    keyName: 'Trash',
+    onShortcut: runTrash
+  })
+
 
   return (
     <Fragment>
       <Tool
         onMouseDown={runTrash}
         icon={
-          <Image src={trash} alt="trash" className="h-full w-[80%] opacity-55" />
+          <Svg src='trash-svgrepo-com.svg' alt="trash" className="h-full w-[80%] opacity-55" />
         }
       ></Tool>
-      <UseShortcut keyName='Trash' onShortcut={() => {
-        runTrash()
-        sendToHostPeer({
-          from: 'client',
-          event: 'painterTrash',
-        })
-        setToolAlert('Trash selected')
-      }} />
     </Fragment>
   )
 }

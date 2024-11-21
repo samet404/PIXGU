@@ -7,7 +7,7 @@ import { z } from 'zod'
 
 export const exit = async () => {
   'use server'
-  const guestAuthToken = cookies().get('guest_auth_session')?.value
+  const guestAuthToken = (await cookies()).get('guest_auth_session')?.value
   if (guestAuthToken) {
     z.string().min(10).cuid2().parse(guestAuthToken)
 
@@ -16,7 +16,7 @@ export const exit = async () => {
     await redisDb.del(`guest:${guestID}:name`)
     await redisDb.del(`guest:${guestID}:name_ID`)
     await redisDb.del(`guest:${guestID}:name_&_name_ID`)
-    cookies().delete('guest_auth_session')
+      ; (await cookies()).delete('guest_auth_session')
   }
 
   redirect('/')

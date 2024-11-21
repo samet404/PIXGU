@@ -1,8 +1,8 @@
 import { ChangesApplyAllTabs } from '../_components/ChangesApplyAllTabs'
 import SectionWrapper from '../_components/SectionWrapper'
-import { Alert } from './Alert'
-import { Items } from './Items'
-import { RecordBinding } from './RecordBinding'
+import { Alert } from './_components/Alert'
+import { Items } from './_components/Items'
+import { RecordBinding } from './_components/RecordBinding'
 
 const Controls = async () => {
   return (

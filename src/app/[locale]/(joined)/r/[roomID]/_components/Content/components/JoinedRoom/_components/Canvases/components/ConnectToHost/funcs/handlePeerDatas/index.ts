@@ -30,6 +30,11 @@ import {
   getPainterTrash,
   getPainterBucket,
   getPrevCanvas,
+  getYouPurchasedMarketItem,
+  getPowerupUsed,
+  getYouUsedPowerup,
+  getPurchasedMarketItem,
+  getPainterEraserOrPencilOut
 } from './funcs'
 
 /**
@@ -37,8 +42,7 @@ import {
  */
 export const handlePeerDatas = (userID: string) => {
   onPeerData<'fromHost'>(useHostPeer.getState().get()!, (rtcData) => {
-    const { from, event } = rtcData
-    if (from !== 'host') return
+    const { event } = rtcData
 
     grayLog(`RECEIVED ${event} DATA FROM HOST`, rtcData)
 
@@ -130,8 +134,24 @@ export const handlePeerDatas = (userID: string) => {
       case 'prevCanvas':
         getPrevCanvas(rtcData.data)
         break
+      case 'youPurchasedMarketItem':
+        getYouPurchasedMarketItem(rtcData.data)
+        break
+      case 'powerupUsed':
+        getPowerupUsed(rtcData.data)
+        break
+      case 'youUsedPowerup':
+        console.log('you used powerup case')
+        getYouUsedPowerup(rtcData.data)
+        break
+      case 'purchasedMarketItem':
+        getPurchasedMarketItem(rtcData.data)
+        break
+      case 'painterEraserOrPencilOut':
+        getPainterEraserOrPencilOut()
+        break
       default:
-        negativeLog('RECEIVED NOT UNKNOWN EVENT FROM HOST', rtcData)
+        negativeLog('RECEIVED UNKNOWN EVENT FROM HOST', rtcData)
         break
     }
   })

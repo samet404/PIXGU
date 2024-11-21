@@ -3,6 +3,8 @@
 import createMDX from '@next/mdx';
 import { fileURLToPath } from 'node:url';
 import createJiti from 'jiti';
+import CircularDependencyPlugin from 'circular-dependency-plugin';
+
 const jiti = createJiti(fileURLToPath(import.meta.url));
 
 // Import env here to validate during build. Using jiti we can import .ts files :)
@@ -27,6 +29,22 @@ const config = {
 
     config.module.rules.push({});
 
+    config.plugins.push(
+      new CircularDependencyPlugin({
+        // exclude detection of files based on a RegExp
+        exclude: /a\.js|node_modules/,
+        // include specific files based on a RegExp
+        include: /dir/,
+        // add errors to webpack instead of warnings
+        failOnError: true,
+        // allow import cycles that include an asyncronous import,
+        // e.g. via import(/* webpackMode: "weak" */ './file.js')
+        allowAsyncCycles: false,
+        // set the current working directory for displaying module paths
+        cwd: process.cwd(),
+      }),
+    );
+
     config.resolve.fallback = {
       // if you miss it, all the other options in fallback, specified
       // by next.js will be dropped.
@@ -35,12 +53,17 @@ const config = {
       fs: false,
     };
 
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ['@svgr/webpack'],
+    });
+
     return config;
   },
-  experimental: {
-    serverComponentsExternalPackages: ['pg'],
-  },
   reactStrictMode: false,
+  experimental: {
+    reactCompiler: true,
+  },
   images: {
     remotePatterns: [
       {

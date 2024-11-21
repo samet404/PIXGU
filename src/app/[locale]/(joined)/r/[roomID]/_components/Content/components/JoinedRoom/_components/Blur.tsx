@@ -7,7 +7,7 @@ import Spinner from '@/components/Spinner'
 import { clsxMerge } from '@/utils/clsxMerge'
 
 export const Blur = ({ children }: PropsWithChildren) => {
-  return children
+  // return children
   const inDeveloperMode = useDeveloperSettings((s) => s.developerMode)
   const isGameStopped = useIsGameStopped((s) => s.value)
   const isSpectator = useAmISpectator((s) => s.amISpectator)

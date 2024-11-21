@@ -1,9 +1,8 @@
 'use client'
 
-import Image from 'next/image'
 import { Tool } from '../Tool'
-import eyeDropper from '@/svg/color-picker-svgrepo-com.svg'
 import { usePainterTool } from '@/zustand/store/usePainterTool'
+import { Svg } from '@/components/Svg'
 
 export const EyeDropper = () => {
   const toolName = usePainterTool((s) => s.current)
@@ -13,7 +12,7 @@ export const EyeDropper = () => {
     <Tool
       isActive={toolName === 'eyedropper'}
       onMouseDown={() => setTool('eyedropper')}
-      icon={<Image src={eyeDropper} alt="eye-dropper" className="opacity-50" />}
+      icon={<Svg src='color-picker-svgrepo-com.svg' alt="eye-dropper" className="opacity-50" />}
     />
   )
 }

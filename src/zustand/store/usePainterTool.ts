@@ -27,7 +27,10 @@ const initState: PainterToolState = {
 
   with: {
     grid: false,
-    color: [0, 0, 0, 0.5],
+    color1: [0, 0, 0, 0.5],
+    color2: [0, 0, 0, 1],
+    selectedColor: 1,
+    undoRedoType: 0
   },
 }
 
@@ -43,12 +46,21 @@ export const usePainterTool = create(
             current: input,
           }),
 
-        setRGBA: (input) =>
+        setColor: (input) =>
           set({
             ...get(),
             with: {
               ...get().with,
-              color: input,
+              color1: input,
+            },
+          }),
+
+        setColor2: (input) =>
+          set({
+            ...get(),
+            with: {
+              ...get().with,
+              color2: input,
             },
           }),
 
@@ -89,7 +101,16 @@ export const usePainterTool = create(
               },
             },
           })
-        }
+        },
+
+        setUndoRedoType: (input) =>
+          set({
+            ...get(),
+            with: {
+              ...get().with,
+              undoRedoType: input,
+            },
+          }),
       }),
       { name: 'painterTool' },
     )
@@ -105,6 +126,7 @@ export type ToolName =
   | 'circle'
   | 'text'
   | 'eyedropper'
+  | 'gradient'
 
 type Options = {
   pencil: {
@@ -137,19 +159,34 @@ export type PainterToolState = {
 
   with: {
     grid: boolean
-    color: [
+    color1: [
       r: number,
       g: number,
       b: number,
       a: number
     ]
+    color2: [
+      r: number,
+      g: number,
+      b: number,
+      a: number
+    ]
+    selectedColor: 1
+
+    undoRedoType: 0 | 1
   }
 }
 
 type Action = {
   setCurrent: (input: PainterToolState['current']) => void
   switchGrid: () => void
-  setRGBA: (input: [
+  setColor: (input: [
+    r: number,
+    g: number,
+    b: number,
+    a: number
+  ]) => void;
+  setColor2: (input: [
     r: number,
     g: number,
     b: number,
@@ -157,5 +194,6 @@ type Action = {
   ]) => void;
   increaseSize: (tool: ToolHaveSizeProperty) => void
   decreaseSize: (tool: ToolHaveSizeProperty) => void
+  setUndoRedoType: (input: PainterToolState['with']['undoRedoType']) => void
 }
 

@@ -1,0 +1,1 @@
+export const lastArrIndex = (arr: any[]) => arr.length - 1

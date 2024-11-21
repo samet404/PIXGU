@@ -1,4 +1,5 @@
 import Spinner from '@/components/Spinner'
+
 import Link from 'next/link'
 import { useState } from 'react'
 
@@ -12,7 +13,8 @@ export const GoToRoom = ({ ID }: Props) => {
             href={`/r/${ID}/h`}
         >
             <div>Go to room</div> {isLoading && <Spinner className='size-5' />}
-        </Link>)
+        </Link>
+    )
 }
 
 type Props = {

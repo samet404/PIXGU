@@ -1,12 +1,17 @@
-import { bucket } from '@/helpers/room'
 import type { PainterBucket } from '@/types/webRTCConnData'
-import { useCanvasesMainData } from '@/zustand/store'
+import { getCanvasWorker, type CanvasWorkerOnMsgData } from '@/workers'
+
+const canvasWorker = getCanvasWorker()
 
 export const getPainterBucket = (data: PainterBucket['data']) => {
-    const { draft_bucket, mctx, dbctx, cellPixelLength, cellSideCount } =
-        useCanvasesMainData.getState()
     const { color, x, y } = data
 
-    bucket(mctx!, dbctx!, draft_bucket!, x, y, cellSideCount, cellPixelLength!, color)
+    canvasWorker.current.postMessage({
+        e: 0, data: {
+            x,
+            y,
+            color
+        }
+    } as CanvasWorkerOnMsgData)
 }
 

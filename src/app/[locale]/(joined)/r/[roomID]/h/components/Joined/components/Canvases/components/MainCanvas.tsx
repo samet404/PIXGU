@@ -36,7 +36,7 @@ export const MainCanvas = () => {
                 imageRendering: 'pixelated',
             }}
             id="main-canvas"
-            className="rounded-lg"
+            className="rounded-lg z-10"
         />
     )
 }

@@ -7,12 +7,14 @@ import {
 import type { User } from 'lucia'
 import type { Guest } from '@/types'
 import type SimplePeer from 'simple-peer'
-import { storePixelHistory } from '@/store'
 import { sendToPeer } from '@/utils/sendToPeer'
 import { positiveLog } from '@/utils/positiveLog'
 import { handlePeerDatas } from './funcs/handlePeerDatas'
 import { sendEveryoneNewPlayer } from './funcs/sendEveryoneNewPlayer'
 import { sendPrevPlayersToNewPlayer } from './funcs/sendPrevPlayersToNewPlayer'
+import { getCanvasWorker, type CanvasWorkerOnMsgData } from '@/workers'
+
+const canvasWorker = getCanvasWorker()
 
 export const onPeerConnect = (
   peer: SimplePeer.Instance,
@@ -31,14 +33,14 @@ export const onPeerConnect = (
 
     if (isSpectator) {
       sendToPeer(peer, {
-        from: 'host',
+
         event: 'youAreSpectator',
       })
 
       useSpectators.getState().add(userID)
       Object.keys(useCoins.getState().coins).forEach((ID) => {
         sendToPeer(peer, {
-          from: 'host',
+
           event: 'coin',
           data: {
             to: ID,
@@ -47,12 +49,11 @@ export const onPeerConnect = (
         })
       })
 
-      sendToPeer(peer, {
-        from: 'host',
-        event: 'prevCanvas',
-        data: storePixelHistory.get().rgb
-      })
     }
+
+    canvasWorker.current.postMessage({
+      e: 5
+    } as CanvasWorkerOnMsgData)
 
     usePlayers.getState().addPlayer(userID, {
       ...user,
@@ -61,7 +62,7 @@ export const onPeerConnect = (
     handlePeerDatas(userID, roomID)
     sendPrevPlayersToNewPlayer(userID)
     sendToPeer(peer, {
-      from: 'host',
+
       event: 'prevSpectators',
       data: useSpectators.getState().playersIDs,
     })

@@ -1,76 +1,128 @@
 "use client"
 
+import { MODIFIER_KEYS } from '@/constants'
 import { useControls } from '@/zustand/store'
 import { useEffect, useRef, type PropsWithChildren } from 'react'
 
+//  We are using a big delay for the first key press to avoid accidental key presses
+const FIRST_KEY_DELAY = 800
+
 export const Shortcut = ({ children }: PropsWithChildren) => {
-    const lifetimeInterval = useRef<ReturnType<typeof setInterval> | null>(null)
-    const addToQueue = useControls(s => s.addToQueue)
-    const clearQueue = useControls(s => s.clearQueue)
-    const lifetimeStartedAt = useRef<number | null>(null)
-    const isAvailable = useRef<boolean>(false)
+    const addToCombination = useControls(s => s.addToCombination)
+    const clearCombination = useControls(s => s.clearCombination)
+    const clearOneCombinationKey = useControls(s => s.clearOneCombinationKey)
 
+    const keydownInterval = useRef<ReturnType<typeof setInterval> | null>(null)
+    const keydownIntervalDelay = useRef<number>(FIRST_KEY_DELAY)
+    const currentModifiers = useRef<string[]>([])
+
+    // clears everything
     const clear = () => {
-        const interval = lifetimeInterval.current
-        if (interval) clearInterval(interval)
+        if (keydownInterval.current) {
+            clearInterval(keydownInterval.current)
+        }
 
-        lifetimeStartedAt.current = null
-        lifetimeInterval.current = null
-        isAvailable.current = true
-        clearQueue()
+        clearCombination()
+        keydownInterval.current = null
+        keydownIntervalDelay.current = FIRST_KEY_DELAY
+        currentModifiers.current = []
     }
 
-    const setLifetime = () => {
-        lifetimeInterval.current = setInterval(() => {
-            const passedMs = Date.now() - lifetimeStartedAt.current!
+    // sets interval for key for hold down effect
+    const setKeyDownInterval = () => {
+        clearInterval(keydownInterval.current!)
 
-            if (passedMs < 5000) return
+        keydownInterval.current = setInterval(() => {
+            console.log(useControls.getState().combination)
+            useControls.getState().setSameCombination()
 
-            clear()
-        }, 50)
+            if (keydownIntervalDelay.current !== 200) {
+                keydownIntervalDelay.current = Math.max(50, keydownIntervalDelay.current * 0.2)
+                setKeyDownInterval()
+            }
+        }, keydownIntervalDelay.current)
     }
 
-    const handleKeyDown = (e: KeyboardEvent) => {
-        const notRight = e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement
-        if (notRight) return
 
-        e.preventDefault()
-        console.log('handlekeydown')
+    const handleKeydown = (e: KeyboardEvent) => {
+        if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return
 
-        const queue = useControls.getState().queue
-        if (!isAvailable.current) return
 
-        if (queue[queue.length - 1] === e.key.toUpperCase()) {
+        const combination = useControls.getState().combination
+        const key = e.key.toUpperCase()
+
+        if (combination.includes(key)) return
+
+        const currentModifiersVal = currentModifiers.current
+
+
+        // Handle modifier keys
+        if (MODIFIER_KEYS.has(key)) {
+            if (currentModifiersVal.length > 0) {
+                // Validate modifier state
+                const hasCorrectModifiers = currentModifiersVal.every(modifier => {
+                    switch (modifier) {
+                        case 'CONTROL':
+                            return e.ctrlKey
+                        case 'ALT':
+                            return e.altKey
+                        case 'SHIFT':
+                            return e.shiftKey
+                        case 'META':
+                            return e.metaKey
+                    }
+                })
+                if (!hasCorrectModifiers) {
+                    clear()
+                    return
+                }
+            }
+
+
+            currentModifiersVal.push(key)
+            if (!useControls.getState().combination.includes(key)) addToCombination(key)
+            setKeyDownInterval()
             return
         }
 
-        if (!lifetimeInterval.current) {
-            addToQueue(e.key.toUpperCase())
-            lifetimeStartedAt.current = Date.now()
-            setLifetime()
+
+        // Handle normal keys without modifiers
+
+        if (!combination.includes(key)) addToCombination(key)
+        setKeyDownInterval()
+    }
+
+
+    const handleKeyUp = (e: KeyboardEvent) => {
+        if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return
+
+        const key = e.key.toUpperCase()
+        const isModifier = MODIFIER_KEYS.has(key)
+        if (isModifier) {
+            currentModifiers.current = currentModifiers.current.filter(modifier => modifier !== key)
+            if (useControls.getState().combination.length === 1) clear()
         }
         else {
-            addToQueue(e.key.toUpperCase())
-            lifetimeStartedAt.current = Date.now()
+            if (useControls.getState().combination.length === 1) clear()
         }
 
-        console.log('queue: ', useControls.getState().queue)
+        clearOneCombinationKey(key)
     }
 
-    const handleKeyUp = () => {
-        clear()
-    }
+    const handleBlur = () => clear()
+
 
     useEffect(() => {
-        document.addEventListener('keydown', handleKeyDown)
+        document.addEventListener('keydown', handleKeydown)
         document.addEventListener('keyup', handleKeyUp)
+        window.addEventListener('blur', handleBlur)
 
         return () => {
-            clear()
-            document.removeEventListener('keydown', handleKeyDown)
+            document.removeEventListener('keydown', handleKeydown)
             document.removeEventListener('keyup', handleKeyUp)
+            window.removeEventListener('blur', handleBlur)
         }
     }, [])
 
     return children
-}
+}    

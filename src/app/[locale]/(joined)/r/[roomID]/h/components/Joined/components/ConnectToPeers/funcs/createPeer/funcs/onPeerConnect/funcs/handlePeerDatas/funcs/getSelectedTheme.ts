@@ -36,7 +36,7 @@ export const getSelectedTheme = (
   useHostPainterData.getState().painterSelectedTheme(data)
 
   sendToAllPeers({
-    from: 'host',
+
     event: 'painterSelectedTheme',
   })
 }

@@ -1,9 +1,12 @@
+import { sendToHostPeer } from '@/utils/sendToHostPeer'
+import { getCanvasWorker, type CanvasWorkerOnMsgData, type CanvasWorkerPostMsgData } from '@/workers'
 import {
     useAmIPainting,
     useCanvasesMainData,
     usePainterTool,
 } from '@/zustand/store'
-import { eraser as runEraser } from '@/helpers/room'
+
+const canvasWorker = getCanvasWorker()
 
 export const eraser = (
     smoothX: number,
@@ -11,9 +14,24 @@ export const eraser = (
 ) => {
     if (!useAmIPainting.getState().amIPainting) return
 
-    const { draft_pencil, cellPixelLength, cellSideCount } = useCanvasesMainData.getState().get()
-    const dpctx = draft_pencil!.getContext('2d')!
     const size = usePainterTool.getState().options.pencil.size
 
-    runEraser(dpctx, smoothX, smoothY, cellPixelLength!, cellSideCount, size)
+
+    canvasWorker.current.postMessage({
+        e: 2,
+        data: {
+            startX: smoothX,
+            startY: smoothY,
+            size
+        }
+    } as CanvasWorkerOnMsgData)
+    sendToHostPeer({
+
+        event: 'painterEraser',
+        data: {
+            x: smoothX,
+            y: smoothY,
+            size
+        }
+    })
 }

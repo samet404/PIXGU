@@ -4,120 +4,142 @@ import {
   useGuessedPlayers,
   useHostPainterData,
   useMatchStatus,
+  usePlayers,
   useWhoIsPainter,
 } from '@/zustand/store'
-import { sendToAllPeers, sendToPeerWithID } from '@/utils'
-import { updatePainterToPlayers } from 'src/funcs/updatePainterToPlayers'
-import { createMatch } from 'src/funcs/createMatch'
+import { sendManyToAllPeers, sendManyToPeerWithID, sendToAllPeers, sendToPeerWithID, strSimilarity } from '@/utils'
+import { createMatch } from '@/helpers/room'
 
 export const guessChat = async (
   data: GuessChatFromClient['data'],
   userID: string,
-  roomID: string,
+  msgID: number,
+  roomID: string
 ) => {
   const painterData = useHostPainterData.getState().value
+  const whoIsPainter = useWhoIsPainter.getState().value
   if (painterData.status !== 'painterSelectedTheme') return
+  if (useWhoIsPainter.getState().isPainter(userID)) return
 
-  console.log('guessChat', {
-    theme: painterData.selectedTheme.toLocaleLowerCase(),
-    msg: data.msg,
+  const theme = painterData.selectedTheme.toLocaleLowerCase().trim().replace(/\s/g, '');
+  if (!theme) return
+  const receivedTheme = data.msg.toLocaleLowerCase().trim().replace(/\s/g, '');
+
+  sendToAllPeers(
+    {
+
+      event: 'guessChat',
+      data: {
+        from: userID,
+        msgID,
+        msg: data.msg,
+        similarity: strSimilarity(theme, receivedTheme),
+      },
+    },
+    { except: [userID] },
+  )
+
+  sendToPeerWithID(userID, {
+
+    event: `yourGuessChat`,
+    data: {
+      msgID,
+      msg: data.msg,
+      similarity: strSimilarity(theme, receivedTheme),
+    },
   })
 
-  const theme = painterData.selectedTheme.toLocaleLowerCase().trim()
-  if (!theme) {
-    console.error('theme is empty')
-    return
-  }
-  if (theme === data.msg.toLocaleLowerCase().trim()) {
-    const { sendManyToAllPeers, sendManyToPeerWithID } = await import('@/utils')
-    const whoIsPainter = useWhoIsPainter.getState().value
-    if (whoIsPainter.status === 'thereIsNoPainter') return
 
-    const painterID = whoIsPainter.painterID
+  if (theme !== receivedTheme) return
+  if (whoIsPainter.status === 'thereIsNoPainter') return
 
-    const guessingTimeLimitMinutes = 4
-    const totalCoinBonus = guessingTimeLimitMinutes * 60
-    const passedTime =
-      useMatchStatus.getState().value.lastMatchStartedAt! - Date.now()
-    const currentCoin = parseFloat(
-      (totalCoinBonus - passedTime / 1000).toFixed(2),
-    )
+  const painterID = whoIsPainter.painterID
 
-    sendManyToAllPeers([
-      [
-        {
-          from: 'host',
-          event: 'guessed',
-          data: {
-            ID: userID,
-          },
-        },
-        {
-          except: [userID],
-        },
-      ],
-      [
-        {
-          from: 'host',
-          event: 'coin',
-          data: {
-            to: userID,
-            amount: currentCoin,
-          },
-        },
-        {
-          except: [userID],
-        },
-      ],
-      [
-        {
-          from: 'host',
-          event: 'coin',
-          data: {
-            to: painterID,
-            amount: currentCoin,
-          },
-        },
-        {
-          except: [painterID],
-        },
-      ],
-    ])
+  const guessingTimeLimitMinutes = 4
+  const totalCoinBonus = guessingTimeLimitMinutes * 60
+  const passedTime =
+    useMatchStatus.getState().value.lastMatchStartedAt! - Date.now()
+  const currentCoin = parseFloat(
+    (totalCoinBonus - passedTime / 1000).toFixed(2),
+  )
 
-    sendManyToPeerWithID(userID, [
+  sendManyToAllPeers([
+    [
       {
-        from: 'host',
-        event: 'yourCoin',
+
+        event: 'guessed',
         data: {
+          ID: userID,
+        },
+      },
+      {
+        except: [userID],
+      },
+    ],
+    [
+      {
+
+        event: 'coin',
+        data: {
+          to: userID,
           amount: currentCoin,
         },
       },
       {
-        from: 'host',
-        event: 'youGuessed',
+        except: [userID],
       },
-    ])
+    ],
+    [
+      {
 
-    sendToPeerWithID(painterID, {
-      from: 'host',
+        event: 'coin',
+        data: {
+          to: painterID,
+          amount: currentCoin,
+        },
+      },
+      {
+        except: [painterID],
+      },
+    ],
+  ])
+
+  sendManyToPeerWithID(userID, [
+    {
+
       event: 'yourCoin',
       data: {
         amount: currentCoin,
       },
+    },
+    {
+
+      event: 'youGuessed',
+    },
+  ])
+
+  sendToPeerWithID(painterID, {
+
+    event: 'yourCoin',
+    data: {
+      amount: currentCoin,
+    },
+  })
+
+  useCoins.getState().add(userID, currentCoin)
+  useCoins.getState().add(painterID, currentCoin)
+  useGuessedPlayers.getState().guessed(userID)
+
+  const isEveryoneGuessed = usePlayers.getState().value.count - 1 === useGuessedPlayers.getState().playersIDs.length
+
+
+  if (isEveryoneGuessed) {
+    useMatchStatus.getState().clearInterval()
+    createMatch(roomID)
+    sendToAllPeers({
+
+      event: 'everyoneGuessed',
     })
-
-    useCoins.getState().add(userID, currentCoin)
-    useCoins.getState().add(painterID, currentCoin)
-    useGuessedPlayers.getState().guessed(userID)
-    const isEveryoneGuessed = useGuessedPlayers.getState().isEveryoneGuessed()
-
-    if (isEveryoneGuessed) {
-      useMatchStatus.getState().clearInterval()
-      createMatch(roomID)
-      sendToAllPeers({
-        from: 'host',
-        event: 'everyoneGuessed',
-      })
-    }
   }
+
 }

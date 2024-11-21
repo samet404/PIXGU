@@ -25,7 +25,7 @@ export const Btn = ({ theme, position }: Props) => {
     })
 
     sendToHostPeer({
-      from: 'client',
+
       event: 'selectTheme',
       data: theme,
     })

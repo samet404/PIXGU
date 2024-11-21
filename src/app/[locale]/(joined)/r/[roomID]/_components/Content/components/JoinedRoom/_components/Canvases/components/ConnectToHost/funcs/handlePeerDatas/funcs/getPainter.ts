@@ -1,12 +1,15 @@
+import { resetMatchStates } from '@/helpers/room'
 import type { CurrentPainter } from '@/types'
 import {
   useAmIGuessed,
-  useCanvasesMainData,
   useGuessChatLayout,
   useGuessedPlayers,
   useIsGameStopped,
-  useMatchStatusClient,
+  useLetterHint,
   useNewPainterPanel,
+  useOwnedPowerups,
+  useRoomGuessChatMsgsStore,
+  useRoomWinnersChatMsgsStore,
   useSelectThemePanel,
   useWhoIsPainterClient,
   useWinnersChatLayout,
@@ -20,39 +23,34 @@ export const getPainter = async (
 
   if (useIsGameStopped.getState().value.code?.includes('waitingForHost'))
     useIsGameStopped.getState().removeCode('waitingForHost')
-  useMatchStatusClient.getState().waitingForThemes()
+
+  useOwnedPowerups.getState().reset()
   useWhoIsPainterClient.getState().setCurrentPainter({
     painterID: data,
     amIPainter,
   })
 
-  const { mctx, main, draft_pencil } = useCanvasesMainData.getState()
+  resetMatchStates()
 
-  mctx!.beginPath()
-  mctx!.fillStyle = '#ffffff'
-  mctx!.fillRect(0, 0, main!.width, main!.height)
-  mctx!.beginPath()
-
-  const dctx = draft_pencil!.getContext('2d')!
-  dctx.beginPath()
-  dctx.clearRect(0, 0, main!.width, main!.height)
-  dctx.beginPath()
-
+  useLetterHint.getState().reset()
   useGuessedPlayers.getState().reset()
   useAmIGuessed.getState().noIMNotGuessed()
 
-  console.log('AM I PAINTER: ', amIPainter)
   if (amIPainter) {
     useSelectThemePanel.getState().open()
     useNewPainterPanel.getState().close()
 
+    useRoomWinnersChatMsgsStore.getState().reset()
     useWinnersChatLayout.getState().setPainterLayout()
     useGuessChatLayout.getState().setPainterLayout()
+    useRoomGuessChatMsgsStore.getState().reset()
   } else {
     useNewPainterPanel.getState().open({ painterID: data })
     useSelectThemePanel.getState().close()
 
     useWinnersChatLayout.getState().setImNotGuessed()
+    useRoomWinnersChatMsgsStore.getState().reset()
     useGuessChatLayout.getState().setImNotGuessed()
+    useRoomGuessChatMsgsStore.getState().reset()
   }
 }

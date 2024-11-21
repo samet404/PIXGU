@@ -8,7 +8,7 @@ import {
 import { negativeLog } from '@/utils/negativeLog'
 import { sendToAllPeers } from '@/utils/sendToAllPeers'
 import { goldLog } from '@/utils/goldLog'
-import { createMatch } from 'src/funcs/createMatch'
+import { createMatch } from '@/helpers/room'
 
 export const playerLeft = (userID: string, roomID: string) => {
   goldLog(`PLAYER ${userID} LEFT THE GAME`)
@@ -22,7 +22,7 @@ export const playerLeft = (userID: string, roomID: string) => {
     useMatchStatus.getState().reset()
   } else if (useWhoIsPainter.getState().isPainter(userID)) {
     sendToAllPeers({
-      from: 'host',
+
       event: 'painterCouldNotSelectTheme',
       data: 'playerLeft',
     })
@@ -33,7 +33,7 @@ export const playerLeft = (userID: string, roomID: string) => {
 
   sendToAllPeers(
     {
-      from: 'host',
+
       event: 'playerLeft',
       data: {
         ID: userID,

@@ -21,9 +21,9 @@ export const fillOnePixel = (
   const exactY = Math.floor(cellPixelLength! * smoothY)
 
   ctx.beginPath()
-  ctx.globalAlpha = color[3]! / 255
-  ctx.fillStyle = `rgb(${color[0]}, ${color[1]}, ${color[2]})`
+  ctx.fillStyle = `rgb(${color[0]}, ${color[1]}, ${color[2]},  ${(color[3]! / 255).toFixed(2)})`
   ctx.fillRect(exactX, exactY, cellPixelLength!, cellPixelLength!)
+  ctx.closePath()
 }
 
 
