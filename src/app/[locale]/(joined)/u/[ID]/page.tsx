@@ -1,11 +1,11 @@
 import { api } from '@/trpc/server'
 import { LeftInfo } from './components/LeftInfo'
 
-type UserPageProps = {
-  params: { ID: string }
+type Props = {
+  params: Promise<{ ID: string }>
 }
 
-const User = async ({ params }: UserPageProps) => {
+const User = async ({ params }: Props) => {
   const { ID } = await params
   const user = await api.user.getByID.query(ID)
   if (!user) return <h1 className="w-full pt-8 text-center">User not found</h1>

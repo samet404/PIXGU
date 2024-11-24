@@ -21,4 +21,4 @@ const Article = ({ params }: Props) => {
 
 export default Article
 
-type Props = { params: { id: string } }
+type Props = { params: Promise<{ id: string }> }

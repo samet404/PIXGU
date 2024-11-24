@@ -24,8 +24,8 @@ const Content = async ({ params }: Props) => {
 export default Content
 
 type Props = {
-  params: {
+  params: Promise<{
     locale: Locale
     roomID: string
-  }
+  }>
 }

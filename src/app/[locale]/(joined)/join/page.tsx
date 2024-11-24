@@ -46,7 +46,7 @@ const JoinRoom = async ({ params }: Props) => {
 export default JoinRoom
 
 type Props = {
-  params: {
+  params: Promise<{
     locale: Locale
-  }
+  }>
 }

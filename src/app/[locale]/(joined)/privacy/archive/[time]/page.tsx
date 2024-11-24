@@ -5,12 +5,12 @@ import type { MDXProps } from 'mdx/types'
 
 
 const SpesificArchive = async ({ params }: {
-    params: {
+    params: Promise<{
         time: string
-    }
+    }>
 }) => {
 
-    const { time } = params
+    const { time } = await params
 
     const Content = await (async () => {
         try {

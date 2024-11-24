@@ -13,7 +13,7 @@ const OAuthSection = async () => {
 
   return (
     <Section title={langObj.oauthDesc}>
-      <div className="grid w-full grid-cols-5 gap-2 rounded-md ">
+      <div className="grid w-full grid-cols-5 gap-2 rounded-md backdrop-blur-3xl pointer-events-none cursor-not-allowed">
         <Discord />
         <Google />
         <Spotify />

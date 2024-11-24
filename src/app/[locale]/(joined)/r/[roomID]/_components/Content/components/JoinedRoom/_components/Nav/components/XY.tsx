@@ -1,13 +1,28 @@
 'use client'
 
+import { clsxMerge } from '@/utils/clsxMerge'
 import { useXY } from '@/zustand/store'
+import { useEffect, useRef, useState } from 'react'
 
 export const XY = () => {
   const XY = useXY((s) => s.value)
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>()
+  const [active, setActive] = useState<boolean>(false)
   const { x, y } = XY
 
+  useEffect(() => {
+    clearTimeout(timeoutRef.current)
+    setActive(true)
+    timeoutRef.current = setTimeout(() => setActive(false), 1000)
+
+    return () => clearTimeout(timeoutRef.current)
+  }, [XY])
+
+
   return (
-    <div className="rounded-full bg-[#ffffff24] px-2 h-full text-[#ffffff52]">
+    <div className={clsxMerge('rounded-full bg-[#ffffff24] px-2 h-full duration-200 text-[#ffffff52]', {
+      'bg-[#ffffff2e]': active
+    })}>
       {x} {y}
     </div>
   )

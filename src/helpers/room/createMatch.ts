@@ -27,8 +27,8 @@ export const createMatch = async (roomID: string) => {
 
 
   const { mctx } = useHostCanvasesData.getState()
-  mctx!.clearRect(0, 0, mctx!.canvas.width, mctx!.canvas.height)
-
+  mctx!.fillStyle = '#ffffff'
+  mctx!.fillRect(0, 0, mctx!.canvas.width, mctx!.canvas.height)
 
   console.log({
     isGameEnded,

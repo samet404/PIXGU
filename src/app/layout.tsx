@@ -54,9 +54,9 @@ export const metadata: Metadata = {
 
 const RootLayout = async (props: {
   children: ReactNode
-  params: {
+  params: Promise<{
     locale: Locale
-  }
+  }>
 }) => {
   return (
     <html lang="en">

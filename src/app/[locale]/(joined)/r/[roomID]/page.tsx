@@ -15,8 +15,8 @@ const Room = async ({ params }: Props) => {
 export default Room
 
 type Props = {
-  params: {
+  params: Promise<{
     locale: Locale
     roomID: string
-  }
+  }>
 }

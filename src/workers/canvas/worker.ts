@@ -67,7 +67,6 @@ self.onmessage = (e) => {
             break
         }
         case 'bucket':
-
             const bucketData = bucket({
                 ...workerData.data,
                 cellSideCount: CELL_SIDE_COUNT,
@@ -75,6 +74,7 @@ self.onmessage = (e) => {
                 blurInfo
             }) as CanvasWorkerPostMsgData
 
+            console.log('bucketData worker: ', bucketData)
             postMessage(bucketData)
             break
 
@@ -133,7 +133,7 @@ self.onmessage = (e) => {
 
             const [x, y] = workerData.data
             postMessage({
-                e: 6,
+                e: 'eyedropper',
                 data: pixels[x]![y]!
             })
             break
@@ -155,6 +155,8 @@ self.onmessage = (e) => {
                     pixels[x!]![y!]! = new Uint8ClampedArray([r!, g!, b!, a!])
                 }
 
+                console.log('undoPixels: ', undoPixels)
+
                 postMessage({
                     e: 'undo/redo',
                     data: undoPixels
@@ -173,6 +175,7 @@ self.onmessage = (e) => {
                     const [r, g, b, a] = pixel[1]!
                     pixels[x!]![y!]! = new Uint8ClampedArray([r!, g!, b!, a!])
                 }
+                console.log('redoPixels: ', redoPixels)
 
                 postMessage({
                     e: 'undo/redo',

@@ -16,11 +16,10 @@ const Home = async ({ params }: Props) => {
   if (!isJoined) return redirect('/start')
 
   const isLogged = await api.auth.isLogged.query()
+  const resolvedParams = await params
 
   setIsLogged(isLogged)
-  setLocale((await params).locale)
-
-
+  setLocale(resolvedParams.locale)
 
 
   return (
@@ -54,8 +53,9 @@ const Home = async ({ params }: Props) => {
 
 export default Home
 
+// Change the Props type to:
 type Props = {
-  params: {
+  params: Promise<{
     locale: Locale
-  }
+  }>
 }

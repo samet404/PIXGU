@@ -1,4 +1,5 @@
 import type { PainterBucket } from '@/types/webRTCConnData'
+import { sendToAllPeers } from '@/utils/sendToAllPeers'
 import { getCanvasWorker, type CanvasWorkerOnMsgData } from '@/workers'
 import { useWhoIsPainter } from '@/zustand/store'
 
@@ -17,4 +18,16 @@ export const getPainterBucket = (data: PainterBucket['data'], userID: string) =>
             color
         }
     } as CanvasWorkerOnMsgData)
+
+    sendToAllPeers({
+
+        event: 'painterBucket',
+        data: {
+            x,
+            y,
+            color
+        }
+    }, {
+        except: [userID]
+    })
 }

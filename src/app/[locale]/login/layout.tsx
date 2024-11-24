@@ -44,7 +44,7 @@ const LoginLayout = async ({ params, children }: Props) => {
   const isLogged = await api.auth.isLogged.query()
   if (isLogged) redirect('/')
 
-  setLocale(params.locale)
+  setLocale((await params).locale)
 
   return <Fragment>{children}</Fragment>
 }
@@ -52,6 +52,6 @@ const LoginLayout = async ({ params, children }: Props) => {
 export default LoginLayout
 
 type Props = {
-  params: { locale: Locale }
+  params: Promise<{ locale: Locale }>
   children: ReactNode
 }
