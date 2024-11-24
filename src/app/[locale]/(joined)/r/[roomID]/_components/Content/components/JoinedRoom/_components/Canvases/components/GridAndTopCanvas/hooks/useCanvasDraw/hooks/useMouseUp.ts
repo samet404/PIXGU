@@ -7,7 +7,6 @@ import { amIPainter } from './func'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { sendToHostPeer } from '@/utils/sendToHostPeer'
 import { getCanvasWorker, type CanvasWorkerOnMsgData } from '@/workers'
-import { clearAndPasteToMainCanvas } from '@/helpers/room'
 
 const canvasWorker = getCanvasWorker()
 
@@ -19,36 +18,26 @@ export const useMouseUp = () => {
 
     switch (tool) {
       case 'pencil': {
-        const { mctx, dpctx } = useCanvasesMainData.getState().get()
 
         sendToHostPeer({
 
           event: 'painterEraserOrPencilOut'
         })
-        canvasWorker.current.postMessage({ e: 4 } as CanvasWorkerOnMsgData)
+        canvasWorker.current.postMessage({ e: 'mouseUp' } as CanvasWorkerOnMsgData)
         useAmIPainting.getState().imNotPainting()
-        clearAndPasteToMainCanvas(dpctx!, mctx!)
         break
       }
       case 'eraser': {
-        const { mctx, dpctx } = useCanvasesMainData.getState().get()
 
         sendToHostPeer({
 
           event: 'painterEraserOrPencilOut'
         })
-        canvasWorker.current.postMessage({ e: 4 } as CanvasWorkerOnMsgData)
+        canvasWorker.current.postMessage({ e: 'mouseUp' } as CanvasWorkerOnMsgData)
         useAmIPainting.getState().imNotPainting()
-        clearAndPasteToMainCanvas(dpctx!, mctx!)
         break
       }
-      case 'gradient': {
-        const { dgctx, mctx } = useCanvasesMainData.getState().get()
 
-        useAmIPainting.getState().imNotPainting()
-        clearAndPasteToMainCanvas(dgctx!, mctx!)
-        break
-      }
     }
   }
 

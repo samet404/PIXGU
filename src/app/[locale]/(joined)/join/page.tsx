@@ -18,8 +18,8 @@ export const metadata: Metadata = {
 }
 
 
-const JoinRoom = ({ params }: Props) => {
-  setLocale(params.locale)
+const JoinRoom = async ({ params }: Props) => {
+  setLocale((await params).locale)
   return (
     <div
       style={{

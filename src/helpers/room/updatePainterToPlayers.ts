@@ -1,6 +1,8 @@
 import { api } from '@/trpc/client'
 import { sendToAllPeers } from '@/utils/sendToAllPeers'
 import { sendToPainterPeer } from '@/utils/sendToPainterPeer'
+import { sToMs } from '@/utils/sToMs'
+import { postMsgToHostTimerWorker } from '@/workers'
 import { useWhoIsPainter } from '@/zustand/store'
 import { useHostPainterData } from '@/zustand/store/useHostPainterData'
 
@@ -20,6 +22,12 @@ export const updatePainterToPlayers = async (roomID: string) => {
   })
 
   useHostPainterData.getState().painterSelectingTheme(themes, roomID)
+  postMsgToHostTimerWorker({
+    ID: 'PAINTER_TIME_IS_UP',
+    type: 'timeout',
+    event: 'start',
+    ms: sToMs(20),
+  })
 
   sendToAllPeers(
     {

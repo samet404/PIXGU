@@ -3,6 +3,7 @@ import { sendToAllPeers } from '@/utils/sendToAllPeers'
 import { create } from 'zustand'
 import { createMatch } from '@/helpers/room'
 import { sToMs } from '@/utils/sToMs'
+import { postMsgToHostTimerWorker } from '@/workers'
 
 type Value =
   | {
@@ -13,8 +14,6 @@ type Value =
   | {
     status: 'painterSelectingTheme'
     themes: [string, string]
-    timeIsUpIntervalStartedAt: number
-    timeIsUpInterval: ReturnType<typeof setInterval>
   }
   | {
     status: 'waitingForPlayers'
@@ -60,28 +59,6 @@ export const useHostPainterData = create<State & Action>((set, get) => ({
         value: {
           status: 'painterSelectingTheme',
           themes,
-          timeIsUpIntervalStartedAt: startedAt,
-          timeIsUpInterval: setInterval(() => {
-            const data = get().value
-            if (data.status !== 'painterSelectingTheme') return
-
-            const passedMs = Date.now() - startedAt
-            console.log('timeIsUpInterval passed ms: ', passedMs, {
-              passedMs,
-              timeIsUpIntervalStartedAt: startedAt,
-              data,
-            })
-            if (passedMs >= sToMs(20)) {
-              clearInterval(data.timeIsUpInterval)
-
-              sendToAllPeers({
-                event: 'painterCouldNotSelectTheme',
-                data: 'timeIsUp',
-              })
-
-              createMatch(roomID)
-            }
-          }, 1000),
         },
       })
     else negativeLog('ATTEMPTED TO SET SELECTING THEME AT WRONG TIME')
@@ -89,8 +66,11 @@ export const useHostPainterData = create<State & Action>((set, get) => ({
 
   reset: () => {
     const value = get().value
-    if (value.status === 'painterSelectingTheme' && value.timeIsUpInterval)
-      clearInterval(value.timeIsUpInterval)
+    if (value.status === 'painterSelectingTheme')
+      postMsgToHostTimerWorker({
+        ID: 'PAINTER_TIME_IS_UP',
+        event: 'stop',
+      })
     set(initValue)
   },
 }))

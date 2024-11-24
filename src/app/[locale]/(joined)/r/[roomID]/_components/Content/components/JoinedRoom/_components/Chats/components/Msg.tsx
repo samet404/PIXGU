@@ -40,7 +40,7 @@ export const Msg = ({ ID, msg, similarity }: Props) => {
                     {msg}
                 </div>
 
-                {similarity && <div className='bg-rose-500 flex rounded-md drop-shadow-md'>
+                {typeof similarity === 'number' && <div className='bg-rose-500 flex rounded-md drop-shadow-md'>
                     <div style={{
                         backgroundColor: `rgba(2,255,167,${similarity.toFixed(2)})`,
                     }} className='text-[#ffffffb4] flex text-xs px-[0.2rem] py-[0.1rem] rounded-md'>

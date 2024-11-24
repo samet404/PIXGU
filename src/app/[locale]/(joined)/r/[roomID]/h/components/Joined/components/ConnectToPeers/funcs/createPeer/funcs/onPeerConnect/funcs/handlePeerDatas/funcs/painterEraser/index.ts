@@ -10,7 +10,7 @@ export const getPainterEraser = (data: PainterEraser['data'], userID: string) =>
     const { x, y, size } = data
 
     canvasWorker.current.postMessage({
-        e: 2,
+        e: 'eraser',
         data: {
             startX: x,
             startY: y,

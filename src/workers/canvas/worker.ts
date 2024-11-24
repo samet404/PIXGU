@@ -1,5 +1,5 @@
 import { bucket, eraser, pencil, redo, redoByOperation, undo, undoByOperation } from './events'
-import type { CanvasWorkerOnMsgData, CanvasWorkerPostMsgData, UndoRedo } from './types'
+import type { BlurInfo, CanvasWorkerOnMsgData, CanvasWorkerPostMsgData, UndoRedo } from './types'
 import { initlizeCanvasPixels } from './utils/initlizeCanvasPixels'
 
 const CELL_SIDE_COUNT = 80
@@ -22,28 +22,63 @@ const mousedown: {
 
 
 const pixelsOnDraw: Set<`${number},${number}`> = new Set()
+const blurInfo: BlurInfo = {
+    blurStack: new Set(),
+    hasBlur: false
+}
+
 let pixels: Uint8ClampedArray[][] = []
 let lastPixel: [x: number, y: number] | null = null
 initlizeCanvasPixels(pixels, CELL_SIDE_COUNT)
 
+
 self.onmessage = (e) => {
     const workerData = e.data as CanvasWorkerOnMsgData
-    console.log('worker onmessage: ', workerData)
 
     switch (workerData.e) {
-        case 0:
+        case 'focus': {
+            blurInfo.hasBlur = false
+
+            const blurArray = Array.from(blurInfo.blurStack)
+            const pixelsToBeFilled: [coors: Uint16Array, color: Uint8ClampedArray][] = []
+            for (let i = 0; i < blurArray.length; i++) {
+                if (blurInfo.hasBlur) {
+                    postMessage({
+                        e: 'focus',
+                        data: pixelsToBeFilled
+                    } as CanvasWorkerPostMsgData)
+                    break
+                }
+
+                const value = blurArray[i]
+                const [x, y] = value!
+                blurInfo.blurStack.delete(value!)
+                pixelsToBeFilled.push([new Uint16Array([x!, y!]), pixels[x!]![y!]!])
+            }
+
+            postMessage({
+                e: 'focus',
+                data: pixelsToBeFilled
+            } as CanvasWorkerPostMsgData)
+            break;
+        }
+        case 'blur': {
+            blurInfo.hasBlur = true
+            break
+        }
+        case 'bucket':
 
             const bucketData = bucket({
                 ...workerData.data,
                 cellSideCount: CELL_SIDE_COUNT,
                 pixels,
+                blurInfo
             }) as CanvasWorkerPostMsgData
-            console.log('worker bucketData: ', bucketData)
 
             postMessage(bucketData)
             break
 
-        case 1:
+        case 'pencil':
             const pencilData = pencil({
                 ...workerData.data,
                 cellSideCount: CELL_SIDE_COUNT,
@@ -51,15 +86,14 @@ self.onmessage = (e) => {
                 lastPixel,
                 pixelsOnDraw,
                 undoRedo,
+                blurInfo
             }) as CanvasWorkerPostMsgData
-            console.log('undoRedoPencil: ', undoRedo.current)
-
 
             postMessage(pencilData)
             lastPixel = [workerData.data.startX, workerData.data.startY]
             break
 
-        case 2:
+        case 'eraser':
 
             const eraserData = eraser({
                 ...workerData.data,
@@ -67,14 +101,15 @@ self.onmessage = (e) => {
                 pixels,
                 lastPixel,
                 pixelsOnDraw,
-                undoRedo
+                undoRedo,
+                blurInfo
             }) as CanvasWorkerPostMsgData
 
             postMessage(eraserData)
             lastPixel = [workerData.data.startX, workerData.data.startY]
             break
 
-        case 3:
+        case 'reset':
 
             pixelsOnDraw.clear()
             lastPixel = null
@@ -83,18 +118,18 @@ self.onmessage = (e) => {
             console.log('worker reset done')
             break
 
-        case 4:
+        case 'mouseUp':
 
             lastPixel = null
             pixelsOnDraw.clear()
             break
 
-        case 5:
+        case 'pixels':
 
             postMessage(pixels)
             break
 
-        case 6:
+        case 'eyedropper':
 
             const [x, y] = workerData.data
             postMessage({
@@ -103,12 +138,12 @@ self.onmessage = (e) => {
             })
             break
 
-        case 7:
+        case 'getPixels':
 
             pixels = workerData.data
             break
 
-        case 8:
+        case 'undo':
             {
                 const undoPixels = undo({ undoRedo })
                 if (!undoPixels) return
@@ -121,13 +156,13 @@ self.onmessage = (e) => {
                 }
 
                 postMessage({
-                    e: 8,
+                    e: 'undo/redo',
                     data: undoPixels
                 } as CanvasWorkerPostMsgData)
                 break
             }
 
-        case 9:
+        case 'redo':
             {
                 const redoPixels = redo({ undoRedo })
                 if (!redoPixels) return
@@ -140,13 +175,13 @@ self.onmessage = (e) => {
                 }
 
                 postMessage({
-                    e: 9,
+                    e: 'undo/redo',
                     data: redoPixels
                 } as CanvasWorkerPostMsgData)
                 break
             }
 
-        case 10:
+        case 'getLastPixel':
             {
                 const data = workerData.data
                 if (data) {
@@ -156,56 +191,54 @@ self.onmessage = (e) => {
                 break;
             }
 
-        case 11:
+        case 'undoByOperation':
             {
-                const ops = undoByOperation({ undoRedo })
-                console.log('undoByOperation: ', ops)
-                if (!ops) break
+                // const pixels = undoByOperation({ undoRedo })
+                // if (!pixels) break
 
-                for (let opsI = 0; opsI < ops.length; opsI++) {
-                    for (let groupI = 0; groupI < ops[opsI]!.length; groupI++) {
-                        const pixel = ops[opsI]![groupI]!
-                        const [x, y] = pixel[0]!
-                        const color = pixel[1]!
-                        pixels[x!]![y!]! = color!
-                    }
-                }
+                // for (let pixelI = 0; pixelI < pixels!.length; pixelI++) {
+                //     const pixel = pixels[pixelI]!
+                //     const [x, y] = pixel[0]!
+                //     const color = pixel[1]!
+                //     pixels[x!]![y!]! = color!
+                // }
 
-                self.postMessage({
-                    e: 11,
-                    data: ops
-                } as CanvasWorkerPostMsgData)
+                // self.postMessage({
+                //     e: 'undoByOperation',
+                //     data: pixels
+                // } as CanvasWorkerPostMsgData)
 
                 break
             }
 
-        case 12:
+        case 'redoByOperation':
             {
+                break
                 const ops = redoByOperation({ undoRedo })
                 if (!ops) break
 
-                for (let opsI = 0; opsI < ops.length; opsI++) {
-                    for (let grpI = 0; grpI < ops[opsI]!.length; grpI++) {
-                        const pixel = ops[opsI]![grpI]!
-                        const [x, y] = pixel[0]
+                // for (let opsI = 0; opsI < ops.length; opsI++) {
+                //     for (let grpI = 0; grpI < ops[opsI]!.length; grpI++) {
+                //         const pixel = ops[opsI]![grpI]!
+                //         const [x, y] = pixel[0]
 
-                        pixels[x!]![y!]! = pixel[1]!
-                    }
-                }
+                //         pixels[x!]![y!]! = pixel[1]!
+                //     }
+                // }
 
-                self.postMessage({
-                    e: 12,
-                    data: ops
-                } as CanvasWorkerPostMsgData)
+                // self.postMessage({
+                //     e: 12,
+                //     data: ops
+                // } as CanvasWorkerPostMsgData)
 
                 break
             }
-        case 13: {
+        case 'mousedown': {
             const data = workerData.data
             undoRedo.current.operationIndex++
+            undoRedo.current.stack.push([])
             undoRedo.current.undoRedoGroup.index = -1
             undoRedo.current.undoRedoGroup.direction = 'r'
-            undoRedo.current.stack.push([])
             mousedown.smooth = data
             console.log('undoRedoMouseDown: ', undoRedo.current)
         }

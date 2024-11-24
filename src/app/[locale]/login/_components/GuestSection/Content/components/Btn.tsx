@@ -53,11 +53,13 @@ export const Btn = ({ inputRef }: Props) => {
 
   return (
     <button
+      disabled={isLoading}
       onMouseDown={handleMouseDown}
       className={clsxMerge(
         'flex w-12 items-center justify-center rounded-md bg-[#ffffff57] p-1 font-[900] duration-300 hover:opacity-60',
         {
           'bg-[#2dd0b8]': isActive,
+          'cursor-wait': isLoading,
         },
       )}
     >

@@ -5,16 +5,10 @@ import { cookies } from 'next/headers'
 export const joinedUserProducure = publicProcedure.use(
   async ({ next, ctx, path, type }) => {
     const start = Date.now()
-    let result
-    if (ctx.user) result = await next()
 
-    const guestAuthToken = (await cookies()).get('guest_auth_session')?.value
-    if (!guestAuthToken) throw new TRPCError({ code: 'UNAUTHORIZED' })
+    if (!ctx.user && !ctx.guest) throw new TRPCError({ code: 'UNAUTHORIZED' })
 
-    const ID = await ctx.redisDb.get(`guest:session:${guestAuthToken}:ID`)
-    if (!ID) throw new TRPCError({ code: 'UNAUTHORIZED' })
-
-    result = await next()
+    let result = await next()
 
     const durationMs = Date.now() - start
     const meta = { path: path, type: type, durationMs }

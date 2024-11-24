@@ -7,7 +7,7 @@ export const getPainterPencil = (data: PainterPencil['data']) => {
     const { x, y, color, size } = data
 
     canvasWorker.current.postMessage({
-        e: 1,
+        e: 'pencil',
         data: {
             color,
             startX: x,

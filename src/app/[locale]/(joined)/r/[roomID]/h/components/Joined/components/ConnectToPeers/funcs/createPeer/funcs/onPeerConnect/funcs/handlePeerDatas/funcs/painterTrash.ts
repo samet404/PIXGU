@@ -7,17 +7,15 @@ const canvasWorker = getCanvasWorker()
 export const painterTrash = (userID: string) => {
   if (!useWhoIsPainter.getState().isPainter(userID)) return
 
-  const { mctx, main, dbctx, dpctx } = useHostCanvasesData.getState()
+  const { mctx } = useHostCanvasesData.getState()
 
   mctx!.beginPath()
   mctx!.fillStyle = '#ffffff'
-  mctx!.fillRect(0, 0, main!.width, main!.height)
+  mctx!.fillRect(0, 0, mctx!.canvas!.width, mctx!.canvas!.height)
   mctx!.closePath()
-  dpctx!.clearRect(0, 0, dpctx!.canvas.width, dpctx!.canvas.height)
-  dbctx!.clearRect(0, 0, dbctx!.canvas.width, dbctx!.canvas.height)
 
   canvasWorker.current.postMessage({
-    e: 3
+    e: 'reset'
   } as CanvasWorkerOnMsgData)
 
   sendToAllPeers({

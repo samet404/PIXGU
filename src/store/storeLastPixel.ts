@@ -4,7 +4,7 @@ export const storeLastPixel: Actions & State = {
     value: null,
     set: function (input) {
         getCanvasWorker().current.postMessage({
-            e: 10,
+            e: 'getLastPixel',
             data: input
         } as CanvasWorkerOnMsgData)
 

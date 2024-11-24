@@ -34,7 +34,8 @@ import {
   getPowerupUsed,
   getYouUsedPowerup,
   getPurchasedMarketItem,
-  getPainterEraserOrPencilOut
+  getPainterEraserOrPencilOut,
+  getPainterMouseDown
 } from './funcs'
 
 /**
@@ -149,6 +150,9 @@ export const handlePeerDatas = (userID: string) => {
         break
       case 'painterEraserOrPencilOut':
         getPainterEraserOrPencilOut()
+        break
+      case 'painterMouseDown':
+        getPainterMouseDown(rtcData.data)
         break
       default:
         negativeLog('RECEIVED UNKNOWN EVENT FROM HOST', rtcData)

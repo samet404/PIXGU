@@ -1,7 +1,6 @@
 import Logo from '@/png/logo.png'
 import Image from 'next/image'
-import LanguageDropdown from './components/LanguageDropdown'
-import SocialLinks from './components/LanguageDropdown/SocialLinks'
+// import LanguageDropdown from './components/LanguageDropdown'
 
 const Navbar = () => {
   return (
@@ -16,8 +15,7 @@ const Navbar = () => {
       </div>
 
       <div className="flex flex-row items-center gap-5">
-        <SocialLinks />
-        <LanguageDropdown />
+        {/* <LanguageDropdown /> */}
       </div>
     </nav>
   )

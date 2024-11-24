@@ -1,5 +1,6 @@
 import type { SelectThemeFromClient } from '@/types/webRTCConnData'
 import { negativeLog, sendToAllPeers } from '@/utils'
+import { postMsgToHostTimerWorker } from '@/workers'
 import {
   useHostPainterData,
   useMatchStatus,
@@ -32,7 +33,10 @@ export const getSelectedTheme = (
 
   useMatchStatus.getState().startInterval(roomID)
 
-  clearInterval(hostPainterData.timeIsUpInterval)
+  postMsgToHostTimerWorker({
+    ID: 'PAINTER_TIME_IS_UP',
+    event: 'stop'
+  })
   useHostPainterData.getState().painterSelectedTheme(data)
 
   sendToAllPeers({

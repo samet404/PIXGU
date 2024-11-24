@@ -1,29 +1,38 @@
 import type { UndoInput } from '../types';
 
 export const undo = ({ undoRedo }: UndoInput) => {
-    const currentUndoRedoGroupIndex = undoRedo.current.undoRedoGroup.index
-    console.log('undo called: ', undoRedo.current)
+    const currentDirection = undoRedo.current.undoRedoGroup.direction;
+    const currentUndoRedoGroupIndex = undoRedo.current.undoRedoGroup.index;
 
-    if (undoRedo.current.undoRedoGroup.direction === 'r') {
-        undoRedo.current.undoRedoGroup.direction = 'u'
-        return undoRedo.current.stack[undoRedo.current.operationIndex]![currentUndoRedoGroupIndex]![0]!
+    // Handle new operation
+    if (currentUndoRedoGroupIndex === 0) {
+        // Check if we can move to previous operation
+        if (undoRedo.current.operationIndex > 0) {
+            const newOperationIndex = undoRedo.current.operationIndex - 1;
+
+            // Set to last group of previous operation
+            undoRedo.current.undoRedoGroup.index =
+                undoRedo.current.stack[newOperationIndex]!.length - 1;
+            undoRedo.current.undoRedoGroup.direction = 'u';
+            undoRedo.current.operationIndex = newOperationIndex;
+        } else
+            // No more operations to undo
+            return null;
+
     }
 
-    else if (undoRedo.current.stack[undoRedo.current.operationIndex]![currentUndoRedoGroupIndex]) {
-        if (undoRedo.current.stack[undoRedo.current.operationIndex]![currentUndoRedoGroupIndex - 1]) {
-            undoRedo.current.undoRedoGroup.index--
-            undoRedo.current.undoRedoGroup.direction = 'u'
-        }
-        return undoRedo.current.stack[undoRedo.current.operationIndex]![currentUndoRedoGroupIndex]![0]
-    }
-    else if (undoRedo.current.stack[undoRedo.current.operationIndex - 1]?.[0]) {
-        undoRedo.current.undoRedoGroup.index = 0
-        undoRedo.current.undoRedoGroup.direction = 'u'
-        undoRedo.current.operationIndex--
+    // Handle direction change
+    if (currentDirection === 'r')
+        undoRedo.current.undoRedoGroup.direction = 'u';
 
-        return undoRedo.current.stack[undoRedo.current.operationIndex]![currentUndoRedoGroupIndex]![0]
-    }
 
-    return null
+    // Get current pixel state
+    const result = undoRedo.current.stack[undoRedo.current.operationIndex]?.[currentUndoRedoGroupIndex]?.[0];
 
-}
+    // Move to previous group if possible
+    if (currentUndoRedoGroupIndex > 0)
+        undoRedo.current.undoRedoGroup.index--;
+
+
+    return result;
+};

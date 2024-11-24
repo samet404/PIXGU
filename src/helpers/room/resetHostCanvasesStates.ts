@@ -3,7 +3,7 @@ import { useHostCanvasesData } from '@/zustand/store'
 
 export const resetHostCanvasesStates = () => {
     const canvasWorker = getCanvasWorker()
-    const { mctx, dbctx, dpctx } = useHostCanvasesData.getState()
+    const { mctx } = useHostCanvasesData.getState()
 
 
     mctx!.beginPath()
@@ -11,14 +11,5 @@ export const resetHostCanvasesStates = () => {
     mctx!.fillRect(0, 0, mctx!.canvas.width, mctx!.canvas.height)
     mctx!.closePath()
 
-    dbctx!.beginPath()
-    dbctx!.clearRect(0, 0, mctx!.canvas.width, mctx!.canvas.height)
-    dbctx!.closePath()
-
-    dpctx!.beginPath()
-    dpctx!.clearRect(0, 0, mctx!.canvas.width, mctx!.canvas.height)
-    dpctx!.closePath()
-
-
-    canvasWorker.current.postMessage({ e: 3 } as CanvasWorkerOnMsgData)
+    canvasWorker.current.postMessage({ e: 'reset' } as CanvasWorkerOnMsgData)
 }

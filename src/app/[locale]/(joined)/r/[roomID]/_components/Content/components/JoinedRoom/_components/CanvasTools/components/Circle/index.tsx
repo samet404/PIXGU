@@ -5,7 +5,7 @@ export const Circle = () => {
   return (
     <Tool
       icon={
-        <div className="size-[90%] rounded-full border-[0.2rem] border-[rgba(255,255,255,0.5)]"></div>
+        <div className="rounded-full border-[0.2rem] border-[rgba(255,255,255,0.5)] size-10"></div>
       }
     ></Tool>
   )

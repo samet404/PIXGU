@@ -3,7 +3,7 @@ import { useAmIPainting, useCanvasesMainData, useCoins, useGuessChatLayout, useG
 
 export const resetMatchStates = () => {
     const canvasWorker = getCanvasWorker()
-    const { mctx, dbctx, dpctx } = useCanvasesMainData.getState()
+    const { mctx } = useCanvasesMainData.getState()
 
 
     mctx!.beginPath()
@@ -11,19 +11,9 @@ export const resetMatchStates = () => {
     mctx!.fillRect(0, 0, mctx!.canvas.width, mctx!.canvas.height)
     mctx!.closePath()
 
-    dbctx!.beginPath()
-    dbctx!.clearRect(0, 0, mctx!.canvas.width, mctx!.canvas.height)
-    dbctx!.closePath()
-
-    dpctx!.beginPath()
-    dpctx!.clearRect(0, 0, mctx!.canvas.width, mctx!.canvas.height)
-    dpctx!.closePath()
-
-
-    canvasWorker.current.postMessage({ e: 3 } as CanvasWorkerOnMsgData)
+    canvasWorker.current.postMessage({ e: 'reset' } as CanvasWorkerOnMsgData)
     useAmIPainting.getState().reset()
     useRoomWinnersChatMsgsStore.getState().reset()
     useRoomGuessChatMsgsStore.getState().reset()
     useGuessedPlayers.getState().reset()
-    useMatchStatusClient.getState().reset()
 }

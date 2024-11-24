@@ -32,7 +32,7 @@ export const GridSwitcher = () => {
     <Tool
       isActive={isOpen}
       icon={
-        <Svg src='grid-svgrepo-com.svg' alt="grid" className="h-full w-full opacity-55" />
+        <Svg src='grid-svgrepo-com.svg' alt="grid" className="size-8 opacity-50" />
       }
       onMouseDown={switchGrid}
     />

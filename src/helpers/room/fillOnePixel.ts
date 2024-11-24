@@ -15,13 +15,13 @@ export const fillOnePixel = (
   smoothX: number,
   smoothY: number,
   cellPixelLength: number,
-  color: Uint8ClampedArray,
+  color: Uint8ClampedArray | [number, number, number],
 ) => {
   const exactX = Math.floor(cellPixelLength! * smoothX)
   const exactY = Math.floor(cellPixelLength! * smoothY)
 
   ctx.beginPath()
-  ctx.fillStyle = `rgb(${color[0]}, ${color[1]}, ${color[2]},  ${(color[3]! / 255).toFixed(2)})`
+  ctx.fillStyle = `rgb(${color[0]}, ${color[1]}, ${color[2]},  255)`
   ctx.fillRect(exactX, exactY, cellPixelLength!, cellPixelLength!)
   ctx.closePath()
 }

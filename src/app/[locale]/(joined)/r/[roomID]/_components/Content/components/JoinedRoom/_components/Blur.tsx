@@ -28,7 +28,7 @@ export const Blur = ({ children }: PropsWithChildren) => {
       case 'failed':
         return (
           <div className="flex flex-row gap-4">
-            <div>Failed to connect to host</div>
+            <div>WebRTC connection failed</div>
           </div>
         )
       case 'finding host':
@@ -61,7 +61,7 @@ export const Blur = ({ children }: PropsWithChildren) => {
       case 'disconnected':
         return 'from-[#ff5ea4] to-[#ee0351]'
       case 'failed':
-        return 'from-[#ff62a6ff] to-[#ee0351b7]'
+        return 'from-[#ff62a6ff] to-[#ee0351ff]'
       case 'finding host':
         return 'from-[#e6d240ff] to-[#ffef77ff]'
     }

@@ -4,7 +4,7 @@ import type { BucketInput, CanvasWorkerPostMsgData } from '../types';
 const DIRECTIONS = [[-1, 0], [1, 0], [0, -1], [0, 1]]
 
 export const bucket = ({ x: startX, y: startY, pixels, cellSideCount, color }: BucketInput) => {
-    const pixelsToBeFilled: Uint16Array[] = []
+    const pixelsToBeFilled: [coors: Uint16Array, color: Uint8ClampedArray][] = []
     const sRgb = pixels[startX]![startY]!
     const visited: Set<string> = new Set()
     const queue: [number, number][] = [[startX, startY]]
@@ -24,9 +24,10 @@ export const bucket = ({ x: startX, y: startY, pixels, cellSideCount, color }: B
 
         if (!visited.has(visitedKey) && isInside(x, y, startX, startY)) {
             visited.add(visitedKey)
-            pixelsToBeFilled.push(new Uint16Array([x, y]))
             const newColor = sRgb[3] !== 255 ? alphaBlendRGBA(pixels[x]![y]!, sRgb) : sRgb
             pixels[x]![y]! = newColor
+            pixelsToBeFilled.push([new Uint16Array([x, y]), newColor])
+
 
             // Add neighbors to queue
             for (const [dx, dy] of DIRECTIONS) {
@@ -37,10 +38,7 @@ export const bucket = ({ x: startX, y: startY, pixels, cellSideCount, color }: B
 
 
     return {
-        e: 0,
-        data: {
-            coors: pixelsToBeFilled,
-            color
-        }
+        e: 'bucket',
+        data: pixelsToBeFilled
     } as CanvasWorkerPostMsgData
 }

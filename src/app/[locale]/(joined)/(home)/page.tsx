@@ -7,6 +7,7 @@ import { setIsLogged, setLocale } from '@/context/server'
 import { redirect } from 'next/navigation'
 import { Outfit } from 'next/font/google'
 import Link from 'next/link'
+import SocialLinks from './_components/SocialLinks'
 
 const outfit = Outfit({ subsets: ['latin'], weight: ['700', '500'] })
 
@@ -17,7 +18,7 @@ const Home = async ({ params }: Props) => {
   const isLogged = await api.auth.isLogged.query()
 
   setIsLogged(isLogged)
-  setLocale(await params.locale)
+  setLocale((await params).locale)
 
 
 
@@ -35,7 +36,14 @@ const Home = async ({ params }: Props) => {
       <div className="flex animate-fade flex-col items-center duration-[100ms]  animate-duration-1000">
         <Navbar />
         <Main />
-        <Link className='text-[#ffffff8d] hover:text-white font-[500] pt-6' href={'/privacy'} prefetch={false}>Privacy Policy</Link>
+        <div className='flex  pt-6 flex-row gap-5 items-center justify-center text-[#ffffff8d]'>
+          <SocialLinks />
+          |
+          <Link className='text-[0.8rem] hover:text-white font-[500]' target='_blank' href='https://404portfolio.vercel.app' prefetch={false}>Made by 404</Link>
+          |
+          <Link className='text-[0.8rem] hover:text-white font-[500]' href={'/privacy'} prefetch={false}>Privacy Policy</Link>
+
+        </div>
       </div>
       <div className='w-full flex h-[20rem] bg-green-400 p-2 items-center justify-center shadow-[0_0px_30px_1px_rgb(74,222,128)]'>
         All systems are operational

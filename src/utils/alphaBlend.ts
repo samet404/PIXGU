@@ -14,7 +14,6 @@ export const alphaBlendRGBA = (background: Uint8ClampedArray, foreground: Uint8C
     const r = Math.round((ab * (1 - af) * background[0]! + foreground[0]! * af) * blend)
     const g = Math.round((ab * (1 - af) * background[1]! + foreground[1]! * af) * blend)
     const b = Math.round((ab * (1 - af) * background[2]! + foreground[2]! * af) * blend)
-    const alpha = Math.round(a * 255)
 
-    return new Uint8ClampedArray([r, g, b, alpha])
+    return new Uint8ClampedArray([r, g, b, 255])
 }

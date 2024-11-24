@@ -58,6 +58,11 @@ export type WinnersChatFromClient = {
   }
 }
 
+export type PainterMouseDown = {
+  event: 'painterMouseDown'
+  data: Uint16Array
+}
+
 export type PainterPencil = {
   event: 'painterPencil'
   data: {
@@ -307,6 +312,7 @@ export type WebRTCConnDataFromHost = (
   | PurchasedMarketItem
   | PowerupUsed
   | YouUsedPowerup
+  | PainterMouseDown
 )
 /**
  * DirectlyFromClient is the type of data that is sent directly from the client.
@@ -322,5 +328,6 @@ export type WebRTCConnDataFromClient = (
   | PainterTrash
   | SelectThemeFromClient
   | BuyMarketItem
+  | PainterMouseDown
   | UsePowerup
 ) 

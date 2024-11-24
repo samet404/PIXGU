@@ -21,7 +21,7 @@ export const pencil = (
     const size = usePainterTool.getState().options.pencil.size
 
     canvasWorker.current.postMessage({
-        e: 1,
+        e: 'pencil',
         data: {
             color,
             startX: smoothX,

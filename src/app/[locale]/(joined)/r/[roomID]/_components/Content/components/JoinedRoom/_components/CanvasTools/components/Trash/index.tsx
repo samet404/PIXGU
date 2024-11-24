@@ -12,17 +12,15 @@ export const Trash = () => {
 
   const trashFunc = async () => {
     const canvasWorker = getCanvasWorker()
-    const { mctx, main, dbctx, dpctx } = useCanvasesMainData.getState()
+    const { mctx, main } = useCanvasesMainData.getState()
 
     mctx!.beginPath()
     mctx!.fillStyle = '#ffffff'
     mctx!.fillRect(0, 0, main!.width, main!.height)
     mctx!.closePath()
-    dpctx!.clearRect(0, 0, dpctx!.canvas.width, dpctx!.canvas.height)
-    dbctx!.clearRect(0, 0, dbctx!.canvas.width, dbctx!.canvas.height)
 
     canvasWorker.current.postMessage({
-      e: 3
+      e: 'reset'
     } as CanvasWorkerOnMsgData)
   }
 
@@ -47,7 +45,7 @@ export const Trash = () => {
       <Tool
         onMouseDown={runTrash}
         icon={
-          <Svg src='trash-svgrepo-com.svg' alt="trash" className="h-full w-[80%] opacity-55" />
+          <Svg src='trash-svgrepo-com.svg' alt="trash" className="size-8 opacity-50" />
         }
       ></Tool>
     </Fragment>

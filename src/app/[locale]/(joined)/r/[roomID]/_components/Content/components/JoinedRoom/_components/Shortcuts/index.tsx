@@ -1,7 +1,7 @@
 "use client"
 
 import { useShortcut } from '@/hooks'
-import { getCanvasWorker, type CanvasWorkerPostMsgData } from '@/workers'
+import { getCanvasWorker, type CanvasWorkerOnMsgData } from '@/workers'
 import { toolsHaveSizeProperty, useGameToolAlert, usePainterTool, type ToolHaveSizeProperty } from '@/zustand/store'
 
 const canvasWorker = getCanvasWorker()
@@ -9,7 +9,6 @@ const canvasWorker = getCanvasWorker()
 export const Shortcuts = () => {
     const setTool = usePainterTool((s) => s.setCurrent)
     const setToolAlert = useGameToolAlert((s) => s.setAlert)
-    const switchGrid = usePainterTool((s) => s.switchGrid)
 
     useShortcut({
         keyName: 'Pencil', onShortcut: () => {
@@ -65,8 +64,8 @@ export const Shortcuts = () => {
             const undoRedoType = usePainterTool.getState().with.undoRedoType
             console.log('undoRedoType: ', undoRedoType)
             canvasWorker.current.postMessage({
-                e: undoRedoType === 0 ? 11 : 8,
-            } as CanvasWorkerPostMsgData)
+                e: undoRedoType === 0 ? 'undoByOperation' : 'undo',
+            } as CanvasWorkerOnMsgData)
             setToolAlert(undoRedoType === 0 ? 'Undo-BO' : 'Undo-PBP')
         }
     })
@@ -76,8 +75,8 @@ export const Shortcuts = () => {
         onShortcut: () => {
             const undoRedoType = usePainterTool.getState().with.undoRedoType
             canvasWorker.current.postMessage({
-                e: undoRedoType === 0 ? 12 : 9,
-            } as CanvasWorkerPostMsgData)
+                e: undoRedoType === 0 ? 'redoByOperation' : 'redo',
+            } as CanvasWorkerOnMsgData)
             setToolAlert(undoRedoType === 0 ? 'Redo-BO' : 'Redo-PBP')
         }
     })

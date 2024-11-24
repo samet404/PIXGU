@@ -8,7 +8,8 @@ export const bucket = (smoothX: number, smoothY: number) => {
     const button = useAmIPainting.getState().button
     const color = new Uint8ClampedArray(usePainterTool.getState().with[button === 0 ? 'color1' : 'color2'])
     canvasWorker.current.postMessage({
-        e: 0, data: {
+        e: 'bucket',
+        data: {
             x: smoothX,
             y: smoothY,
             color

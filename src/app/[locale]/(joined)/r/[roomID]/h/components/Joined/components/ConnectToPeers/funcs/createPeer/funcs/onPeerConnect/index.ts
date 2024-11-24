@@ -52,7 +52,7 @@ export const onPeerConnect = (
     }
 
     canvasWorker.current.postMessage({
-      e: 5
+      e: 'pixels'
     } as CanvasWorkerOnMsgData)
 
     usePlayers.getState().addPlayer(userID, {

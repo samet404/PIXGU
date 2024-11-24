@@ -12,11 +12,11 @@ export const metadata: Metadata = {
 }
 
 const Content = async ({ params }: Props) => {
-  const roomID = params.roomID
+  const roomID = (await params).roomID
   const user = await api.auth.getUser.query()
   const guest = await api.auth.getGuest.query()
 
-  setServerContexts(params.locale, roomID, user, guest, !!guest)
+  setServerContexts((await params).locale, roomID, user, guest, !!guest)
 
   return <PreventRefresh><JoinedRoom roomID={roomID} user={user} guest={guest} /></PreventRefresh>
 }

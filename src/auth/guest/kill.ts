@@ -14,6 +14,6 @@ export const killGuest = async () => {
     await redisDb.del(`guest:${guestID}:name`)
     await redisDb.del(`guest:${guestID}:name_ID`)
     await redisDb.del(`guest:${guestID}:name_&_name_ID`)
-    cookies().delete('guest_auth_session')
+      ; (await cookies()).delete('guest_auth_session')
   }
 }

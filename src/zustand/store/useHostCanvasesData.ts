@@ -6,12 +6,6 @@ export type HostCanvasesData = {
 
     main?: HTMLCanvasElement
     mctx?: CanvasRenderingContext2D
-
-    dpctx?: CanvasRenderingContext2D
-    draft_pencil?: HTMLCanvasElement
-
-    dbctx?: CanvasRenderingContext2D
-    draft_bucket?: HTMLCanvasElement
 }
 
 type State = HostCanvasesData

@@ -2,7 +2,6 @@
 
 import { fillOnePixel } from '@/helpers/room'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
-import { grayLog } from '@/utils/grayLog'
 import { sendToAllPeers } from '@/utils/sendToAllPeers'
 import { getCanvasWorker, terminateCanvasWorker, type CanvasWorkerPostMsgData } from '@/workers'
 import { useHostCanvasesData, useWhoIsPainter } from '@/zustand/store'
@@ -16,43 +15,46 @@ export const UseCanvasWorker = () => {
             const workerData = e.data as CanvasWorkerPostMsgData
 
             switch (workerData.e) {
-                case 0: {
-                    grayLog('BUCKET WORKER DONE', e.data)
-                    const { dbctx, cellPixelLength } = useHostCanvasesData.getState()
-                    const { color, coors } = workerData.data
+                case 'focus': {
+                    const { mctx, cellPixelLength } = useHostCanvasesData.getState()
 
-                    grayLog('BUCKET WORKER DONE', workerData)
+                    for (let i = 0; i < workerData.data.length; i++) {
+                        const [coors, color] = workerData.data[i]!
+                        fillOnePixel(mctx!, coors[0]!, coors[1]!, cellPixelLength!, color)
+                    }
+                    break
+                }
+                case 'bucket': {
+                    const { mctx, cellPixelLength } = useHostCanvasesData.getState()
 
-                    console.log('started bucket ', color)
-                    for (const coord of coors) {
-                        fillOnePixel(dbctx!, coord[0]!, coord[1]!, cellPixelLength!, color)
+                    for (let i = 0; i < workerData.data.length; i++) {
+                        const [coors, color] = workerData.data[i]!
+                        fillOnePixel(mctx!, coors[0]!, coors[1]!, cellPixelLength!, color)
                     }
                 }
                     break
 
-                case 1: {
-                    const { color, coors } = workerData.data
-                    const { dbctx, cellPixelLength } = useHostCanvasesData.getState()
+                case 'pencil': {
+                    const { mctx, cellPixelLength } = useHostCanvasesData.getState()
 
-                    if (workerData.e !== 1) return
-
-                    for (let i = 0; i < coors.length; i++) {
-                        fillOnePixel(dbctx!, coors[i]![0]!, coors[i]![1]!, cellPixelLength!, color)
+                    for (let i = 0; i < workerData.data.length; i++) {
+                        const [coors, color] = workerData.data[i]!
+                        fillOnePixel(mctx!, coors[0]!, coors[1]!, cellPixelLength!, color)
                     }
                 }
                     break
-                case 2: {
-                    grayLog('ERASER WORKER DONE', e.data)
-                    const { dbctx, cellPixelLength } = useHostCanvasesData.getState()
-                    const { coors } = workerData.data
+                case 'eraser': {
+                    const { mctx, cellPixelLength } = useHostCanvasesData.getState()
 
-                    for (let i = 0; i < coors.length; i++) {
-                        fillOnePixel(dbctx!, coors[i]![0]!, coors[i]![1]!, cellPixelLength!, new Uint8ClampedArray([255, 255, 255, 255]))
+                    for (let i = 0; i < workerData.data.length; i++) {
+                        const [coors, color] = workerData.data[i]!
+                        fillOnePixel(mctx!, coors[0]!, coors[1]!, cellPixelLength!, color)
                     }
-                }
-                    break
 
-                case 3: {
+                    break
+                }
+
+                case 'reset': {
                     const value = useWhoIsPainter.getState().value
                     const painterID = 'painterID' in value ? value.painterID : null
                     if (!painterID) return
@@ -65,8 +67,19 @@ export const UseCanvasWorker = () => {
                     })
                 }
                     break
-                default:
-                    break
+
+
+                case 'undo/redo':
+
+                    {
+                        const { mctx, cellPixelLength } = useHostCanvasesData.getState()
+
+                        for (let i = 0; i < workerData.data.length; i++) {
+                            const [coors, color] = workerData.data[i]!
+                            fillOnePixel(mctx!, coors[0]!, coors[1]!, cellPixelLength!, color)
+                        }
+                    }
+
             }
         }
 
@@ -77,3 +90,6 @@ export const UseCanvasWorker = () => {
 
     return null
 }
+
+
+

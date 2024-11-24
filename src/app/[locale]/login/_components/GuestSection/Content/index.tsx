@@ -1,15 +1,11 @@
 'use client'
 
-import {
-  forwardRef,
-  Fragment,
-  useRef,
-  type MutableRefObject,
-  type Ref,
-  type RefObject,
-} from 'react'
 import { Btn } from './components/Btn'
 import { Input } from './components/Input'
+import {
+  Fragment,
+  useRef,
+} from 'react'
 
 export const Content = () => {
   const receivedInputRef = useRef<HTMLInputElement>(null)

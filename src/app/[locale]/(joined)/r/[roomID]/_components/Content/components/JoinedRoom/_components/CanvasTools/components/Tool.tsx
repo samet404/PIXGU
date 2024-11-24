@@ -20,6 +20,11 @@ export const Tool = ({
   const [springs, api] = useSpring(() => ({
     from: {
       scale: 1,
+      rotate: '0deg',
+    },
+    config: {
+      tension: 300,
+      friction: 10,
     },
   }))
 
@@ -29,13 +34,29 @@ export const Tool = ({
         if (!onMouseDown) return
         api.start({
           from: {
-            scale: 0.5,
+            scale: 0.8,
+            rotate: '-20deg',
           },
           to: {
             scale: 1,
+            rotate: '0deg',
           },
         })
         onMouseDown(e)
+      }}
+      onMouseEnter={() => {
+        if (isActive) return
+
+        api.start({
+          scale: 1.1,
+        })
+      }}
+      onMouseLeave={() => {
+        if (isActive) return
+
+        api.start({
+          scale: 1,
+        })
       }}
       style={springs}
       className={clsxMerge(

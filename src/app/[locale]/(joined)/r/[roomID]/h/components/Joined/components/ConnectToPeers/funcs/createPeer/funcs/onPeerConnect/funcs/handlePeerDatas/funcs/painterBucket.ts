@@ -10,7 +10,8 @@ export const getPainterBucket = (data: PainterBucket['data'], userID: string) =>
 
 
     canvasWorker.current.postMessage({
-        e: 0, data: {
+        e: 'bucket',
+        data: {
             x,
             y,
             color

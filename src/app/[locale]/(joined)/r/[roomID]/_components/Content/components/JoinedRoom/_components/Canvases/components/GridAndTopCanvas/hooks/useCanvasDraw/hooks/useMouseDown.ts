@@ -1,12 +1,16 @@
-import { amIPainter, bucket, eraser, eyedropper, gradient, pencil } from './func'
+import { amIPainter, bucket, eraser, eyedropper, pencil } from './func'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { storeMouseDownStartAt } from '@/store'
+import { sendToHostPeer } from '@/utils/sendToHostPeer'
+import { getCanvasWorker, type CanvasWorkerOnMsgData } from '@/workers'
 import {
   useCanvasesMainData,
   useXY,
   usePainterTool,
   useAmIPainting,
 } from '@/zustand/store'
+
+const canvasWorker = getCanvasWorker()
 
 export const useMouseDown = (myUserID: string) => {
   const handler = (e: PointerEvent) => {
@@ -19,9 +23,6 @@ export const useMouseDown = (myUserID: string) => {
       zoom,
       cellPixelLength,
       mctx,
-      dpctx,
-      draft_pencil
-
     } = useCanvasesMainData.getState()
     if (!main || !cellPixelLength || !zoom) return
 
@@ -39,6 +40,16 @@ export const useMouseDown = (myUserID: string) => {
       exact: [exactX, exactY],
       smooth: [smoothX, smoothY]
     })
+    canvasWorker.current.postMessage({
+      e: 'mousedown',
+      data: [smoothX, smoothY]
+    } as CanvasWorkerOnMsgData)
+
+    sendToHostPeer({
+      event: 'painterMouseDown',
+      data: new Uint16Array([smoothX, smoothY])
+    })
+
     console.log('start x, y: ', smoothX, smoothY)
 
     const toolName = usePainterTool.getState().current
@@ -46,10 +57,6 @@ export const useMouseDown = (myUserID: string) => {
     switch (toolName) {
       case 'pencil':
         useAmIPainting.getState().imPainting(e.button)
-
-        mctx!.drawImage(draft_pencil!, 0, 0)
-        dpctx!.clearRect(0, 0, dpctx!.canvas.width, dpctx!.canvas.height)
-
         pencil(smoothX, smoothY)
         break
       case 'eraser':

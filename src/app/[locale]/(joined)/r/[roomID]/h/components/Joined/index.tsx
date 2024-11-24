@@ -4,19 +4,19 @@ import { Outfit } from 'next/font/google'
 import { PlayersSection } from './components/PlayersSection'
 import { ConnectToPeers } from './components/ConnectToPeers'
 import { Providers } from './components/Providers'
-import { getGuest, getRoomID, getUser, getUserID } from '@/context/server'
 import { States } from './components/States'
 import { ResetStates } from './components/ResetStates'
 import { Navbar } from './components/Navbar'
 import { Canvases } from './components/Canvases'
-import type { MyUserInfoForRoomStoreState } from '@/zustand/store'
-import type { Guest } from '@/types/guest'
 import type { User } from 'lucia'
+import { UseTimersWorker } from './components/UseTimersWorker'
+import type { Guest } from '@/types/guest'
 
 const outfit = Outfit({
   subsets: ['latin'],
   weight: ['600', '700', '500', '400', '300',],
 })
+
 
 const Joined = ({ roomID, user, guest }: Props) => {
   const userID = user?.id ? user.id : guest!.ID
@@ -27,6 +27,7 @@ const Joined = ({ roomID, user, guest }: Props) => {
         id="root"
         className={`${outfit.className} h-full w-full overflow-y-scroll`}
       >
+        <UseTimersWorker roomID={roomID} />
         <ResetStates />
         <ConnectToPeers />
         <HostingHealthDisplay />

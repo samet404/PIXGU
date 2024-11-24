@@ -15,7 +15,7 @@ export const Btn = () => {
         },
       )}
     >
-      <Svg src='google-svgrepo-com.svg' alt="google" className="h-full w-full opacity-50" />
+      <Svg src='google-svgrepo-com.svg' alt="google" className="h-full w-full opacity-90" />
     </button>
   )
 }

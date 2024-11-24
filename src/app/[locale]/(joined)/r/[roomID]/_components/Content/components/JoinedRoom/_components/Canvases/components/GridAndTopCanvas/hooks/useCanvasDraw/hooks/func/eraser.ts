@@ -18,7 +18,7 @@ export const eraser = (
 
 
     canvasWorker.current.postMessage({
-        e: 2,
+        e: 'eraser',
         data: {
             startX: smoothX,
             startY: smoothY,

@@ -1,12 +1,13 @@
 import { faDiscord, faXTwitter } from '@fortawesome/free-brands-svg-icons'
 import SocialLink from './components/SocialLink'
+import { Fragment } from 'react'
 
 const SocialLinks = () => {
   return (
-    <div className=" flex flex-row flex-wrap gap-2">
+    <Fragment>
       <SocialLink href="https://discord.gg/KB48qQCqCx" faIcon={faDiscord} />
-      {/* <SocialLink href="https://x.com/PIXAWAI_Game" faIcon={faXTwitter} /> */}
-    </div>
+      <SocialLink href="https://x.com/PIXAWAI_Game" faIcon={faXTwitter} />
+    </Fragment>
   )
 }
 export default SocialLinks

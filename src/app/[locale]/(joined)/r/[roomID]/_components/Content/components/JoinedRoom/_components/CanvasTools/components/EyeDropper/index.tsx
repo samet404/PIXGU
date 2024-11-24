@@ -12,7 +12,7 @@ export const EyeDropper = () => {
     <Tool
       isActive={toolName === 'eyedropper'}
       onMouseDown={() => setTool('eyedropper')}
-      icon={<Svg src='color-picker-svgrepo-com.svg' alt="eye-dropper" className="opacity-50" />}
+      icon={<Svg src='color-picker-svgrepo-com.svg' alt="eye-dropper" className="size-9 opacity-50" />}
     />
   )
 }

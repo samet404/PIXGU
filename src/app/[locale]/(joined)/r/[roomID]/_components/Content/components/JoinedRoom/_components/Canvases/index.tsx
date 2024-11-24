@@ -1,6 +1,5 @@
 'use client'
 
-import { DraftCanvas } from './components/DraftCanvas'
 import { GridAndTopCanvas } from './components/GridAndTopCanvas'
 import { MainCanvas } from './components/MainCanvas'
 import { Suspense } from 'react'
@@ -10,6 +9,7 @@ import { SelectTheme } from './components/SelectTheme'
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
 import { useAmIPainting, useCanvasesMainData } from '@/zustand/store'
 import { UseCanvasWorker } from './components/UseCanvasWorker'
+import { BlurFocus } from './components/BlurFocus'
 
 const Canvases = () => {
   const updateZoom = (scale: number) => {
@@ -46,10 +46,8 @@ const Canvases = () => {
                 className={`relative flex select-none rounded-[0.7rem] border-[0.2rem] border-[#ffffff37]`}
               >
                 <MainCanvas key={'MainCanvas'} />
-                <DraftCanvas key={'DraftCanvas'} name='pencil' code='p' />
-                <DraftCanvas key={'DraftGradient'} name='gradient' code='g' />
-                <DraftCanvas key={'DraftBucket'} name='bucket' code='b' />
                 <GridAndTopCanvas key={'GridAndTopCanvas'} />
+                <BlurFocus />
                 <NewPainter key={'NewPainter'} />
                 <SelectTheme key={'SelectTheme'} />
               </div>

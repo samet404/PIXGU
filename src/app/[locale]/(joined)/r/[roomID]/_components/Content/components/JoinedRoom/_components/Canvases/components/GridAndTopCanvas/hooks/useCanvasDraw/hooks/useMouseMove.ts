@@ -1,6 +1,6 @@
 import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { useAmIPainting, useCanvasesMainData, usePainterTool, useXY } from '@/zustand/store'
-import { amIPainter, eraser, gradient, pencil } from './func'
+import { amIPainter, eraser, pencil } from './func'
 
 export const useMouseMove = (myUserID: string) => {
   const handler = (e: PointerEvent) => {
@@ -31,8 +31,6 @@ export const useMouseMove = (myUserID: string) => {
       case 'eraser':
         eraser(smoothX, smoothY)
         break
-      case 'gradient':
-        gradient(x, y)
     }
   }
 

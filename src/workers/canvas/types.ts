@@ -7,6 +7,8 @@ export type BucketInputFromMain = {
 export type BucketInputFromWorker = {
     cellSideCount: number
     pixels: Uint8ClampedArray[][]
+    blurInfo: BlurInfo
+
 }
 
 export type PencilInputFromMain = {
@@ -22,7 +24,7 @@ export type PencilInputFromWorker = {
     pixelsOnDraw: Set<`${number},${number}`>
     undoRedo: UndoRedo
     lastPixel: [x: number, y: number] | null
-
+    blurInfo: BlurInfo
 }
 
 export type EraserInputMain = {
@@ -37,6 +39,7 @@ export type EraserInputFromWorker = {
     pixelsOnDraw: Set<`${number},${number}`>
     undoRedo: UndoRedo
     lastPixel: [x: number, y: number] | null
+    blurInfo: BlurInfo
 }
 
 export type PencilInput = PencilInputFromWorker & PencilInputFromMain
@@ -44,97 +47,77 @@ export type BucketInput = BucketInputFromWorker & BucketInputFromMain
 export type EraserInput = EraserInputFromWorker & EraserInputMain
 
 export type CanvasWorkerOnMsgData = {
-    // bucket
-    e: 0
+    e: 'bucket'
     data: BucketInputFromMain
 } | {
-    // pencil
-    e: 1
+    e: 'pencil'
     data: PencilInputFromMain
 } | {
-    // eraser
-    e: 2
+    e: 'eraser'
     data: EraserInputMain
 } | {
-    // reset
-    e: 3
+    e: 'reset'
 } | {
-    // mouseUp
-    e: 4
+    e: 'mouseUp'
 } | {
-    // pixels
-    e: 5
+    e: 'pixels'
 } | {
-    // eyedropper
-    e: 6
+    e: 'eyedropper'
     data: [x: number, y: number]
 } | {
-    // getPixels
-    e: 7
+    e: 'getPixels'
     data: Uint8ClampedArray[][]
 } | {
-    // redo
-    e: 8
+    e: 'redo'
 } | {
-    // undo
-    e: 9
+    e: 'undo'
 } | {
-    // getLastPixel
-    e: 10
+    e: 'getLastPixel'
     data: Uint16Array | null
 } | {
-    // redo byOperation
-    e: 11
+    e: 'redoByOperation'
 } | {
-    // undo byOperation
-    e: 12
+    e: 'undoByOperation'
 } | {
-    // mousedown
-    e: 13
+    e: 'mousedown'
     data: [smoothX: number, smoothY: number]
+} | {
+    e: 'focus'
+} | {
+    e: 'blur'
 }
 
 
-export type CanvasWorkerPostMsgData = {
-    e: 0
-    data: {
-        coors: Uint16Array[]
-        color: Uint8ClampedArray
+export type CanvasWorkerPostMsgData =
+    {
+        e: 'bucket'
+        data: [coor: Uint16Array, color: Uint8ClampedArray][]
+    } | {
+        e: 'pencil'
+        data: [coor: Uint16Array, color: Uint8ClampedArray][]
+    } | {
+        e: 'eraser'
+        data: [coor: Uint16Array, color: Uint8ClampedArray][]
+
+    } |
+    {
+        e: 'focus'
+        data: [coor: Uint16Array, color: Uint8ClampedArray][]
     }
-} | {
-    e: 1
-    data: {
-        coors: Uint16Array[]
-        color: Uint8ClampedArray
+    |
+    {
+        e: 'reset'
     }
-} | {
-    e: 2
-    data: {
-        coors: Uint16Array[]
-    }
-} |
-{
-    e: 3
-}
     | {
-        e: 5
+        e: 'pixels'
         data: Uint8ClampedArray[][]
     }
     | {
-        e: 6
+        e: 'eyedropper'
         data: Uint8ClampedArray
     } | {
-        e: 8
+        e: 'undo/redo'
         data: [coor: Uint16Array, color: Uint8ClampedArray][]
-    } | {
-        e: 9
-        data: [coor: Uint16Array, color: Uint8ClampedArray][]
-    } | {
-        e: 11
-        data: [coords: Uint16Array, color: Uint8ClampedArray][][]
-    } | {
-        e: 12
-        data: [coor: Uint16Array, color: Uint8ClampedArray][][]
     }
 
 export type RedoInput = {
@@ -157,3 +140,8 @@ export type UndoRedo = {
     }
 }
 
+
+export type BlurInfo = {
+    blurStack: Set<[number, number]>
+    hasBlur: boolean
+}

@@ -11,6 +11,6 @@ export const Eraser = () => {
     return <Tool
         isActive={toolName === 'eraser'}
         onMouseDown={() => setTool('eraser')}
-        icon={<Svg src='eraser-svgrepo-com.svg' alt="eraser" className="opacity-50" />}
+        icon={<Svg src='eraser-svgrepo-com.svg' alt="eraser" className="opacity-50 size-8" />}
     />
 }
