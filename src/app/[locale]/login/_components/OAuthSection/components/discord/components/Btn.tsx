@@ -10,15 +10,15 @@ export const Btn = () => {
     <button
       onClick={() => setIsLoading(true)}
       className={clsxMerge(
-        `flex aspect-square h-12 w-12 items-center justify-center rounded-lg bg-[#5865F2] p-1 drop-shadow-[0_0px_2px_#5865F2]`,
+        `flex aspect-square h-full w-full items-center border-[#ffffff93] border-[0.2rem] justify-center rounded-lg bg-[#5865F2] p-1 drop-shadow-[0_0px_2px_#5865F2]`,
         {
-          'scale-90 animate-pulse opacity-50 animate-infinite': isLoading,
+          'animate-pulse opacity-50 animate-infinite': isLoading,
         },
       )}
     >
       <FontAwesomeIcon
         icon={faDiscord}
-        fontSize={45}
+        fontSize={35}
         color={'rgba(255,255,255,0.85)'}
       />
     </button>

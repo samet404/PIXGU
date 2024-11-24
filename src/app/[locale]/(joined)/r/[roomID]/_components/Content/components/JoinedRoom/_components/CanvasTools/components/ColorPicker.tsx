@@ -6,7 +6,7 @@ import { usePainterTool } from '@/zustand/store'
 
 export const ColorPicker = () => {
   const selectedColor = useAtomValue(selectedColorAtom)
-  const initialColor = usePainterTool.getState().with[selectedColor === 0 ? 'color1' : 'color2']
+  const initialColor = (usePainterTool.getState().with[selectedColor === 0 ? 'color1' : 'color2']) ?? [0, 0, 0, 125]
 
   const handleOnChange = ({ r, g, b, a }: RgbaColor) => usePainterTool.getState()[selectedColor === 0 ? 'setColor' : 'setColor2']([r, g, b, a * 255])
 

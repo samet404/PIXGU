@@ -7,6 +7,7 @@ import { z } from 'zod'
 import { wToMs } from '@/utils'
 
 export const validateGuest = async (): Promise<Guest | null> => {
+  'use server'
   const authToken = (await cookies()).get('guest_auth_session')?.value
   if (!authToken) return null
 

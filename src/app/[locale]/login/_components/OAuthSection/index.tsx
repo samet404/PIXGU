@@ -13,11 +13,11 @@ const OAuthSection = async () => {
 
   return (
     <Section title={langObj.oauthDesc}>
-      <div className="grid w-full grid-cols-5 gap-2 rounded-md backdrop-blur-3xl pointer-events-none cursor-not-allowed">
+      <div className="grid w-full grid-cols-1 grid-rows-[3rem] gap-2 rounded-md ">
         <Discord />
-        <Google />
+        {/* <Google />
         <Spotify />
-        <Github />
+        <Github /> */}
       </div>
       {/* <Link
         href={'/articles/oeu90qdjAS)'}

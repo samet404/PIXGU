@@ -3,6 +3,7 @@ import 'server-only'
 import { redisDb } from '@/db/redis'
 import { cookies } from 'next/headers'
 import { z } from 'zod'
+import { env } from '@/env/server'
 
 export const killGuest = async () => {
   const authToken = (await cookies()).get('guest_auth_session')?.value
@@ -13,7 +14,12 @@ export const killGuest = async () => {
     await redisDb.del(`guest:session:${authToken}:ID`)
     await redisDb.del(`guest:${guestID}:name`)
     await redisDb.del(`guest:${guestID}:name_ID`)
-    await redisDb.del(`guest:${guestID}:name_&_name_ID`)
-      ; (await cookies()).delete('guest_auth_session')
+    await redisDb.del(`guest:${guestID}:name_&_name_ID`),
+      await fetch(`${env.BASE_URL}/api/del-guest-auth-token`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
   }
 }

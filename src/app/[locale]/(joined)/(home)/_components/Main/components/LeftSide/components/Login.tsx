@@ -2,9 +2,11 @@ import { getIsLogged } from '@/context/server'
 import MainButton from './MainButton'
 import login from '@/png/login.png'
 import Image from 'next/image'
+import { api } from '@/trpc/server'
 
-const Login = ({ name, description }: Props) => {
-
+const Login = async ({ name, description }: Props) => {
+  const isLogged = await api.auth.isLogged.query()
+  if (isLogged) return null
   return (
     <MainButton
       link="/login"
