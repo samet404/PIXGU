@@ -13,7 +13,10 @@ export const Content = () => {
   return (
     <Fragment>
       <Input ref={receivedInputRef} />
-      <Btn inputRef={receivedInputRef} />
+      <div className='flex flex-row gap-2 w-full'>
+        <Btn inputRef={receivedInputRef} joinGame={true} />
+        <Btn inputRef={receivedInputRef} joinGame={false} />
+      </div>
     </Fragment>
   )
 }

@@ -33,8 +33,10 @@ const Home = async ({ params }: Props) => {
       className={`${outfit.className} flex h-full w-full flex-col gap-[10rem] items-center justify-between overflow-y-scroll pt-2`}
     >
       <div className="flex animate-fade flex-col items-center duration-[100ms]  animate-duration-1000">
-        <Navbar />
-        <Main />
+        <div className='flex flex-col items-center'>
+          <Navbar />
+          <Main />
+        </div>
         <div className='flex  pt-6 flex-row gap-5 items-center justify-center text-[#ffffff8d]'>
           <SocialLinks />
           |

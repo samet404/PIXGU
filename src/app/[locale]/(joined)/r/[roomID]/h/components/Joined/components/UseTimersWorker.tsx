@@ -3,8 +3,9 @@
 import { createMatch } from '@/helpers/room'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { sendToAllPeers } from '@/utils/sendToAllPeers'
-import { getHostTimerWorker, terminateTimerWorker, TimerWorkerPostMsgData } from '@/workers'
-import { useHostingHealth, useHostPainterData, usePlayers } from '@/zustand/store'
+import { sendToPeerWithID } from '@/utils/sendToPeerWithID'
+import { getHostTimerWorker, postMsgToHostTimerWorker, terminateTimerWorker, TimerWorkerPostMsgData } from '@/workers'
+import { useCoins, useHostingHealth, useHostPainterData, useMatchStatus, usePlayers, useWhoIsPainter } from '@/zustand/store'
 
 export const UseTimersWorker = ({ roomID }: Props) => {
     useEffectOnce(() => {
@@ -34,7 +35,44 @@ export const UseTimersWorker = ({ roomID }: Props) => {
                     })
 
                     createMatch(roomID)
+                    break
                 }
+
+                case 'MATCH_REMAIN_TIME':
+                    console.log('MATCH_REMAIN_TIME')
+                    useMatchStatus.getState().decreaseRemainSeconds()
+                    break
+
+                case 'MATCH_ENDED':
+                    const painterID = useWhoIsPainter.getState().value.painterID!
+
+                    postMsgToHostTimerWorker({
+                        ID: 'MATCH_REMAIN_TIME',
+                        event: 'stop',
+                    })
+
+                    useCoins.getState().decrease(painterID, 100)
+
+                    sendToPeerWithID(painterID, {
+
+                        event: 'yourCoin',
+                        data: {
+                            amount: useCoins.getState().coins[painterID]!,
+                        },
+                    })
+
+                    sendToAllPeers({
+                        event: 'coin',
+                        data: {
+                            to: painterID,
+                            amount: useCoins.getState().coins[painterID]!,
+                        },
+                    }, {
+                        except: [painterID]
+                    })
+
+                    createMatch(roomID)
+                    break
 
             }
 

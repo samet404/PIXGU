@@ -4,5 +4,5 @@ import { useCoins } from '@/zustand/store'
 export const getCoin = (data: Coin['data']) => {
   const { to, amount } = data
 
-  useCoins.getState().add(to, amount)
+  useCoins.getState().set(to, amount)
 }

@@ -14,7 +14,7 @@ const LeftSide = async () => {
   return (
     <div
       id="main-left-side"
-      className='grid h-full w-full gap-2 overflow-y-scroll rounded-md bg-[rgba(0,0,0,0.7)] p-2 xs:grid-cols-1 md:grid-cols-2'
+      className='grid h-full w-full gap-2 overflow-y-scroll grid-rows-[7rem_7rem_7rem] rounded-md bg-[rgba(0,0,0,0.7)] p-2 xs:grid-cols-1 md:grid-cols-2'
     >
       <QuickMatch
         name={langObj.quick_match.name}

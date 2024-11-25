@@ -12,5 +12,5 @@ export const sendToPainterPeer = (rtcData: WebRTCConnData) => {
     return
   }
 
-  sendToPeerWithID(whoIsPainter.painterID, rtcData)
+  sendToPeerWithID(whoIsPainter.painterID!, rtcData)
 }

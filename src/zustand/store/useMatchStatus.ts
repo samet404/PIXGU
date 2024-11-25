@@ -1,88 +1,71 @@
-import { mToMs } from '@/utils/mToMs'
-import { createMatch } from '@/helpers/room'
+import { MATCH_TIME_MINUTES, MATCH_TIME_SECONDS } from '@/constants'
 import { create } from 'zustand'
 
 type State = {
   value: {
-    matchInterval: ReturnType<typeof setInterval> | null
+    passedSeconds: number | null
+    remainSeconds: number | null
     isFirstMatch: boolean
     matchCount: number
-    lastMatchStartedAt: number | null
+    startedAt: number | null
   }
 }
 type Action = {
-  startInterval: (roomID: string) => void
-  cancelInterval: () => void
-  clearInterval: () => void
+  timeoutStarted: (roomID: string) => void
+  timeoutCancelled: () => void
+  decreaseRemainSeconds: () => void
   reset: () => void
 }
 
 const initValue: State = {
   value: {
-    matchInterval: null,
+    remainSeconds: null,
+    passedSeconds: null,
     isFirstMatch: true,
     matchCount: 0,
-    lastMatchStartedAt: null,
+    startedAt: null,
   },
 }
 
+
 export const useMatchStatus = create<State & Action>((set, get) => ({
   ...initValue,
-
-  startInterval: (roomID) => {
-    const state = get().value
-    if (state.matchInterval) {
-      clearInterval(state.matchInterval)
-      console.log('interval cleared')
-    }
-    const startedAt = Date.now()
+  decreaseRemainSeconds: () => {
+    console.log('decreased remain seconds')
     set({
       value: {
-        matchCount: get().value.matchCount + 1,
-        matchInterval: setInterval(() => {
-          const state = get().value
-          const passedMs = Date.now() - startedAt
-          console.log('passedMs in startInterval:', passedMs, {
-            passedMs,
-            state,
-            startedAt,
-            date: Date.now(),
-          })
+        ...get().value,
+        remainSeconds: get().value.remainSeconds! - 1,
+        passedSeconds: get().value.passedSeconds! + 1
+      }
+    })
+  },
 
-          if (passedMs >= mToMs(4)) {
-            if (state.matchInterval) clearInterval(state.matchInterval)
-            createMatch(roomID)
-          }
-        }, 1000),
+  timeoutStarted: () => {
+    set({
+      value: {
+        passedSeconds: 0,
+        startedAt: Date.now(),
+        remainSeconds: MATCH_TIME_SECONDS,
+        matchCount: get().value.matchCount + 1,
         isFirstMatch: false,
-        lastMatchStartedAt: startedAt,
       },
     })
   },
 
-  cancelInterval: () => {
-    const matchTimeout = get().value.matchInterval
-    if (matchTimeout) clearInterval(matchTimeout)
+  timeoutCancelled: () => {
+
     set({
       value: {
+        passedSeconds: null,
+        remainSeconds: null,
+        startedAt: null,
         matchCount:
           get().value.matchCount !== 0 ? get().value.matchCount - 1 : 0,
-        matchInterval: null,
         isFirstMatch: get().value.matchCount === 1,
-        lastMatchStartedAt: get().value.lastMatchStartedAt,
       },
     })
   },
 
-  clearInterval: () => {
-    const matchTimeout = get().value.matchInterval
-    if (matchTimeout) clearInterval(matchTimeout)
-    set({ ...get() })
-  },
-  get: () => get(),
-  reset: () => {
-    const matchInterval = get().value.matchInterval
-    if (matchInterval) clearInterval(matchInterval)
-    set(initValue)
-  },
+  reset: () => set({ ...initValue }),
 }))

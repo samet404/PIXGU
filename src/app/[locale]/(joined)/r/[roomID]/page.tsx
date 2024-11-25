@@ -1,7 +1,5 @@
-import { Suspense } from 'react'
 import Content from './_components/Content'
 import type { Locale } from '@/types/locale'
-import Spinner from '@/components/Spinner'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {

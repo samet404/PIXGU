@@ -16,4 +16,4 @@ export type TimerWorkerPostMsgData = {
 }
 
 
-export type ID = 'PAINTER_TIME_IS_UP' | 'GAME_ENDED' | 'MATCH_ENDED' | 'MATCH_REMAIN_TIME'
+export type ID = 'MATCH_REMAIN_TIME'

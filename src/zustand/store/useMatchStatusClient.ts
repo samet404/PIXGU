@@ -1,7 +1,6 @@
 import { create } from 'zustand'
 
 type State = {
-  // matchInterval: ReturnType<typeof setInterval> | null
   status: 'waitingForThemes' | 'init' | 'started'
   isFirstMatch: boolean
   matchCount: number
@@ -9,9 +8,9 @@ type State = {
 }
 
 type Action = {
-  startInterval: () // interval: ReturnType<typeof setInterval>
+  startInterval: ()
 
-  => void
+    => void
   clearMatch: () => void
   waitingForThemes: () => void
   reset: () => void
@@ -29,26 +28,20 @@ export const useMatchStatusClient = create<State & Action>((set, get) => ({
   ...initValue,
 
   startInterval: () => {
-    // const matchInterval = get().matchInterval
-    // if (matchInterval) clearInterval(matchInterval)
 
     set({
       status: 'started',
       matchCount: get().matchCount + 1,
-      // matchInterval: interval,
       isFirstMatch: false,
       lastMatchStartedAt: Date.now(),
     })
   },
 
   clearMatch: () =>
-    // const matchInterval = get().matchInterval
-    // if (matchInterval) clearInterval(matchInterval)
 
     set({
       status: 'waitingForThemes',
       matchCount: get().matchCount - 1 < 0 ? 0 : get().matchCount - 1,
-      // matchInterval: null,
       isFirstMatch: get().matchCount - 1 <= 0,
       lastMatchStartedAt: get().lastMatchStartedAt,
     }),
@@ -62,7 +55,5 @@ export const useMatchStatusClient = create<State & Action>((set, get) => ({
       lastMatchStartedAt: get().lastMatchStartedAt,
     }),
   reset: () =>
-    // const matchInterval = get().matchInterval
-    // if (matchInterval) clearInterval(matchInterval)
     set(initValue),
 }))

@@ -10,6 +10,7 @@ import { wToMs } from '@/utils'
 import { redisDb } from '@/db/redis'
 import { redirect } from 'next/navigation'
 import { killGuest } from '@/auth/guest'
+import { api } from '@/trpc/server'
 
 const createTokenId = init({
   length: 25,
@@ -18,7 +19,7 @@ const createGuestId = init({
   length: 22,
 })
 
-export const joinAsGuest = async (input: { name: string }) => {
+export const joinAsGuest = async (input: { name: string, joinGame: boolean }) => {
   'use server'
 
   z.object({
@@ -51,6 +52,7 @@ export const joinAsGuest = async (input: { name: string }) => {
   await redisDb.set(redisKeys.name, name)
   await redisDb.set(redisKeys.nameID, nameID)
   await redisDb.set(redisKeys.nameWithNameID, `${name}@${nameID}`)
+  await redisDb.sadd('guest_users', guestID)
 
   const now = Date.now()
   await redisDb.set(redisKeys.createdAt, now)
@@ -65,5 +67,11 @@ export const joinAsGuest = async (input: { name: string }) => {
       domain: env.NODE_ENV === 'production' ? 'pixgu.com' : 'localhost',
     })
 
-  redirect('/')
+  if (input.joinGame) {
+    const roomID = await api.gameRoom.getRandomPublicRoomID.query()
+    if (!roomID) return '/create'
+    return `/r/${roomID}`
+  }
+
+  return '/'
 }

@@ -4,7 +4,7 @@ import { Content } from './Content'
 export const GuestSection = () => {
   return (
     <Section title="Join us as guest">
-      <div className="flex flex-row gap-1">
+      <div className="flex flex-col gap-2">
         <Content />
       </div>
       <div className="text-[0.8rem]">

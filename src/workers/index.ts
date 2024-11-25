@@ -59,3 +59,39 @@ export const terminateTimerWorker = (): void => {
     hostTimerWorker.current?.terminate()
     hostTimerWorker.current = null
 }
+
+
+
+
+
+
+
+const playerTimerWorker: {
+    current: Worker | null
+} = {
+    current: null
+}
+
+export const getTimerTimerWorker = () => {
+    if (!playerTimerWorker.current) {
+        playerTimerWorker.current = new Worker(new URL('./playerTimer/worker.ts', import.meta.url), {
+            type: 'module',
+        })
+    }
+
+    return playerTimerWorker as {
+        current: Worker
+    }
+}
+
+export const postMsgToTimerTimerWorker = (msg: TimerWorkerOnMsgData) => getTimerTimerWorker().current.postMessage(msg)
+
+export const terminatePlayerTimerWorker = (): void => {
+    postMsgToTimerTimerWorker({
+        event: 'clear'
+    })
+    playerTimerWorker.current?.terminate()
+    playerTimerWorker.current = null
+}
+
+

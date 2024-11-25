@@ -6,7 +6,7 @@ const SocialLinks = () => {
   return (
     <Fragment>
       <SocialLink href="https://discord.gg/KB48qQCqCx" faIcon={faDiscord} />
-      <SocialLink href="https://x.com/PIXAWAI_Game" faIcon={faXTwitter} />
+      {/* <SocialLink href="https://x.com/PIXAWAI_Game" faIcon={faXTwitter} /> */}
     </Fragment>
   )
 }

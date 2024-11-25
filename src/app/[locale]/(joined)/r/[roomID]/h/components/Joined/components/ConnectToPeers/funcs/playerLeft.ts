@@ -9,6 +9,7 @@ import { negativeLog } from '@/utils/negativeLog'
 import { sendToAllPeers } from '@/utils/sendToAllPeers'
 import { goldLog } from '@/utils/goldLog'
 import { createMatch } from '@/helpers/room'
+import { postMsgToHostTimerWorker } from '@/workers'
 
 export const playerLeft = (userID: string, roomID: string) => {
   goldLog(`PLAYER ${userID} LEFT THE GAME`)
@@ -20,6 +21,10 @@ export const playerLeft = (userID: string, roomID: string) => {
   if (usePlayers.getState().value.count <= 1) {
     setHostingHealth('waitingForPlayers')
     useMatchStatus.getState().reset()
+    postMsgToHostTimerWorker({
+      ID: 'MATCH_ENDED',
+      event: 'stop',
+    })
   } else if (useWhoIsPainter.getState().isPainter(userID)) {
     sendToAllPeers({
 
@@ -27,7 +32,11 @@ export const playerLeft = (userID: string, roomID: string) => {
       data: 'playerLeft',
     })
 
-    useMatchStatus.getState().cancelInterval()
+    postMsgToHostTimerWorker({
+      ID: 'MATCH_ENDED',
+      event: 'stop',
+    })
+    useMatchStatus.getState().timeoutCancelled()
     createMatch(roomID)
   }
 

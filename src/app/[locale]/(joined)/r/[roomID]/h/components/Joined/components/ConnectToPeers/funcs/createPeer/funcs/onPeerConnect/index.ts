@@ -2,6 +2,7 @@ import {
   useCoins,
   useHostingHealth,
   usePlayers,
+  useSocketIO,
   useSpectators,
 } from '@/zustand/store'
 import type { User } from 'lucia'
@@ -24,6 +25,8 @@ export const onPeerConnect = (
 ) =>
   peer.on('connect', () => {
     positiveLog(`CONNECTED TO ${userID}`)
+    useSocketIO.getState().io!.emit('connection-success', userID)
+
 
     if (usePlayers.getState().value.count === 1)
       useHostingHealth.getState().set('readyToStart')

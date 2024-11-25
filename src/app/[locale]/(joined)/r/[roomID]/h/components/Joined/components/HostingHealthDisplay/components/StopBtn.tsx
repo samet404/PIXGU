@@ -8,6 +8,7 @@ import {
 } from '@/zustand/store'
 import { sendToAllPeers } from '@/utils/sendToAllPeers'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
+import { postMsgToHostTimerWorker } from '@/workers'
 
 export const StopBtn = ({ roomID }: Props) => {
   const buttonRef = useRef<HTMLButtonElement | null>(null)
@@ -36,6 +37,10 @@ export const StopBtn = ({ roomID }: Props) => {
     sfx.current.play()
 
     useMatchStatus.getState().reset()
+    postMsgToHostTimerWorker({
+      ID: 'MATCH_ENDED',
+      event: 'stop',
+    })
     useGuessedPlayers.getState().reset()
     useHostingHealth.getState().set('readyToStart')
     useSpectators.getState().reset()

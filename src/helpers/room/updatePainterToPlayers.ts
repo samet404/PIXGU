@@ -10,9 +10,8 @@ export const updatePainterToPlayers = async (roomID: string) => {
   const whoIsPainter = useWhoIsPainter.getState().value
   if (whoIsPainter.status === 'thereIsNoPainter') return
 
-  const painterID = whoIsPainter.painterID
+  const painterID = whoIsPainter.painterID!
   sendToAllPeers({
-
     event: 'currentPainter',
     data: painterID,
   })

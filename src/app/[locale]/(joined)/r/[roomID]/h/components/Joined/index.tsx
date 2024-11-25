@@ -11,6 +11,7 @@ import { Canvases } from './components/Canvases'
 import type { User } from 'lucia'
 import { UseTimersWorker } from './components/UseTimersWorker'
 import type { Guest } from '@/types/guest'
+import { MatchTimer } from './components/MatchTimer'
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -27,6 +28,7 @@ const Joined = ({ roomID, user, guest }: Props) => {
         id="root"
         className={`${outfit.className} h-full w-full overflow-y-scroll`}
       >
+        <MatchTimer />
         <UseTimersWorker roomID={roomID} />
         <ResetStates />
         <ConnectToPeers />

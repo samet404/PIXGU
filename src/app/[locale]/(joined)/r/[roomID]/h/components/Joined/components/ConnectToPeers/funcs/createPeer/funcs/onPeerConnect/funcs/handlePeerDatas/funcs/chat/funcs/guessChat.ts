@@ -9,6 +9,8 @@ import {
 } from '@/zustand/store'
 import { sendManyToAllPeers, sendManyToPeerWithID, sendToAllPeers, sendToPeerWithID, strSimilarity } from '@/utils'
 import { createMatch } from '@/helpers/room'
+import { MATCH_TIME_MINUTES } from '@/constants'
+import { postMsgToHostTimerWorker } from '@/workers'
 
 export const guessChat = async (
   data: GuessChatFromClient['data'],
@@ -53,15 +55,14 @@ export const guessChat = async (
   if (theme !== receivedTheme) return
   if (whoIsPainter.status === 'thereIsNoPainter') return
 
-  const painterID = whoIsPainter.painterID
+  const painterID = whoIsPainter.painterID!
 
-  const guessingTimeLimitMinutes = 4
-  const totalCoinBonus = guessingTimeLimitMinutes * 60
-  const passedTime =
-    useMatchStatus.getState().value.lastMatchStartedAt! - Date.now()
-  const currentCoin = parseFloat(
-    (totalCoinBonus - passedTime / 1000).toFixed(2),
-  )
+  const totalCoinBonus = MATCH_TIME_MINUTES * 80
+  const passedSeconds = useMatchStatus.getState().value.remainSeconds!
+  const currentCoin = parseFloat(((totalCoinBonus - passedSeconds)).toFixed(2))
+
+  useCoins.getState().add(userID, currentCoin)
+  useCoins.getState().add(painterID, currentCoin)
 
   sendManyToAllPeers([
     [
@@ -82,7 +83,7 @@ export const guessChat = async (
         event: 'coin',
         data: {
           to: userID,
-          amount: currentCoin,
+          amount: useCoins.getState().coins[userID]!,
         },
       },
       {
@@ -95,7 +96,7 @@ export const guessChat = async (
         event: 'coin',
         data: {
           to: painterID,
-          amount: currentCoin,
+          amount: useCoins.getState().coins[painterID]!,
         },
       },
       {
@@ -109,7 +110,7 @@ export const guessChat = async (
 
       event: 'yourCoin',
       data: {
-        amount: currentCoin,
+        amount: useCoins.getState().coins[userID]!,
       },
     },
     {
@@ -122,19 +123,27 @@ export const guessChat = async (
 
     event: 'yourCoin',
     data: {
-      amount: currentCoin,
+      amount: useCoins.getState().coins[painterID]!,
     },
   })
 
-  useCoins.getState().add(userID, currentCoin)
-  useCoins.getState().add(painterID, currentCoin)
+
   useGuessedPlayers.getState().guessed(userID)
 
   const isEveryoneGuessed = usePlayers.getState().value.count - 1 === useGuessedPlayers.getState().playersIDs.length
 
 
   if (isEveryoneGuessed) {
-    useMatchStatus.getState().clearInterval()
+    postMsgToHostTimerWorker({
+      ID: 'MATCH_ENDED',
+      event: 'stop',
+    })
+    postMsgToHostTimerWorker({
+      ID: 'MATCH_REMAIN_TIME',
+      event: 'stop',
+    })
+    useMatchStatus.getState().timeoutCancelled()
+
     createMatch(roomID)
     sendToAllPeers({
 

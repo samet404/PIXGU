@@ -46,10 +46,17 @@ export const createMatch = async (roomID: string) => {
     })
 
     useHostingHealth.getState().set('gameEnded')
-    useMatchStatus.getState().reset()
     useHostPainterData.getState().reset()
     useWhoIsPainter.getState().reset()
     useMatchStatus.getState().reset()
+    postMsgToHostTimerWorker({
+      ID: 'MATCH_ENDED',
+      event: 'stop',
+    })
+    postMsgToHostTimerWorker({
+      ID: 'MATCH_REMAIN_TIME',
+      event: 'stop',
+    })
     useSpectators.getState().reset()
     useCoins.getState().reset()
     postMsgToCanvasWorker({ e: 'reset' })
@@ -65,19 +72,6 @@ export const createMatch = async (roomID: string) => {
     return
   }
 
-  // if (isFirstMatch && players().count >= 2) {
-  //   useGuessedPlayers.getState().reset()
-  //   const painterID = playersIDs[0]!
-  //   setCurrentPainter({
-  //     nextPainterI: 1,
-  //     painterID,
-  //     amIPainter: false,
-  //   })
-
-  //   useHostPainterData.getState().reset()
-  //   usePixelHistory.getState().reset()
-  //   updatePainterToPlayers(roomID)
-  // } else
   if (players().count >= 2) {
     useGuessedPlayers.getState().reset()
     const whoIsPainter = useWhoIsPainter.getState().value
@@ -103,12 +97,12 @@ export const createMatch = async (roomID: string) => {
 
     const { nextPainterI, painterID } = whoIsPainter
 
-    const { index: newNextPainterI } = getNextArrElmI(playersIDs, nextPainterI)
+    const { index: newNextPainterI } = getNextArrElmI(playersIDs, nextPainterI!)
 
     setCurrentPainter({
       amIPainter: false,
       nextPainterI: newNextPainterI,
-      painterID: playersIDs[nextPainterI]!,
+      painterID: playersIDs[nextPainterI!]!,
     })
 
     useHostPainterData.getState().reset()

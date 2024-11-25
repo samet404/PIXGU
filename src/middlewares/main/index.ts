@@ -138,13 +138,10 @@ export const main: NextMiddleware = async (req: NextRequest) => {
     return
   }
 
-  console.log(1.5)
   // if pathname has no locale, add locale to pathname with user's device locale then redirect
   const locale = (await import('./funcs/getLocale')).getLocale(req, locales)
 
   if (!isJoined) {
-    console.log(2)
-
     if (!pathname.startsWith('/start') && !pathname.startsWith('/login')) {
       req.nextUrl.pathname = `/${locale}/start`
       return NextResponse.redirect(req.nextUrl)

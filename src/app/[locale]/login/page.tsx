@@ -9,7 +9,7 @@ import Link from 'next/link'
 
 const inter = Inter({
   subsets: ['latin'],
-  weight: ['400', '500'],
+  weight: ['400', '500', '600', '700'],
 })
 
 const Page = () => {

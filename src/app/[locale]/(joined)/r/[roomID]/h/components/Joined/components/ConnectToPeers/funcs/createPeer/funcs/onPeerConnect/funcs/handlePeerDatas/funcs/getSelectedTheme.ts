@@ -1,3 +1,4 @@
+import { MATCH_TIME_MILISECONDS, MATCH_TIME_MINUTES } from '@/constants'
 import type { SelectThemeFromClient } from '@/types/webRTCConnData'
 import { negativeLog, sendToAllPeers } from '@/utils'
 import { postMsgToHostTimerWorker } from '@/workers'
@@ -31,12 +32,27 @@ export const getSelectedTheme = (
     return
   }
 
-  useMatchStatus.getState().startInterval(roomID)
-
+  useMatchStatus.getState().timeoutStarted(roomID)
   postMsgToHostTimerWorker({
     ID: 'PAINTER_TIME_IS_UP',
     event: 'stop'
   })
+  postMsgToHostTimerWorker({
+    ID: 'MATCH_ENDED',
+    event: 'start',
+    type: 'timeout',
+    ms: MATCH_TIME_MILISECONDS,
+  })
+
+  postMsgToHostTimerWorker({
+    ID: 'MATCH_REMAIN_TIME',
+    event: 'start',
+    type: 'interval',
+    ms: 1000,
+  })
+
+
+
   useHostPainterData.getState().painterSelectedTheme(data)
 
   sendToAllPeers({
