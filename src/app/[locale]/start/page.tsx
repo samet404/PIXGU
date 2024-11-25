@@ -26,20 +26,26 @@ const Start = () => {
           placeholder="blur"
           className=" aspect-video w-full"
         />
-        <div className="absolute bottom-0 left-0 flex h-[20%] w-full  justify-center p-4">
-          <div className="hover:opacity-60">
+        <div className="absolute bottom-0 left-0 flex h-full  w-full flex-col gap-4 items-center pt-12 ">
+
+          <div className='text-white text-[1.2rem] drop-shadow-[0_0px_2px_rgba(0,0,0,0.3)]'>
+            Not just another drawing game. Think fast, draw faster, win bigger
+          </div>
+
+          <div className="hover:opacity-60 backdrop-blur-md">
             <Link
               href={'/login'}
-              className=" animate-fade-up justify-center text-[2rem] font-[700] text-[white] duration-300 "
+              className=" animate-fade-up justify-center text-[2rem] font-[600] px-4 py-1 rounded-md shadow-[0_0px_30px_1px_rgba(0,0,0,0.2)] bg-[#00000029]  text-[#ffffffc3] duration-300 "
             >
-              Play
+              Play now
             </Link>
           </div>
         </div>
       </div>
-      <main className="flex h-[40rem] w-full items-center justify-center bg-gradient-to-t from-[#d575c2] to-[#1f1f1f] text-white  xxs:text-[1.5rem] md:text-[3rem] lg:text-[4rem]">
-        <div className="w-[90%] text-center font-[700] selection:!bg-[#ed0dc0] xxs:leading-[2rem]  md:leading-[4rem] lg:leading-[5rem]">
-          We're creating a space where your creativity can flourish and shine.
+      <main className="flex h-[40rem] w-full flex-col items-center justify-center bg-gradient-to-t from-[#000000] to-[#1f1f1f] text-white  xxs:text-[1.5rem] md:text-[3rem] lg:text-[4rem]">
+        <div>{`ᓚ₍⑅^..^₎♡`}</div>
+        <div className='text-sm w-[20rem]'>
+          Hello, you found my secret spot. I am the developer of this game. I faced significant challenges while making this game alone. There are many things I want to add to the game. If you liked my game, I would be happy if you consider supporting me.
         </div>
       </main>
     </div>
