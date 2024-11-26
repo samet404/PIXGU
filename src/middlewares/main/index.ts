@@ -117,11 +117,13 @@ export const main: NextMiddleware = async (req: NextRequest) => {
       return pathnameWithoutLocale
     })()
 
+    console.log('pathnameWithoutLocale: ', pathnameWithoutLocale)
 
     if (!isJoined) {
       if (
         !pathnameWithoutLocale.startsWith('/start') &&
-        !pathnameWithoutLocale.startsWith('/login')
+        !pathnameWithoutLocale.startsWith('/login') &&
+        !pathnameWithoutLocale.startsWith('/privacy')
       ) {
         req.nextUrl.pathname = `/${pathnameLocale}/start`
         return NextResponse.redirect(req.nextUrl)
@@ -142,7 +144,7 @@ export const main: NextMiddleware = async (req: NextRequest) => {
   const locale = (await import('./funcs/getLocale')).getLocale(req, locales)
 
   if (!isJoined) {
-    if (!pathname.startsWith('/start') && !pathname.startsWith('/login')) {
+    if (!pathname.startsWith('/start') && !pathname.startsWith('/login') && !pathname.startsWith('/privacy')) {
       req.nextUrl.pathname = `/${locale}/start`
       return NextResponse.redirect(req.nextUrl)
     }
