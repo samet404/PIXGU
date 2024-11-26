@@ -1,23 +1,30 @@
+import { MATCH_TIME_SECONDS } from '@/constants'
 import { create } from 'zustand'
 
 type State = {
+  theme: string | null
   status: 'waitingForThemes' | 'init' | 'started'
   isFirstMatch: boolean
   matchCount: number
+  remainSeconds: number | null
+  passedSeconds: number | null
   lastMatchStartedAt: number | null
 }
 
 type Action = {
-  startInterval: ()
-
-    => void
+  setTheme: (theme: string) => void
+  clearTheme: () => void
+  startMatch: () => void
   clearMatch: () => void
   waitingForThemes: () => void
+  decreaseRemainSeconds: () => void
   reset: () => void
 }
 
 const initValue: State = {
-  // matchInterval: null,
+  theme: null,
+  passedSeconds: null,
+  remainSeconds: null,
   status: 'init',
   isFirstMatch: true,
   matchCount: 0,
@@ -27,9 +34,18 @@ const initValue: State = {
 export const useMatchStatusClient = create<State & Action>((set, get) => ({
   ...initValue,
 
-  startInterval: () => {
+  decreaseRemainSeconds: () =>
+    set({
+      ...get(),
+      remainSeconds: get().remainSeconds! - 1,
+      passedSeconds: get().passedSeconds! + 1
+    }),
+
+  startMatch: () => {
 
     set({
+      remainSeconds: MATCH_TIME_SECONDS,
+      passedSeconds: 0,
       status: 'started',
       matchCount: get().matchCount + 1,
       isFirstMatch: false,
@@ -37,9 +53,23 @@ export const useMatchStatusClient = create<State & Action>((set, get) => ({
     })
   },
 
+  setTheme: (theme) =>
+    set({
+      ...get(),
+      theme
+    }),
+
+  clearTheme: () =>
+    set({
+      ...get(),
+      theme: null
+    }),
+
   clearMatch: () =>
 
     set({
+      remainSeconds: null,
+      passedSeconds: null,
       status: 'waitingForThemes',
       matchCount: get().matchCount - 1 < 0 ? 0 : get().matchCount - 1,
       isFirstMatch: get().matchCount - 1 <= 0,
@@ -48,9 +78,10 @@ export const useMatchStatusClient = create<State & Action>((set, get) => ({
 
   waitingForThemes: () =>
     set({
+      remainSeconds: null,
+      passedSeconds: null,
       status: 'waitingForThemes',
       matchCount: get().matchCount,
-      // matchInterval: null,
       isFirstMatch: get().matchCount - 1 <= 0,
       lastMatchStartedAt: get().lastMatchStartedAt,
     }),

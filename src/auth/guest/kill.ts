@@ -11,15 +11,14 @@ export const killGuest = async () => {
   if (authToken) {
     z.string().min(10).cuid2().parse(authToken)
 
-    const guestID = await redisDb.get(`guest:session:${authToken}:ID`)
-    const userID = await redisDb.get(`guest:${guestID}:ID`)
-    if (!userID) return
+    const guestID = await redisDb.get(`guest:session:${authToken}:ID`)!
     await redisDb.del(`guest:session:${authToken}:ID`)
     await redisDb.del(`guest:${guestID}:name`)
     await redisDb.del(`guest:${guestID}:name_ID`)
     await redisDb.del(`guest:${guestID}:name_&_name_ID`)
+    await redisDb.del(`user:${guestID}:settings:developer_mode`)
 
-    const redisKeysByUserID = REDIS_ROOM_KEYS_BY_USER_ID(userID)
+    const redisKeysByUserID = REDIS_ROOM_KEYS_BY_USER_ID(guestID!)
 
     const createdRooms = await redisDb.smembers(redisKeysByUserID.createdRooms)
 

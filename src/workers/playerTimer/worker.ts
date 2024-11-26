@@ -1,9 +1,9 @@
-import type { TimerWorkerOnMsgData } from './types'
+import type { PlayerTimerWorkerOnMsgData } from './types'
 
 const timers: Record<number | string, ReturnType<typeof setInterval>> = {}
 
 self.onmessage = (e) => {
-    const data = e.data as TimerWorkerOnMsgData
+    const data = e.data as PlayerTimerWorkerOnMsgData
     const { event } = data
 
     switch (event) {

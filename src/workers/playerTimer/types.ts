@@ -1,19 +1,19 @@
-export type TimerWorkerOnMsgData = {
-    ID: ID
+export type PlayerTimerWorkerOnMsgData = {
+    ID: PlayerTimerID
     ms: number
     type: 'interval' | 'timeout'
     event: 'start'
 } | {
-    ID: ID
+    ID: PlayerTimerID
     event: 'stop'
 
 } | {
     event: 'clear'
 }
 
-export type TimerWorkerPostMsgData = {
-    ID: ID
+export type PlayerTimerWorkerPostMsgData = {
+    ID: PlayerTimerID
 }
 
 
-export type ID = 'MATCH_REMAIN_TIME'
+export type PlayerTimerID = 'MATCH_REMAIN_TIME' | 'PAINTER_TIME_IS_UP' | 'GAME_ENDED' 

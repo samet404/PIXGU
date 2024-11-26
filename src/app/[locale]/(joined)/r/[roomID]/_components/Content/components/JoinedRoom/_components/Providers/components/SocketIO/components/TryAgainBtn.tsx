@@ -22,11 +22,12 @@ export const TryAgainBtn = ({ tryAgain }: Props) => {
 
     return (
         <button onMouseDown={() => {
-            if (tryAgainCount < 30) {
-                tryAgain()
-            }
+            window.location.reload()
+            // if (tryAgainCount < 30) {
+            //     tryAgain()
+            // }
 
-            setTryAgainCount(prev => prev + 1)
+            // setTryAgainCount(prev => prev + 1)
         }} className='rounded-md bg-[#ffffff2b] px-2 py-1'>
             {tryAgainTxt()}
         </button>

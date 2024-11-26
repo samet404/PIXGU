@@ -28,6 +28,7 @@ import { ToolAlert } from './_components/ToolAlert'
 import { CanvasToolsShadow } from './_components/CanvasToolsShadow'
 import { LetterHint } from './_components/Letterhint'
 import { api } from '@/trpc/server'
+import { UseTimersWorker } from './_components/UseTimersWorker'
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -37,11 +38,9 @@ const outfit = Outfit({
 const JoinedRoom = async () => {
   const userID = getUserID()
   const hostID = getHostID()
-  const guestID = getGuestID()
   const roomID = getRoomID()
   const user = getUser()
   const guest = getGuest()
-  const isHost = userID === hostID
 
   const havePassword = await api.gameRoom.isHavePass.query({
     roomID,
@@ -61,6 +60,7 @@ const JoinedRoom = async () => {
         <div
           className='relative flex h-full w-full flex-col'
         >
+          <UseTimersWorker />
           <AnimatedDiv />
           <Nav />
           <div className="h-full w-full">
@@ -81,7 +81,7 @@ const JoinedRoom = async () => {
               </Suspense>
               <div
                 id="rootDiv"
-                className="relative flex h-full w-full animate-fade-down flex-row items-start justify-between gap-2 overflow-y-scroll px-2 pb-24 pt-2"
+                className="relative flex h-full w-full animate-fade flex-row items-start justify-between gap-2 overflow-y-scroll px-2 pb-24 pt-2"
               >
                 <Spectator />
 

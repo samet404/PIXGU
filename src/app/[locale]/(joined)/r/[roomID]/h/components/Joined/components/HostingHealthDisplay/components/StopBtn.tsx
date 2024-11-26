@@ -41,6 +41,10 @@ export const StopBtn = ({ roomID }: Props) => {
       ID: 'MATCH_ENDED',
       event: 'stop',
     })
+    postMsgToHostTimerWorker({
+      ID: 'MATCH_REMAIN_TIME',
+      event: 'stop',
+    })
     useGuessedPlayers.getState().reset()
     useHostingHealth.getState().set('readyToStart')
     useSpectators.getState().reset()

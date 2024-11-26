@@ -5,6 +5,7 @@ import { MatchCount } from './components/MatchCount'
 import { MatchTime } from './components/MatchTime'
 import { BtnOptionsShortcut } from './components/BtnOptionsShortcut'
 import { XY } from './components/XY'
+import { Theme } from './components/Theme'
 
 const Nav = () => {
   return (
@@ -17,6 +18,7 @@ const Nav = () => {
           <Ping />
           <MatchCount />
           <MatchTime />
+          <Theme />
           <XY />
         </div>
 

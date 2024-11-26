@@ -1,4 +1,4 @@
-import { MATCH_TIME_MINUTES, MATCH_TIME_SECONDS } from '@/constants'
+import { MATCH_TIME_SECONDS } from '@/constants'
 import { create } from 'zustand'
 
 type State = {
@@ -54,14 +54,12 @@ export const useMatchStatus = create<State & Action>((set, get) => ({
   },
 
   timeoutCancelled: () => {
-
     set({
       value: {
+        ...get().value,
         passedSeconds: null,
         remainSeconds: null,
         startedAt: null,
-        matchCount:
-          get().value.matchCount !== 0 ? get().value.matchCount - 1 : 0,
         isFirstMatch: get().value.matchCount === 1,
       },
     })

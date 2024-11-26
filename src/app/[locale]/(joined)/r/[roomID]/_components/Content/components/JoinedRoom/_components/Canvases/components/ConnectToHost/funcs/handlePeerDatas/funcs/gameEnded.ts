@@ -1,5 +1,5 @@
 import type { GameEnded } from '@/types/webRTCConnData'
-import { useAmISpectator, useGameEndedPanel, useNewPainterPanel, useSelectThemePanel, useSpectators, useWhoIsPainterClient } from '@/zustand/store'
+import { useAmISpectator, useGameEndedPanel, useNewPainterPanel, useSelectThemePanel, useSpectators, useWhoIsPainterClient, useXY } from '@/zustand/store'
 import { resetMatchStates } from '@/helpers/room'
 
 export const gameEnded = (data: GameEnded['data']) => {
@@ -10,4 +10,5 @@ export const gameEnded = (data: GameEnded['data']) => {
   useNewPainterPanel.getState().reset()
   useSelectThemePanel.getState().reset()
   useWhoIsPainterClient.getState().reset()
+  useXY.getState().reset()
 }

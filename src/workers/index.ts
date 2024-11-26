@@ -1,9 +1,10 @@
 export type * from './hostTimer/types'
 export type * from './canvas/types'
-
+export type * from './playerTimer/types'
 
 import type { CanvasWorkerOnMsgData } from './canvas/types'
 import type { TimerWorkerOnMsgData } from './hostTimer/types'
+import type { PlayerTimerWorkerOnMsgData } from './playerTimer/types'
 
 const canvasWorker: {
     current: Worker | null
@@ -72,7 +73,7 @@ const playerTimerWorker: {
     current: null
 }
 
-export const getTimerTimerWorker = () => {
+export const getPlayerTimerWorker = () => {
     if (!playerTimerWorker.current) {
         playerTimerWorker.current = new Worker(new URL('./playerTimer/worker.ts', import.meta.url), {
             type: 'module',
@@ -84,10 +85,10 @@ export const getTimerTimerWorker = () => {
     }
 }
 
-export const postMsgToTimerTimerWorker = (msg: TimerWorkerOnMsgData) => getTimerTimerWorker().current.postMessage(msg)
+export const postMsgToPlayerTimerWorker = (msg: PlayerTimerWorkerOnMsgData) => getPlayerTimerWorker().current.postMessage(msg)
 
 export const terminatePlayerTimerWorker = (): void => {
-    postMsgToTimerTimerWorker({
+    postMsgToPlayerTimerWorker({
         event: 'clear'
     })
     playerTimerWorker.current?.terminate()

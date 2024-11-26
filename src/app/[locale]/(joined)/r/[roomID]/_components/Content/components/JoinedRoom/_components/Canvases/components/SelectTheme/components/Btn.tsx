@@ -1,7 +1,7 @@
 'use client'
 
 import { sendToHostPeer } from '@/utils/sendToHostPeer'
-import { useSelectThemePanel } from '@/zustand/store'
+import { useMatchStatusClient, useSelectThemePanel } from '@/zustand/store'
 import clsx from 'clsx'
 import { useEffect, useRef } from 'react'
 
@@ -24,8 +24,9 @@ export const Btn = ({ theme, position }: Props) => {
       theme,
     })
 
-    sendToHostPeer({
+    useMatchStatusClient.getState().setTheme(theme)
 
+    sendToHostPeer({
       event: 'selectTheme',
       data: theme,
     })
@@ -35,7 +36,7 @@ export const Btn = ({ theme, position }: Props) => {
       ref={btnRef}
       onClick={onClick}
       className={clsx(
-        `h-full grow break-words  text-[1rem] text-[#00000093] hover:text-violet-600`,
+        `h-full grow break-words text-[1rem] text-[#00000093] hover:text-violet-600`,
         {
           'animate-fade-right': position === 1,
           'animate-fade-left': position === 2,

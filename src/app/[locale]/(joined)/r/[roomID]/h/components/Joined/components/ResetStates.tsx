@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffectOnce } from '@/hooks/useEffectOnce'
+import { postMsgToCanvasWorker, postMsgToHostTimerWorker } from '@/workers'
 import {
   useHostingHealth,
   useHostPainterData,
@@ -18,6 +19,8 @@ import {
 export const ResetStates = () => {
   useEffectOnce(() => {
     return () => {
+      postMsgToCanvasWorker({ e: 'reset' })
+      postMsgToHostTimerWorker({ event: 'clear' })
       useHostPainterData.getState().reset()
       useMatchStatus.getState().reset()
       useHostingHealth.getState().reset()
