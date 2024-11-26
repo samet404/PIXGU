@@ -8,6 +8,7 @@ import {
   useHostingHealth,
   useHostPainterData,
   usePlayers,
+  useSocketIO,
   useSpectators,
   useWhoIsPainter,
 } from '@/zustand/store'
@@ -38,6 +39,7 @@ export const createMatch = async (roomID: string) => {
     players,
   })
   if (isGameEnded) {
+    useSocketIO.getState().io!.emit('game-started', false)
     sendToAllPeers({
       event: 'gameEnded',
       data: {

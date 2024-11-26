@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { useHostingHealth } from '@/zustand/store'
+import { useHostingHealth, useSocketIO } from '@/zustand/store'
 import { createMatch } from '@/helpers/room'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
 
@@ -8,6 +8,7 @@ export const StartBtn = ({ roomID }: Props) => {
   const sfx = useRef<HTMLAudioElement>(
     new Audio('/sound/sfx/button/relaxing_Crystal_but.mp3'),
   )
+  const io = useSocketIO(s => s.io)
   const [remainSecond, setRemainSecond] = useState(5)
 
   useEffectOnce(() => {
@@ -28,7 +29,7 @@ export const StartBtn = ({ roomID }: Props) => {
   const handleClick = () => {
     if (!buttonRef.current) return
     sfx.current.play()
-
+    io!.emit('game-started', true)
     createMatch(roomID)
     useHostingHealth.getState().set('gameIsStarted')
   }

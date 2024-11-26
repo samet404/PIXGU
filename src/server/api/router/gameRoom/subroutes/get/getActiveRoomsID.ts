@@ -12,7 +12,7 @@ export const getActiveRoomsID = joinedUserProducure
     }),
   )
   .query(async ({ input, ctx }) => {
-    const roomsIDs = await ctx.redisDb.smembers('active_rooms')
+    const roomsIDs = await ctx.redisDb.smembers('active_public_rooms')
     console.log(roomsIDs)
     const sortBy = input.sortBy
 

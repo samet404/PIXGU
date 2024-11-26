@@ -1,19 +1,21 @@
+import { sendToAllPeers } from '@/utils/sendToAllPeers'
+import { useEffectOnce } from '@/hooks/useEffectOnce'
+import { postMsgToHostTimerWorker } from '@/workers'
 import { useRef, useState } from 'react'
 import {
   useGuessedPlayers,
   useHostingHealth,
   useHostPainterData,
   useMatchStatus,
+  useSocketIO,
   useSpectators,
 } from '@/zustand/store'
-import { sendToAllPeers } from '@/utils/sendToAllPeers'
-import { useEffectOnce } from '@/hooks/useEffectOnce'
-import { postMsgToHostTimerWorker } from '@/workers'
 
 export const StopBtn = ({ roomID }: Props) => {
   const buttonRef = useRef<HTMLButtonElement | null>(null)
   const sfx = useRef<HTMLAudioElement>(new Audio('/sound/sfx/painter.mp3'))
   const [remainSecond, setRemainSecond] = useState(5)
+  const io = useSocketIO(s => s.io)
 
   useEffectOnce(() => {
     let remainSecond = 5
@@ -31,6 +33,7 @@ export const StopBtn = ({ roomID }: Props) => {
   })
 
   const handleClick = () => {
+    io!.emit('game-started', false)
     if (!buttonRef.current) return
     buttonRef.current.disabled = true
 
@@ -51,7 +54,6 @@ export const StopBtn = ({ roomID }: Props) => {
     useHostPainterData.getState().reset()
 
     sendToAllPeers({
-
       event: 'gameIsStopped',
     })
   }
