@@ -8,6 +8,7 @@ import Spinner from '@/components/Spinner'
 import { Content } from './_components/Content'
 import { SocketIOProvider } from './_components/SocketIOProvider'
 import type { Metadata } from 'next'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'CREATE',
@@ -27,12 +28,14 @@ const CreateRoom = async () => {
         <BackgroundImages />
       </Suspense>
       <div className="relative z-10 flex h-full animate-fade flex-col items-center justify-start gap-3 lg:w-[40rem]">
-        <Image
-          src={Logo}
-          alt="logo"
-          className="size-[6rem] select-none object-contain"
-          sizes="calc(2.33vw + 90px)"
-        ></Image>
+        <Link href='/'>
+          <Image
+            src={Logo}
+            alt="logo"
+            className="size-[6rem] select-none object-contain"
+            sizes="calc(2.33vw + 90px)"
+          ></Image>
+        </Link>
         <SocketIOProvider>
           <Suspense fallback={<Spinner />}>
             <Content>

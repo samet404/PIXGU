@@ -1,6 +1,7 @@
 'use client'
 
 import { sendToHostPeer } from '@/utils/sendToHostPeer'
+import { postMsgToPlayerTimerWorker } from '@/workers'
 import { useMatchStatusClient, useSelectThemePanel } from '@/zustand/store'
 import clsx from 'clsx'
 import { useEffect, useRef } from 'react'
@@ -22,6 +23,11 @@ export const Btn = ({ theme, position }: Props) => {
     btnRef.current.disabled = true
     useSelectThemePanel.getState().selectTheme({
       theme,
+    })
+
+    postMsgToPlayerTimerWorker({
+      ID: 'PAINTER_SELECTING_REMAIN_TIME',
+      event: 'stop',
     })
 
     useMatchStatusClient.getState().setTheme(theme)

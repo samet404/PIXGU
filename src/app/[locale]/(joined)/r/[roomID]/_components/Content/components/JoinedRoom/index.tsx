@@ -68,7 +68,7 @@ const JoinedRoom = async () => {
             <ToolAlert />
             <ResetStates />
             <CanvasTools />
-            <GameEnd userID={userID} />
+            <GameEnd userID={user ? user.id : guest!.ID} />
             <Suspense>
               <Blur />
             </Suspense>

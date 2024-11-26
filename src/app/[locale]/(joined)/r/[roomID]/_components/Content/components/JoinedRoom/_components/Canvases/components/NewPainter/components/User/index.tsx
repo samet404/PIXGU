@@ -1,7 +1,6 @@
 'use client'
 
 import { useWhoIsPainterClient, usePlayers } from '@/zustand/store'
-import { Img } from './components/Img'
 import { UserPfp } from '@/components/UserPfp'
 
 export const User = () => {
@@ -9,7 +8,7 @@ export const User = () => {
 
   if (whoIsPainter.status === 'thereIsNoPainter') return
 
-  const user = usePlayers.getState().getPlayer(whoIsPainter.painterID)
+  const user = usePlayers.getState().getPlayer(whoIsPainter.painterID!)
   if (!user) return
 
   const isGuest = 'ID' in user

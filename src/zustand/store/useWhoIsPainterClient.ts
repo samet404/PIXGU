@@ -1,14 +1,10 @@
 import { create } from 'zustand'
 
-type Value =
-  | {
-      status: 'currentPainter'
-      amIPainter: boolean
-      painterID: string
-    }
-  | {
-      status: 'thereIsNoPainter'
-    }
+type Value = {
+  status: 'currentPainter' | 'thereIsNoPainter'
+  amIPainter: boolean | null
+  painterID: string | null
+}
 
 type State = {
   value: Value
@@ -22,6 +18,8 @@ type Action = {
 const initValue: State = {
   value: {
     status: 'thereIsNoPainter',
+    amIPainter: null,
+    painterID: null,
   },
 }
 

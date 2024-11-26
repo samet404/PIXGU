@@ -16,4 +16,4 @@ export type PlayerTimerWorkerPostMsgData = {
 }
 
 
-export type PlayerTimerID = 'MATCH_REMAIN_TIME' | 'PAINTER_TIME_IS_UP' | 'GAME_ENDED' 
+export type PlayerTimerID = 'MATCH_REMAIN_TIME' | 'PAINTER_SELECTING_REMAIN_TIME' | 'GAME_ENDED' 

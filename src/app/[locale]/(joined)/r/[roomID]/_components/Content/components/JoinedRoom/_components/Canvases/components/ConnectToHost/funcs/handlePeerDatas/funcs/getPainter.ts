@@ -1,5 +1,6 @@
 import { resetMatchStates } from '@/helpers/room'
 import type { CurrentPainter } from '@/types'
+import { postMsgToPlayerTimerWorker } from '@/workers'
 import {
   useAmIGuessed,
   useGuessChatLayout,
@@ -28,6 +29,10 @@ export const getPainter = async (
   useWhoIsPainterClient.getState().setCurrentPainter({
     painterID: data,
     amIPainter,
+  })
+  postMsgToPlayerTimerWorker({
+    ID: 'PAINTER_SELECTING_REMAIN_TIME',
+    event: 'stop',
   })
 
   resetMatchStates()

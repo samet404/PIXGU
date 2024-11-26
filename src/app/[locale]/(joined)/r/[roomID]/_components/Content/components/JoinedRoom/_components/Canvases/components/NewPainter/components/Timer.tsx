@@ -1,29 +1,9 @@
 'use client'
 
-import { percentageOf } from '@/utils/percentageOf'
-import { useEffect, useRef, useState } from 'react'
+import { usePainterSelectingRemainTime } from '@/zustand/store'
 
 export const Timer = () => {
-  const start = useRef<number>()
-  const [width, setWidth] = useState(0)
-
-  useEffect(() => {
-    if (!start.current) start.current = Date.now()
-
-    const interval = setInterval(() => {
-      const currentSecond = (Date.now() - start.current!) / 1000
-      console.log(currentSecond)
-      if (currentSecond >= 20) {
-        clearInterval(interval)
-        setWidth(100)
-        return
-      }
-
-      setWidth(percentageOf(currentSecond, 20))
-    }, 50)
-
-    return () => clearInterval(interval)
-  }, [])
+  const width = usePainterSelectingRemainTime((s) => s.passedMilisecondsWithPercent)
 
   const description = (() => {
     if (width > 100) return 'Time is up?'

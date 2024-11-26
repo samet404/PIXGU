@@ -35,7 +35,7 @@ export const GameEnd = ({ userID }: Props) => {
         </div>
         <div className="z-10 flex min-h-[30rem] w-[30rem] animate-fade-up flex-col rounded-lg bg-gradient-to-tr from-gray-200 to-gray-50 p-1 shadow-[0_0px_20px_1px_rgba(0,0,0,0.5)]">
           {panelInfo.isOpen &&
-            panelInfo.coins.map(([ID, amount], i) => {
+            panelInfo.coins!.map(([ID, amount], i) => {
               return (
                 <Player
                   key={ID}

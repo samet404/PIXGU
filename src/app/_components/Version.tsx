@@ -8,9 +8,9 @@ const outfit = Outfit({
 export const Version = () => {
   return (
     <div
-      className={`${outfit.className} pointer-events-none absolute bottom-0 right-0 z-[99] animate-fade bg-[#ffffff46] px-2 py-[0.15rem] text-[0.6rem] text-[#0000007c] backdrop-blur-lg hover:opacity-0`}
+      className={`${outfit.className} pointer-events-none absolute bottom-0 right-0 z-[99] animate-fade bg-[#ffffff46] px-2 py-[0.15rem] text-[0.5rem] text-[#0000007c] backdrop-blur-lg hover:opacity-0`}
     >
-      ALPHA 0.0.2
+      ALPHA 0.0.3
     </div>
   )
 }

@@ -6,6 +6,7 @@ import Logo from '@/png/logo.png'
 import Image from 'next/image'
 import { Outfit } from 'next/font/google'
 import type { Metadata } from 'next'
+import Link from 'next/link'
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -30,12 +31,14 @@ const JoinRoom = async ({ params }: Props) => {
       className={`${outfit.className} relative z-20 flex h-full w-full flex-col items-center justify-center gap-3 bg-gradient-to-tl from-[hsla(220,39%,10%,1)] via-[hsla(220,39%,10%,1)] to-transparent p-4`}
     >
       <div className="flex flex-row items-end justify-between xxs:w-full lg:w-[50rem] ">
-        <Image
-          src={Logo}
-          alt="logo"
-          className="size-[6rem] select-none object-contain"
-          sizes="calc(2.33vw + 90px)"
-        ></Image>
+        <Link href='/'>
+          <Image
+            src={Logo}
+            alt="logo"
+            className="size-[6rem] select-none object-contain"
+            sizes="calc(2.33vw + 90px)"
+          ></Image>
+        </Link>
         <div className="text-[#a0217f]">Join rooms near you to reduce ping</div>
       </div>
       <Rooms />

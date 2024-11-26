@@ -1,28 +1,12 @@
 'use client'
 
 import { percentageOf } from '@/utils/percentageOf'
+import { usePainterSelectingRemainTime } from '@/zustand/store'
 import { useEffect, useRef, useState, type PropsWithChildren } from 'react'
 
 export const Timer = ({ children }: PropsWithChildren) => {
   const start = useRef<number | null>(null)
-  const [height, setHeight] = useState(0)
-
-  useEffect(() => {
-    if (!start.current) start.current = Date.now()
-
-    const interval = setInterval(() => {
-      const currentSecond = (Date.now() - start.current!) / 1000
-      if (currentSecond >= 20) {
-        clearInterval(interval)
-        setHeight(100)
-        return
-      }
-
-      setHeight(percentageOf(currentSecond, 20))
-    }, 50)
-
-    return () => clearInterval(interval)
-  }, [])
+  const height = usePainterSelectingRemainTime((s) => s.passedMilisecondsWithPercent)
 
   return (
     <div className="absolute z-40 flex h-full w-full items-center justify-center rounded-[0.4rem] bg-violet-300 p-2">
