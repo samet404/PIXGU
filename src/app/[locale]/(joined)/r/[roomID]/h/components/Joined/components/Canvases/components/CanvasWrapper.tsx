@@ -11,7 +11,7 @@ export const CanvasWrapper = ({ children }: PropsWithChildren) => {
     return (
         <div className={clsxMerge('w-[90%] flex items-center justify-center', {
             'hidden': selectedItem !== 'Canvas',
-            'animate-fade-up': selectedItem === 'Canvas',
+            'animate-fade': selectedItem === 'Canvas',
         })}>{children}</div>
     )
 }

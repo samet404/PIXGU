@@ -116,7 +116,7 @@ export type CanvasWorkerPostMsgData =
         e: 'eyedropper'
         data: Uint8ClampedArray
     } | {
-        e: 'undo/redo'
+        e: 'undo-redo'
         data: [coor: Uint16Array, color: Uint8ClampedArray][]
     }
 
@@ -133,8 +133,13 @@ export type UndoRedo = {
     current: {
         undoRedoGroup: {
             index: number
+            madeLastUndoOperation: boolean
+            madeLastRedoOperation: boolean
             direction: 'u' | 'r'
         }
+        direction: 'u' | 'r'
+        madeLastUndoOperation: boolean
+        madeLastRedoOperation: boolean
         operationIndex: number
         stack: [[coords: Uint16Array, color: Uint8ClampedArray][], [coords: Uint16Array, color: Uint8ClampedArray][]][][]
     }

@@ -2,10 +2,20 @@ import Link from 'next/link'
 import { archiveTimestamps } from './_archive'
 import Template from './_components/Template'
 import type { MDXProps } from 'mdx/types'
+import type { Metadata } from 'next'
 const lastArchive = archiveTimestamps[archiveTimestamps.length - 1]!
 
 const Content: MDXComponent = (await import(`./_archive/${lastArchive}.mdx`)).default
 
+export const metadata: Metadata = {
+    title: 'PRIVACY',
+    keywords: [
+        'pixgu privacy policy',
+        'pixgu privacy',
+        'PIXGU privacy policy',
+        'PIXGU privacy',
+    ]
+}
 
 const Privacy = () => {
 

@@ -1,38 +1,47 @@
 import type { UndoInput } from '../types'
 
 export const redo = ({ undoRedo }: UndoInput) => {
-    const currentDirection = undoRedo.current.undoRedoGroup.direction
-    const currentUndoRedoGroupIndex = undoRedo.current.undoRedoGroup.index
+    console.log({ undoRedo: undoRedo.current })
+    const currentDirection = undoRedo.current.undoRedoGroup.direction;
+    const currentUndoRedoGroupIndex = undoRedo.current.undoRedoGroup.index;
+    const currentOperation = undoRedo.current.stack[undoRedo.current.operationIndex];
 
     // Handle new operation
-    if (currentUndoRedoGroupIndex === undoRedo.current.stack[undoRedo.current.operationIndex]!.length - 1) {
-        // Check if we can move to previous operation
+    if (currentUndoRedoGroupIndex === currentOperation!.length - 1) {
+        if (undoRedo.current.undoRedoGroup.madeLastRedoOperation) return null
+        undoRedo.current.undoRedoGroup.madeLastRedoOperation = true
+        const result = undoRedo.current.stack[undoRedo.current.operationIndex]?.[currentUndoRedoGroupIndex]?.[1];
+
+        // Check if we can move to next operation
         if (undoRedo.current.operationIndex < undoRedo.current.stack.length - 1) {
-            const newOperationIndex = undoRedo.current.operationIndex + 1
+            undoRedo.current.undoRedoGroup.madeLastRedoOperation = false
+            const newOperationIndex = undoRedo.current.operationIndex + 1;
 
-            // Set to last group of previous operation
-            undoRedo.current.undoRedoGroup.index =
-                undoRedo.current.stack[newOperationIndex]!.length + 1
-            undoRedo.current.undoRedoGroup.direction = 'r'
-            undoRedo.current.operationIndex = newOperationIndex
-        } else
-            // No more operations to undo
-            return null
+            // Set to first group of next operation
+            undoRedo.current.undoRedoGroup.index = 0;
+            undoRedo.current.operationIndex = newOperationIndex;
 
+            if (currentDirection === 'u')
+                undoRedo.current.undoRedoGroup.direction = 'r';
+        }
+
+        return result
     }
 
     // Handle direction change
     if (currentDirection === 'u')
-        undoRedo.current.undoRedoGroup.direction = 'r'
+        undoRedo.current.undoRedoGroup.direction = 'r';
 
+    if (undoRedo.current.undoRedoGroup.madeLastRedoOperation)
+        undoRedo.current.undoRedoGroup.madeLastRedoOperation = false
 
     // Get current pixel state
-    const result = undoRedo.current.stack[undoRedo.current.operationIndex]?.[currentUndoRedoGroupIndex]?.[1]
+    const result = undoRedo.current.stack[undoRedo.current.operationIndex]?.[currentUndoRedoGroupIndex]?.[1];
 
-    // Move to previous group if possible
-    if (currentUndoRedoGroupIndex > 0)
+    // Move to next group if possible
+    if (currentUndoRedoGroupIndex < currentOperation!.length - 1) {
         undoRedo.current.undoRedoGroup.index++
-
+    }
 
     return result
-}
+};

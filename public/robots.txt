@@ -1,0 +1,11 @@
+User-agent: *
+Disallow: /en/htp
+Disallow: /en/r
+Disallow: /en/settings
+Disallow: /en/r
+Disallow: /en/start
+Disallow: /en/u
+
+# Allow all crawlers
+User-agent: *
+Allow: /

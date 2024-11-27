@@ -5,7 +5,7 @@ import { useControls } from '@/zustand/store'
 import { useEffect, useRef, type PropsWithChildren } from 'react'
 
 //  We are using a big delay for the first key press to avoid accidental key presses
-const FIRST_KEY_DELAY = 800
+const FIRST_KEY_DELAY = 400
 
 export const Shortcut = ({ children }: PropsWithChildren) => {
     const addToCombination = useControls(s => s.addToCombination)
@@ -36,8 +36,8 @@ export const Shortcut = ({ children }: PropsWithChildren) => {
             console.log(useControls.getState().combination)
             useControls.getState().setSameCombination()
 
-            if (keydownIntervalDelay.current !== 200) {
-                keydownIntervalDelay.current = Math.max(50, keydownIntervalDelay.current * 0.2)
+            if (keydownIntervalDelay.current !== 50) {
+                keydownIntervalDelay.current = Math.max(50, keydownIntervalDelay.current * 0.1)
                 setKeyDownInterval()
             }
         }, keydownIntervalDelay.current)
@@ -81,7 +81,7 @@ export const Shortcut = ({ children }: PropsWithChildren) => {
 
             currentModifiersVal.push(key)
             if (!useControls.getState().combination.includes(key)) addToCombination(key)
-            setKeyDownInterval()
+            // setKeyDownInterval()
             return
         }
 

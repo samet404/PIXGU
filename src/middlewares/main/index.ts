@@ -17,6 +17,7 @@ export const main: NextMiddleware = async (req: NextRequest) => {
   const { pathname } = req.nextUrl
   console.log('pathname', pathname)
   if (
+    pathname.startsWith('/ads.txt') ||
     pathname.startsWith('/image/') ||
     pathname.startsWith('/sound') ||
     pathname.startsWith('/favicon') ||

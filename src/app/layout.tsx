@@ -26,23 +26,24 @@ export const metadata: Metadata = {
   description:
     'Welcome to PIXGU, where people draw and guess as fast as they can.',
   keywords: [
-    'pixgu',
-    'PIXGU',
-    'draw',
+    'drawing game',
+    'draw game',
+    'guess game',
+    'drawing',
     'guess',
     'pixel art',
-    'virtual art',
-    'art',
-    'drawing',
-    'painting',
-    'pix',
-    'pixel',
-    'draw art',
-    'draw pixel art',
+    'pixgu',
+    'PIXGU'
   ],
   category: 'game',
   openGraph: {
     title: 'PIXGU',
+    images: [
+      {
+        url: '/image/png/startbg.png',
+        alt: 'bg',
+      },
+    ],
     description:
       'Welcome to PIXGU, where people draw and guess as fast as they can.',
   },

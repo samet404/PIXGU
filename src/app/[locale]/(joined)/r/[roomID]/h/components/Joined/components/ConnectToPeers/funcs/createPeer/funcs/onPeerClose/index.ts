@@ -1,3 +1,4 @@
+import { negativeLog } from '@/utils'
 import { useSocketIO } from '@/zustand/store'
 import type SimplePeer from 'simple-peer'
 // import { playerLeaved } from './funcs/playerLeaved'
@@ -8,6 +9,6 @@ export const onPeerClose = (
   roomID: string,
 ) =>
   peer.on('close', () => {
-    console.error('PEER CLOSED', userID)
+    negativeLog('PEER CLOSED', userID)
     useSocketIO.getState().io!.emit('connection-failed', userID)
   })

@@ -1,30 +1,45 @@
 import type { UndoInput } from '../types'
 
 export const undoByOperation = ({ undoRedo }: UndoInput) => {
+    const currentDirection = undoRedo.current.direction;
+    const currentOperationIndex = undoRedo.current.operationIndex;
+    const result: [coords: Uint16Array, color: Uint8ClampedArray][] = []
 
-    console.log({ undoRedo: undoRedo.current })
-    // No more operations to undo
-    if (undoRedo.current.operationIndex <= -1) return null
+    // Handle new operation
+    if (currentOperationIndex === 0) {
+        if (undoRedo.current.madeLastUndoOperation) return null
+        undoRedo.current.madeLastUndoOperation = true
 
-    const operationIndex = undoRedo.current.operationIndex
-    const pixelsToBeFilled: [coords: Uint16Array, color: Uint8ClampedArray][] = []
-    const operation = undoRedo.current.stack[operationIndex]!
+        for (let groupI = 0; groupI < undoRedo.current.stack[undoRedo.current.operationIndex]!.length; groupI++) {
+            for (let undoI = 0; undoI < undoRedo.current.stack[undoRedo.current.operationIndex]![groupI]![0]!.length; undoI++) {
+                result.push(undoRedo.current.stack[undoRedo.current.operationIndex]![groupI]![0]![undoI]!)
+            }
+        }
 
-    // Get pixels to be filled from the current operation
-    for (let opI = 0; opI < operation.length; opI++) {
-        console.log('redoGroup', operation[opI]!)
-        const redoGroup = operation[opI]![0]!
+        return result
+    }
 
-        for (let redoGroupI = 0; redoGroupI < redoGroup.length; redoGroupI++) {
-            pixelsToBeFilled.push(redoGroup[redoGroupI]!)
+    // Handle direction change
+    if (currentDirection === 'r')
+        undoRedo.current.direction = 'u';
+
+    if (undoRedo.current.madeLastUndoOperation)
+        undoRedo.current.madeLastUndoOperation = false
+
+    // Get current pixel state
+
+
+    for (let groupI = 0; groupI < undoRedo.current.stack[undoRedo.current.operationIndex]!.length; groupI++) {
+        for (let undoI = 0; undoI < undoRedo.current.stack[undoRedo.current.operationIndex]![groupI]![0]!.length; undoI++) {
+            result.push(undoRedo.current.stack[undoRedo.current.operationIndex]![groupI]![0]![undoI]!)
         }
     }
 
-    const newOperationIndex = operationIndex - 1
-    undoRedo.current.undoRedoGroup.index = undoRedo.current.stack[newOperationIndex]!.length - 1
-    undoRedo.current.undoRedoGroup.direction = 'r'
-    undoRedo.current.operationIndex = newOperationIndex;
 
-    // Get the current pixel state from the undo/redo group
-    return pixelsToBeFilled;
+    // Move to previous group if possible
+    if (currentOperationIndex > 0)
+        undoRedo.current.operationIndex--
+
+    return result
 }
+

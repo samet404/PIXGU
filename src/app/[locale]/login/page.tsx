@@ -6,11 +6,27 @@ import Logo from '@/png/logo.png'
 import { Inter } from 'next/font/google'
 import { GuestSection } from './_components/GuestSection'
 import Link from 'next/link'
+import type { Metadata } from 'next'
 
 const inter = Inter({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700'],
 })
+
+export const metadata: Metadata = {
+  title: 'LOGIN',
+  description: 'Login and play PIXGU with your friends!',
+  keywords: [
+    'pixgu login',
+    'PIXGU login',
+    'pixgu sign in',
+    'PIXGU sign in',
+    'pixgu sign up',
+    'PIXGU sign up',
+    'pixgu create account',
+    'PIXGU create account',
+  ]
+}
 
 const Page = () => {
   return (

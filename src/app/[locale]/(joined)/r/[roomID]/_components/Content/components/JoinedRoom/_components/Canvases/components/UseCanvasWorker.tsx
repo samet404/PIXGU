@@ -66,7 +66,15 @@ export const UseCanvasWorker = () => {
                     )
                     break
 
-
+                case 'undo-redo':
+                    {
+                        const { cellPixelLength, mctx } = useCanvasesMainData.getState()
+                        for (let i = 0; i < workerData.data.length; i++) {
+                            const [coors, color] = workerData.data[i]!
+                            fillOnePixel(mctx!, coors[0]!, coors[1]!, cellPixelLength!, color)
+                        }
+                        break
+                    }
 
             }
         }

@@ -3,6 +3,7 @@ import {
   useMatchStatus,
   usePeers,
   usePlayers,
+  useSocketIO,
   useWhoIsPainter,
 } from '@/zustand/store'
 import { negativeLog } from '@/utils/negativeLog'
@@ -21,6 +22,11 @@ export const playerLeft = (userID: string, roomID: string) => {
   if (usePlayers.getState().value.count <= 1) {
     setHostingHealth('waitingForPlayers')
     useMatchStatus.getState().reset()
+    postMsgToHostTimerWorker({
+      ID: 'MATCH_REMAIN_TIME',
+      event: 'stop',
+    })
+    useSocketIO.getState().io!.emit('game-started', false)
     postMsgToHostTimerWorker({
       ID: 'MATCH_ENDED',
       event: 'stop',

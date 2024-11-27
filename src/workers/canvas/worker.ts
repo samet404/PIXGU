@@ -1,3 +1,4 @@
+import { lastArrIndex } from '@/utils/lastArrIndex'
 import { bucket, eraser, pencil, redo, redoByOperation, undo, undoByOperation } from './events'
 import type { BlurInfo, CanvasWorkerOnMsgData, CanvasWorkerPostMsgData, UndoRedo } from './types'
 import { initlizeCanvasPixels } from './utils/initlizeCanvasPixels'
@@ -5,7 +6,12 @@ import { initlizeCanvasPixels } from './utils/initlizeCanvasPixels'
 const CELL_SIDE_COUNT = 80
 const undoRedoInit: UndoRedo['current'] = {
     operationIndex: -1,
+    direction: 'r',
+    madeLastUndoOperation: false,
+    madeLastRedoOperation: false,
     undoRedoGroup: {
+        madeLastUndoOperation: false,
+        madeLastRedoOperation: false,
         direction: 'r',
         index: -1
     },
@@ -29,11 +35,12 @@ const blurInfo: BlurInfo = {
 
 let pixels: Uint8ClampedArray[][] = []
 let lastPixel: [x: number, y: number] | null = null
-initlizeCanvasPixels(pixels, CELL_SIDE_COUNT)
 
 
 self.onmessage = (e) => {
     const workerData = e.data as CanvasWorkerOnMsgData
+    if (pixels.length === 0) initlizeCanvasPixels(pixels, CELL_SIDE_COUNT)
+
 
     switch (workerData.e) {
         case 'focus': {
@@ -148,6 +155,8 @@ self.onmessage = (e) => {
                 const undoPixels = undo({ undoRedo })
                 if (!undoPixels) return
 
+                console.log('undo: ', undoPixels)
+
                 for (let i = 0; i < undoPixels.length; i++) {
                     const pixel = undoPixels[i]!
                     const [x, y] = pixel[0]!
@@ -155,10 +164,8 @@ self.onmessage = (e) => {
                     pixels[x!]![y!]! = new Uint8ClampedArray([r!, g!, b!, a!])
                 }
 
-                console.log('undoPixels: ', undoPixels)
-
                 postMessage({
-                    e: 'undo/redo',
+                    e: 'undo-redo',
                     data: undoPixels
                 } as CanvasWorkerPostMsgData)
                 break
@@ -175,10 +182,9 @@ self.onmessage = (e) => {
                     const [r, g, b, a] = pixel[1]!
                     pixels[x!]![y!]! = new Uint8ClampedArray([r!, g!, b!, a!])
                 }
-                console.log('redoPixels: ', redoPixels)
 
                 postMessage({
-                    e: 'undo/redo',
+                    e: 'undo-redo',
                     data: redoPixels
                 } as CanvasWorkerPostMsgData)
                 break
@@ -196,51 +202,64 @@ self.onmessage = (e) => {
 
         case 'undoByOperation':
             {
-                // const pixels = undoByOperation({ undoRedo })
-                // if (!pixels) break
+                const undoPixels = undoByOperation({ undoRedo })
+                if (!undoPixels) break
 
-                // for (let pixelI = 0; pixelI < pixels!.length; pixelI++) {
-                //     const pixel = pixels[pixelI]!
-                //     const [x, y] = pixel[0]!
-                //     const color = pixel[1]!
-                //     pixels[x!]![y!]! = color!
-                // }
+                for (let i = 0; i < undoPixels.length; i++) {
+                    const pixel = undoPixels[i]!
+                    const [x, y] = pixel[0]!
+                    const [r, g, b, a] = pixel[1]!
+                    pixels[x!]![y!]! = new Uint8ClampedArray([r!, g!, b!, a!])
+                }
 
-                // self.postMessage({
-                //     e: 'undoByOperation',
-                //     data: pixels
-                // } as CanvasWorkerPostMsgData)
-
+                postMessage({
+                    e: 'undo-redo',
+                    data: undoPixels
+                } as CanvasWorkerPostMsgData)
                 break
             }
 
         case 'redoByOperation':
             {
-                break
-                const ops = redoByOperation({ undoRedo })
-                if (!ops) break
+                const redoPixels = redoByOperation({ undoRedo })
+                if (!redoPixels) break
 
-                // for (let opsI = 0; opsI < ops.length; opsI++) {
-                //     for (let grpI = 0; grpI < ops[opsI]!.length; grpI++) {
-                //         const pixel = ops[opsI]![grpI]!
-                //         const [x, y] = pixel[0]
+                for (let i = 0; i < redoPixels.length; i++) {
+                    const pixel = redoPixels[i]!
+                    const [x, y] = pixel[0]!
+                    const [r, g, b, a] = pixel[1]!
+                    pixels[x!]![y!]! = new Uint8ClampedArray([r!, g!, b!, a!])
+                }
 
-                //         pixels[x!]![y!]! = pixel[1]!
-                //     }
-                // }
-
-                // self.postMessage({
-                //     e: 12,
-                //     data: ops
-                // } as CanvasWorkerPostMsgData)
-
+                postMessage({
+                    e: 'undo-redo',
+                    data: redoPixels
+                } as CanvasWorkerPostMsgData)
                 break
             }
         case 'mousedown': {
             const data = workerData.data
-            undoRedo.current.operationIndex++
+
+            if (undoRedo.current.stack.length !== 0) {
+                const currentOperationIndex = undoRedo.current.operationIndex
+
+                // check if the operation index is the last operation index
+                if (undoRedo.current.operationIndex !== lastArrIndex(undoRedo.current.stack))
+                    undoRedo.current.stack.length = undoRedo.current.operationIndex
+
+                if (undoRedo.current.undoRedoGroup.index !== lastArrIndex(undoRedo.current.stack[currentOperationIndex]!))
+                    undoRedo.current.stack[currentOperationIndex]!.length = undoRedo.current.undoRedoGroup.index + 1
+
+            }
+
+            undoRedo.current.madeLastRedoOperation = false
+            undoRedo.current.madeLastUndoOperation = false
+            undoRedo.current.undoRedoGroup.madeLastUndoOperation = false
+            undoRedo.current.undoRedoGroup.madeLastRedoOperation = false
             undoRedo.current.stack.push([])
+            undoRedo.current.operationIndex++
             undoRedo.current.undoRedoGroup.index = -1
+            undoRedo.current.direction = 'r'
             undoRedo.current.undoRedoGroup.direction = 'r'
             mousedown.smooth = data
             console.log('undoRedoMouseDown: ', undoRedo.current)

@@ -69,7 +69,7 @@ export const UseCanvasWorker = () => {
                     break
 
 
-                case 'undo/redo':
+                case 'undo-redo':
 
                     {
                         const { mctx, cellPixelLength } = useHostCanvasesData.getState()
