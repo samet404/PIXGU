@@ -22,7 +22,7 @@ export const logout = async (): Promise<ActionResult> => {
       sessionCookie.value,
       sessionCookie.attributes,
     )
-  return redirect('/start')
+  return redirect('/')
 }
 
 type ActionResult = {

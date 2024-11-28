@@ -122,17 +122,17 @@ export const main: NextMiddleware = async (req: NextRequest) => {
 
     if (!isJoined) {
       if (
-        !pathnameWithoutLocale.startsWith('/start') &&
+        pathnameWithoutLocale !== '/' &&
         !pathnameWithoutLocale.startsWith('/login') &&
         !pathnameWithoutLocale.startsWith('/privacy')
       ) {
-        req.nextUrl.pathname = `/${pathnameLocale}/start`
+        req.nextUrl.pathname = `/${pathnameLocale}`
         return NextResponse.redirect(req.nextUrl)
       }
     }
 
     if (isJoined) {
-      if (pathnameWithoutLocale.startsWith('/start')) {
+      if (pathnameWithoutLocale !== '/') {
         req.nextUrl.pathname = `/${pathnameLocale}`
         return NextResponse.redirect(req.nextUrl)
       }
@@ -145,14 +145,14 @@ export const main: NextMiddleware = async (req: NextRequest) => {
   const locale = (await import('./funcs/getLocale')).getLocale(req, locales)
 
   if (!isJoined) {
-    if (!pathname.startsWith('/start') && !pathname.startsWith('/login') && !pathname.startsWith('/privacy')) {
-      req.nextUrl.pathname = `/${locale}/start`
+    if (pathname === '/' && !pathname.startsWith('/login') && !pathname.startsWith('/privacy')) {
+      req.nextUrl.pathname = `/${locale}`
       return NextResponse.redirect(req.nextUrl)
     }
   }
 
   if (isJoined) {
-    if (pathname.startsWith('/start')) {
+    if (pathname === '/') {
       req.nextUrl.pathname = `/${locale}`
       return NextResponse.redirect(req.nextUrl)
     } else if (pathname.startsWith('/login')) {

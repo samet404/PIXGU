@@ -16,15 +16,17 @@ import { DefaultShortcuts } from './_components/DefaultShortcuts'
 import Head from 'next/head'
 config.autoAddCss = false
 
+
+const description = 'PIXGU - Free online drawing and guessing game inspired by Gartic.io and Skribbl.io. Join rooms or host one to play with friends'
+
 export const metadata: Metadata = {
   title: {
     absolute: '',
     default: 'PIXGU',
-    template: 'PIXGU | %s',
+    template: 'PIXGU - %s',
   },
   creator: '404',
-  description:
-    'Welcome to PIXGU, where people draw and guess as fast as they can.',
+  description,
   keywords: [
     'drawing game',
     'draw game',
@@ -41,17 +43,31 @@ export const metadata: Metadata = {
     images: [
       {
         url: '/image/png/startbg.png',
-        alt: 'bg',
+        alt: 'pixgu.com background',
       },
     ],
-    description:
-      'Welcome to PIXGU, where people draw and guess as fast as they can.',
+    description,
+  },
+
+  twitter: {
+    title: 'PIXGU',
+    description,
+    images: [
+      {
+        url: '/image/png/startbg.png',
+        alt: 'pixgu.com background',
+      },
+    ],
   },
   icons: {
     icon: '/image/png/logo.png',
   },
-
-
+  authors: [
+    {
+      name: '404',
+      url: 'https://404portfolio.vercel.app',
+    },
+  ],
   metadataBase: new URL('https://pixgu.com'),
 }
 
