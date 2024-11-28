@@ -60,7 +60,7 @@ export const metadata: Metadata = {
     ],
   },
   icons: {
-    icon: '/image/png/logo.png',
+    icon: '/image/png/logobg2.png',
   },
   authors: [
     {
