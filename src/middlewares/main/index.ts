@@ -132,7 +132,7 @@ export const main: NextMiddleware = async (req: NextRequest) => {
     }
 
     if (isJoined) {
-      if (pathnameWithoutLocale !== '/') {
+      if (pathname === '/') {
         req.nextUrl.pathname = `/${pathnameLocale}`
         return NextResponse.redirect(req.nextUrl)
       }

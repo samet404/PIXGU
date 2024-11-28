@@ -28,17 +28,26 @@ export const metadata: Metadata = {
   creator: '404',
   description,
   keywords: [
-    'drawing game',
-    'draw game',
-    'guess game',
-    'drawing',
-    'guess',
-    'pixel art',
     'pixgu',
-    'PIXGU'
+    'drawing game',
+    'word guessing',
+    'draw and guess',
+    'multiplayer game',
+    'sketch game',
+    'paint online',
+    'online drawing',
+    'free game',
+    'browser game',
+    'party game',
+    'fun with friends',
+    'pictionary online',
+    'draw something',
+    'free drawing game',
+    'multiplayer drawing'
   ],
   category: 'game',
   openGraph: {
+    type: 'website',
     title: 'PIXGU',
     images: [
       {
