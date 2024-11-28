@@ -6,13 +6,11 @@ import { initlizeCanvasPixels } from './utils/initlizeCanvasPixels'
 const CELL_SIDE_COUNT = 80
 const undoRedoInit: UndoRedo['current'] = {
     operationIndex: -1,
-    direction: 'r',
     madeLastUndoOperation: false,
     madeLastRedoOperation: false,
     undoRedoGroup: {
         madeLastUndoOperation: false,
         madeLastRedoOperation: false,
-        direction: 'r',
         index: -1
     },
     stack: []
@@ -40,6 +38,7 @@ let lastPixel: [x: number, y: number] | null = null
 self.onmessage = (e) => {
     const workerData = e.data as CanvasWorkerOnMsgData
     if (pixels.length === 0) initlizeCanvasPixels(pixels, CELL_SIDE_COUNT)
+    console.log('worker received event: ', workerData.e)
 
 
     switch (workerData.e) {
@@ -120,8 +119,11 @@ self.onmessage = (e) => {
 
             pixelsOnDraw.clear()
             lastPixel = null
+            blurInfo.blurStack.clear()
+            blurInfo.hasBlur = false
             initlizeCanvasPixels(pixels, CELL_SIDE_COUNT)
             undoRedo.current = { ...undoRedoInit }
+            mousedown.smooth = null
             console.log('worker reset done')
             break
 
@@ -238,6 +240,7 @@ self.onmessage = (e) => {
                 break
             }
         case 'mousedown': {
+            console.log('Before mousedown:', undoRedo.current);
             const data = workerData.data
 
             if (undoRedo.current.stack.length !== 0) {
@@ -245,24 +248,27 @@ self.onmessage = (e) => {
 
                 // check if the operation index is the last operation index
                 if (undoRedo.current.operationIndex !== lastArrIndex(undoRedo.current.stack))
-                    undoRedo.current.stack.length = undoRedo.current.operationIndex
+                    // delete  after operationIndex 
+                    undoRedo.current.stack.length = undoRedo.current.operationIndex + 1
 
                 if (undoRedo.current.undoRedoGroup.index !== lastArrIndex(undoRedo.current.stack[currentOperationIndex]!))
+                    // delete after undoRedoGroup.index
                     undoRedo.current.stack[currentOperationIndex]!.length = undoRedo.current.undoRedoGroup.index + 1
 
             }
 
-            undoRedo.current.madeLastRedoOperation = false
+
+            undoRedo.current.madeLastRedoOperation = true
             undoRedo.current.madeLastUndoOperation = false
             undoRedo.current.undoRedoGroup.madeLastUndoOperation = false
-            undoRedo.current.undoRedoGroup.madeLastRedoOperation = false
+            undoRedo.current.undoRedoGroup.madeLastRedoOperation = true
             undoRedo.current.stack.push([])
             undoRedo.current.operationIndex++
             undoRedo.current.undoRedoGroup.index = -1
-            undoRedo.current.direction = 'r'
-            undoRedo.current.undoRedoGroup.direction = 'r'
             mousedown.smooth = data
-            console.log('undoRedoMouseDown: ', undoRedo.current)
+            console.log('mousedown: ', undoRedo.current)
+
+            console.log('After mousedown:', undoRedo.current);
         }
 
     }

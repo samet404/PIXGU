@@ -3,7 +3,7 @@ import { create } from 'zustand'
 type Value = {
   x: number
   y: number
-}
+} | null
 
 type State = {
   value: Value
@@ -15,7 +15,7 @@ type Action = {
 }
 
 const initValue: State = {
-  value: { x: 0, y: 0 },
+  value: null,
 }
 
 export const useXY = create<State & Action>((set) => ({

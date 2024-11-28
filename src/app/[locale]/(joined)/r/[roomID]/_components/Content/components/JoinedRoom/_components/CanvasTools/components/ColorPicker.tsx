@@ -11,7 +11,7 @@ export const ColorPicker = () => {
   const handleOnChange = ({ r, g, b, a }: RgbaColor) => usePainterTool.getState()[selectedColor === 0 ? 'setColor' : 'setColor2']([r, g, b, a * 255])
 
   return (
-    <div className='h-[10rem]'>
+    <div className='h-[16rem]'>
       <RgbaColorPicker
         style={{
           width: '100%',

@@ -8,7 +8,6 @@ export const XY = () => {
   const XY = useXY((s) => s.value)
   const timeoutRef = useRef<ReturnType<typeof setTimeout>>()
   const [active, setActive] = useState<boolean>(false)
-  const { x, y } = XY
 
   useEffect(() => {
     clearTimeout(timeoutRef.current)
@@ -19,11 +18,15 @@ export const XY = () => {
   }, [XY])
 
 
-  return (
-    <div className={clsxMerge('rounded-full bg-[#ffffff24] px-2 h-full duration-200 text-[#ffffff52]', {
-      'bg-[#ffffff2e]': active
-    })}>
-      {x} {y}
-    </div>
-  )
+  if (XY) {
+    const { x, y } = XY
+
+    return (
+      <div className={clsxMerge('rounded-full bg-[#ffffff24] px-2 h-full duration-200 text-[#ffffff52]', {
+        'bg-[#ffffff2e]': active
+      })}>
+        {x} {y}
+      </div>
+    )
+  }
 }

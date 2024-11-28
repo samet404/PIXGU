@@ -6,7 +6,7 @@ import { useAmISpectator, useHostPeer, useDeveloperSettings } from '@/zustand/st
 import Spinner from '@/components/Spinner'
 import { clsxMerge } from '@/utils/clsxMerge'
 
-export const Blur = ({ children }: PropsWithChildren) => {
+export const Status = ({ children }: PropsWithChildren) => {
   // return children
   const inDeveloperMode = useDeveloperSettings((s) => s.developerMode)
   const isGameStopped = useIsGameStopped((s) => s.value)
@@ -77,7 +77,7 @@ export const Blur = ({ children }: PropsWithChildren) => {
   return (
     <div
       className={clsxMerge(
-        `absolute z-40 flex h-full w-full animate-fade-down items-center justify-center bg-gradient-to-tr ${bgColor} duration-1000`,
+        `absolute z-40 flex h-full w-full items-center justify-center bg-gradient-to-tr ${bgColor} duration-1000`,
         {
           '': !inDeveloperMode,
         },

@@ -50,8 +50,6 @@ export const useMouseDown = (myUserID: string) => {
       data: new Uint16Array([smoothX, smoothY])
     })
 
-    console.log('start x, y: ', smoothX, smoothY)
-
     const toolName = usePainterTool.getState().current
 
     switch (toolName) {

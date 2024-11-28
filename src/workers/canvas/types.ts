@@ -135,9 +135,7 @@ export type UndoRedo = {
             index: number
             madeLastUndoOperation: boolean
             madeLastRedoOperation: boolean
-            direction: 'u' | 'r'
         }
-        direction: 'u' | 'r'
         madeLastUndoOperation: boolean
         madeLastRedoOperation: boolean
         operationIndex: number

@@ -9,6 +9,7 @@ import {
   useLetterHint,
   useNewPainterPanel,
   useOwnedPowerups,
+  usePainterSelectingRemainTime,
   useRoomGuessChatMsgsStore,
   useRoomWinnersChatMsgsStore,
   useSelectThemePanel,
@@ -42,6 +43,7 @@ export const getPainter = async (
   resetMatchStates()
 
 
+  usePainterSelectingRemainTime.getState().reset()
   useLetterHint.getState().reset()
   useGuessedPlayers.getState().reset()
   useAmIGuessed.getState().noIMNotGuessed()

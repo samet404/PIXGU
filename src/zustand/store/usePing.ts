@@ -2,24 +2,23 @@ import { create } from 'zustand'
 
 type State = {
   interval: null | ReturnType<typeof setInterval>
-  ping: number
+  ping: number | null
 }
 
 type Action = {
   setInterval: (input: ReturnType<typeof setInterval>) => void
   set: (input: number) => void
-  get: () => number
   reset: () => void
 }
 
 const initState: State = {
   interval: null,
-  ping: 0,
+  ping: null,
 }
 
 export const usePing = create<State & Action>((set, get) => ({
   interval: null,
-  ping: 0,
+  ping: null,
 
   set: (input) =>
     set({
@@ -33,7 +32,6 @@ export const usePing = create<State & Action>((set, get) => ({
       interval,
     }),
 
-  get: () => get().ping,
   reset: () => {
     const interval = get().interval
     if (interval) clearInterval(interval)

@@ -12,6 +12,7 @@ import { useEffect, useRef } from 'react'
 import { Color } from './components/Color'
 import { ColorPicker } from './components/ColorPicker'
 import { UndoRedo } from './components/UndoRedo'
+import { UndoRedoBtn } from './components/UndoRedoBtn'
 
 
 const CanvasTools = () => {
@@ -42,9 +43,10 @@ const CanvasTools = () => {
     if (isOpen) return (
       <div ref={mainRef} style={
         {
+          scrollbarWidth: 'none',
           backgroundImage: 'radial-gradient(at 100% 100%, hsla(0, 0%, 0%, 0.1) 0px, transparent 50%)'
         }
-      } className="absolute z-40 animate-fade-right gap-5 py-7 px-4 animate-duration-150 overflow-y-auto rounded-r-[2rem] left-0 top-0 flex w-[15rem] shadow-[0_0px_40px_10px_rgba(0,0,0,0.5)] h-full flex-col bg-[#1f0236b2] backdrop-blur-md">
+      } className="absolute z-40 animate-fade-right gap-5 pt-7 pb-20 px-4 animate-duration-150 overflow-y-auto rounded-r-lg left-0 top-0 flex w-[15rem] shadow-[0_0px_40px_10px_rgba(0,0,0,0.5)] h-full flex-col bg-[#1f0236b2] backdrop-blur-md">
         <div className='w-full grid gap-2 grid-cols-4 grid-flow-row'>
           <Pencil />
           <Eraser />
@@ -52,6 +54,10 @@ const CanvasTools = () => {
           <Bucket />
           <Trash />
           {/* <Gradient /> */}
+        </div>
+        <div className='flex flex-row gap-2'>
+          <UndoRedoBtn type='undo' />
+          <UndoRedoBtn type='redo' />
         </div>
         <div className='flex flex-col gap-2'>
           <ColorPicker />

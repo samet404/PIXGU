@@ -2,13 +2,14 @@ import { lastArrIndex } from '@/utils/lastArrIndex';
 import type { UndoInput } from '../types'
 
 export const redoByOperation = ({ undoRedo }: UndoInput) => {
-    const currentDirection = undoRedo.current.direction;
+    if (undoRedo.current.madeLastUndoOperation || undoRedo.current.stack.length === 0) return null
+
     const currentOperationIndex = undoRedo.current.operationIndex;
     const result: [coords: Uint16Array, color: Uint8ClampedArray][] = []
+    undoRedo.current.madeLastUndoOperation = false
 
     // Handle new operation
-    if (lastArrIndex(undoRedo.current.stack) === currentOperationIndex) {
-        if (undoRedo.current.madeLastRedoOperation) return null
+    if (currentOperationIndex === lastArrIndex(undoRedo.current.stack)) {
         undoRedo.current.madeLastRedoOperation = true
 
         for (let groupI = 0; groupI < undoRedo.current.stack[undoRedo.current.operationIndex]!.length; groupI++) {
@@ -20,12 +21,8 @@ export const redoByOperation = ({ undoRedo }: UndoInput) => {
         return result
     }
 
-    // Handle direction change
-    if (currentDirection === 'r')
-        undoRedo.current.direction = 'u';
 
-    if (undoRedo.current.madeLastRedoOperation)
-        undoRedo.current.madeLastRedoOperation = false
+    undoRedo.current.madeLastRedoOperation = false
 
 
     for (let groupI = 0; groupI < undoRedo.current.stack[undoRedo.current.operationIndex]!.length; groupI++) {
@@ -35,9 +32,7 @@ export const redoByOperation = ({ undoRedo }: UndoInput) => {
     }
 
 
-    // Move to previous group if possible
-    if (currentOperationIndex < lastArrIndex(undoRedo.current.stack))
-        undoRedo.current.operationIndex++
+    undoRedo.current.operationIndex++
 
     return result
 }

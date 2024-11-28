@@ -10,7 +10,7 @@ import {
 import { Providers } from './_components/Providers'
 import { Suspense } from 'react'
 import AnimatedDiv from './_components/AnimatedDiv'
-import { Blur } from './_components/Blur'
+import { Status } from './_components/Status'
 import Canvases from './_components/Canvases'
 import { Chats } from './_components/Chats'
 import Nav from './_components/Nav'
@@ -70,7 +70,7 @@ const JoinedRoom = async () => {
             <CanvasTools />
             <GameEnd userID={user ? user.id : guest!.ID} />
             <Suspense>
-              <Blur />
+              <Status />
             </Suspense>
             <Shortcuts />
             <div className="h-[100vh] w-full">

@@ -8,6 +8,8 @@ export const Ping = () => {
   const ping = usePing((state) => state.ping)
   const hostConnectionStatus = useHostPeer((state) => state.status)
 
+  if (!ping) return null
+
   const theme = (() => {
     switch (hostConnectionStatus) {
       case 'failed':
