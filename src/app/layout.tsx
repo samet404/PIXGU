@@ -15,6 +15,7 @@ import { SmallScreenAlert } from './_components/SmallScreenAlert'
 import { DefaultShortcuts } from './_components/DefaultShortcuts'
 import Head from 'next/head'
 config.autoAddCss = false
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 
 const description = 'PIXGU - Free online drawing and guessing game inspired by Gartic.io and Skribbl.io. Join rooms or host one to play with friends'
@@ -96,6 +97,7 @@ const RootLayout = async (props: {
             'radial-gradient(at 80% 100%, hsla(222,47%,16%,1) 0px, transparent 50%),radial-gradient(at 0% 0%, hsla(222,48%,19%,1) 0px, transparent 50%)',
         }}
       >
+        <GoogleAnalytics gaId='G-PL9PWSE3JG' />
         <Head>
           <Adsense />
         </Head>

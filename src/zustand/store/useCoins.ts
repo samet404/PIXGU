@@ -3,9 +3,11 @@ import { create } from 'zustand'
 type UserID = string
 type State = {
   coins: Record<UserID, number>
+  prevCoins: Record<UserID, number>
 }
 
 type Action = {
+  newMatch: () => void
   add: (userID: string, amount: number) => void
   get: (userID: string) => number
   set: (userID: string, amount: number) => void
@@ -16,11 +18,19 @@ type Action = {
 
 const initValue: State = {
   coins: {},
+  prevCoins: {},
 }
 
 export const useCoins = create<State & Action>((set, get) => ({
   ...initValue,
 
+  newMatch: () =>
+    set({
+      ...get(),
+      prevCoins: {
+        ...get().coins,
+      },
+    }),
   add: (userID, amount) =>
     set({
       coins: {
@@ -45,6 +55,7 @@ export const useCoins = create<State & Action>((set, get) => ({
         [userID]: parseFloat(((get().coins[userID] ?? 0) - amount).toFixed(2)),
       },
     }),
+
   getSortedByAmount: () => {
     const coins = get().coins
 
@@ -59,6 +70,8 @@ export const useCoins = create<State & Action>((set, get) => ({
 
     return sorted
   },
+
   get: (userID) => get().coins[userID] ?? 0,
+
   reset: () => set(initValue),
 }))

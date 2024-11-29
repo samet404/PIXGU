@@ -3,7 +3,8 @@ import { create } from 'zustand'
 
 
 const initValue: State = {
-    value: {}
+    value: {},
+    prevValue: {}
 }
 
 export const usePlayersOwnedPowerups = create<State & Action>((set, get) => ({
@@ -42,8 +43,10 @@ export const usePlayersOwnedPowerups = create<State & Action>((set, get) => ({
 
 
 type UserID = string
+type Value = Record<UserID, Record<Powerup, number>>
 type State = {
-    value: Record<UserID, Record<Powerup, number>>
+    value: Value
+    prevValue: Value
 }
 
 type Action = {
