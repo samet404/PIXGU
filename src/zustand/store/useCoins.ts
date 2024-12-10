@@ -2,13 +2,14 @@ import { create } from 'zustand'
 
 type UserID = string
 type State = {
+  prevCoins: Record<UserID, number> | null
   coins: Record<UserID, number>
-  prevCoins: Record<UserID, number>
 }
 
 type Action = {
   newMatch: () => void
   add: (userID: string, amount: number) => void
+  returnPrev: () => void
   get: (userID: string) => number
   set: (userID: string, amount: number) => void
   decrease: (userID: string, amount: number) => void
@@ -17,8 +18,8 @@ type Action = {
 }
 
 const initValue: State = {
+  prevCoins: null,
   coins: {},
-  prevCoins: {},
 }
 
 export const useCoins = create<State & Action>((set, get) => ({
@@ -31,6 +32,15 @@ export const useCoins = create<State & Action>((set, get) => ({
         ...get().coins,
       },
     }),
+
+  returnPrev: () =>
+    set({
+      prevCoins: null,
+      coins: {
+        ...get().prevCoins!,
+      },
+    }),
+
   add: (userID, amount) =>
     set({
       coins: {

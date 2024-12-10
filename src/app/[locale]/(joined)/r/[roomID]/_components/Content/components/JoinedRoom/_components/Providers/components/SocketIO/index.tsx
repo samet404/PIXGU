@@ -43,6 +43,7 @@ export const SocketIOProvider = ({ roomID, children }: Props) => {
   const [status, setStatus] = useState<StatusState>(initStatusState)
   const io = useSocketIO(s => s.io)
   const [ioOpts, setIoOpts] = useState<Partial<ManagerOptions & SocketOptions>>({
+
     auth: {
       roomID,
       password

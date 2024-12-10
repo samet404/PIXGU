@@ -26,8 +26,9 @@ export const guessChat = async (
   const theme = painterData.selectedTheme.toLocaleLowerCase().trim().replace(/\s/g, '');
   if (!theme) return
   const receivedTheme = data.msg.toLocaleLowerCase().trim().replace(/\s/g, '');
+  const similarity = strSimilarity(theme, receivedTheme)
 
-  sendToAllPeers(
+  if (similarity <= 0.8) sendToAllPeers(
     {
 
       event: 'guessChat',
@@ -35,7 +36,7 @@ export const guessChat = async (
         from: userID,
         msgID,
         msg: data.msg,
-        similarity: strSimilarity(theme, receivedTheme),
+        similarity,
       },
     },
     { except: [userID] },
@@ -47,7 +48,7 @@ export const guessChat = async (
     data: {
       msgID,
       msg: data.msg,
-      similarity: strSimilarity(theme, receivedTheme),
+      similarity,
     },
   })
 
@@ -144,11 +145,11 @@ export const guessChat = async (
     })
     useMatchStatus.getState().timeoutCancelled()
 
-    createMatch(roomID)
     sendToAllPeers({
-
       event: 'everyoneGuessed',
     })
+
+    await createMatch(roomID)
   }
 
 }

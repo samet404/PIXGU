@@ -1,7 +1,6 @@
 import './_styles/scrollbars.css'
 import {
   getGuest,
-  getGuestID,
   getHostID,
   getRoomID,
   getUser,
@@ -29,6 +28,7 @@ import { CanvasToolsShadow } from './_components/CanvasToolsShadow'
 import { LetterHint } from './_components/Letterhint'
 import { api } from '@/trpc/server'
 import { UseTimersWorker } from './_components/UseTimersWorker'
+import { Logs } from './_components/Logs'
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -85,7 +85,12 @@ const JoinedRoom = async () => {
               >
                 <Spectator />
 
-                <div className="z-10 flex h-[90vh] flex-col gap-2 lg:w-[12rem] xl:w-[15rem]">
+                <div
+                  style={{
+                    scrollbarWidth: 'none'
+                  }}
+                  className="z-10 flex h-[90vh] overflow-y-scroll flex-col gap-3 lg:w-[12rem] xl:w-[15rem]">
+                  <Logs />
                   <PlayersSection />
                 </div>
                 <div className="z-10 flex grow flex-col items-center gap-2 rounded-lg">

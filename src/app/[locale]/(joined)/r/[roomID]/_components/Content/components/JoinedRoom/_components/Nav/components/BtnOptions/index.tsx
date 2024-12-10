@@ -6,8 +6,11 @@ import { createPortal } from 'react-dom'
 import { isModalOpenAtom } from './atoms'
 import dynamic from 'next/dynamic'
 import { Svg } from '@/components/Svg'
+import Spinner from '@/components/Spinner'
 
-const Modal = dynamic(() => import('./components/Modal').then((m) => m.default))
+const Modal = dynamic(() => import('./components/Modal').then((m) => m.default), {
+  loading: () => <Spinner />
+})
 
 const BtnOptions = () => {
   const [isModalOpen, setIsModalOpen] = useAtom(isModalOpenAtom)
@@ -16,16 +19,15 @@ const BtnOptions = () => {
     <Fragment>
       <button
         onClick={() => setIsModalOpen(true)}
-        className="rounded-md bg-[#ffffff18] w-7 text-sm text-[#ffffff7f] shadow-[0_0px_10px_1px_rgba(0,0,0,0.5)]"
+        className="rounded-md bg-[#ffffff18]  flex flex-row gap-2 w-7 text-sm text-[#ffffff7f] shadow-[0_0px_10px_1px_rgba(0,0,0,0.5)]"
       >
         <Svg src='more-vertical-svgrepo-com.svg' alt="options" className="w-full h-full opacity-20" />
+        {typeof window !== 'undefined'
+          ? isModalOpen
+            ? createPortal(<Modal />, document.body)
+            : null
+          : null}
       </button>
-      {typeof window !== 'undefined'
-        ? isModalOpen
-          ? createPortal(<Modal />, document.body)
-          : null
-        : null}
-
 
     </Fragment>
   )

@@ -10,7 +10,7 @@ export const Btn = () => {
     <button
       onClick={() => setIsLoading(true)}
       className={clsxMerge(
-        `flex aspect-square h-full w-full items-center border-[#ffffff93] border-[0.2rem] justify-center rounded-lg bg-[#5865F2] p-1 drop-shadow-[0_0px_2px_#5865F2]`,
+        `flex size-12 items-center justify-center rounded-lg p-1`,
         {
           'animate-pulse opacity-50 animate-infinite': isLoading,
         },
@@ -18,7 +18,7 @@ export const Btn = () => {
     >
       <FontAwesomeIcon
         icon={faDiscord}
-        fontSize={35}
+        className='!w-full !h-full'
         color={'rgba(255,255,255,0.85)'}
       />
     </button>

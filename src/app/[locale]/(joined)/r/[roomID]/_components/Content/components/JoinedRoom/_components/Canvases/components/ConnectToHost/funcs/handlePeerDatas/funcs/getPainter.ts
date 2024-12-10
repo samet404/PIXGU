@@ -10,9 +10,11 @@ import {
   useNewPainterPanel,
   useOwnedPowerups,
   usePainterSelectingRemainTime,
+  usePlayers,
   useRoomGuessChatMsgsStore,
   useRoomWinnersChatMsgsStore,
   useSelectThemePanel,
+  useTotalMatchCount,
   useWhoIsPainterClient,
   useWinnersChatLayout,
 } from '@/zustand/store'
@@ -22,12 +24,13 @@ export const getPainter = async (
   myUserID: string,
 ) => {
   const amIPainter = myUserID === data
+  console.log('amIPainter', amIPainter)
 
   if (useIsGameStopped.getState().value.code?.includes('waitingForHost'))
     useIsGameStopped.getState().removeCode('waitingForHost')
 
   useOwnedPowerups.getState().reset()
-  useWhoIsPainterClient.getState().setCurrentPainter({
+  useWhoIsPainterClient.getState().setPainterSelected({
     painterID: data,
     amIPainter,
   })
@@ -47,8 +50,10 @@ export const getPainter = async (
   useLetterHint.getState().reset()
   useGuessedPlayers.getState().reset()
   useAmIGuessed.getState().noIMNotGuessed()
+  useTotalMatchCount.getState().set(usePlayers.getState().value.count + 1)
 
   if (amIPainter) {
+    console.log('amIPainter true')
     useSelectThemePanel.getState().open()
     useNewPainterPanel.getState().close()
 
@@ -57,6 +62,7 @@ export const getPainter = async (
     useGuessChatLayout.getState().setPainterLayout()
     useRoomGuessChatMsgsStore.getState().reset()
   } else {
+    console.log('amIPainter false')
     useNewPainterPanel.getState().open({ painterID: data })
     useSelectThemePanel.getState().close()
 

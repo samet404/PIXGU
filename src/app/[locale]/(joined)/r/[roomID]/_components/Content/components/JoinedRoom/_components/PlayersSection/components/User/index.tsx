@@ -36,7 +36,7 @@ const User = ({ ID, nameWithNameID, profilePicture }: Props) => {
       prefetch={false}
       target="_blank"
       className={clsxMerge(
-        'group group flex w-full flex-row items-center justify-center text-ellipsis rounded-lg bg-[#ffffff2e] p-2 duration-300',
+        'group group flex w-full flex-row items-center justify-center text-ellipsis last:rounded-b-lg bg-[#ffffff2e] p-2 duration-300',
         {
           'bg-[rgba(254,240,41,0.22)]': isGuessed,
           'bg-[rgba(179,104,255,0.33)]': isPainter,

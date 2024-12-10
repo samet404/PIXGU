@@ -22,9 +22,11 @@ export const useAmIGuessed = create<State & Action>((set, get) => ({
       amIGuessed: true,
     }),
 
-  noIMNotGuessed: () =>
+  noIMNotGuessed: () => {
+    console.log('noIMNotGuessed')
     set({
       amIGuessed: false,
-    }),
+    })
+  },
   reset: () => set(initValue),
 }))

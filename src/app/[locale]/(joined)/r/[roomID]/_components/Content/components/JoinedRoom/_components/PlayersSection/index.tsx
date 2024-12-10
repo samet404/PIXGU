@@ -5,7 +5,7 @@ import { Others } from './components/Others'
 
 const PlayersSection = () => {
   return (
-    <div className="flex h-full w-full flex-col justify-start gap-1 rounded-lg">
+    <div className="flex h-full w-full flex-col justify-start rounded-lg">
       <Me />
       <Others />
     </div>

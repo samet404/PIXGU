@@ -1,10 +1,10 @@
 import { getLocale } from '@/context/server'
-import Link from 'next/link'
+// import Link from 'next/link'
 import { getLangObj } from './lang'
 import { Discord } from './components/discord'
-import { Google } from './components/google'
-import { Spotify } from './components/spotify'
-import { Github } from './components/github'
+// import { Google } from './components/google'
+// import { Spotify } from './components/spotify'
+// import { Github } from './components/github'
 import { Section } from '../Section'
 
 const OAuthSection = async () => {
@@ -13,7 +13,7 @@ const OAuthSection = async () => {
 
   return (
     <Section title={langObj.oauthDesc}>
-      <div className="grid w-full grid-cols-1 grid-rows-[3rem] gap-2 rounded-md ">
+      <div className="w-full flex flex-row justify-center flex-wrap gap-2 rounded-md ">
         <Discord />
         {/* <Google />
         <Spotify />

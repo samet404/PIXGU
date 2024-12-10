@@ -1,7 +1,8 @@
 "use client"
 
-import { createMatch } from '@/helpers/room'
+import { createMatch, gameEnded } from '@/helpers/room'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
+import { storePaintersAccess } from '@/store'
 import { sendToAllPeers } from '@/utils/sendToAllPeers'
 import { sendToPeerWithID } from '@/utils/sendToPeerWithID'
 import { getHostTimerWorker, postMsgToHostTimerWorker, terminateTimerWorker, TimerWorkerPostMsgData } from '@/workers'
@@ -30,11 +31,11 @@ export const UseTimersWorker = ({ roomID }: Props) => {
                     if (data.status !== 'painterSelectingTheme') return
 
                     sendToAllPeers({
-                        event: 'painterCouldNotSelectTheme',
-                        data: 'timeIsUp',
+                        event: 'painterSelectedThemeTimeIsUp',
                     })
 
-                    createMatch(roomID)
+                    if (storePaintersAccess.value.paintersToBeSelected.length === 1) gameEnded()
+                    else createMatch(roomID)
                     break
                 }
 

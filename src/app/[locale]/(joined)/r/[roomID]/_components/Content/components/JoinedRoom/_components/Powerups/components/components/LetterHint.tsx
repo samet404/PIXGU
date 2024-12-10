@@ -9,7 +9,6 @@ export const LetterHint = () => {
 
     const isDisabled = () => {
         if (matchStatus !== 'started') return true
-        if (painterStatus.status !== 'currentPainter') return true
         if (painterStatus.amIPainter) return true
 
         return false

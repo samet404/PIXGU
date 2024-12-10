@@ -8,9 +8,9 @@ export const Status = ({ text, theme, ...rest }: Props) => {
         {
           'bg-[rgba(52,211,153,0.2)]': theme === 'green',
           'bg-[rgba(248,113,113,0.2)]': theme === 'red',
-          'animate-pulse bg-[rgba(255,226,112,0.27)] animate-infinite':
+          'bg-[rgba(255,226,112,0.27)]':
             theme === 'bright yellow',
-          'animate-pulse bg-[rgba(250,204,21,0.2)] animate-infinite':
+          'bg-[rgba(250,204,21,0.2)]':
             theme === 'yellow',
           'p-1': !text,
           'py-[0.35rem] pl-[0.35rem] pr-3': text,

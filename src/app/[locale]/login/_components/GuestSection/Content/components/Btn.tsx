@@ -69,15 +69,15 @@ export const Btn = ({ inputRef, joinGame }: Props) => {
       disabled={isLoading || globalLoading}
       onMouseDown={handleMouseDown}
       className={clsxMerge(
-        'flex items-center justify-center rounded-md bg-[#ffffff57] shadow-sm px-2 py-1 font-[600] duration-300 hover:opacity-60',
+        'flex items-center justify-center rounded-md bg-[#ffffff57] shadow-sm px-2 py-1 font-[600] transition-colors duration-300 hover:opacity-60',
         {
-          'bg-[#0cb299]': isActive,
+          'bg-[#0dd5b7]': isActive,
           'cursor-not-allowed': globalLoading,
           'cursor-wait': isLoading,
         },
       )}
     >
-      {isLoading ? <Spinner className="size-4 drop-shadow-none" /> : joinGame ? `Join game` : `Login`}
+      {isLoading ? <Spinner className="size-4 drop-shadow-none" /> : joinGame ? `Login and join game` : `Login`}
     </button>
   )
 }

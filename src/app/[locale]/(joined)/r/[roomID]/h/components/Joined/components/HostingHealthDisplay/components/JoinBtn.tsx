@@ -27,17 +27,16 @@ export const JoinBtn = () => {
     })
   }
 
-  if (hostStatus !== 'readyToStart')
-    return (
-      <animated.button onClick={handleClick} style={springs} className="flex">
-        <Link
-          href={window.location.href.replace(/\/h$/, '')}
-          target="_blank"
-          prefetch={false}
-          className="flex h-full w-full items-center justify-center rounded-md bg-[#ffffff82] px-4  text-[#02020285] hover:opacity-60 disabled:cursor-not-allowed disabled:opacity-65"
-        >
-          Join the game
-        </Link>
-      </animated.button>
-    )
+  return (
+    <animated.button onClick={handleClick} style={springs} className="flex">
+      <Link
+        href={window.location.href.replace(/\/h$/, '')}
+        target="_blank"
+        prefetch={false}
+        className="flex h-full w-full items-center flex-shrink justify-center rounded-md bg-[#ffffff82] px-4 py-1  text-[#02020285] hover:opacity-60 disabled:cursor-not-allowed disabled:opacity-65"
+      >
+        Join the game
+      </Link>
+    </animated.button>
+  )
 }

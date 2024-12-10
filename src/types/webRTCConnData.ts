@@ -133,7 +133,7 @@ type PingPongData = {
   data: {
     date: number
     something: 'Ad eiusmod qui in aliqua irure. Ipsum eu elit enim mollit adipisicing incididunt.'
-    ping: number
+    ping: number | null
   }
 }
 
@@ -163,9 +163,8 @@ export type PainterSelectingTheme = {
   event: 'painterSelectingTheme'
 }
 
-export type PainterCouldNotSelectTheme = {
-  event: 'painterCouldNotSelectTheme'
-  data: 'timeIsUp' | 'playerLeft'
+export type PainterSelectedThemeTimeIsUp = {
+  event: 'painterSelectedThemeTimeIsUp'
 }
 
 export type Guessed = {
@@ -277,10 +276,20 @@ export type YouUsedPowerup = {
   }
 }
 
+export type GameLog = {
+  event: 'gameLog'
+  data: {
+    data: string
+    color: 'red' | 'green' | 'yellow'
+    time: number
+  }
+}
+
 export type WebRTCConnDataFromHost = (
   | PlayerLeft
   | PlayerJoined
   | PrevPlayers
+  | GameLog
   | CurrentPainter
   | GuessChatFromHost
   | WinnersChatFromHost
@@ -290,7 +299,7 @@ export type WebRTCConnDataFromHost = (
   | SelectThemeFromHost
   | PainterSelectedTheme
   | PainterSelectingTheme
-  | PainterCouldNotSelectTheme
+  | PainterSelectedThemeTimeIsUp
   | Guessed
   | Coin
   | YourCoin

@@ -11,7 +11,7 @@ import { Sounds } from './components/Sounds'
 
 const urbanist = Urbanist({
   subsets: ['latin'],
-  weight: ['500', '700'],
+  weight: ['500',],
 })
 
 const Modal = () => {
@@ -39,7 +39,7 @@ const Modal = () => {
       <div
         onKeyDown={handleOnKeyDown}
         ref={ref}
-        className="flex flex-col rotate-[-5deg] animate-throw rounded-md bg-[#ffffffb2] shadow-[0_0px_20px_1px_rgba(0,0,0,0.4)]"
+        className="flex flex-col rotate-[-5deg] animate-flip-up rounded-md bg-[#ffffffb2] shadow-[0_0px_20px_1px_rgba(0,0,0,0.4)]"
       >
         <Back />
         <Controls />

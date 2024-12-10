@@ -15,6 +15,7 @@ import {
   useOwnedPowerups,
   useCoins,
   useMatchStatus,
+  useIsGameStopped,
 } from '@/zustand/store'
 
 export const ResetStates = () => {
@@ -31,6 +32,7 @@ export const ResetStates = () => {
   const resetPlayersOwnedPowerups = useOwnedPowerups.getState().reset
   const resetCoins = useCoins.getState().reset
   const resetMatchStates = useMatchStatus.getState().reset
+  const resetIsGameStopped = useIsGameStopped.getState().reset
 
   useEffectReturnOnce(() => {
     terminateCanvasWorker()
@@ -47,6 +49,7 @@ export const ResetStates = () => {
     resetOwnedPowerups()
     resetMatchStates()
     resetCoins()
+    resetIsGameStopped()
   })
 
   return null

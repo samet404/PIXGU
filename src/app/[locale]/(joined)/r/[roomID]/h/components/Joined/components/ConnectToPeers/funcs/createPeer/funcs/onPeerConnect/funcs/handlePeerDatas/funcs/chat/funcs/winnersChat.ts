@@ -1,32 +1,24 @@
 import type { WinnersChatFromClient } from '@/types/webRTCConnData';
 import { sendToAllPeers } from '@/utils/sendToAllPeers';
 import { sendToPeerWithID } from '@/utils/sendToPeerWithID';
-import { strSimilarity } from '@/utils/strSimilarity';
-import { useHostPainterData, useWhoIsPainter } from '@/zustand/store';
+import { useGuessedPlayers, useHostPainterData, useWhoIsPainter } from '@/zustand/store';
 
 export const winnersChat = async (
     data: WinnersChatFromClient['data'],
     userID: string,
     msgID: number,
 ) => {
-    const painterData = useHostPainterData.getState().value
-    const whoIsPainter = useWhoIsPainter.getState().value
-    if (painterData.status !== 'painterSelectedTheme') return
-
-    const theme = painterData.selectedTheme.toLocaleLowerCase().trim()
-    if (!theme) return
-    const receivedTheme = data.msg.toLocaleLowerCase().trim()
-
+    if (useHostPainterData.getState().value.status !== 'painterSelectedTheme') return
+    if (!useGuessedPlayers.getState().isGuessed(userID)) return
 
     sendToAllPeers(
         {
 
-            event: 'guessChat',
+            event: 'winnersChat',
             data: {
                 from: userID,
                 msgID,
                 msg: data.msg,
-                similarity: strSimilarity(theme, receivedTheme),
             },
         },
         { except: [userID] },
@@ -34,11 +26,10 @@ export const winnersChat = async (
 
     sendToPeerWithID(userID, {
 
-        event: `yourGuessChat`,
+        event: `yourWinnersChat`,
         data: {
             msgID,
             msg: data.msg,
-            similarity: strSimilarity(theme, receivedTheme),
         },
     })
 }

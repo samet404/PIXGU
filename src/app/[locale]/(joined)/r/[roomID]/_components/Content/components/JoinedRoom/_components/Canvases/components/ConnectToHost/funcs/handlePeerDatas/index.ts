@@ -8,7 +8,6 @@ import {
   getWinnersChat,
   getYourWinnersChat,
   getYourGuessChat,
-  getPainterCouldNotSelectTheme,
   getPainterSelectedTheme,
   getPainterSelectingTheme,
   getCoin,
@@ -35,7 +34,9 @@ import {
   getYouUsedPowerup,
   getPurchasedMarketItem,
   getPainterEraserOrPencilOut,
-  getPainterMouseDown
+  getPainterMouseDown,
+  getPainterSelectedThemeTimeIsUp,
+  getGameLog
 } from './funcs'
 
 /**
@@ -54,8 +55,8 @@ export const handlePeerDatas = (userID: string) => {
       case 'painterPencil':
         getPainterPencil(rtcData.data)
         break
-      case 'painterCouldNotSelectTheme':
-        getPainterCouldNotSelectTheme(rtcData.data, userID)
+      case 'painterSelectedThemeTimeIsUp':
+        getPainterSelectedThemeTimeIsUp()
         break
       case 'painterSelectedTheme':
         getPainterSelectedTheme()
@@ -153,6 +154,9 @@ export const handlePeerDatas = (userID: string) => {
         break
       case 'painterMouseDown':
         getPainterMouseDown(rtcData.data)
+        break
+      case 'gameLog':
+        getGameLog(rtcData.data)
         break
       default:
         negativeLog('RECEIVED UNKNOWN EVENT FROM HOST', rtcData)

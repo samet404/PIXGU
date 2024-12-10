@@ -1,19 +1,39 @@
 import { create } from 'zustand'
 
-type State = { coin: number }
+type State = {
+  prevCoin: number | null
+  coin: number
+}
 
 type Action = {
   add: (input: number) => void
   get: () => number
   set: (input: number) => void
+  newMatch: () => void
+  returnPrev: () => void
   minus: (input: number) => void
   reset: () => void
 }
 
-const initValue = 0
+const initValue: State = {
+  prevCoin: null,
+  coin: 0,
+}
 
 export const useMyCoin = create<State & Action>((set, get) => ({
-  coin: initValue,
+  ...initValue,
+
+  newMatch: () =>
+    set({
+      ...get(),
+      prevCoin: get().coin,
+    }),
+
+  returnPrev: () =>
+    set({
+      prevCoin: null,
+      coin: get().prevCoin!,
+    }),
 
   add: (input) =>
     set({
@@ -30,5 +50,5 @@ export const useMyCoin = create<State & Action>((set, get) => ({
       coin: parseFloat((get().coin - input).toFixed(2)),
     }),
   get: () => get().coin,
-  reset: () => set({ coin: initValue }),
+  reset: () => set({ ...initValue }),
 }))

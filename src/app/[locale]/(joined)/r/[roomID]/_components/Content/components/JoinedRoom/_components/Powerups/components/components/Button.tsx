@@ -6,10 +6,13 @@ import { useSpring, animated } from '@react-spring/web'
 import Image, { type StaticImageData } from 'next/image'
 import { sendToHostPeer } from '@/utils/sendToHostPeer'
 import { useOwnedPowerups } from '@/zustand/store'
+import { useSetAtom } from 'jotai'
+import { openPanelAtom } from '../../../atoms'
 
 export const Button = ({ name, isDisabled, onClick, ...rest }: Props) => {
   const [image, setImage] = useState<StaticImageData | null>(null)
   const count = useOwnedPowerups((s) => s.powerups[name])
+  const setOpenPanel = useSetAtom(openPanelAtom)
 
   const [springs, api] = useSpring(() => ({
     from: {
@@ -46,6 +49,7 @@ export const Button = ({ name, isDisabled, onClick, ...rest }: Props) => {
     })
 
     onClick?.()
+    setOpenPanel(null)
   }
 
 

@@ -1,8 +1,8 @@
-import type { WebRTCConnData } from '@/types/webRTCConnData'
+import type { WebRTCConnDataFromClient } from '@/types/webRTCConnData'
 import { sendToPeer } from './sendToPeer'
 import { useHostPeer } from '@/zustand/store/useHostPeer'
 
-export const sendToHostPeer = (data: WebRTCConnData) => {
+export const sendToHostPeer = (data: WebRTCConnDataFromClient) => {
   const hostPeer = useHostPeer.getState().peer
   if (!hostPeer || hostPeer === undefined) {
     console.error('HOST PEER NOT FOUND')

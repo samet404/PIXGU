@@ -1,20 +1,21 @@
 import { useRef, useState } from 'react'
-import { useHostingHealth, useSocketIO } from '@/zustand/store'
+import { useHostingHealth, usePlayers, useSocketIO, useTotalMatchCount } from '@/zustand/store'
 import { createMatch } from '@/helpers/room'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
+import { storePaintersAccess } from '@/store'
 
 export const StartBtn = ({ roomID }: Props) => {
+  const io = useSocketIO(s => s.io)
+  const [remainSecond, setRemainSecond] = useState(5)
   const buttonRef = useRef<HTMLButtonElement | null>(null)
   const sfx = useRef<HTMLAudioElement>(
     new Audio('/sound/sfx/button/relaxing_Crystal_but.mp3'),
   )
-  const io = useSocketIO(s => s.io)
-  const [remainSecond, setRemainSecond] = useState(5)
 
   useEffectOnce(() => {
     let remainSecond = 5
     const interval = setInterval(() => {
-      if (remainSecond === 0) {
+      if (remainSecond <= 0) {
         clearInterval(interval)
         return
       }
@@ -23,15 +24,16 @@ export const StartBtn = ({ roomID }: Props) => {
     }, 1000)
 
     return () => clearInterval(interval)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   })
 
   const handleClick = () => {
-    if (!buttonRef.current) return
     sfx.current.play()
     io!.emit('game-started', true)
-    createMatch(roomID)
+    useTotalMatchCount.getState().set(usePlayers.getState().value.count)
+    storePaintersAccess.initUsers(usePlayers.getState().getPlayersIDs())
     useHostingHealth.getState().set('gameIsStarted')
+
+    createMatch(roomID)
   }
 
   return (

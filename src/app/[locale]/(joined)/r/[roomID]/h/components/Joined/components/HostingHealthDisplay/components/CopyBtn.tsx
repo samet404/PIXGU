@@ -51,14 +51,13 @@ export const CopyBtn = () => {
     })
   }
 
-  if (hostStatus !== 'readyToStart')
-    return (
-      <animated.button
-        onClick={handleClick}
-        style={springs}
-        className="!hover:opactiy-60 rounded-md bg-[#ffffff82] px-4 leading-8 text-[#02020285] disabled:cursor-not-allowed disabled:opacity-65"
-      >
-        {isCopied ? 'Copied!' : 'Copy link'}
-      </animated.button>
-    )
+  return (
+    <animated.button
+      onClick={handleClick}
+      style={springs}
+      className="!hover:opactiy-60 rounded-md bg-[#ffffff82] px-4 leading-8 text-[#02020285] disabled:cursor-not-allowed disabled:opacity-65"
+    >
+      {isCopied ? 'Copied!' : 'Copy link'}
+    </animated.button>
+  )
 }

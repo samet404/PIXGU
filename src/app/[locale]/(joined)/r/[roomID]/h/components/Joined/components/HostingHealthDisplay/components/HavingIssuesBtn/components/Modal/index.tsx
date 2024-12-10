@@ -1,7 +1,6 @@
 import { useSetAtom } from 'jotai'
 import { isModalOpenAtom } from '../../atoms'
 import { Outfit } from 'next/font/google'
-import { Item } from './components/Item'
 import { useOnClickOutside } from 'usehooks-ts'
 import { useRef, type KeyboardEvent } from 'react'
 import Content from './Content.mdx'
@@ -28,6 +27,7 @@ export const Modal = () => {
           'radial-gradient(at 80% 100%, hsla(328,86%,44%,1) 0px, transparent 50%),radial-gradient(at 11% 100%, hsla(328,86%,44%,1) 0px, transparent 50%)',
       }}
       className={`${outfit.className} overflow-y-scroll bg-[#000000d3] backdrop-blur-sm overflow-x-hidden absolute left-0 top-0 z-50 flex h h-full w-full pb-4 pt-20`}>
+      <div className='left-2 top-2 absolute text-[#ffffff6f] text-xs cursor-help'>Click up to close</div>
       <div
         onKeyUp={handleOnKeyDown}
 
@@ -36,7 +36,7 @@ export const Modal = () => {
         <div
           ref={ref}
           onKeyDown={handleOnKeyDown}
-          className='animate-fade-up  w-full  h-full prose prose-headings:text-white prose-strong:text-white text-white'>
+          className='animate-fade-up !selection:!bg-[#b7016c] w-full  h-full prose prose-headings:text-white prose-strong:text-white text-white'>
           <Content />
           <div className='pt-10'></div>
         </div>

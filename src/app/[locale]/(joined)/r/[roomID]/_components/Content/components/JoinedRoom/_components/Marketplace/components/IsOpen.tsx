@@ -22,7 +22,7 @@ export const IsOpen = ({ children }: PropsWithChildren) => {
             You can buy power-ups or something here.
           </div>
         </div>
-        <div onClick={() => setOpenPanel(null)} className="h-full w-full"></div>
+        <div onClick={() => setOpenPanel(null)} className="absolute top-0 left-0 h-[50%] w-full"></div>
         {children}
       </section>
     )

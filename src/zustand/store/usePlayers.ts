@@ -38,7 +38,10 @@ export const usePlayers = create<State & Action>((set, get) => ({
 
   get: () => get().value,
   removePlayer: (userID: string) => {
+    console.log('running removePlayer')
     if (!get().value.obj[userID]) return
+    console.log('removing player', userID)
+
     set({
       value: {
         ...get().value,

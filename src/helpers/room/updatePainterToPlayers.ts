@@ -1,15 +1,23 @@
+import { storePaintersAccess } from '@/store'
 import { api } from '@/trpc/client'
 import { sendToAllPeers } from '@/utils/sendToAllPeers'
 import { sendToPainterPeer } from '@/utils/sendToPainterPeer'
 import { sToMs } from '@/utils/sToMs'
 import { postMsgToHostTimerWorker } from '@/workers'
-import { useWhoIsPainter } from '@/zustand/store'
+import { useTotalMatchCount, useWhoIsPainter } from '@/zustand/store'
 import { useHostPainterData } from '@/zustand/store/useHostPainterData'
 
 export const updatePainterToPlayers = async (roomID: string) => {
   const whoIsPainter = useWhoIsPainter.getState().value
   if (whoIsPainter.status === 'thereIsNoPainter') return
 
+  console.log('sending current painter...', {
+    painterID: whoIsPainter.painterID,
+    roomID,
+    useTotalMatchCount: useTotalMatchCount.getState().value,
+    whoIsPainter: whoIsPainter,
+    storePaintersAccess,
+  })
   const painterID = whoIsPainter.painterID!
   sendToAllPeers({
     event: 'currentPainter',

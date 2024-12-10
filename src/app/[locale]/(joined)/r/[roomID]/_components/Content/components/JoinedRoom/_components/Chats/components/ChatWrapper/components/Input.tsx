@@ -13,7 +13,6 @@ export const Input = ({ name }: Props) => {
     if (!inputRef.current) return
 
     sendToHostPeer({
-
       event: name,
       data: {
         msg: inputRef.current.value,
@@ -26,7 +25,7 @@ export const Input = ({ name }: Props) => {
   useEventListener(
     'keydown',
     (e) => {
-      if (!inputRef.current?.value) return null
+      if (!inputRef.current?.value) return
 
       if (e.key === 'Enter') {
         sendMsg()

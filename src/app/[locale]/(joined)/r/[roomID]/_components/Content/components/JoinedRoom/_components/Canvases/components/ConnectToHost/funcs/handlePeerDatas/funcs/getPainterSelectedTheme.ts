@@ -1,9 +1,14 @@
 import { postMsgToPlayerTimerWorker } from '@/workers'
 import {
+  useCoins,
   useMatchStatusClient,
+  useMyCoin,
   useNewPainterPanel,
+  useOwnedPowerups,
+  usePlayersOwnedPowerups,
   useRoomGuessChatMsgsStore,
   useSelectThemePanel,
+  useWhoIsPainterClient,
 } from '@/zustand/store'
 
 export const getPainterSelectedTheme = () => {
@@ -19,6 +24,11 @@ export const getPainterSelectedTheme = () => {
     event: 'stop',
   })
 
+  useCoins.getState().newMatch()
+  useMyCoin.getState().newMatch()
+  usePlayersOwnedPowerups.getState().newMatch()
+  useOwnedPowerups.getState().newMatch()
+  useWhoIsPainterClient.getState().selectedTheme()
   useNewPainterPanel.getState().close()
   useSelectThemePanel.getState().close()
   useRoomGuessChatMsgsStore.getState().reset()

@@ -42,7 +42,6 @@ export const useMatchStatusClient = create<State & Action>((set, get) => ({
     }),
 
   startMatch: () => {
-
     set({
       remainSeconds: MATCH_TIME_SECONDS,
       passedSeconds: 0,
@@ -52,6 +51,8 @@ export const useMatchStatusClient = create<State & Action>((set, get) => ({
       lastMatchStartedAt: Date.now(),
     })
   },
+
+
 
   setTheme: (theme) =>
     set({
@@ -71,8 +72,8 @@ export const useMatchStatusClient = create<State & Action>((set, get) => ({
       remainSeconds: null,
       passedSeconds: null,
       status: 'waitingForThemes',
-      matchCount: get().matchCount - 1 < 0 ? 0 : get().matchCount - 1,
-      isFirstMatch: get().matchCount - 1 <= 0,
+      matchCount: Math.max(0, get().matchCount - 1),
+      isFirstMatch: Math.max(0, get().matchCount - 1) === 0,
       lastMatchStartedAt: get().lastMatchStartedAt,
     }),
 

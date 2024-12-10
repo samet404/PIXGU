@@ -2,9 +2,9 @@
 
 import { sendToHostPeer } from '@/utils/sendToHostPeer'
 import { postMsgToPlayerTimerWorker } from '@/workers'
-import { useMatchStatusClient, useSelectThemePanel } from '@/zustand/store'
-import clsx from 'clsx'
+import { useCoins, useMatchStatusClient, useMyCoin, useOwnedPowerups, usePlayersOwnedPowerups, useSelectThemePanel, useWhoIsPainter, useWhoIsPainterClient } from '@/zustand/store'
 import { useEffect, useRef } from 'react'
+import clsx from 'clsx'
 
 export const Btn = ({ theme, position }: Props) => {
   const btnRef = useRef<HTMLButtonElement>(null)
@@ -36,6 +36,11 @@ export const Btn = ({ theme, position }: Props) => {
       event: 'selectTheme',
       data: theme,
     })
+    useCoins.getState().newMatch()
+    useMyCoin.getState().newMatch()
+    usePlayersOwnedPowerups.getState().newMatch()
+    useOwnedPowerups.getState().newMatch()
+    useWhoIsPainterClient.getState().selectedTheme()
   }
   return (
     <button

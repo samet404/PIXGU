@@ -18,7 +18,7 @@ export const ChatWrapper = ({
                         style={{
                             overflowAnchor: 'auto',
                         }}
-                        id={`${name}MsgContainer`}
+                        id='msgContainer'
                         className="chatMsgContainer flex h-full w-full grow flex-col gap-2 overflow-y-scroll rounded-md bg-[#ffffff13] py-1 pl-2 pr-1"
                     >
                         {children}

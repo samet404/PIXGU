@@ -1,20 +1,5 @@
 import { create } from 'zustand'
 
-type Value = {
-  status: 'currentPainter' | 'thereIsNoPainter'
-  amIPainter: boolean | null
-  painterID: string | null
-}
-
-type State = {
-  value: Value
-}
-type Action = {
-  setCurrentPainter: (input: { amIPainter: boolean; painterID: string }) => void
-  isPainter: (userID: string) => boolean
-  reset: () => void
-}
-
 const initValue: State = {
   value: {
     status: 'thereIsNoPainter',
@@ -26,10 +11,17 @@ const initValue: State = {
 export const useWhoIsPainterClient = create<State & Action>((set, get) => ({
   ...initValue,
 
-  setCurrentPainter: ({ amIPainter, painterID }) =>
+  selectingTheme: () => set({
+    value: {
+      ...get().value,
+      status: 'selectingTheme'
+    }
+  }),
+
+  setPainterSelected: ({ amIPainter, painterID }) =>
     set({
       value: {
-        status: 'currentPainter',
+        status: 'painterSelected',
         amIPainter,
         painterID,
       },
@@ -37,7 +29,7 @@ export const useWhoIsPainterClient = create<State & Action>((set, get) => ({
 
   isPainter: (ID) => {
     const value = get().value
-    if (value.status === 'currentPainter') {
+    if (value.status === 'selectedTheme') {
       return value.painterID === ID
     } else {
       console.log('No painter')
@@ -45,5 +37,29 @@ export const useWhoIsPainterClient = create<State & Action>((set, get) => ({
     }
   },
 
+  selectedTheme: () => set({
+    value: {
+      ...get().value,
+      status: 'selectedTheme',
+    }
+  }),
+
   reset: () => set(initValue),
 }))
+
+type Value = {
+  status: 'thereIsNoPainter' | 'selectingTheme' | 'selectedTheme' | 'painterSelected'
+  amIPainter: boolean | null
+  painterID: string | null
+}
+
+type State = {
+  value: Value
+}
+type Action = {
+  setPainterSelected: (input: { amIPainter: boolean; painterID: string }) => void
+  selectingTheme: () => void
+  selectedTheme: () => void
+  isPainter: (userID: string) => boolean
+  reset: () => void
+}

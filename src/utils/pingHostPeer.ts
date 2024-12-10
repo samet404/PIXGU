@@ -6,16 +6,24 @@ import { sendToHostPeer } from './sendToHostPeer'
  * @link https://en.wikipedia.org/wiki/Ping_(networking_utility)
  */
 export const pingHostPeer = (heartbeatIntervalMs: number) => {
+  sendToHostPeer({
+    event: 'ping',
+    data: {
+      date: Date.now(),
+      ping: usePing.getState().ping,
+      something:
+        'Ad eiusmod qui in aliqua irure. Ipsum eu elit enim mollit adipisicing incididunt.',
+    },
+  })
+
   usePing.getState().setInterval(
     setInterval(
       () => {
-        const ping = usePing.getState().ping
-        if (ping) sendToHostPeer({
-
+        sendToHostPeer({
           event: 'ping',
           data: {
             date: Date.now(),
-            ping,
+            ping: usePing.getState().ping,
             something:
               'Ad eiusmod qui in aliqua irure. Ipsum eu elit enim mollit adipisicing incididunt.',
           },

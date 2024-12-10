@@ -8,7 +8,7 @@ export const GuestSection = () => {
         <Content />
       </div>
       <div className="text-[0.8rem]">
-        Guest accounts have limited features and expire after 2 weeks of
+        Guest accounts expire after 2 weeks of
         inactivity.
       </div>
     </Section>

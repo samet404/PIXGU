@@ -24,7 +24,7 @@ export const HostingHealthDisplay = () => {
       case 'waitingForPlayers':
         return '#348bd370'
       case 'gameEnded':
-        return '#ffffff29'
+        return '#ff00f229'
     }
   })()
 
@@ -50,33 +50,12 @@ export const HostingHealthDisplay = () => {
       case 'waitingForPlayers':
         return 'You can copy the link and share it with your friends'
       case 'gameEnded':
-        return 'You can view the final results and start a new game if desired.'
+        return "Check out the final results. Feel free to start a new game whenever you're ready."
       default:
         return ''
     }
   })()
 
-  const joinBtn = (() => {
-    switch (status) {
-      case 'readyToStart':
-        return <JoinBtn />
-      case 'waitingForPlayers':
-        return <JoinBtn />
-      default:
-        return null
-    }
-  })()
-
-  const copyBtn = (() => {
-    switch (status) {
-      case 'readyToStart':
-        return <CopyBtn />
-      case 'waitingForPlayers':
-        return <CopyBtn />
-      default:
-        return null
-    }
-  })()
 
   return (
     <div
@@ -90,7 +69,7 @@ export const HostingHealthDisplay = () => {
             status === 'gameIsStarted',
           'border-b-[#34d3cb] text-[#34d3cb]': status === 'readyToStart',
           'border-b-[#348bd3] text-[#348bd3]': status === 'waitingForPlayers',
-          'border-b-[#ffffffa4] text-[#ffffffa4]': status === 'gameEnded',
+          'border-b-[#ff00e6a4] text-[#ff00f7a4]': status === 'gameEnded',
         },
       )}
     >
@@ -105,7 +84,7 @@ export const HostingHealthDisplay = () => {
                 status === 'readyToStart',
               'inline-block bg-gradient-to-r from-[#348bd3] to-[#348bd3] bg-clip-text text-transparent':
                 status === 'waitingForPlayers',
-              'inline-block bg-gradient-to-r from-[#ffffffcc] to-[#ffffffcc] bg-clip-text text-transparent':
+              'inline-block bg-gradient-to-r from-[#ff00e6a4] to-[#ff00f7a4] bg-clip-text text-transparent':
                 status === 'gameEnded',
             },
           )}
@@ -116,11 +95,12 @@ export const HostingHealthDisplay = () => {
           {smText}
         </div>
       </div>
-      <div className="flex h-8 flex-row gap-3 drop-shadow-[0_0px_10px_rgba(0,0,0,0.2)]">
+      <div className="flex h-8 flex-row w-[90%] flex-wrap justify-center gap-3 drop-shadow-[0_0px_10px_rgba(0,0,0,0.2)]">
         {status === 'readyToStart' ? <StartBtn roomID={roomID} /> : null}
         {status === 'gameIsStarted' ? <StopBtn roomID={roomID} /> : null}
-        {joinBtn}
-        {copyBtn}
+        {status === 'readyToStart' || status === 'waitingForPlayers' ? <CopyBtn /> : null}
+        {status === 'readyToStart' || status === 'waitingForPlayers' ? <JoinBtn /> : null}
+
         <HavingIssuesBtn />
       </div>
       <div className='absolute bottom-2 w-full flex items-center justify-center animate-fade-down aniamte-delay-[1000ms]'>

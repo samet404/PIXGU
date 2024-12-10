@@ -1,10 +1,14 @@
 import { MATCH_TIME_MILISECONDS, MATCH_TIME_MINUTES } from '@/constants'
+import { storePaintersAccess } from '@/store'
 import type { SelectThemeFromClient } from '@/types/webRTCConnData'
 import { negativeLog, sendToAllPeers } from '@/utils'
 import { postMsgToHostTimerWorker } from '@/workers'
 import {
+  useCoins,
   useHostPainterData,
   useMatchStatus,
+  usePlayers,
+  usePlayersOwnedPowerups,
   useWhoIsPainter,
 } from '@/zustand/store'
 
@@ -52,11 +56,13 @@ export const getSelectedTheme = (
   })
 
 
-
+  storePaintersAccess.selectedAsPainter(useWhoIsPainter.getState().value.painterID!, usePlayers.getState().value.count)
   useHostPainterData.getState().painterSelectedTheme(data)
 
   sendToAllPeers({
-
     event: 'painterSelectedTheme',
   })
+
+  useCoins.getState().newMatch()
+  usePlayersOwnedPowerups.getState().newMatch()
 }

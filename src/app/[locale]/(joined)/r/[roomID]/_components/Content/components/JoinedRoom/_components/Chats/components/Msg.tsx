@@ -13,7 +13,7 @@ export const Msg = ({ ID, msg, similarity }: Props) => {
     const pfp = isGuest ? null : player?.profilePicture
 
     useEffectOnce(() => {
-        const messageList = document.getElementById('guessChatMsgContainer')
+        const messageList = document.getElementById('msgContainer')
         const scrollHeight = messageList!.scrollHeight
         const clientHeight = messageList!.clientHeight
 
@@ -43,8 +43,8 @@ export const Msg = ({ ID, msg, similarity }: Props) => {
                 {typeof similarity === 'number' && <div className='bg-rose-500 flex rounded-md drop-shadow-md'>
                     <div style={{
                         backgroundColor: `rgba(2,255,167,${similarity.toFixed(2)})`,
-                    }} className='text-[#ffffffb4] flex text-xs px-[0.2rem] py-[0.1rem] rounded-md'>
-                        {(similarity * 100).toFixed(2)} %
+                    }} className='text-[#ffffffe8]  flex text-xs px-[0.2rem] py-[0.1rem] rounded-md'>
+                        <div className='drop-shadow-[0_0px_3px_rgba(0,0,0,0.65)]'>{(similarity * 100).toFixed(2)} %</div>
                     </div>
                 </div>}
             </div>

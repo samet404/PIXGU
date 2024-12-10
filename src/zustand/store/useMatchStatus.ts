@@ -13,6 +13,7 @@ type State = {
 type Action = {
   timeoutStarted: (roomID: string) => void
   timeoutCancelled: () => void
+  cancelMatch: () => void
   decreaseRemainSeconds: () => void
   reset: () => void
 }
@@ -41,6 +42,17 @@ export const useMatchStatus = create<State & Action>((set, get) => ({
     })
   },
 
+  cancelMatch: () =>
+    set({
+      value: {
+        matchCount: Math.max(0, get().value.matchCount - 1),
+        isFirstMatch: Math.max(0, get().value.matchCount - 1) === 0,
+        passedSeconds: null,
+        remainSeconds: null,
+        startedAt: null,
+      }
+    }),
+
   timeoutStarted: () => {
     set({
       value: {
@@ -60,7 +72,6 @@ export const useMatchStatus = create<State & Action>((set, get) => ({
         passedSeconds: null,
         remainSeconds: null,
         startedAt: null,
-        isFirstMatch: get().value.matchCount === 1,
       },
     })
   },

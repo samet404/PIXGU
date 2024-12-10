@@ -37,18 +37,23 @@ export const useGuessChatLayout = create<State & Action>((set, get) => ({
   },
 
   setPainterLayout: () => {
+    console.log("setting i'm painter layout")
+
     set({
       value: { isOpen: true, input: false, change: true, info: true },
     })
   },
 
   setImNotGuessed: () => {
+    console.log("setting i'm not guessed layout")
     set({
       value: { isOpen: true, input: true, change: false, info: true },
     })
   },
 
   setIGuessed: () => {
+    console.log("setting i'm guessed layout")
+
     set({
       value: { isOpen: true, input: false, change: true, info: true },
     })

@@ -1,49 +1,54 @@
+import { storePaintersAccess } from '@/store'
 import type { PlayerLeft } from '@/types'
-import { useAmIPainting, useAmISpectator, useCoins, useGuessedPlayers, useMatchStatusClient, useMyCoin, useRoomGuessChatMsgsStore, useRoomWinnersChatMsgsStore, useSpectators } from '@/zustand/store'
+import { postMsgToCanvasWorker, postMsgToPlayerTimerWorker } from '@/workers'
+import { useCoins, useGuessedPlayers, useIsGameStopped, useLetterHint, useMatchStatusClient, useMyCoin, useNewPainterPanel, useOwnedPowerups, usePlayers, usePlayersOwnedPowerups, useRoomGuessChatMsgsStore, useRoomWinnersChatMsgsStore, useSelectThemePanel, useTotalMatchCount, useWhoIsPainterClient, useXY } from '@/zustand/store'
 
 export const getLeftPlayers = async (data: PlayerLeft['data']) => {
-  const { usePlayers, useWhoIsPainterClient } = await import('@/zustand/store')
-  const whoIsPainter = useWhoIsPainterClient.getState().value
-
-  usePlayers.getState().removePlayer(data.ID)
   const isPainter = useWhoIsPainterClient.getState().isPainter(data.ID)
 
-  if (isPainter || usePlayers.getState().value.count === 0) {
-    useWhoIsPainterClient.getState().reset()
+  usePlayers.getState().removePlayer(data.ID)
+  useXY.getState().reset()
 
-    const {
-      useIsGameStopped,
-      useGuessChatLayout,
-      useNewPainterPanel,
-      useSelectThemePanel,
-      useWinnersChatLayout,
-    } = await import('@/zustand/store')
+  const userReamainPainterAccessCount = storePaintersAccess.removePlayerFromPaintersToBeSelected(data.ID, useTotalMatchCount.getState().value.userPainterAccesCount!)
+  useTotalMatchCount.getState().decreaseTotalMatchCount(userReamainPainterAccessCount)
 
-    if (usePlayers.getState().value.count === 0) {
-      useIsGameStopped.getState().addCode('waitingForPlayers')
-      useWhoIsPainterClient.getState().reset()
-      useAmIPainting.getState().reset()
-      useWinnersChatLayout.getState().reset()
-      useGuessChatLayout.getState().reset()
-      useRoomWinnersChatMsgsStore.getState().reset()
-      useRoomGuessChatMsgsStore.getState().reset()
-      useGuessedPlayers.getState().reset()
-      useMyCoin.getState().reset()
-      useCoins.getState().reset()
-      useSpectators.getState().reset()
-      useAmISpectator.getState().reset()
-      useNewPainterPanel.getState().reset()
-      useMatchStatusClient.getState().reset()
-      useSelectThemePanel.getState().reset()
-    }
-    useWhoIsPainterClient.getState().reset()
-    useGuessChatLayout.getState().reset()
-    useWinnersChatLayout.getState().reset()
-    useNewPainterPanel.getState().reset()
+  if (usePlayers.getState().value.count === 0) {
+    useIsGameStopped.getState().addCode('waitingForPlayers')
+    useOwnedPowerups.getState().reset()
+    usePlayersOwnedPowerups.getState().reset()
+    useMyCoin.getState().reset()
+    useCoins.getState().reset()
     useSelectThemePanel.getState().reset()
+  }
+  else if (isPainter) {
+    const painterStatus = useWhoIsPainterClient.getState().value.status
 
-    if (whoIsPainter.status === 'currentPainter' && whoIsPainter.amIPainter) {
-      useWhoIsPainterClient.getState().reset()
+    useLetterHint.getState().reset()
+    useRoomWinnersChatMsgsStore.getState().reset()
+    useRoomGuessChatMsgsStore.getState().reset()
+    useGuessedPlayers.getState().reset()
+    useNewPainterPanel.getState().reset()
+
+    if (painterStatus === 'selectedTheme') {
+      postMsgToCanvasWorker({
+        e: 'reset',
+      })
+      postMsgToPlayerTimerWorker({
+        event: 'stop',
+        ID: 'MATCH_REMAIN_TIME'
+      })
+
+      useMatchStatusClient.getState().clearMatch()
+      useMyCoin.getState().returnPrev()
+      useCoins.getState().returnPrev()
+      usePlayersOwnedPowerups.getState().returnPrev()
+      useOwnedPowerups.getState().returnPrev()
+    }
+    else if (painterStatus === 'selectingTheme') {
+      postMsgToPlayerTimerWorker({
+        event: 'stop',
+        ID: 'PAINTER_SELECTING_REMAIN_TIME'
+      })
     }
   }
 }

@@ -1,7 +1,7 @@
 'use client'
 
 import { useMyUserInfoForRoomStore } from '@/zustand/provider'
-import { Inter } from 'next/font/google'
+import { Inter, Urbanist } from 'next/font/google'
 import { Coin } from './components/Coin'
 import {
   useAmIGuessed,
@@ -17,6 +17,12 @@ const inter = Inter({
   weight: ['700'],
 })
 
+const urbanist = Urbanist({
+  subsets: ['latin'],
+  weight: '700',
+})
+
+
 const Me = () => {
   const successSfxRef = useRef<HTMLAudioElement>(
     new Audio('/sound/sfx/success.mp3'),
@@ -30,7 +36,12 @@ const Me = () => {
   const name = isGuest ? user?.name : user?.usernameWithUsernameID
   const pfp = isGuest ? null : user?.profilePicture
 
-  console.log('my user info: ', user)
+  console.log('my user info: ', {
+    amIGuessed,
+    amISpectator,
+    whoIsPainter,
+    ID,
+  })
   useEffect(() => {
     if (!amIGuessed) return
 
@@ -41,11 +52,10 @@ const Me = () => {
   return (
     <div
       className={clsxMerge(
-        `group group flex w-full flex-col items-center justify-center rounded-lg bg-[#ffffff2e]`,
+        `group group flex w-full flex-col items-center justify-center rounded-t-lg bg-[#ffffff2e]`,
         {
-          'bg-[rgba(254,240,41,0.22)]': amIGuessed === true,
-          'bg-[rgba(179,104,255,0.33)]':
-            whoIsPainter.status === 'currentPainter' && whoIsPainter.amIPainter,
+          'bg-[rgba(254,240,41,0.22)]': amIGuessed,
+          'bg-[rgba(179,104,255,0.33)]': whoIsPainter.amIPainter,
           'opacity-50': amISpectator,
         },
       )}
@@ -62,7 +72,9 @@ const Me = () => {
             className="size-8 h-full flex-shrink-0 select-none rounded-full drop-shadow-[0_0px_5px_rgba(0,0,0,0.3)]"
           />
 
-          <div className="line-clamp-1 w-[70%] break-all pr-1 text-sm tracking-wide text-[#ffffffd4] drop-shadow-[0_0px_2px_rgba(0,0,0,0.55)]">
+          <div
+            className={`${urbanist.className} line-clamp-1 w-[70%] break-all pr-1 text-sm tracking-wide text-[#ffffffd4] drop-shadow-[0_0px_2px_rgba(0,0,0,0.55)]`}
+          >
             {name}
           </div>
         </div>

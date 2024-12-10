@@ -39,7 +39,7 @@ const JoinRoom = async ({ params }: Props) => {
             sizes="calc(2.33vw + 90px)"
           ></Image>
         </Link>
-        <div className="text-[#a0217f]">Join rooms near you to reduce ping</div>
+        <div className="text-[#be2796]">Don't forget, join rooms near you to reduce ping</div>
       </div>
       <Rooms />
     </div>
