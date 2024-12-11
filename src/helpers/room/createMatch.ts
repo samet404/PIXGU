@@ -26,7 +26,7 @@ export const createMatch = async (roomID: string) => {
   postMsgToCanvasWorker({ e: 'reset' })
 
 
-  if (isGameEnded) gameEnded()
+  if (isGameEnded && players().count > 1) gameEnded()
   else if (players().count >= 2) {
     useGuessedPlayers.getState().reset()
     const whoIsPainter = useWhoIsPainter.getState().value

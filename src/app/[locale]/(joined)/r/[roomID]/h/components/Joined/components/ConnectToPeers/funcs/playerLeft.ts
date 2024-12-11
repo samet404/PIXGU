@@ -43,6 +43,17 @@ export const playerLeft = (userID: string, roomID: string) => {
   useGuessedPlayers.getState().reset()
 
   if (usePlayers.getState().value.count <= 1) {
+    postMsgToHostTimerWorker({
+      ID: 'MATCH_REMAIN_TIME',
+      event: 'stop',
+    })
+    postMsgToHostTimerWorker({
+      ID: 'PAINTER_TIME_IS_UP',
+      event: 'stop',
+    })
+    postMsgToCanvasWorker({
+      e: 'reset',
+    })
     useHostingHealth.getState().set('waitingForPlayers')
     useMatchStatus.getState().reset()
     useCoins.getState().reset()

@@ -13,7 +13,6 @@ import '@fortawesome/fontawesome-svg-core/styles.css'
 import { Adsense } from './_components/Adsense'
 import { SmallScreenAlert } from './_components/SmallScreenAlert'
 import { DefaultShortcuts } from './_components/DefaultShortcuts'
-import Head from 'next/head'
 config.autoAddCss = false
 import { GoogleAnalytics } from '@next/third-parties/google'
 
@@ -98,9 +97,7 @@ const RootLayout = async (props: {
         }}
       >
         <GoogleAnalytics gaId='G-PL9PWSE3JG' />
-        <Head>
-          <Adsense />
-        </Head>
+        <Adsense />
         <SmallScreenAlert>
           <TRPCReactProvider cookies={(await cookies()).toString()}>
             {/* <CustomCursor /> */}

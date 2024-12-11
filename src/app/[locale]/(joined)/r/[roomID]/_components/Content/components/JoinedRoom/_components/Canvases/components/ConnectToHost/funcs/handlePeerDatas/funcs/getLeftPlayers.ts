@@ -13,9 +13,23 @@ export const getLeftPlayers = async (data: PlayerLeft['data']) => {
   useTotalMatchCount.getState().decreaseTotalMatchCount(userReamainPainterAccessCount)
 
   if (usePlayers.getState().value.count === 0) {
+    postMsgToCanvasWorker({
+      e: 'reset',
+    })
+    postMsgToPlayerTimerWorker({
+      event: 'stop',
+      ID: 'MATCH_REMAIN_TIME'
+    })
+
+    useMatchStatusClient.getState().reset()
+    useWhoIsPainterClient.getState().reset()
+    useXY.getState().reset()
+    useMatchStatusClient.getState().clearMatch()
+    useIsGameStopped.getState().addCode('waitingForHost')
     useIsGameStopped.getState().addCode('waitingForPlayers')
     useOwnedPowerups.getState().reset()
     usePlayersOwnedPowerups.getState().reset()
+    useGuessedPlayers.getState().reset()
     useMyCoin.getState().reset()
     useCoins.getState().reset()
     useSelectThemePanel.getState().reset()

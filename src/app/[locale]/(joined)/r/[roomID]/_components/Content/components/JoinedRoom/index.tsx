@@ -29,6 +29,7 @@ import { LetterHint } from './_components/Letterhint'
 import { api } from '@/trpc/server'
 import { UseTimersWorker } from './_components/UseTimersWorker'
 import { Logs } from './_components/Logs'
+import { TipsModal } from './_components/TipsModal'
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -69,9 +70,7 @@ const JoinedRoom = async () => {
             <ResetStates />
             <CanvasTools />
             <GameEnd userID={user ? user.id : guest!.ID} />
-            <Suspense>
-              <Status />
-            </Suspense>
+            <Status />
             <Shortcuts />
             <div className="h-[100vh] w-full">
               <Suspense>
@@ -83,6 +82,7 @@ const JoinedRoom = async () => {
                 id="rootDiv"
                 className="relative flex h-full w-full animate-fade flex-row items-start justify-between gap-2 overflow-y-scroll px-2 pb-24 pt-2"
               >
+                <TipsModal />
                 <Spectator />
 
                 <div

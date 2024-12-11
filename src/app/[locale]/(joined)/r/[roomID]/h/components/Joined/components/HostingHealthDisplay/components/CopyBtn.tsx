@@ -4,7 +4,6 @@ import { useSpring, animated } from '@react-spring/web'
 import { useRef, useState } from 'react'
 
 export const CopyBtn = () => {
-  const hostStatus = useHostingHealth((s) => s.status)
   const [isCopied, setIsCopied] = useState<boolean>(false)
   const divRef = useRef<HTMLDivElement>(document.createElement('div'))
   const copiedTimeout = useRef<ReturnType<typeof setTimeout>>()

@@ -32,11 +32,11 @@ export const BlurFocus = () => {
         }
     })
 
-    if (hasBlur) return <div className='animate-fade-blur absolute z-30 pointer-events-none backdrop-blur-3xl rounded-md w-full h-full items-center justify-center text-center flex flex-col gap-1 text-white font-[700]'>
-        <div className='drop-shadow-[0_0px_2px_rgba(0,0,0,0.2)] text-[2rem]'>
+    if (hasBlur) return <div className='animate-fade-blur absolute z-30 pointer-events-none backdrop-blur-3xl rounded-md w-full h-full items-center justify-center text-center flex flex-col gap-4 leading-3 text-white font-[700]'>
+        <div className='drop-shadow-[0_0px_10px_rgba(0,0,0,0.4)] text-[2rem]'>
             Canvas paused
         </div>
-        <div className='drop-shadow-[0_0px_2px_rgba(0,0,0,0.2)] text-[1rem]'>
+        <div className='drop-shadow-[0_0px_20px_rgba(0,0,0,0.8)] text-[1rem]'>
             due to browser limitations
         </div>
     </div>

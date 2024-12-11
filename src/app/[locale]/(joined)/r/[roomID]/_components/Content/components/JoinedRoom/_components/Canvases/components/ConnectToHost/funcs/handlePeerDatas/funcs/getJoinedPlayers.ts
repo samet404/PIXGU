@@ -10,5 +10,7 @@ export const getJoinedPlayers = (data: PlayerJoined['data']) => {
     ([key, value]) => key !== 'isSpectator',
   ) as Player
 
+  console.log('player count: ', usePlayers.getState().value.count)
+
   usePlayers.getState().addPlayer(ID, player)
 }
