@@ -1,6 +1,7 @@
 import { chat, getBuyMarketItem, getPainterBucket, getPainterEraser, getPainterMouseDown, getPainterMouseUp, getPainterPencil, getSelectedTheme, getUsePowerup, painterTrash, pong } from './funcs'
 import { onPeerData, grayLog, negativeLog } from '@/utils'
 import { usePeers } from '@/zustand/store'
+import { getUndoRedo } from './funcs/getUndoRedo'
 
 export const handlePeerDatas = (userID: string, roomID: string) => {
   const peers = usePeers.getState().get()
@@ -45,6 +46,9 @@ export const handlePeerDatas = (userID: string, roomID: string) => {
         break
       case 'painterEraserOrPencilOut':
         getPainterMouseUp(userID)
+        break
+      case 'undoRedo':
+        getUndoRedo(rtcData.data, userID)
         break
       default:
         negativeLog('RECEIVED NOT UNKNOWN EVENT FROM CLIENT', rtcData)

@@ -76,6 +76,13 @@ export const UseCanvasWorker = () => {
                         break
                     }
 
+                case 'clear-canvas': {
+                    const { mctx } = useCanvasesMainData.getState()
+                    mctx!.fillStyle = '#ffffff'
+                    mctx!.fillRect(0, 0, mctx!.canvas.width, mctx!.canvas.height)
+                    break
+                }
+
             }
         }
 

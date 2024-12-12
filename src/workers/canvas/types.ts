@@ -7,6 +7,7 @@ export type BucketInputFromMain = {
 export type BucketInputFromWorker = {
     cellSideCount: number
     pixels: Uint8ClampedArray[][]
+    undoRedo: UndoRedo
     blurInfo: BlurInfo
 
 }
@@ -118,7 +119,10 @@ export type CanvasWorkerPostMsgData =
     } | {
         e: 'undo-redo'
         data: [coor: Uint16Array, color: Uint8ClampedArray][]
+    } | {
+        e: 'clear-canvas'
     }
+
 
 export type RedoInput = {
     undoRedo: UndoRedo

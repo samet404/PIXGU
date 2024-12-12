@@ -1,6 +1,7 @@
 "use client"
 
 import { useShortcut } from '@/hooks'
+import { sendToHostPeer } from '@/utils/sendToHostPeer'
 import { getCanvasWorker, type CanvasWorkerOnMsgData } from '@/workers'
 import { toolsHaveSizeProperty, useGameToolAlert, usePainterTool, useWhoIsPainterClient, type ToolHaveSizeProperty } from '@/zustand/store'
 
@@ -88,6 +89,15 @@ export const Shortcuts = () => {
             canvasWorker.current.postMessage({
                 e: undoRedoType === 0 ? 'undoByOperation' : 'undo',
             } as CanvasWorkerOnMsgData)
+
+            sendToHostPeer({
+                event: 'undoRedo',
+                data: {
+                    type: undoRedoType,
+                    direction: 0
+                }
+            })
+
             setToolAlert(undoRedoType === 0 ? 'Undo-BO' : 'Undo-PBP')
         }
     })
@@ -102,6 +112,15 @@ export const Shortcuts = () => {
             canvasWorker.current.postMessage({
                 e: undoRedoType === 0 ? 'redoByOperation' : 'redo',
             } as CanvasWorkerOnMsgData)
+
+            sendToHostPeer({
+                event: 'undoRedo',
+                data: {
+                    type: undoRedoType,
+                    direction: 1
+                }
+            })
+
             setToolAlert(undoRedoType === 0 ? 'Redo-BO' : 'Redo-PBP')
         }
     })
@@ -114,8 +133,10 @@ export const Shortcuts = () => {
             const whoIsPainter = useWhoIsPainterClient.getState().value
             if (!whoIsPainter.amIPainter) return
 
-            const selectedType = usePainterTool.getState().with.undoRedoType
-            setUndoRedoType(selectedType === 0 ? 1 : 0)
+            const undoRedoType = usePainterTool.getState().with.undoRedoType
+            setUndoRedoType(undoRedoType === 0 ? 1 : 0)
+
+            setToolAlert(undoRedoType === 0 ? 'Changed to UR-BO' : 'Changed to UR-PBP')
         }
     })
 

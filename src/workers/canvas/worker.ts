@@ -2,8 +2,10 @@ import { lastArrIndex } from '@/utils/lastArrIndex'
 import { bucket, eraser, pencil, redo, redoByOperation, undo, undoByOperation } from './events'
 import type { BlurInfo, CanvasWorkerOnMsgData, CanvasWorkerPostMsgData, UndoRedo } from './types'
 import { initlizeCanvasPixels } from './utils/initlizeCanvasPixels'
+import { stringifiedLog } from '@/utils'
 
 const CELL_SIDE_COUNT = 80
+
 const undoRedoInit: UndoRedo['current'] = {
     operationIndex: -1,
     madeLastUndoOperation: false,
@@ -23,7 +25,6 @@ const mousedown: {
 } = {
     smooth: null
 }
-
 
 const pixelsOnDraw: Set<`${number},${number}`> = new Set()
 const blurInfo: BlurInfo = {
@@ -77,11 +78,16 @@ self.onmessage = (e) => {
                 ...workerData.data,
                 cellSideCount: CELL_SIDE_COUNT,
                 pixels,
-                blurInfo
+                blurInfo,
+                undoRedo
             }) as CanvasWorkerPostMsgData
 
-            console.log('bucketData worker: ', bucketData)
             postMessage(bucketData)
+            stringifiedLog({
+                name: 'after bucket',
+                ...undoRedo.current,
+                stack: undoRedo.current.stack.map(arr => arr.length)
+            })
             break
 
         case 'pencil':
@@ -97,6 +103,11 @@ self.onmessage = (e) => {
 
             postMessage(pencilData)
             lastPixel = [workerData.data.startX, workerData.data.startY]
+            stringifiedLog({
+                name: 'after pencil',
+                ...undoRedo.current,
+                stack: undoRedo.current.stack.map(arr => arr.length)
+            })
             break
 
         case 'eraser':
@@ -111,6 +122,11 @@ self.onmessage = (e) => {
                 blurInfo
             }) as CanvasWorkerPostMsgData
 
+            stringifiedLog({
+                name: 'after eraser',
+                ...undoRedo.current,
+                stack: undoRedo.current.stack.map(arr => arr.length)
+            })
             postMessage(eraserData)
             lastPixel = [workerData.data.startX, workerData.data.startY]
             break
@@ -122,7 +138,10 @@ self.onmessage = (e) => {
             blurInfo.blurStack.clear()
             blurInfo.hasBlur = false
             initlizeCanvasPixels(pixels, CELL_SIDE_COUNT)
-            undoRedo.current = { ...undoRedoInit }
+            undoRedo.current = {
+                ...undoRedoInit,
+                stack: []
+            }
             mousedown.smooth = null
             console.log('worker reset done')
             break
@@ -166,6 +185,11 @@ self.onmessage = (e) => {
                     pixels[x!]![y!]! = new Uint8ClampedArray([r!, g!, b!, a!])
                 }
 
+                stringifiedLog({
+                    name: 'after undo',
+                    ...undoRedo.current,
+                    stack: undoRedo.current.stack.map(arr => arr.length)
+                })
                 postMessage({
                     e: 'undo-redo',
                     data: undoPixels
@@ -185,6 +209,11 @@ self.onmessage = (e) => {
                     pixels[x!]![y!]! = new Uint8ClampedArray([r!, g!, b!, a!])
                 }
 
+                stringifiedLog({
+                    name: 'after redo',
+                    ...undoRedo.current,
+                    stack: undoRedo.current.stack.map(arr => arr.length)
+                })
                 postMessage({
                     e: 'undo-redo',
                     data: redoPixels
@@ -204,8 +233,20 @@ self.onmessage = (e) => {
 
         case 'undoByOperation':
             {
+                stringifiedLog({
+                    name: 'before undoByOperation',
+                    ...undoRedo.current,
+                    stack: undoRedo.current.stack.map(arr => arr.length)
+                })
+
                 const undoPixels = undoByOperation({ undoRedo })
                 if (!undoPixels) break
+                if (typeof undoPixels === 'number') {
+                    self.postMessage({
+                        e: 'clear-canvas'
+                    } as CanvasWorkerPostMsgData)
+                    break
+                }
 
                 for (let i = 0; i < undoPixels.length; i++) {
                     const pixel = undoPixels[i]!
@@ -213,6 +254,12 @@ self.onmessage = (e) => {
                     const [r, g, b, a] = pixel[1]!
                     pixels[x!]![y!]! = new Uint8ClampedArray([r!, g!, b!, a!])
                 }
+
+                stringifiedLog({
+                    name: 'after undoByOperation',
+                    ...undoRedo.current,
+                    stack: undoRedo.current.stack.map(arr => arr.length)
+                })
 
                 postMessage({
                     e: 'undo-redo',
@@ -223,6 +270,12 @@ self.onmessage = (e) => {
 
         case 'redoByOperation':
             {
+                stringifiedLog({
+                    name: 'before redoByOperation',
+                    ...undoRedo.current,
+                    stack: undoRedo.current.stack.map(arr => arr.length)
+                })
+
                 const redoPixels = redoByOperation({ undoRedo })
                 if (!redoPixels) break
 
@@ -233,6 +286,12 @@ self.onmessage = (e) => {
                     pixels[x!]![y!]! = new Uint8ClampedArray([r!, g!, b!, a!])
                 }
 
+                stringifiedLog({
+                    name: 'after redoByOperation',
+                    ...undoRedo.current,
+                    stack: undoRedo.current.stack.map(arr => arr.length)
+                })
+
                 postMessage({
                     e: 'undo-redo',
                     data: redoPixels
@@ -240,35 +299,67 @@ self.onmessage = (e) => {
                 break
             }
         case 'mousedown': {
-            console.log('Before mousedown:', undoRedo.current);
+            stringifiedLog({
+                name: 'before mousedown',
+                ...undoRedo.current,
+                stack: undoRedo.current.stack.map(arr => arr.length)
+            })
             const data = workerData.data
 
-            if (undoRedo.current.stack.length !== 0) {
+            if (undoRedo.current.operationIndex === -1) {
+                undoRedo.current = {
+                    ...undoRedoInit,
+                    stack: []
+                }
+            }
+            else if (undoRedo.current.operationIndex >= 0) {
                 const currentOperationIndex = undoRedo.current.operationIndex
 
                 // check if the operation index is the last operation index
-                if (undoRedo.current.operationIndex !== lastArrIndex(undoRedo.current.stack))
-                    // delete  after operationIndex 
-                    undoRedo.current.stack.length = undoRedo.current.operationIndex + 1
-
-                if (undoRedo.current.undoRedoGroup.index !== lastArrIndex(undoRedo.current.stack[currentOperationIndex]!))
-                    // delete after undoRedoGroup.index
-                    undoRedo.current.stack[currentOperationIndex]!.length = undoRedo.current.undoRedoGroup.index + 1
-
+                if (undoRedo.current.operationIndex !== lastArrIndex(undoRedo.current.stack)) {
+                    console.log('oI: not last')
+                    stringifiedLog({
+                        name: 'before oI',
+                        ...undoRedo.current,
+                        stack: undoRedo.current.stack.map(arr => arr.length)
+                    })
+                    undoRedo.current.stack.length = undoRedo.current.operationIndex + 1 // delete  after operationIndex
+                    stringifiedLog({
+                        name: 'after oI',
+                        ...undoRedo.current,
+                        stack: undoRedo.current.stack.map(arr => arr.length)
+                    })
+                }
+                if (undoRedo.current.undoRedoGroup.index !== lastArrIndex(undoRedo.current.stack[currentOperationIndex]!)) {
+                    console.log('urgI: not last')
+                    stringifiedLog({
+                        name: 'before urgI',
+                        ...undoRedo.current,
+                        stack: undoRedo.current.stack.map(arr => arr.length)
+                    })
+                    undoRedo.current.stack[currentOperationIndex]!.length = undoRedo.current.undoRedoGroup.index + 1                 // delete after undoRedoGroup.index
+                    stringifiedLog({
+                        name: 'after urgI',
+                        ...undoRedo.current,
+                        stack: undoRedo.current.stack.map(arr => arr.length)
+                    })
+                }
             }
 
-
+            undoRedo.current.undoRedoGroup.index = -1
             undoRedo.current.madeLastRedoOperation = true
             undoRedo.current.madeLastUndoOperation = false
             undoRedo.current.undoRedoGroup.madeLastUndoOperation = false
             undoRedo.current.undoRedoGroup.madeLastRedoOperation = true
             undoRedo.current.stack.push([])
             undoRedo.current.operationIndex++
-            undoRedo.current.undoRedoGroup.index = -1
             mousedown.smooth = data
-            console.log('mousedown: ', undoRedo.current)
 
-            console.log('After mousedown:', undoRedo.current);
+            stringifiedLog({
+                name: 'after mousedown',
+                ...undoRedo.current,
+                stack: undoRedo.current.stack.map(arr => arr.length),
+            })
         }
 
     }

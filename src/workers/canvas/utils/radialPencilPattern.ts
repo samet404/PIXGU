@@ -17,16 +17,12 @@ export const radialPencilPattern = ({ cellSideCount, color, lastPixel, pixels, p
 
     const addPixel = (x: number, y: number) => {
         if (isInside(x, y)) {
-
-
             const prevColor = pixels[x]![y]!
-            console.error('no prev color ', prevColor)
             const newColor = color[3] !== 255 ? alphaBlendRGBA(prevColor, color) : color
             if (prevColor[0] === newColor[0] && prevColor[1] === newColor[1] && prevColor[2] === newColor[2]) return
 
             addNewUndoRedoGroup(undoRedo)
             const undoRedoGroupIndex = undoRedo.current.undoRedoGroup.index
-            console.warn('undoRedoGroup: ', undoRedo.current.stack[undoRedoOperationIndex]![undoRedoGroupIndex])
             undoRedo.current.stack[undoRedoOperationIndex]![undoRedoGroupIndex]![0]!.push([new Uint16Array([x, y]), prevColor])
             undoRedo.current.stack[undoRedoOperationIndex]![undoRedoGroupIndex]![1]!.push([new Uint16Array([x, y]), newColor])
 

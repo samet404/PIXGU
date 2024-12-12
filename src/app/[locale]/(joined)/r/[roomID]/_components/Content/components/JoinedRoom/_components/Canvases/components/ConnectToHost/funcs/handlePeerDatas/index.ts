@@ -36,7 +36,8 @@ import {
   getPainterEraserOrPencilOut,
   getPainterMouseDown,
   getPainterSelectedThemeTimeIsUp,
-  getGameLog
+  getGameLog,
+  getUndoRedo
 } from './funcs'
 
 /**
@@ -157,6 +158,9 @@ export const handlePeerDatas = (userID: string) => {
         break
       case 'gameLog':
         getGameLog(rtcData.data)
+        break
+      case 'undoRedo':
+        getUndoRedo(rtcData.data)
         break
       default:
         negativeLog('RECEIVED UNKNOWN EVENT FROM HOST', rtcData)

@@ -285,6 +285,14 @@ export type GameLog = {
   }
 }
 
+export type UndoRedo = {
+  event: 'undoRedo'
+  data: {
+    type: 0 | 1
+    direction: 0 | 1
+  }
+}
+
 export type WebRTCConnDataFromHost = (
   | PlayerLeft
   | PlayerJoined
@@ -322,6 +330,7 @@ export type WebRTCConnDataFromHost = (
   | PowerupUsed
   | YouUsedPowerup
   | PainterMouseDown
+  | UndoRedo
 )
 /**
  * DirectlyFromClient is the type of data that is sent directly from the client.
@@ -339,4 +348,5 @@ export type WebRTCConnDataFromClient = (
   | BuyMarketItem
   | PainterMouseDown
   | UsePowerup
+  | UndoRedo
 ) 

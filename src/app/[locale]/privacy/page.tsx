@@ -14,7 +14,8 @@ export const metadata: Metadata = {
         'pixgu privacy',
         'PIXGU privacy policy',
         'PIXGU privacy',
-    ]
+    ],
+    description: 'This Privacy Policy explains how we collect, use, store, protect, and share your personal information through our services.'
 }
 
 const Privacy = () => {

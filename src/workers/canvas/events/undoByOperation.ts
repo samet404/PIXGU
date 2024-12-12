@@ -1,40 +1,38 @@
 import type { UndoInput } from '../types'
 
 export const undoByOperation = ({ undoRedo }: UndoInput) => {
-    console.log('before undoByOperation: ', undoRedo.current)
-    if (undoRedo.current.madeLastUndoOperation || undoRedo.current.stack.length === 0) return null
+    // if we are at the first operation or there is no undo operation to undo, exit
+    if (undoRedo.current.madeLastUndoOperation || undoRedo.current.stack.length === 0) return
 
-    const currentOperationIndex = undoRedo.current.operationIndex;
     const result: [coords: Uint16Array, color: Uint8ClampedArray][] = []
-    undoRedo.current.madeLastRedoOperation = false
+    // currentOperationIndex to apply the current undo operation
+    const currentOperationIndex = undoRedo.current.operationIndex;
 
-    // Handle new operation
-    if (currentOperationIndex === 0) {
-        undoRedo.current.madeLastUndoOperation = true
-
-        for (let groupI = 0; groupI < undoRedo.current.stack[undoRedo.current.operationIndex]!.length; groupI++) {
-            for (let undoI = 0; undoI < undoRedo.current.stack[undoRedo.current.operationIndex]![groupI]![0]!.length; undoI++) {
-                result.push(undoRedo.current.stack[undoRedo.current.operationIndex]![groupI]![0]![undoI]!)
+    if (currentOperationIndex === -1) {
+        // push all the color and coords to result
+        for (let groupI = 0; groupI < undoRedo.current.stack[0]!.length; groupI++) {
+            for (let undoI = 0; undoI < undoRedo.current.stack[0]![groupI]![0]!.length; undoI++) {
+                result.push(undoRedo.current.stack[0]![groupI]![0]![undoI]!)
             }
         }
 
+        undoRedo.current.madeLastUndoOperation = true
         return result
     }
 
-
+    undoRedo.current.madeLastRedoOperation = false
     undoRedo.current.madeLastUndoOperation = false
+    undoRedo.current.operationIndex--
 
 
-    for (let groupI = 0; groupI < undoRedo.current.stack[undoRedo.current.operationIndex]!.length; groupI++) {
-        for (let undoI = 0; undoI < undoRedo.current.stack[undoRedo.current.operationIndex]![groupI]![0]!.length; undoI++) {
-            result.push(undoRedo.current.stack[undoRedo.current.operationIndex]![groupI]![0]![undoI]!)
+    // push all the color and coords to result
+    for (let groupI = 0; groupI < undoRedo.current.stack[currentOperationIndex]!.length; groupI++) {
+        for (let undoI = 0; undoI < undoRedo.current.stack[currentOperationIndex]![groupI]![0]!.length; undoI++) {
+            result.push(undoRedo.current.stack[currentOperationIndex]![groupI]![0]![undoI]!)
         }
     }
 
-
-    undoRedo.current.operationIndex--
-
-    console.log('after undoByOperation: ', undoRedo.current)
+    // undo successful
     return result
 }
 
