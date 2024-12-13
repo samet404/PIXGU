@@ -6,23 +6,23 @@ export const iceServers: RTCIceServer[] = [
   },
   {
     urls: "turn:global.relay.metered.ca:80",
-    username: "18c5a9c1757031a60a6df5fb",
-    credential: "KVDgG+Pt6jhhfrB8",
+    username: "e0bc174ce6b35fe4b4e3bab6",
+    credential: "W9oGhBvOcEPA9vP7",
   },
   {
     urls: "turn:global.relay.metered.ca:80?transport=tcp",
-    username: "18c5a9c1757031a60a6df5fb",
-    credential: "KVDgG+Pt6jhhfrB8",
+    username: "e0bc174ce6b35fe4b4e3bab6",
+    credential: "W9oGhBvOcEPA9vP7",
   },
   {
     urls: "turn:global.relay.metered.ca:443",
-    username: "18c5a9c1757031a60a6df5fb",
-    credential: "KVDgG+Pt6jhhfrB8",
+    username: "e0bc174ce6b35fe4b4e3bab6",
+    credential: "W9oGhBvOcEPA9vP7",
   },
   {
     urls: "turns:global.relay.metered.ca:443?transport=tcp",
-    username: "18c5a9c1757031a60a6df5fb",
-    credential: "KVDgG+Pt6jhhfrB8",
+    username: "e0bc174ce6b35fe4b4e3bab6",
+    credential: "W9oGhBvOcEPA9vP7",
   },
 ]
 
