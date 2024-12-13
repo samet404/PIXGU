@@ -64,7 +64,7 @@ export const UseTimersWorker = ({ }: Props) => {
                     sendToHostPeer({
                         event: 'ping',
                         data: {
-                            date: performance.now(),
+                            date: Date.now(),
                             ping: usePing.getState().ping,
                             something:
                                 'Ad eiusmod qui in aliqua irure. Ipsum eu elit enim mollit adipisicing incididunt.',
