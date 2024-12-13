@@ -10,7 +10,6 @@ import { Svg } from '@/components/Svg'
 export const GridSwitcher = () => {
   const isOpen = usePainterTool((s) => s.with.grid)
   const switchGrid = usePainterTool((s) => s.switchGrid)
-  const setToolAlert = useGameToolAlert((s) => s.setAlert)
 
   useEffect(() => {
     if (isOpen) {
@@ -19,20 +18,11 @@ export const GridSwitcher = () => {
     } else clearGrid()
   }, [isOpen])
 
-
-  useShortcut({
-    keyName: 'Grid', onShortcut: () => {
-      switchGrid()
-      setToolAlert(`Grid ${isOpen ? 'closed' : 'opened'}`)
-    }
-  })
-
-
   return (
     <Tool
       isActive={isOpen}
       icon={
-        <Svg src='grid-svgrepo-com.svg' alt="grid" className="size-8 opacity-50" />
+        <Svg src='grid-svgrepo-com.svg' alt="grid" className="size-9 opacity-50" />
       }
       onMouseDown={switchGrid}
     />

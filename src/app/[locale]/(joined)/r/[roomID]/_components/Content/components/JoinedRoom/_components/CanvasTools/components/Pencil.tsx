@@ -12,7 +12,7 @@ export const Pencil = () => {
     <Tool
       isActive={toolName === 'pencil'}
       onMouseDown={() => setTool('pencil')}
-      icon={<Svg src='/pencil-svgrepo-com.svg' alt="eye-dropper" className="size-10 opacity-50" />}
+      icon={<Svg src='/pencil-svgrepo-com.svg' alt="eye-dropper" className="size-9 opacity-50" />}
     />
   )
 }

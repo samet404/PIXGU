@@ -9,7 +9,7 @@ export const Ping = ({ userID }: Props) => {
       'text-green-400': ping && ping < 70,
       'text-red-400': ping && ping >= 70,
 
-    })}>{ping}ms</div>
+    })}>{ping.toFixed(1)}ms</div>
   )
 }
 

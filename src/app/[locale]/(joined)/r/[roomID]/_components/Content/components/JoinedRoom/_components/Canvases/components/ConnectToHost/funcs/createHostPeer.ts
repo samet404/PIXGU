@@ -1,16 +1,17 @@
-import { api } from '@/trpc/client'
 import type { WebRTCSignalData } from '@/types/webRTCSignalData'
 import { goldLog } from '@/utils/goldLog'
-import { pingHostPeer } from '@/utils/pingHostPeer'
 import { positiveLog } from '@/utils/positiveLog'
 import { simplePeer } from '@/utils/simplePeer'
 import {
   useHostPeer,
   useIsGameStopped,
+  usePing,
   usePlayers,
   useSocketIO,
 } from '@/zustand/store'
 import { handlePeerDatas } from './handlePeerDatas'
+import { postMsgToPlayerTimerWorker } from '@/workers'
+import { sendToHostPeer } from '@/utils/sendToHostPeer'
 
 export const createHostPeer = (roomID: string, myUserID: string) => {
   const io = useSocketIO.getState().io
@@ -44,7 +45,21 @@ export const createHostPeer = (roomID: string, myUserID: string) => {
       status: 'connected',
     })
 
-    pingHostPeer(5000)
+    sendToHostPeer({
+      event: 'ping',
+      data: {
+        date: performance.now(),
+        ping: usePing.getState().ping,
+        something:
+          'Ad eiusmod qui in aliqua irure. Ipsum eu elit enim mollit adipisicing incididunt.',
+      },
+    })
+    postMsgToPlayerTimerWorker({
+      ID: 'PING',
+      event: 'start',
+      type: 'interval',
+      ms: 5000,
+    })
     handlePeerDatas(myUserID)
   })
 }

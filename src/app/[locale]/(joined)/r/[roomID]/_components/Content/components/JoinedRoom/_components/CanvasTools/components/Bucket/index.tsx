@@ -12,7 +12,7 @@ export const Bucket = () => {
     <Tool
       isActive={toolName === 'bucket'}
       onMouseDown={() => setTool('bucket')}
-      icon={<Svg src='bucket-svgrepo-com.svg' alt="eye-dropper" className="opacity-50 size-10" />}
+      icon={<Svg src='bucket-svgrepo-com.svg' alt="eye-dropper" className="opacity-50 size-9" />}
     />
   )
 }

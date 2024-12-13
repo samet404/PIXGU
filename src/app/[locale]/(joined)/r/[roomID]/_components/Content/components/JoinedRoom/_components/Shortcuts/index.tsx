@@ -102,6 +102,15 @@ export const Shortcuts = () => {
         }
     })
 
+    const switchGrid = usePainterTool((s) => s.switchGrid)
+
+    useShortcut({
+        keyName: 'Grid', onShortcut: () => {
+            switchGrid()
+            setToolAlert(`Grid ${usePainterTool.getState().with.grid ? 'Grid opened' : 'Grid closed'}`)
+        }
+    })
+
     useShortcut({
         keyName: 'Redo',
         onShortcut: () => {

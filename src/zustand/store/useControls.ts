@@ -7,10 +7,10 @@ import { MODIFIER_KEYS } from '@/constants';
 const initState: State = {
     combination: [],
     keys: {
-        Pencil: ['P'],
-        Bucket: ['B'],
-        Eyedropper: ['E'],
-        Eraser: ['X'],
+        Pencil: ['w'],
+        Bucket: ['A'],
+        Eyedropper: ['S'],
+        Eraser: ['E'],
         Powerups: ['U'],
         Download: ['D'],
         Trash: ['BACKSPACE'],

@@ -34,10 +34,7 @@ const Joined = ({ roomID, user, guest }: Props) => {
         <ConnectToPeers />
         <HostingHealthDisplay />
         <div
-          style={{
-            backgroundImage: 'radial-gradient(at 100% 0%, hsla(210,53%,50%,0.3) 0px, transparent 50%), radial-gradient(at 0% 0%, hsla(210,73%,57%,0.6) 0px, transparent 50%)'
-          }}
-          className="flex flex-col items-center gap-4 py-5 min-h-[70rem]">
+          className="flex flex-col bg-[#ffffff13] items-center gap-4 pt-5 pb-[20rem]">
           <Navbar />
           <PlayersSection />
           <Canvases />

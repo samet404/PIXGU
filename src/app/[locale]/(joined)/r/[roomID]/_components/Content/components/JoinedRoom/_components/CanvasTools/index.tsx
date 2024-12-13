@@ -13,6 +13,7 @@ import { Color } from './components/Color'
 import { ColorPicker } from './components/ColorPicker'
 import { UndoRedo } from './components/UndoRedo'
 import { UndoRedoBtn } from './components/UndoRedoBtn'
+import { GridSwitcher } from './components/GridSwitcher'
 
 
 const CanvasTools = () => {
@@ -53,6 +54,7 @@ const CanvasTools = () => {
           <EyeDropper />
           <Bucket />
           <Trash />
+          <GridSwitcher />
           {/* <Gradient /> */}
         </div>
         <div className='flex flex-row gap-2'>
