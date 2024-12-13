@@ -19,7 +19,6 @@ export const sendToPeer = async (
         grayLog(JSON.stringify({
           name: 'DATA_SENT_TO_PEER',
           data,
-          peer,
           sendingAt: Date.now(),
         }, null, 2))
       } catch (e) {
@@ -36,7 +35,6 @@ export const sendToPeer = async (
       grayLog(JSON.stringify({
         name: 'SENDING_DATA_TO_PEER',
         data,
-        peer,
         sendingAt: Date.now(),
       }, null, 2))
     } catch (e) {
