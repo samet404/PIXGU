@@ -8,7 +8,11 @@ export const handlePeerDatas = (userID: string, roomID: string) => {
 
   onPeerData<'fromClient'>(peers[userID]!.peer, (rtcData) => {
     const { event } = rtcData
-    grayLog(`RECEIVED ${event} DATA FROM ${userID}`, rtcData)
+    grayLog(JSON.stringify({
+      name: 'WEBRTC_DATA_FROM_CLIENT',
+      data: rtcData,
+      receivedAt: Date.now(),
+    }, null, 2))
 
     switch (event) {
       case 'ping':

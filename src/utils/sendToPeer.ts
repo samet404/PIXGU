@@ -13,9 +13,15 @@ export const sendToPeer = async (
 ) => {
   if (Array.isArray(data)) {
     data.forEach((d) => {
+
       try {
-        grayLog(`SENDING ${d.event} TO PEER`, data, peer)
         peer?.send(JSON.stringify(d))
+        grayLog(JSON.stringify({
+          name: 'DATA_SENT_TO_PEER',
+          data,
+          peer,
+          sendingAt: Date.now(),
+        }, null, 2))
       } catch (e) {
         negativeLog('Error sending data to peer:', e)
       }
@@ -25,12 +31,15 @@ export const sendToPeer = async (
   }
 
   if (isObject(data)) {
-    grayLog(`SENDING ${data.event} TO PEER`, data, peer)
-
     try {
       peer?.send(JSON.stringify(data))
+      grayLog(JSON.stringify({
+        name: 'SENDING_DATA_TO_PEER',
+        data,
+        peer,
+        sendingAt: Date.now(),
+      }, null, 2))
     } catch (e) {
-      const { negativeLog } = await import('./_index')
       negativeLog('Error sending data to peer:', e)
     }
 
