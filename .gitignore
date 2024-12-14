@@ -42,3 +42,4 @@ bun.lockb
 
 # typescript
 *.tsbuildinfo
+bun.lockb

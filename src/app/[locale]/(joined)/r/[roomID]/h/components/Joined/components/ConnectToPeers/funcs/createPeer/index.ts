@@ -19,6 +19,7 @@ export const createPeer = (roomID: string, user: User | Guest) => {
   const peer = simplePeer({
     initiator: true,
   })
+
   console.log('create peer')
 
   usePeers.getState().add({
