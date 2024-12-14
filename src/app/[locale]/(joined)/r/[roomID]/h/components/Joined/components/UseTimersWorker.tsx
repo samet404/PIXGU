@@ -79,7 +79,7 @@ export const UseTimersWorker = ({ roomID }: Props) => {
                         sendToPeerWithID(userID, {
                             event: 'ping',
                             data: {
-                                date: Date.now(),
+                                date: performance.now(),
                                 ping: usePlayersPing.getState().pings[userID],
                                 something: 'Ad eiusmod qui in aliqua irure. Ipsum eu elit enim mollit adipisicing incididunt.',
                             },
