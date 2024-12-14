@@ -130,20 +130,20 @@ export type PlayerJoined = {
 }
 
 type PingPongData = {
-  data: {
-    date: number
-    something: 'Ad eiusmod qui in aliqua irure. Ipsum eu elit enim mollit adipisicing incididunt.'
-    ping: number | null
-  }
+  date: number
+  something: 'Ad eiusmod qui in aliqua irure. Ipsum eu elit enim mollit adipisicing incididunt.'
+  ping?: number
 }
 
 export type Ping = {
   event: 'ping'
-} & PingPongData
+  data: PingPongData
+}
 
 export type Pong = {
   event: 'pong'
-} & PingPongData
+  data: PingPongData
+}
 
 export type SelectThemeFromHost = {
   event: 'selectTheme'
@@ -303,7 +303,6 @@ export type WebRTCConnDataFromHost = (
   | WinnersChatFromHost
   | YourGuessChatFromHost
   | YourWinnersChatFromHost
-  | Pong
   | SelectThemeFromHost
   | PainterSelectedTheme
   | PainterSelectingTheme
@@ -331,6 +330,7 @@ export type WebRTCConnDataFromHost = (
   | YouUsedPowerup
   | PainterMouseDown
   | UndoRedo
+  | Ping
 )
 /**
  * DirectlyFromClient is the type of data that is sent directly from the client.
@@ -342,7 +342,7 @@ export type WebRTCConnDataFromClient = (
   | PainterPencil
   | PainterEraser
   | PainterBucket
-  | Ping
+  | Pong
   | PainterTrash
   | SelectThemeFromClient
   | BuyMarketItem

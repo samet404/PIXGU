@@ -6,7 +6,7 @@ import { storePaintersAccess } from '@/store'
 import { sendToAllPeers } from '@/utils/sendToAllPeers'
 import { sendToPeerWithID } from '@/utils/sendToPeerWithID'
 import { getHostTimerWorker, postMsgToHostTimerWorker, terminateTimerWorker, TimerWorkerPostMsgData } from '@/workers'
-import { useCoins, useHostingHealth, useHostPainterData, useMatchStatus, usePlayers, useWhoIsPainter } from '@/zustand/store'
+import { useCoins, useHostingHealth, useHostPainterData, useMatchStatus, usePeers, usePlayers, usePlayersPing, useWhoIsPainter } from '@/zustand/store'
 
 export const UseTimersWorker = ({ roomID }: Props) => {
     useEffectOnce(() => {
@@ -74,7 +74,18 @@ export const UseTimersWorker = ({ roomID }: Props) => {
 
                     createMatch(roomID)
                     break
-
+                case 'PING':
+                    Object.keys(usePeers.getState().peers).forEach(userID => {
+                        sendToPeerWithID(userID, {
+                            event: 'ping',
+                            data: {
+                                date: Date.now(),
+                                ping: usePlayersPing.getState().pings[userID],
+                                something: 'Ad eiusmod qui in aliqua irure. Ipsum eu elit enim mollit adipisicing incididunt.',
+                            },
+                        })
+                    })
+                    break
             }
 
             return () => {

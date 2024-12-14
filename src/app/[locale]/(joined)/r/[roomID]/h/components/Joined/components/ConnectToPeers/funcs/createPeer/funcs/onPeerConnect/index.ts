@@ -13,7 +13,7 @@ import { positiveLog } from '@/utils/positiveLog'
 import { handlePeerDatas } from './funcs/handlePeerDatas'
 import { sendEveryoneNewPlayer } from './funcs/sendEveryoneNewPlayer'
 import { sendPrevPlayersToNewPlayer } from './funcs/sendPrevPlayersToNewPlayer'
-import { getCanvasWorker, type CanvasWorkerOnMsgData } from '@/workers'
+import { getCanvasWorker, postMsgToHostTimerWorker, type CanvasWorkerOnMsgData } from '@/workers'
 
 const canvasWorker = getCanvasWorker()
 
@@ -26,6 +26,13 @@ export const onPeerConnect = (
   peer.on('connect', () => {
     positiveLog(`CONNECTED TO ${userID}`)
     useSocketIO.getState().io!.emit('connection-success', userID)
+
+    postMsgToHostTimerWorker({
+      ID: 'PING',
+      event: 'start',
+      type: 'interval',
+      ms: 5000,
+    })
 
 
     if (usePlayers.getState().value.count === 1)

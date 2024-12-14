@@ -3,7 +3,6 @@
 import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { useAmIPainting, useAmISpectator, useCoins, useGameEndedPanel, useGuessChatLayout, useGuessedPlayers, useIsGameStopped, useMatchStatusClient, useMyCoin, useNewPainterPanel, usePainterSelectingRemainTime, usePing, useRoomGuessChatMsgsStore, useRoomWinnersChatMsgsStore, useSelectThemePanel, useSpectators, useWhoIsPainterClient, useWinnersChatLayout, } from '@/zustand/store'
 import { getPlayerTimerWorker, postMsgToPlayerTimerWorker, terminatePlayerTimerWorker, type PlayerTimerWorkerPostMsgData } from '@/workers'
-import { sendToHostPeer } from '@/utils/sendToHostPeer'
 
 export const UseTimersWorker = ({ }: Props) => {
     useEffectOnce(() => {
@@ -60,17 +59,7 @@ export const UseTimersWorker = ({ }: Props) => {
                     useGameEndedPanel.getState().add50msToTimer()
                     break
 
-                case 'PING':
-                    sendToHostPeer({
-                        event: 'ping',
-                        data: {
-                            date: Date.now(),
-                            ping: usePing.getState().ping,
-                            something:
-                                'Ad eiusmod qui in aliqua irure. Ipsum eu elit enim mollit adipisicing incididunt.',
-                        },
-                    })
-                    break
+
 
 
             }

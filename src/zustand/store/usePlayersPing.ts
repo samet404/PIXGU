@@ -1,11 +1,11 @@
 import { create } from 'zustand'
 
 type State = {
-    pings: Record<string, number | null>
+    pings: Record<string, number | undefined>
 }
 
 type Action = {
-    set: (ping: number | null, userID: string) => void
+    set: (ping: number | undefined, userID: string) => void
     reset: () => void
 }
 

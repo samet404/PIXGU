@@ -1,5 +1,5 @@
 export * from './chat'
-export * from './pong'
+export * from './getPong'
 export * from './getSelectedTheme'
 export * from './painterTrash'
 export * from './painterEraser'

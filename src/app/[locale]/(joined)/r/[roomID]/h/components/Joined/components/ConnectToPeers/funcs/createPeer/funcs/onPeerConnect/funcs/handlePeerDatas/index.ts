@@ -1,4 +1,4 @@
-import { chat, getBuyMarketItem, getPainterBucket, getPainterEraser, getPainterMouseDown, getPainterMouseUp, getPainterPencil, getSelectedTheme, getUsePowerup, painterTrash, pong } from './funcs'
+import { chat, getBuyMarketItem, getPainterBucket, getPainterEraser, getPainterMouseDown, getPainterMouseUp, getPainterPencil, getSelectedTheme, getUsePowerup, painterTrash, getPong } from './funcs'
 import { onPeerData, grayLog, negativeLog } from '@/utils'
 import { usePeers } from '@/zustand/store'
 import { getUndoRedo } from './funcs/getUndoRedo'
@@ -15,8 +15,8 @@ export const handlePeerDatas = (userID: string, roomID: string) => {
     }, null, 2))
 
     switch (event) {
-      case 'ping':
-        pong(rtcData.data, userID)
+      case 'pong':
+        getPong(rtcData.data, userID)
         break
       case 'guessChat':
         chat(rtcData.data, event, userID, roomID)

@@ -45,21 +45,6 @@ export const createHostPeer = (roomID: string, myUserID: string) => {
       status: 'connected',
     })
 
-    sendToHostPeer({
-      event: 'ping',
-      data: {
-        date: Date.now(),
-        ping: usePing.getState().ping,
-        something:
-          'Ad eiusmod qui in aliqua irure. Ipsum eu elit enim mollit adipisicing incididunt.',
-      },
-    })
-    postMsgToPlayerTimerWorker({
-      ID: 'PING',
-      event: 'start',
-      type: 'interval',
-      ms: 5000,
-    })
     handlePeerDatas(myUserID)
   })
 }
