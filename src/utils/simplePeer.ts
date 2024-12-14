@@ -2,7 +2,7 @@ import SimplePeer from 'simple-peer'
 
 export const iceServers: RTCIceServer[] = [
   {
-    urls: "stun:stun.relay.metered.ca:80",
+    urls: "stun:stun.l.google.com:19302",
   },
   {
     urls: "turns:global.relay.metered.ca:443?transport=tcp",
