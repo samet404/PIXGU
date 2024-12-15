@@ -277,11 +277,17 @@ export type UndoRedo = {
   }
 }
 
+export type LoremForRTT = {
+  event: 'loremForRTT'
+  data: 'Eu irure ea occaecat deserunt fugiat incididunt tempor est consectetur sit velit labore cillum.'
+}
+
 export type WebRTCConnDataFromHost = (
   | PlayerLeft
   | PlayerJoined
   | PrevPlayers
   | GameLog
+  | LoremForRTT
   | CurrentPainter
   | GuessChatFromHost
   | WinnersChatFromHost
@@ -324,6 +330,7 @@ export type WebRTCConnDataFromClient = (
   | GuessChatFromClient
   | PainterPencil
   | PainterEraser
+  | LoremForRTT
   | PainterBucket
   | PainterTrash
   | SelectThemeFromClient

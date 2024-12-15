@@ -5,6 +5,7 @@ import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { storePaintersAccess } from '@/store'
 import type { RTCStats } from '@/types/rtcStats'
 import { sendToAllPeers } from '@/utils/sendToAllPeers'
+import { sendToPeer } from '@/utils/sendToPeer'
 import { sendToPeerWithID } from '@/utils/sendToPeerWithID'
 import { violetLog } from '@/utils/violetLog'
 import { getHostTimerWorker, postMsgToHostTimerWorker, terminateTimerWorker, TimerWorkerPostMsgData } from '@/workers'
@@ -79,6 +80,12 @@ export const UseTimersWorker = ({ roomID }: Props) => {
                 case 'RTT':
                     Object.keys(usePeers.getState().peers).forEach((ID) => {
                         const peer = usePeers.getState().peers[ID]!.peer as any
+
+                        sendToPeer(peer, {
+                            event: 'loremForRTT',
+                            data: 'Eu irure ea occaecat deserunt fugiat incididunt tempor est consectetur sit velit labore cillum.'
+                        })
+
                         peer.getStats((err: Error | null, stats: RTCStats[]) => {
                             if (err) {
                                 console.error('Failed to get peer stats:', err);

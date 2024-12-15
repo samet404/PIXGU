@@ -5,6 +5,7 @@ import { useAmIPainting, useAmISpectator, useCoins, useGameEndedPanel, useGuessC
 import { getPlayerTimerWorker, postMsgToPlayerTimerWorker, terminatePlayerTimerWorker, type PlayerTimerWorkerPostMsgData } from '@/workers'
 import { violetLog } from '@/utils/violetLog'
 import { RTCStats } from '@/types'
+import { sendToPeer } from '@/utils/sendToPeer'
 
 export const UseTimersWorker = ({ }: Props) => {
     useEffectOnce(() => {
@@ -62,6 +63,12 @@ export const UseTimersWorker = ({ }: Props) => {
                     break
                 case 'RTT':
                     const peer = useHostPeer.getState().peer as any
+
+                    sendToPeer(peer, {
+                        event: 'loremForRTT',
+                        data: 'Eu irure ea occaecat deserunt fugiat incididunt tempor est consectetur sit velit labore cillum.'
+                    })
+
                     peer.getStats((err: Error | null, stats: RTCStats[]) => {
                         if (err) {
                             console.error('Failed to get peer stats:', err);
