@@ -79,8 +79,12 @@ export const UseTimersWorker = ({ }: Props) => {
                         stats.forEach((report) => {
                             if (report.type === 'candidate-pair') {
                                 const rtt = report.currentRoundTripTime
+                                if (!rtt) {
+                                    violetLog(`RTT is undefined`)
+                                    return
+                                }
 
-                                violetLog(`RTT ${rtt}ms`)
+                                violetLog(`RTT ${rtt / 1000}ms`)
                                 usePing.getState().set(rtt)
                             }
                         })
