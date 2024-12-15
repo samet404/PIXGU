@@ -12,7 +12,6 @@ import {
   getPainterSelectingTheme,
   getCoin,
   getPrevPlayers,
-  getPing,
   getMyCoin,
   getGuessed,
   getYouGuessed,
@@ -88,9 +87,6 @@ export const handlePeerDatas = (userID: string) => {
         break
       case 'prevPlayers':
         getPrevPlayers(rtcData.data, userID)
-        break
-      case 'ping':
-        getPing(rtcData.data)
         break
       case 'guessed':
         getGuessed(rtcData.data)

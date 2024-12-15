@@ -1,11 +1,15 @@
 import SimplePeer from 'simple-peer'
+// import wrtc from 'wrtc'
 
 export const iceServers: RTCIceServer[] = [
   {
-    urls: "stun:stun.relay.metered.ca:80",
-  },
+    urls: [
+      'stun:stun.l.google.com:19302',
+      'stun:global.stun.twilio.com:3478',
+      "stun:stun.relay.metered.ca:80"
+    ]
+  }
 ]
-
 
 /**
  * Create a new SimplePeer instance
@@ -18,6 +22,7 @@ export const simplePeer = (opts?: SimplePeer.Options): SimplePeer.Instance => {
 
 
   return new SimplePeer({
+    // wrtc,
     initiator: opts?.initiator ?? false,
     channelConfig: {
       ordered: true,

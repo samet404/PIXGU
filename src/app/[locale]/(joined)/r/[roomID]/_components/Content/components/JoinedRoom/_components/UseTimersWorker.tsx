@@ -1,8 +1,10 @@
 "use client"
 
 import { useEffectOnce } from '@/hooks/useEffectOnce'
-import { useAmIPainting, useAmISpectator, useCoins, useGameEndedPanel, useGuessChatLayout, useGuessedPlayers, useIsGameStopped, useMatchStatusClient, useMyCoin, useNewPainterPanel, usePainterSelectingRemainTime, usePing, useRoomGuessChatMsgsStore, useRoomWinnersChatMsgsStore, useSelectThemePanel, useSpectators, useWhoIsPainterClient, useWinnersChatLayout, } from '@/zustand/store'
+import { useAmIPainting, useAmISpectator, useCoins, useGameEndedPanel, useGuessChatLayout, useGuessedPlayers, useHostPeer, useIsGameStopped, useMatchStatusClient, useMyCoin, useNewPainterPanel, usePainterSelectingRemainTime, usePing, useRoomGuessChatMsgsStore, useRoomWinnersChatMsgsStore, useSelectThemePanel, useSpectators, useWhoIsPainterClient, useWinnersChatLayout, } from '@/zustand/store'
 import { getPlayerTimerWorker, postMsgToPlayerTimerWorker, terminatePlayerTimerWorker, type PlayerTimerWorkerPostMsgData } from '@/workers'
+import { violetLog } from '@/utils/violetLog'
+import { RTCStats } from '@/types'
 
 export const UseTimersWorker = ({ }: Props) => {
     useEffectOnce(() => {
@@ -58,6 +60,25 @@ export const UseTimersWorker = ({ }: Props) => {
 
                     useGameEndedPanel.getState().add50msToTimer()
                     break
+                case 'RTT':
+                    const peer = useHostPeer.getState().peer as any
+                    peer.getStats((err: Error | null, stats: RTCStats[]) => {
+                        if (err) {
+                            console.error('Failed to get peer stats:', err);
+                            peer.destroy()
+                            return
+                        }
+
+                        stats.forEach((report) => {
+                            if (report.type === 'candidate-pair') {
+                                const rtt = report.currentRoundTripTime
+
+                                violetLog(`RTT ${rtt}ms`)
+                                usePing.getState().set(rtt)
+                            }
+                        })
+
+                    })
 
 
 

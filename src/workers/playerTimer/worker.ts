@@ -19,9 +19,12 @@ self.onmessage = (e) => {
         }
         case 'start': {
             console.log('worker timer started', data)
-            const { ID, ms, type } = data
+            const { ID, ms, type, triggerNow } = data
             const start = performance.now()
 
+            if (triggerNow) self.postMessage({
+                ID
+            })
 
             if (type === 'timeout')
                 timers[ID] = setInterval(() => {

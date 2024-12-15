@@ -28,9 +28,10 @@ export const onPeerConnect = (
     useSocketIO.getState().io!.emit('connection-success', userID)
 
     postMsgToHostTimerWorker({
-      ID: 'PING',
+      ID: 'RTT',
       event: 'start',
       type: 'interval',
+      triggerNow: true,
       ms: 5000,
     })
 

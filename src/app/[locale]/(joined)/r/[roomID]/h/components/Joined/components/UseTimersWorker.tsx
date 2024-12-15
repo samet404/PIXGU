@@ -3,8 +3,10 @@
 import { createMatch, gameEnded } from '@/helpers/room'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { storePaintersAccess } from '@/store'
+import type { RTCStats } from '@/types/rtcStats'
 import { sendToAllPeers } from '@/utils/sendToAllPeers'
 import { sendToPeerWithID } from '@/utils/sendToPeerWithID'
+import { violetLog } from '@/utils/violetLog'
 import { getHostTimerWorker, postMsgToHostTimerWorker, terminateTimerWorker, TimerWorkerPostMsgData } from '@/workers'
 import { useCoins, useHostingHealth, useHostPainterData, useMatchStatus, usePeers, usePlayers, usePlayersPing, useWhoIsPainter } from '@/zustand/store'
 
@@ -74,18 +76,26 @@ export const UseTimersWorker = ({ roomID }: Props) => {
 
                     createMatch(roomID)
                     break
-                case 'PING':
-                    Object.keys(usePeers.getState().peers).forEach(userID => {
-                        sendToPeerWithID(userID, {
-                            event: 'ping',
-                            data: {
-                                date: performance.now(),
-                                ping: usePlayersPing.getState().pings[userID],
-                                something: 'Ad eiusmod qui in aliqua irure. Ipsum eu elit enim mollit adipisicing incididunt.',
-                            },
+                case 'RTT':
+                    Object.keys(usePeers.getState().peers).forEach((ID) => {
+                        const peer = usePeers.getState().peers[ID]!.peer as any
+                        peer.getStats((err: Error | null, stats: RTCStats[]) => {
+                            if (err) {
+                                console.error('Failed to get peer stats:', err);
+                                peer.destroy()
+                                return
+                            }
+
+                            stats.forEach((report) => {
+                                if (report.type === 'candidate-pair') {
+                                    const rtt = report.currentRoundTripTime
+
+                                    violetLog(`RTT ${rtt}ms`)
+                                    usePlayersPing.getState().set(rtt, ID)
+                                }
+                            })
                         })
                     })
-                    break
             }
 
             return () => {

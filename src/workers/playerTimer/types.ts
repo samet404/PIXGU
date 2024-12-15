@@ -3,6 +3,7 @@ export type PlayerTimerWorkerOnMsgData = {
     ms: number
     type: 'interval' | 'timeout'
     event: 'start'
+    triggerNow?: boolean
 } | {
     ID: PlayerTimerID
     event: 'stop'
@@ -16,4 +17,4 @@ export type PlayerTimerWorkerPostMsgData = {
 }
 
 
-export type PlayerTimerID = 'MATCH_REMAIN_TIME' | 'PAINTER_SELECTING_REMAIN_TIME' | 'GAME_ENDED' 
+export type PlayerTimerID = 'MATCH_REMAIN_TIME' | 'PAINTER_SELECTING_REMAIN_TIME' | 'GAME_ENDED' | 'RTT'
