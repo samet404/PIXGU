@@ -1,13 +1,12 @@
 import MainButton from './MainButton'
 import Image from 'next/image'
 import friends from '@/png/friends.png'
-import { getIsLogged } from '@/context/server'
 
 const Friends = ({ name, description }: Props) => {
   return (
     <div>
       <MainButton
-        link="/f"
+        disabled
         icon={
           <Image
             className=" size-12 opacity-30 drop-shadow-[0_0px_8px_rgba(0,0,0,0.7)]"

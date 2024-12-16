@@ -39,7 +39,7 @@ const MainButton = ({
           {children}
         </ButtonLink>
       ) : (
-        <Button className={className} onMouseDown={onMouseDown}>
+        <Button className={className} onMouseDown={onMouseDown} disabled={disabled}>
           <ButtonContent name={name} description={description} icon={icon} />
           {children}
         </Button>
