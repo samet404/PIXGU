@@ -44,3 +44,4 @@ bun.lockb
 # typescript
 *.tsbuildinfo
 bun.lockb
+src/xata.ts
