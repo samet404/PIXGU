@@ -59,6 +59,7 @@
     "babel-plugin-react-compiler": "^19.0.0-beta-0dec889-20241115",
     "bcrypt": "^5.1.1",
     "broadcast-channel": "^7.0.0",
+    "bun-types": "^1.1.39",
     "caniuse-lite": "^1.0.30001640",
     "canvas-confetti": "^1.9.3",
     "circular-dependency-plugin": "^5.2.2",
