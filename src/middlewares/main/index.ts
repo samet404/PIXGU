@@ -5,167 +5,152 @@ import {
   type NextMiddleware,
   type NextRequest,
   NextResponse,
+  userAgent,
 } from 'next/server'
 import { lucia } from '@/auth/lucia'
 import { cookies } from 'next/headers'
 import { env } from '@/env/server'
-import { z } from 'zod'
+import { getLocale } from './funcs/getLocale'
 
 const locales: Locale[] = ['en', 'tr']
 
+// Helper functions
+const isPublicPath = (pathname: string): boolean => {
+  const publicPaths = [
+    '/ads.txt',
+    '/image/',
+    '/sound',
+    '/favicon',
+    '/robots.txt',
+    '/_next',
+    '/api',
+  ]
+  return publicPaths.some((path) => pathname.startsWith(path))
+}
+
+const isPublicRoute = (path: string): boolean => {
+  return (
+    path === '/' ||
+    path.startsWith('/login') ||
+    path.startsWith('/privacy') ||
+    path.startsWith('/r')
+  )
+}
+
+const redirectWithLocale = (req: NextRequest, locale: string, path = ''): NextResponse => {
+  req.nextUrl.pathname = `/${locale}${path}`
+  return NextResponse.redirect(req.nextUrl)
+}
+
+const notSupportedWebRTC = (browser: string) => `Sorry, but we are can not support ${browser} due to the lack of support for WebRTC technology. Please use Chromium-based browsers (Brave, Chrome, Opera, etc.) instead.`
+
 export const main: NextMiddleware = async (req: NextRequest) => {
+  const { browser } = userAgent(req)
+  const browserName = browser.name
+  console.log('browserName ', browserName)
+
   const { pathname } = req.nextUrl
   console.log('pathname', pathname)
-  if (
-    pathname.startsWith('/ads.txt') ||
-    pathname.startsWith('/image/') ||
-    pathname.startsWith('/sound') ||
-    pathname.startsWith('/favicon') ||
-    pathname.startsWith('/robots.txt') ||
-    pathname.startsWith('/_next') ||
-    pathname.startsWith('/api')
-  )
-    return NextResponse.next()
 
-  // if user is logged in
+
+  switch (browserName) {
+    case 'Firefox':
+      return NextResponse.json(notSupportedWebRTC(browserName))
+    case 'Safari':
+      return NextResponse.json(notSupportedWebRTC(browserName))
+    case 'Safari Mobile':
+      return NextResponse.json(notSupportedWebRTC(browserName))
+    case 'IE':
+      return NextResponse.json('Sorry, we can not support Internet Explorer due to limitations of the browser. Please use chromium-based modern browsers (Brave, Chrome, Opera, etc.) instead.')
+  }
+
+  // Skip middleware for public assets
+  if (isPublicPath(pathname)) return NextResponse.next()
+
+  // Check authentication status
   const sessionId = (await cookies()).get(lucia.sessionCookieName)?.value ?? null
-  const isLoggedIn = sessionId !== null && sessionId !== undefined
+  const isLoggedIn = Boolean(sessionId)
 
-  console.log('middleware logged: ', isLoggedIn)
-  if (isLoggedIn) {
+  // Handle logged-in users
+  if (isLoggedIn && sessionId) {
     const authInfo = await lucia.validateSession(sessionId)
-
     if (authInfo.user) {
       const redisLocaleRes = await fetch(
-        `${env.BASE_URL}/api/locale/${authInfo.user.id}`,
+        `${env.BASE_URL}/api/locale/${authInfo.user.id}`
       )
       const redisLocale = await redisLocaleRes.json()
 
-      // if user has a locale in redis
       if (redisLocale) {
-        // if pathname has redis locale
-        const pathnameHasRedisLocale =
-          pathname.startsWith(`/${redisLocale}/`) ||
-          pathname === `/${redisLocale}`
+        const hasRedisLocale = pathname.startsWith(`/${redisLocale}`) || pathname === `/${redisLocale}`
 
-        // if pathname has redis locale do nothing
-        if (pathnameHasRedisLocale) {
+        if (hasRedisLocale) {
           if (pathname.endsWith('/settings'))
-            req.nextUrl.pathname = `/${redisLocale}/settings/account`
+            return redirectWithLocale(req, redisLocale, '/settings/account')
 
           return NextResponse.redirect(req.nextUrl)
         }
 
-        // if pathname has another locale
-        const pathnameAnotherLocale = locales.find((locale) => {
-          if (locale === redisLocale) return undefined
-          if (pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`)
-            return locale
-          return undefined
-        })
+        // Handle path with different locale
+        const currentLocale = locales.find(
+          (locale) => locale !== redisLocale && (pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`)
+        )
 
-        // if pathname has another locale redirect to redis locale
-        if (pathnameAnotherLocale) {
-          if (
-            pathname.replace(pathnameAnotherLocale, '').startsWith('/login')
-          ) {
-            req.nextUrl.pathname = `/${redisLocale}`
-            return NextResponse.redirect(req.nextUrl)
+        if (currentLocale) {
+          if (pathname.replace(currentLocale, '').startsWith('/login')) {
+            return redirectWithLocale(req, redisLocale)
           }
 
-          if (pathname.endsWith('/settings')) {
-            req.nextUrl.pathname = `/${redisLocale}/settings/account`
-            return NextResponse.redirect(req.nextUrl)
-          }
+          const newPath = pathname.endsWith('/settings')
+            ? '/settings/account'
+            : pathname.replace(`/${currentLocale}`, '')
 
-          req.nextUrl.pathname = `/${redisLocale}${pathname.replace(`/${pathnameAnotherLocale}`, '')}`
-          return NextResponse.redirect(req.nextUrl)
+          return redirectWithLocale(req, redisLocale, newPath)
         }
 
-        // if pathname has no locale add redis locale to pathname then redirect
-        req.nextUrl.pathname = `/${redisLocale}${pathname}`
-        return NextResponse.redirect(req.nextUrl)
+        return redirectWithLocale(req, redisLocale, pathname)
       }
     }
   }
 
-  // if user is not logged in or user has no locale in redis
-  console.log('  user is not logged in or user has no locale in redis')
-
-  // if pathname has locale
-  const pathnameLocale = locales.find(
-    (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`,
-  )
-
-  console.log('(await cookies()).toString(): ', (await cookies()).toString())
+  // Handle non-logged-in users or users without Redis locale
   const isGuestValid = await fetch(
     `${env.BASE_URL}/api/validate-guest-auth-session`,
     {
-      headers: {
-        cookie: (await cookies()).toString(),
-      },
-    },
+      headers: { cookie: (await cookies()).toString() },
+    }
   ).then((res) => res.json())
+
   const isJoined = isGuestValid || isLoggedIn
-  console.log('isJoined', isJoined)
-  console.log('isGuestValid', isGuestValid)
+  const pathnameLocale = locales.find(
+    (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
+  )
 
-  // if pathname has locale
   if (pathnameLocale) {
-    const pathnameWithoutLocale = (() => {
-      const pathnameWithoutLocale = pathname.replace(`/${pathnameLocale}`, '')
-      if (pathnameWithoutLocale === '') return '/'
-      return pathnameWithoutLocale
-    })()
+    const pathnameWithoutLocale = pathname.replace(`/${pathnameLocale}`, '') || '/'
 
-    console.log('pathnameWithoutLocale: ', pathnameWithoutLocale)
+    if (!isJoined && !isPublicRoute(pathnameWithoutLocale))
+      return redirectWithLocale(req, pathnameLocale)
 
-    if (!isJoined) {
-      if (
-        pathnameWithoutLocale !== '/' &&
-        !pathnameWithoutLocale.startsWith('/login') &&
-        !pathnameWithoutLocale.startsWith('/privacy')
-      ) {
-        req.nextUrl.pathname = `/${pathnameLocale}`
-        return NextResponse.redirect(req.nextUrl)
-      }
-    }
-
-    if (isJoined) {
-      if (pathname === '/') {
-        req.nextUrl.pathname = `/${pathnameLocale}`
-        return NextResponse.redirect(req.nextUrl)
-      }
-    }
+    if (isJoined && pathname === '/')
+      return redirectWithLocale(req, pathnameLocale)
 
     return
   }
 
-  // if pathname has no locale, add locale to pathname with user's device locale then redirect
-  const locale = (await import('./funcs/getLocale')).getLocale(req, locales)
+  // Handle paths without locale
+  const locale = getLocale(req, locales)
 
-  if (!isJoined) {
-    if (pathname === '/' && !pathname.startsWith('/login') && !pathname.startsWith('/privacy')) {
-      req.nextUrl.pathname = `/${locale}`
-      return NextResponse.redirect(req.nextUrl)
-    }
+  if (!isJoined && pathname === '/' && !pathname.startsWith('/login') && !pathname.startsWith('/privacy')) {
+    return redirectWithLocale(req, locale)
   }
 
   if (isJoined) {
-    if (pathname === '/') {
-      req.nextUrl.pathname = `/${locale}`
-      return NextResponse.redirect(req.nextUrl)
-    } else if (pathname.startsWith('/login')) {
-      if (isLoggedIn) {
-        req.nextUrl.pathname = `/${locale}`
-        return NextResponse.redirect(req.nextUrl)
-      }
-    } else if (pathname.endsWith('/settings')) {
-      req.nextUrl.pathname = `/${locale}/settings/account`
-      return NextResponse.redirect(req.nextUrl)
-    }
+    if (pathname === '/' || (isLoggedIn && pathname.startsWith('/login')))
+      return redirectWithLocale(req, locale)
+
+    if (pathname.endsWith('/settings'))
+      return redirectWithLocale(req, locale, '/settings/account')
   }
 
-  req.nextUrl.pathname = `/${locale}${pathname}`
-  return NextResponse.redirect(req.nextUrl)
+  return redirectWithLocale(req, locale, pathname)
 }

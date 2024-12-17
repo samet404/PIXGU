@@ -1,4 +1,3 @@
-import { getIsLogged } from '@/context/server'
 import MainButton from './MainButton'
 import login from '@/png/login.png'
 import Image from 'next/image'

@@ -7,5 +7,5 @@ export const getLocale = publicProcedure.query(async ({ ctx, input }) => {
 
   console.log('userID', userID)
   if (!userID) return null
-  return (await ctx.redisDb.get(`${userID}:locale`)) as Locale
+  return (await ctx.redisDb.get(`user:${userID}:locale`)) as Locale
 })

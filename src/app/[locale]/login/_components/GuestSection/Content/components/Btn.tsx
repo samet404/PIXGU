@@ -77,7 +77,7 @@ export const Btn = ({ inputRef, joinGame }: Props) => {
         },
       )}
     >
-      {isLoading ? <Spinner className="size-4 drop-shadow-none" /> : joinGame ? `Login and join game` : `Login`}
+      {isLoading ? <Spinner className="size-4 drop-shadow-none" /> : joinGame ? `Log in and join game` : `Login`}
     </button>
   )
 }

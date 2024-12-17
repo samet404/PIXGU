@@ -1,23 +1,11 @@
 import Navbar from './_components/Navbar'
-import Main from './_components/Main'
-import { api } from '@/trpc/server'
+import { Main } from './_components/Main'
 import type { Locale } from '@/types'
-import { setIsLogged, setLocale } from '@/context/server'
-import { redirect } from 'next/navigation'
 import { Outfit } from 'next/font/google'
-import Link from 'next/link'
-import SocialLinks from './_components/SocialLinks'
 
 const outfit = Outfit({ subsets: ['latin'], weight: ['700', '500'] })
 
 const Home = async ({ locale }: Props) => {
-    const isJoined = await api.auth.isJoined.query()
-    const isLogged = await api.auth.isLogged.query()
-
-    setIsLogged(isLogged)
-    setLocale(locale)
-
-
     return (
         <div
             style={{
@@ -32,7 +20,7 @@ const Home = async ({ locale }: Props) => {
             <div className="flex animate-fade flex-col items-center duration-[100ms]  animate-duration-1000">
                 <div className='flex flex-col items-center'>
                     <Navbar />
-                    <Main />
+                    <Main locale={locale} />
                 </div>
             </div>
 

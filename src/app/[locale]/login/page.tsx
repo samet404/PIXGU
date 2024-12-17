@@ -1,12 +1,7 @@
-import Image from 'next/image'
-import bgImg from '@/jpg/marek-piwnicki-Uc0hRKBu3xY-unsplash.jpg'
-import NavigationSection from './_components/NavigationSection'
-import OAuthSection from './_components/OAuthSection'
-import Logo from '@/png/logo.png'
 import { Inter } from 'next/font/google'
-import { GuestSection } from './_components/GuestSection'
-import Link from 'next/link'
 import type { Metadata } from 'next'
+import type { Locale } from '@/types'
+import { Login } from '@/components/Login'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -14,8 +9,8 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'LOGIN',
-  description: 'Login and play PIXGU with your friends!',
+  title: 'LOG IN',
+  description: 'Log in and play PIXGU with your friends!',
   keywords: [
     'pixgu login',
     'PIXGU login',
@@ -28,41 +23,16 @@ export const metadata: Metadata = {
   ]
 }
 
-const Page = () => {
-  return (
-    <div
-      className={`${inter.className} flex h-full w-full flex-col items-center`}
-    >
-      <Image
-        src={bgImg}
-        alt="background"
-        className="absolute z-0 h-full w-full select-none object-cover brightness-[0.5]"
-        placeholder="blur"
-        sizes="100vw"
-        quality={40}
-      ></Image>
+const Page = async ({ params }: Props) => {
+  const { locale } = await params
 
-      <main className="flex h-full xxs:w-full md:w-[20rem] animate-fade flex-col items-center gap-3 overflow-y-auto bg-[rgba(255,255,255,0.2)] px-2 py-2 shadow-[0_0px_80px_10px_rgba(0,0,0,0.5)] backdrop-blur-md animate-duration-[500ms]">
-        <NavigationSection />
-        <Image
-          src={Logo}
-          alt="logo"
-          className=" h-[auto] w-[6rem] pb-6 drop-shadow-[0_0px_8px_rgba(0,0,0,0.3)]"
-          sizes="calc(1.96vw + 75px)"
-        ></Image>
-        <div className='h-full w-full flex max-w-[20rem] flex-col justify-between'>
-          <div className='flex flex-col gap-2'>
-            <GuestSection />
-            <OAuthSection />
-          </div>
-
-          <div className='text-xs text-[#ffffffc4] text-center'>
-            By logging in, you agree to Pixgu's <Link className='text-blue-400' href="/privacy">Privacy Policy</Link>
-          </div>
-        </div>
-      </main>
-    </div>
-  )
+  return <Login locale={locale} guest={true} oauth={true} />
 }
 
 export default Page
+
+type Props = {
+  params: Promise<{
+    locale: Locale
+  }>
+}

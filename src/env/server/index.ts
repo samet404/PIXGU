@@ -97,6 +97,7 @@ export const env = createEnv({
       .default('development'),
     ROOT_FOLDER_NAME: z.string().default('PIXGU'),
     IP_ADDRESS: z.string().default('66.6.44.4'),
+    CANARY: z.enum(['0', '1'])
   },
 
   /**
@@ -129,6 +130,8 @@ export const env = createEnv({
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     GOOGLE_REDIRECT_URI: process.env.GOOGLE_REDIRECT_URI,
+
+    CANARY: process.env.CANARY
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

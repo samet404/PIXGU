@@ -1,11 +1,8 @@
 import MainButton from './MainButton'
 import Image from 'next/image'
 import createroom from '@/png/createroom.png'
-import { getIsLogged } from '@/context/server'
 
 const CreateRoom = ({ name, description }: Props) => {
-  const isLogged = getIsLogged()
-
   return (
     <MainButton
       link="/create"
@@ -18,7 +15,6 @@ const CreateRoom = ({ name, description }: Props) => {
       }
       name={name}
       description={description}
-      disabled={!isLogged}
       keyName="2"
       className="hover:from-[rgb(167,158,60)] hover:to-[rgba(255,255,255,0.3)]"
     />

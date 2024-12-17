@@ -11,9 +11,6 @@ export const PreventRefresh = ({ children }: PropsWithChildren) => {
         }
 
         window.addEventListener('beforeunload', handleBeforeUnload)
-        return () => {
-            window.removeEventListener('beforeunload', handleBeforeUnload)
-        }
     })
 
     return children

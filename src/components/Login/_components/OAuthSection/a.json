@@ -1,0 +1,15 @@
+{
+  "state": {
+    "current": "pencil",
+    "options": {
+      "pencil": { "size": 1 },
+      "eraser": { "size": 1 },
+      "bucket": { "size": 1 },
+      "rectangle": { "width": 1, "height": 1 },
+      "circle": { "radius": 1 },
+      "text": { "text": "text", "fontSize": 1 }
+    },
+    "with": { "grid": false, "color": { "r": 255, "g": 0, "b": 0, "a": 0.27 } }
+  },
+  "version": 0
+}

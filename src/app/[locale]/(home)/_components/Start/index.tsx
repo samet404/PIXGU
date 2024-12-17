@@ -13,7 +13,7 @@ const Start = () => {
   return (
     <div
       style={{
-        scrollbarWidth: 'thin',
+        scrollbarWidth: 'none',
       }}
       className={`${outfit.className} h-full w-full flex-col gap-2 overflow-y-scroll`}
     >
@@ -29,7 +29,7 @@ const Start = () => {
         <div className="absolute bottom-0 left-0 flex h-full  w-full flex-col gap-4 items-center pt-12 ">
 
           <div className='text-white text-[1.2rem] drop-shadow-[0_0px_2px_rgba(0,0,0,0.3)]'>
-            Not just another drawing game. Think fast, draw faster, win bigger
+            Start shape your imagination. Think fast, draw faster, win bigger.
           </div>
 
           <div className="hover:opacity-60 backdrop-blur-md">

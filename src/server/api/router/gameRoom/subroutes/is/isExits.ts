@@ -1,11 +1,10 @@
-import { loggedUserProducure } from '@/procedure'
-import { TRPCError } from '@trpc/server'
+import { publicProcedure } from '@/server/api/trpc'
 import { z } from 'zod'
 
-export const isExits = loggedUserProducure
+export const isExits = publicProcedure
   .input(
     z.object({
-      roomID: z.string().max(128),
+      roomID: z.string(),
     }),
   )
   .query(async ({ input, ctx }) => {
@@ -13,11 +12,6 @@ export const isExits = loggedUserProducure
 
     const isExits = await ctx.redisDb.exists(`room:${roomID}:name`)
 
-    if (isExits === 0)
-      throw new TRPCError({
-        code: 'NOT_FOUND',
-        message: 'ROOM_NOT_FOUND',
-      })
-
+    if (isExits === 0) return false
     return true
   })

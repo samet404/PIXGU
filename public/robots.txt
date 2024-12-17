@@ -2,6 +2,7 @@ User-agent: *
 Disallow: /en/htp
 Disallow: /en/r
 Disallow: /en/settings
+Disallow: /settings
 Disallow: /en/r
 Disallow: /en/start
 Disallow: /en/u

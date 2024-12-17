@@ -1,7 +1,6 @@
 import magnify from '@/png/magnifiy.png'
 import Image from 'next/image'
 import MainButton from './MainButton'
-import { getIsLogged } from '@/context/server'
 
 const JoinRoom = ({ name, description }: Props) => {
 

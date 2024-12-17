@@ -410,7 +410,7 @@ const DatabaseClient = buildClient();
 
 const defaultOptions = {
   databaseURL:
-    "https://404-s-workspace-68cmk0.eu-central-1.xata.sh/db/main-database",
+    "https://404-s-workspace-68cmk0.eu-central-1.xata.sh/db/main-database:main",
 };
 
 export class XataClient extends DatabaseClient<DatabaseSchema> {

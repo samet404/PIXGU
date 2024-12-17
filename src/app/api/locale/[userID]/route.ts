@@ -1,3 +1,4 @@
+import { redisDb } from '@/db/redis'
 import type { Locale } from '@/types/locale'
 
 export async function GET(req: Request) {
@@ -5,7 +6,6 @@ export async function GET(req: Request) {
   console.log('locale route userID ', userID)
   if (!userID) return new Response(JSON.stringify(null))
 
-  const redisDb = (await import('@/redis')).redisDb
   const redisLocale = (await redisDb.get(`user:${userID}:locale`)) as Locale
 
   return new Response(JSON.stringify(redisLocale))

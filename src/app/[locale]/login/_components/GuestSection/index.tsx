@@ -3,7 +3,7 @@ import { Content } from './Content'
 
 export const GuestSection = () => {
   return (
-    <Section title="Join us as guest">
+    <Section title="Login as Guest">
       <div className="flex flex-col gap-2">
         <Content />
       </div>

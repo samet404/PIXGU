@@ -5,10 +5,9 @@ import Login from './components/Login'
 import QuickMatch from './components/QuickMatch'
 import Friends from './components/Friends'
 import { getLangObj } from './lang'
-import { getLocale } from '@/context/server'
+import type { Locale } from '@/types'
 
-const LeftSide = async () => {
-  const locale = getLocale()
+const LeftSide = async ({ locale }: Props) => {
   const langObj = await getLangObj(locale)
 
   return (
@@ -43,4 +42,9 @@ const LeftSide = async () => {
     </div>
   )
 }
+
 export default LeftSide
+
+type Props = {
+  locale: Locale
+}
