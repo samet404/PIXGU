@@ -76,5 +76,5 @@
     "**/*.mjs",
     ".next/types/**/*.ts"
   ],
-  "exclude": ["node_modules", "**/*.js", "./.trash"]
+  "exclude": ["node_modules", "**/*.js", "./.trash", "./src/xata.ts"]
 }
