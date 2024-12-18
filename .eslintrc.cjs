@@ -8,7 +8,7 @@ const config = {
     tsconfigRootDir: './',
     project: ['./tsconfig.json'],
   },
-  ignorePatterns: ['node_modules', '**/*.js', './.trash'],
+  ignorePatterns: ['node_modules', '**/*.js', './.trash', './src/xata.ts'],
   extends: [
     'next/core-web-vitals',
     'eslint:recommended',
