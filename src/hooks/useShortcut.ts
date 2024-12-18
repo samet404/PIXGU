@@ -8,6 +8,7 @@ export const useShortcut = ({ keyName, onShortcut }: Args) => {
 
     useEffect(() => {
         if (arrsEqual(combination, keyValue)) onShortcut()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [combination, keyValue])
 }
 

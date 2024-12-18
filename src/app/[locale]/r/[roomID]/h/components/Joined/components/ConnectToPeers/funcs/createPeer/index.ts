@@ -1,9 +1,8 @@
-import type { Guest, RTCStats } from '@/types'
+import type { Guest } from '@/types'
 import { onPeerConnect, onPeerClose, onPeerError, onPeerSignal } from './funcs'
 import { simplePeer } from '@/utils/simplePeer'
 import { useMatchStatus, usePeers, useSocketIO } from '@/zustand/store'
 import type { User } from 'lucia'
-import { violetLog } from '@/utils/violetLog'
 
 /**
  * Create a webrtc peer connection to the given user.

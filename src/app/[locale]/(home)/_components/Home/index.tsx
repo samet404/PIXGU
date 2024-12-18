@@ -5,7 +5,7 @@ import { Outfit } from 'next/font/google'
 
 const outfit = Outfit({ subsets: ['latin'], weight: ['700', '500'] })
 
-const Home = async ({ locale }: Props) => {
+const Home = ({ locale }: Props) => {
     return (
         <div
             style={{

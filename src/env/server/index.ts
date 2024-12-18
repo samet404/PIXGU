@@ -98,6 +98,7 @@ export const env = createEnv({
     ROOT_FOLDER_NAME: z.string().default('PIXGU'),
     IP_ADDRESS: z.string().default('66.6.44.4'),
     CANARY: z.enum(['0', '1'])
+
   },
 
   /**

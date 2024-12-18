@@ -18,7 +18,7 @@ export const Content = forwardRef(
   ) => {
     const io = useSocketIO(s => s.io)
     const setCount = useSetAtom(createdRoomsCountAtom)
-    const { data, error, isError, refetch, isLoading, isRefetching } =
+    const { data, isError, refetch, isLoading, isRefetching } =
       api.gameRoom.getCreatedRoomsIDs.useQuery(undefined, {
         refetchOnWindowFocus: false,
       })

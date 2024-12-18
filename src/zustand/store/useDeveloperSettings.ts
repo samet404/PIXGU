@@ -1,24 +1,21 @@
-import type { RouterOutputs } from '@/trpc/shared'
-import { create } from 'zustand'
 import { subscribeWithSelector } from 'zustand/middleware'
-import { syncTabs } from 'zustand-sync-tabs'
+import { persistNSync } from 'persist-and-sync'
+import { create } from 'zustand'
 
-type TRPCGetAllSettings = RouterOutputs['settings']['getAll']
 
 type State = {
-  others: {
+  isOpen: boolean
+  others?: {
     consoleLog: typeof console.log | undefined
     consoleError: typeof console.error | undefined
     consoleInfo: typeof console.info | undefined
     consoleWarn: typeof console.warn | undefined
   }
-} & TRPCGetAllSettings
+}
 
-type PartitalState = Partial<State>
 
 type Action = {
-  setInitialState: (state: TRPCGetAllSettings) => void
-  setDeveloperMode: (isEnabled: boolean) => void
+  switch: () => void
   setConsoleLogFuncs: (
     consoleLog: typeof console.log | undefined,
     consoleError: typeof console.error | undefined,
@@ -27,23 +24,20 @@ type Action = {
   ) => void
 }
 
-const initState: PartitalState = {}
+const initState: State = {
+  isOpen: false
+}
 
-export const useDeveloperSettings = create<PartitalState & Action>()(
+export const useDeveloperSettings = create<State & Action>()(
   subscribeWithSelector(
-    syncTabs<PartitalState & Action>(
+    persistNSync<State & Action>(
       (set, get) => ({
         ...initState,
-        setInitialState: (state) => {
+
+        switch: () => {
           set({
             ...get(),
-            ...state,
-          })
-        },
-        setDeveloperMode: (isEnabled) => {
-          set({
-            ...get(),
-            developerMode: isEnabled,
+            isOpen: !get().isOpen
           })
         },
         setConsoleLogFuncs: (

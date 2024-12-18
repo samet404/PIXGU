@@ -28,14 +28,13 @@ const isPublicPath = (pathname: string): boolean => {
   return publicPaths.some((path) => pathname.startsWith(path))
 }
 
-const isPublicRoute = (path: string): boolean => {
-  return (
-    path === '/' ||
-    path.startsWith('/login') ||
-    path.startsWith('/privacy') ||
-    path.startsWith('/r')
-  )
-}
+const isPublicRoute = (path: string): boolean => (
+  path === '/' ||
+  path.startsWith('/login') ||
+  path.startsWith('/privacy') ||
+  path.startsWith('/r')
+)
+
 
 const redirectWithLocale = (req: NextRequest, locale: string, path = ''): NextResponse => {
   req.nextUrl.pathname = `/${locale}${path}`

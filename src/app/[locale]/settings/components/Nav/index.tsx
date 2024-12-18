@@ -1,6 +1,5 @@
 import { Outfit } from 'next/font/google'
 import NavItem from './components/NavItem'
-import { api } from '@/trpc/server'
 import HomeBtn from './components/HomeBtn'
 import BackButton from '@/components/BackButton'
 
@@ -9,9 +8,7 @@ const outfit = Outfit({
   weight: ['500'],
 })
 
-const Nav = async () => {
-  const isLogged = await api.auth.isLogged.query()
-
+const Nav = () => {
   return (
     <nav
       style={{

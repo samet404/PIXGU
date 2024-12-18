@@ -2,7 +2,7 @@ import SectionWrapper from '../_components/SectionWrapper'
 import { ClearLocalstorage } from './components/ClearLocalstorage'
 import { DeveloperMode } from './components/DeveloperMode'
 
-const Advanced = async () => {
+const Advanced = () => {
   return (
     <SectionWrapper text="Advanced">
 

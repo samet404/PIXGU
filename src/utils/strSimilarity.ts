@@ -2,7 +2,7 @@ const editDistance = (str1: string, str2: string): number => {
     str1 = str1.toLowerCase();
     str2 = str2.toLowerCase();
 
-    const costs = new Array();
+    const costs = [];
     for (let i = 0; i <= str1.length; i++) {
         let lastValue = i;
         for (let j = 0; j <= str2.length; j++) {

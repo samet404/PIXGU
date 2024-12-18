@@ -1,4 +1,4 @@
-import { MATCH_TIME_MILISECONDS, MATCH_TIME_MINUTES } from '@/constants'
+import { MATCH_TIME_MILISECONDS } from '@/constants'
 import { storePaintersAccess } from '@/store'
 import type { SelectThemeFromClient } from '@/types/webRTCConnData'
 import { negativeLog, sendToAllPeers } from '@/utils'

@@ -24,6 +24,8 @@ export const useMouseOut = () => {
         canvasWorker.current.postMessage({ e: 'mouseUp' } as CanvasWorkerOnMsgData)
         useAmIPainting.getState().imNotPainting()
       }
+        break
+
       case 'eraser': {
         sendToHostPeer({
           event: 'painterEraserOrPencilOut'

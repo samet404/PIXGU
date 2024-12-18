@@ -2,18 +2,20 @@
 const config = {
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    project: true,
+    ecmaFeatures: {
+      jsx: true,
+    },
+    tsconfigRootDir: './',
+    project: ['./tsconfig.json'],
   },
-  plugins: ['@typescript-eslint', 'react-hooks', 'react', 'drizzle'],
+  ignorePatterns: ['node_modules', '**/*.js', './.trash'],
   extends: [
-    'plugin:drizzle/recommended',
-    'plugin:react-hooks/recommended',
     'next/core-web-vitals',
+    'eslint:recommended',
+    'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/recommended-type-checked',
     'plugin:@typescript-eslint/stylistic-type-checked',
-    'eslint:recommended',
     'plugin:react/recommended',
-    'plugin:@tanstack/eslint-plugin-query/recommended',
   ],
   overrides: [
     {
@@ -21,6 +23,7 @@ const config = {
       extends: ['plugin:@typescript-eslint/disable-type-checked'],
     },
   ],
+
   globals: {
     React: true,
     google: true,
@@ -35,13 +38,6 @@ const config = {
     JSX: true,
   },
   rules: {
-    '@tanstack/query/no-rest-destructuring': 'warn',
-    '@tanstack/query/exhaustive-deps': 'error',
-    '@tanstack/query/stable-query-client': 'error',
-
-    'drizzle/enforce-delete-with-where': 'error',
-    'drizzle/enforce-update-with-where': 'error',
-
     'no-constant-condition': 'warn',
     'dot-notation': 'off',
     'prefer-const': 'off',
@@ -55,6 +51,9 @@ const config = {
 
     'react/react-in-jsx-scope': 'off',
     'react/jsx-uses-react': 'off',
+    'react-hooks/exhaustive-deps': 'off',
+    'react/react-hooks/exhaustive-deps': 'off',
+    'react/no-unescaped-entities': 'off',
 
     '@typescript-eslint/prefer-nullish-coalescing': 'off',
     '@typescript-eslint/prefer-optional-chain': 'off',
@@ -70,6 +69,7 @@ const config = {
     '@typescript-eslint/no-unsafe-assignment': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-duplicate-type-constituents': 'off',
+    '@typescript-eslint/prefer-for-of': 'off',
     '@typescript-eslint/array-type': 'off',
     '@typescript-eslint/consistent-type-definitions': 'off',
     '@typescript-eslint/no-unused-vars': 'off',
@@ -77,6 +77,8 @@ const config = {
     '@typescript-eslint/no-useless-empty-export': 'warn',
     '@typescript-eslint/require-await': 'warn',
     '@typescript-eslint/no-empty-function': 'warn',
+    '@typescript-eslint/no-base-to-string': 'off',
+    '@typescript-eslint/restrict-template-expressions': 'off',
     '@typescript-eslint/consistent-type-imports': [
       'error',
       {

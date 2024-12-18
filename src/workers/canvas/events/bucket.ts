@@ -7,7 +7,7 @@ const DIRECTIONS = [[-1, 0], [1, 0], [0, -1], [0, 1]]
 export const bucket = ({ x: startX, y: startY, pixels, cellSideCount, blurInfo, color, undoRedo }: BucketInput) => {
     const pixelsToBeFilled: [coors: Uint16Array, color: Uint8ClampedArray][] = []
     const startRgb = pixels[startX]![startY]!
-    const visited: Set<string> = new Set()
+    const visited = new Set<string>()
     const queue: [number, number][] = [[startX, startY]]
 
     const undoRedoOperationIndex = undoRedo.current.operationIndex
@@ -35,11 +35,11 @@ export const bucket = ({ x: startX, y: startY, pixels, cellSideCount, blurInfo, 
 
                 addNewUndoRedoGroup(undoRedo)
                 const undoRedoGroupIndex = undoRedo.current.undoRedoGroup.index
-                undoRedo.current.stack[undoRedoOperationIndex]![undoRedoGroupIndex]![0]!.push([new Uint16Array([x, y]), prevColor])
-                undoRedo.current.stack[undoRedoOperationIndex]![undoRedoGroupIndex]![1]!.push([new Uint16Array([x, y]), newColor])
+                undoRedo.current.stack[undoRedoOperationIndex]![undoRedoGroupIndex]![0].push([new Uint16Array([x, y]), prevColor])
+                undoRedo.current.stack[undoRedoOperationIndex]![undoRedoGroupIndex]![1].push([new Uint16Array([x, y]), newColor])
 
 
-                pixels[x]![y]! = newColor
+                pixels[x]![y] = newColor
                 if (blurInfo.hasBlur) blurInfo.blurStack.add([x, y])
                 else pixelsToBeFilled.push([new Uint16Array([x, y]), newColor])
 

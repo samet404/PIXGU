@@ -40,7 +40,7 @@ const Content = async ({ params }: Props) => {
   const { locale, roomID } = await params
 
   const isJoined = await api.auth.isJoined.query()
-  if (!isJoined) redirect(`/r/${roomID}`)
+  if (!isJoined) redirect(`/${locale}/r/${roomID}`)
 
   const user = await api.auth.getUser.query()
   const guest = await api.auth.getGuest.query()
@@ -51,7 +51,7 @@ const Content = async ({ params }: Props) => {
     return guest!.ID
   })()
 
-  if (hostID !== clientID) redirect(`/${locale}/${roomID}`)
+  if (hostID !== clientID) redirect(`/${locale}/r/${roomID}`)
 
   return <PreventRefresh>
     <Joined roomID={roomID} user={user} guest={guest} />

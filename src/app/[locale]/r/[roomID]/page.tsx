@@ -1,4 +1,3 @@
-import { Outfit } from 'next/font/google'
 import type { Metadata } from 'next'
 import type { Locale } from '@/types/locale'
 import { api } from '@/trpc/server'

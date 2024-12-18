@@ -23,10 +23,10 @@ export const radialPencilPattern = ({ cellSideCount, color, lastPixel, pixels, p
 
             addNewUndoRedoGroup(undoRedo)
             const undoRedoGroupIndex = undoRedo.current.undoRedoGroup.index
-            undoRedo.current.stack[undoRedoOperationIndex]![undoRedoGroupIndex]![0]!.push([new Uint16Array([x, y]), prevColor])
-            undoRedo.current.stack[undoRedoOperationIndex]![undoRedoGroupIndex]![1]!.push([new Uint16Array([x, y]), newColor])
+            undoRedo.current.stack[undoRedoOperationIndex]![undoRedoGroupIndex]![0].push([new Uint16Array([x, y]), prevColor])
+            undoRedo.current.stack[undoRedoOperationIndex]![undoRedoGroupIndex]![1].push([new Uint16Array([x, y]), newColor])
 
-            pixels[x]![y]! = newColor
+            pixels[x]![y] = newColor
             pixelsOnDraw.add(`${x},${y}`)
             if (blurInfo.hasBlur) blurInfo.blurStack.add([x, y])
             else pixelsToBeFilled.push([new Uint16Array([x, y]), newColor])
@@ -60,7 +60,7 @@ export const radialPencilPattern = ({ cellSideCount, color, lastPixel, pixels, p
 
     if (lastPixel) {
         const [prevX, prevY] = lastPixel
-        const pixelsBetween = calculatePixelsBetween(prevX!, prevY!, startX, startY)
+        const pixelsBetween = calculatePixelsBetween(prevX, prevY, startX, startY)
 
         for (const { x, y } of pixelsBetween) {
             run(x, y)

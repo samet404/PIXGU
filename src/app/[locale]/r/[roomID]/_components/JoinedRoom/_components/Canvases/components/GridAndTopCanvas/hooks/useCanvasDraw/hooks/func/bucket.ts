@@ -1,5 +1,5 @@
 import { sendToHostPeer } from '@/utils/sendToHostPeer'
-import { postMsgToCanvasWorker, type CanvasWorkerOnMsgData } from '@/workers'
+import { postMsgToCanvasWorker } from '@/workers'
 import { useAmIPainting, usePainterTool } from '@/zustand/store'
 
 

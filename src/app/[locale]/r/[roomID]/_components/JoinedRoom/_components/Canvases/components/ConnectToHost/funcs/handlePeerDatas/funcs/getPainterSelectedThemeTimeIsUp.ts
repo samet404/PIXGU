@@ -1,7 +1,7 @@
 import { postMsgToPlayerTimerWorker } from '@/workers'
-import { useGuessChatLayout, useNewPainterPanel, useOwnedPowerups, usePainterSelectingRemainTime, useRoomGuessChatMsgsStore, useRoomWinnersChatMsgsStore, useSelectThemePanel, useWinnersChatLayout } from '@/zustand/store'
+import { useNewPainterPanel, useOwnedPowerups, usePainterSelectingRemainTime, useRoomGuessChatMsgsStore, useRoomWinnersChatMsgsStore, useSelectThemePanel } from '@/zustand/store'
 
-export const getPainterSelectedThemeTimeIsUp = async () => {
+export const getPainterSelectedThemeTimeIsUp = () => {
   postMsgToPlayerTimerWorker({
     event: 'stop',
     ID: 'PAINTER_SELECTING_REMAIN_TIME'

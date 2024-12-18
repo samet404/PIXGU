@@ -1,4 +1,3 @@
-import type { RouterInputs } from '@/trpc/shared'
 import { create } from 'zustand'
 
 type State = Partial<RouterInput>

@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   description: 'Create and rule the room'
 }
 
-const CreateRoom = async () => {
+const CreateRoom = () => {
   return (
     <div
       style={{

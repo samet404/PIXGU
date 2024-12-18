@@ -35,6 +35,7 @@ export const validateRequest = cache(
             sessionCookie.attributes,
           )
       }
+      // eslint-disable-next-line no-empty
     } catch { }
     return result
   },

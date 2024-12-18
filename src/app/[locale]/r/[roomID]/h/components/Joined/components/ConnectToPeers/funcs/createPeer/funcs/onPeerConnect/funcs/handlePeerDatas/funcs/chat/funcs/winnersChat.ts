@@ -1,9 +1,9 @@
 import type { WinnersChatFromClient } from '@/types/webRTCConnData';
 import { sendToAllPeers } from '@/utils/sendToAllPeers';
 import { sendToPeerWithID } from '@/utils/sendToPeerWithID';
-import { useGuessedPlayers, useHostPainterData, useWhoIsPainter } from '@/zustand/store';
+import { useGuessedPlayers, useHostPainterData } from '@/zustand/store';
 
-export const winnersChat = async (
+export const winnersChat = (
     data: WinnersChatFromClient['data'],
     userID: string,
     msgID: number,

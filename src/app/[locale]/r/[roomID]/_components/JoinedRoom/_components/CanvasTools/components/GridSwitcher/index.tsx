@@ -3,8 +3,7 @@
 import { drawGrid, clearGrid } from '@/helpers/room'
 import { Tool } from '../Tool'
 import { useEffect } from 'react'
-import { useGameToolAlert, usePainterTool } from '@/zustand/store'
-import { useShortcut } from '@/hooks/useShortcut'
+import { usePainterTool } from '@/zustand/store'
 import { Svg } from '@/components/Svg'
 
 export const GridSwitcher = () => {

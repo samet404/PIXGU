@@ -19,7 +19,7 @@ import {
   useWinnersChatLayout,
 } from '@/zustand/store'
 
-export const getPainter = async (
+export const getPainter = (
   data: CurrentPainter['data'],
   myUserID: string,
 ) => {

@@ -1,12 +1,9 @@
-import { fillOnePixel } from '@/helpers/room'
 import { sendToHostPeer } from '@/utils/sendToHostPeer'
-import { getCanvasWorker, type CanvasWorkerOnMsgData, type CanvasWorkerPostMsgData } from '@/workers'
+import { getCanvasWorker, type CanvasWorkerOnMsgData } from '@/workers'
 import {
     useAmIPainting,
-    useCanvasesMainData,
     usePainterTool,
 } from '@/zustand/store'
-import type { MouseEvent } from 'react'
 
 const canvasWorker = getCanvasWorker()
 

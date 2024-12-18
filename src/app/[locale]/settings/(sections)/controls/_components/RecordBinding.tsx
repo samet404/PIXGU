@@ -57,7 +57,7 @@ export const RecordBinding = () => {
             }, 50)
         }
 
-        if (MODIFIER_KEYS.has(e.key.toUpperCase()) && recording.value.length > 0 && !MODIFIER_KEYS.has(recording.value[recording.value!.length - 1]!)) return
+        if (MODIFIER_KEYS.has(e.key.toUpperCase()) && recording.value.length > 0 && !MODIFIER_KEYS.has(recording.value[recording.value.length - 1]!)) return
 
         setRecording({
             key: recording.key,

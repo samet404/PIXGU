@@ -1,12 +1,12 @@
 'use client'
 
-import { Fragment, useEffect, useRef, useState, type PropsWithChildren } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import YouTubePlayer from 'youtube-player'
 import type { YouTubePlayer as YoutubePlayerType } from 'youtube-player/dist/types'
-import { useSoundSettings, useTabs } from '@/zustand/store'
+import { useSoundSettings } from '@/zustand/store'
 import { Options } from './Options'
 
-export const Player = ({ children }: PropsWithChildren) => {
+export const Player = () => {
     const list = useSoundSettings(s => s.musicLinks)
     const youtubeVidRef = useRef<YoutubePlayerType | null>(null)
     const [ready, retReady] = useState(false)
@@ -28,7 +28,7 @@ export const Player = ({ children }: PropsWithChildren) => {
     }, [list])
 
 
-    return (
+    if (ready) return (
         <Fragment>
             <div className='text-[#ffffffa9] text-sm text-center'> {list.length === 0 ? 'You can add music link in settings > sounds' : null}</div>
             <div

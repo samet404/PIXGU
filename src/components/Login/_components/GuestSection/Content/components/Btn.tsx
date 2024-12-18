@@ -25,12 +25,15 @@ export const Btn = ({ inputRef, joinGame, redirectToRoomID }: Props) => {
     return () => {
       reset()
       setIsActive(false)
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       if (inputRef.current) inputRef.current.value = ''
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
     setGlobalLoading(isLoading)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading])
 
   useEventListener(

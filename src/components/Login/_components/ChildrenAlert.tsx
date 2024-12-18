@@ -23,7 +23,7 @@ export const ChildrenAlert = ({ children }: PropsWithChildren) => {
                 </div>
             </div>
 
-            <div className='text-[#ffffffc4] text-xs'>To use PIXGU, you must be 13 or older. More information about PIXGU's age restrictions can be found in our <Link className='text-blue-400' href='/privacy'>Privacy Policy</Link>.</div>
+            <div className='text-[#ffffffc4] text-xs'>To use PIXGU, you must be 13 or older. More information about {`PIXGU's`} age restrictions can be found in our <Link className='text-blue-400' href='/privacy'>Privacy Policy</Link>.</div>
         </div>
     )
 }

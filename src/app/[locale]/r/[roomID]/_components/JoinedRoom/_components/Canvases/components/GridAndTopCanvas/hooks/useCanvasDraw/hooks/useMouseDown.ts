@@ -22,7 +22,6 @@ export const useMouseDown = (myUserID: string) => {
       main,
       zoom,
       cellPixelLength,
-      mctx,
     } = useCanvasesMainData.getState()
     if (!main || !cellPixelLength || !zoom) return
 

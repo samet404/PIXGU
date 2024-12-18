@@ -7,7 +7,7 @@ import { negativeLog } from './negativeLog'
 /**
  * Send data to peer
  */
-export const sendToPeer = async (
+export const sendToPeer = (
   peer: SimplePeer.Instance | undefined,
   data: WebRTCConnData | WebRTCConnData[],
 ) => {

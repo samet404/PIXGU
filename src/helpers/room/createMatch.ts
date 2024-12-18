@@ -14,7 +14,7 @@ import {
 import { postMsgToCanvasWorker } from '@/workers'
 
 
-export const createMatch = async (roomID: string) => {
+export const createMatch = (roomID: string) => {
   const players = usePlayers.getState().get
   const isGameEnded = (useMatchStatus.getState().value.matchCount === useTotalMatchCount.getState().value.totalMatchCount) || storePaintersAccess.value.paintersToBeSelected.length === 0
   const { mctx } = useHostCanvasesData.getState()

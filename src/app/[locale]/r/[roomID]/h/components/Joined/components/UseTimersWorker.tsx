@@ -8,7 +8,7 @@ import { sendToAllPeers } from '@/utils/sendToAllPeers'
 import { sendToPeer } from '@/utils/sendToPeer'
 import { sendToPeerWithID } from '@/utils/sendToPeerWithID'
 import { violetLog } from '@/utils/violetLog'
-import { getHostTimerWorker, postMsgToHostTimerWorker, terminateTimerWorker, TimerWorkerPostMsgData } from '@/workers'
+import { getHostTimerWorker, postMsgToHostTimerWorker, terminateTimerWorker, type TimerWorkerPostMsgData } from '@/workers'
 import { useCoins, useHostingHealth, useHostPainterData, useMatchStatus, usePeers, usePlayers, usePlayersPing, useWhoIsPainter } from '@/zustand/store'
 
 export const UseTimersWorker = ({ roomID }: Props) => {
@@ -47,7 +47,7 @@ export const UseTimersWorker = ({ roomID }: Props) => {
                     useMatchStatus.getState().decreaseRemainSeconds()
                     break
 
-                case 'MATCH_ENDED':
+                case 'MATCH_ENDED': {
                     const painterID = useWhoIsPainter.getState().value.painterID!
 
                     postMsgToHostTimerWorker({
@@ -77,6 +77,7 @@ export const UseTimersWorker = ({ roomID }: Props) => {
 
                     createMatch(roomID)
                     break
+                }
                 case 'RTT':
                     Object.keys(usePeers.getState().peers).forEach((ID) => {
                         const peer = usePeers.getState().peers[ID]!.peer as any

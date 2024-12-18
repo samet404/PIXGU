@@ -4,7 +4,7 @@ import { goldLog } from '@/utils/goldLog'
 import { useSocketIO } from '@/zustand/store'
 
 export const onPeerSignal = (peer: SimplePeer.Instance, userID: string) => {
-  peer.on('signal', async (signal: WebRTCSignalData) => {
+  peer.on('signal', (signal: WebRTCSignalData) => {
     goldLog(`${signal.type.toUpperCase()} SENT TO ${userID}`, signal)
 
     console.log('send-webrtc-signal input: ', {

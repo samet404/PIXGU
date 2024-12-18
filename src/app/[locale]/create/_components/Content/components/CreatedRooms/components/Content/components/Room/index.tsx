@@ -5,8 +5,8 @@ import { api } from '@/trpc/react'
 import { KillRoomBtn } from './components/KillRoomBtn'
 import { GoToRoom } from './components/GoToRoom'
 
-export const Room = ({ ID, refetch }: Props) => {
-    const { data, error, isError, isLoading } =
+export const Room = ({ ID }: Props) => {
+    const { data, error, isLoading } =
         api.gameRoom.getCreatedRoom.useQuery(
             { ID },
             {

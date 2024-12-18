@@ -1,3 +1,3 @@
 import { publicProcedure } from '@/server/api/trpc'
 
-export const getGuest = publicProcedure.query(async ({ ctx }) => ctx.guest)
+export const getGuest = publicProcedure.query(({ ctx }) => ctx.guest)

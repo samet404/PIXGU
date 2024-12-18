@@ -1,6 +1,5 @@
 'use client'
 
-import { api } from '@/trpc/react'
 import { Urbanist } from 'next/font/google'
 import { useCreateRoomInputs, useSocketIO } from '@/zustand/store'
 import { clsxMerge } from '@/utils/clsxMerge'
@@ -86,7 +85,7 @@ const CreateRoomButton = ({ createdRoomsRef }: Props) => {
     return 'Create'
   })()
 
-  const handleClick = async () => {
+  const handleClick = () => {
     const resetTimeout = resetTimeoutRef.current
     if (resetTimeout) clearTimeout(resetTimeout)
     if (!name) return

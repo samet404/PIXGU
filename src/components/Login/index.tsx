@@ -3,7 +3,7 @@ import bgImg from '@/png/startbg.png'
 import { NavigationSection } from './_components/NavigationSection'
 import { OAuthSection } from './_components/OAuthSection'
 import Logo from '@/png/logo.png'
-import { Inter, Outfit } from 'next/font/google'
+import { Outfit } from 'next/font/google'
 import { GuestSection } from './_components/GuestSection'
 import Link from 'next/link'
 import type { Locale } from '@/types'
@@ -42,7 +42,7 @@ export const Login = ({ locale, redirectToRoomID, guest, oauth }: Props) => {
         <div className='h-full w-full flex max-w-[20rem] flex-col justify-between'>
           <div className='flex flex-col gap-2'>
             {guest && <GuestSection redirectToRoomID={redirectToRoomID} />}
-            {oauth && <OAuthSection locale={locale} />}
+            {oauth ? <OAuthSection locale={locale} /> : <Link className='text-[#ffffffb4] hover:text-white drop-shadow-lg text-xs' href="/login">I want to log in with oauth provider instead</Link>}
           </div>
 
           <div className='text-xs text-[#ffffffc4] text-center'>

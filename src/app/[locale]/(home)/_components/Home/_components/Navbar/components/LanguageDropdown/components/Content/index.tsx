@@ -1,5 +1,5 @@
-import OpenerBtn from './components/OpenerBtn'
-import Dropdown from './components/DropdownContent'
+// import OpenerBtn from './components/OpenerBtn'
+// import Dropdown from './components/DropdownContent'
 
 const Content = () => {
   return (

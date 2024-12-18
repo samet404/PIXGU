@@ -3,7 +3,7 @@ import { guessChat } from './funcs/guessChat'
 import { winnersChat } from './funcs/winnersChat'
 import { useHostPlayersMsgs } from '@/zustand/store'
 
-export const chat = async (
+export const chat = (
   data: (GuessChatFromClient | WinnersChatFromClient)['data'],
   event: (GuessChatFromClient | WinnersChatFromClient)['event'],
   userID: string,

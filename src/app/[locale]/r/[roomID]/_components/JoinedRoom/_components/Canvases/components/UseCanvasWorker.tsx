@@ -58,13 +58,14 @@ export const UseCanvasWorker = () => {
                     }
                     break
 
-                case 'eyedropper':
+                case 'eyedropper': {
 
                     const data = workerData.data
                     usePainterTool.getState().setColor(
                         [data[0]!, data[1]!, data[2]!, 255]
                     )
                     break
+                }
 
                 case 'undo-redo':
                     {

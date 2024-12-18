@@ -11,7 +11,7 @@ export const painterTrash = (userID: string) => {
 
   mctx!.beginPath()
   mctx!.fillStyle = '#ffffff'
-  mctx!.fillRect(0, 0, mctx!.canvas!.width, mctx!.canvas!.height)
+  mctx!.fillRect(0, 0, mctx!.canvas.width, mctx!.canvas.height)
   mctx!.closePath()
 
   canvasWorker.current.postMessage({

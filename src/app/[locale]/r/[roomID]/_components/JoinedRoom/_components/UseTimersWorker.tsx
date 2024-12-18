@@ -4,10 +4,10 @@ import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { useAmIPainting, useAmISpectator, useCoins, useGameEndedPanel, useGuessChatLayout, useGuessedPlayers, useHostPeer, useIsGameStopped, useMatchStatusClient, useMyCoin, useNewPainterPanel, usePainterSelectingRemainTime, usePing, useRoomGuessChatMsgsStore, useRoomWinnersChatMsgsStore, useSelectThemePanel, useSpectators, useWhoIsPainterClient, useWinnersChatLayout, } from '@/zustand/store'
 import { getPlayerTimerWorker, postMsgToPlayerTimerWorker, terminatePlayerTimerWorker, type PlayerTimerWorkerPostMsgData } from '@/workers'
 import { violetLog } from '@/utils/violetLog'
-import { RTCStats } from '@/types'
+import { type RTCStats } from '@/types'
 import { sendToPeer } from '@/utils/sendToPeer'
 
-export const UseTimersWorker = ({ }: Props) => {
+export const UseTimersWorker = () => {
     useEffectOnce(() => {
         const timerWorker = getPlayerTimerWorker()
 
@@ -61,7 +61,7 @@ export const UseTimersWorker = ({ }: Props) => {
 
                     useGameEndedPanel.getState().add50msToTimer()
                     break
-                case 'RTT':
+                case 'RTT': {
                     const peer = useHostPeer.getState().peer as any
 
                     sendToPeer(peer, {
@@ -90,6 +90,7 @@ export const UseTimersWorker = ({ }: Props) => {
                         })
 
                     })
+                }
 
 
 
@@ -104,7 +105,4 @@ export const UseTimersWorker = ({ }: Props) => {
     })
 
     return null
-}
-
-type Props = {
 }

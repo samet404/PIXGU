@@ -7,7 +7,6 @@ import { useEffect, type PropsWithChildren } from 'react'
 export const Tabs = ({ children }: PropsWithChildren) => {
     const newTab = useTabs((s) => s.newTab)
     const closeTab = useTabs((s) => s.closeTab)
-    const tabCount = useTabs((s) => s.currentTabCount)
     const tabIDs = useTabs((s) => s.tabIDs)
     const myTabID = useTabs((s) => s.tabID)
     const setMusicPlayerTabID = useTabs(s => s.setMusicPlayerTabID)

@@ -1,7 +1,5 @@
 import { z } from 'zod'
 import { publicProcedure } from '@/server/api/trpc'
-import { user } from '@/schema/user'
-import { eq } from 'drizzle-orm'
 
 export const isUserExitsByID = publicProcedure
   .input(z.string())

@@ -1,5 +1,5 @@
 import { useEffectOnce } from '@/hooks/useEffectOnce'
-import { useAmIPainting, useCanvasesMainData, usePainterTool, useXY } from '@/zustand/store'
+import { useCanvasesMainData, usePainterTool, useXY } from '@/zustand/store'
 import { amIPainter, eraser, pencil } from './func'
 
 export const useMouseMove = (myUserID: string) => {

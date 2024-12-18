@@ -13,3 +13,5 @@ export const Input = forwardRef((_: unknown, ref: Ref<HTMLInputElement>) => {
     />
   )
 })
+
+Input.displayName = 'nameInput'

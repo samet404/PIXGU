@@ -3,7 +3,7 @@ import { Alert } from './_components/Alert'
 import { Items } from './_components/Items'
 import { RecordBinding } from './_components/RecordBinding'
 
-const Controls = async () => {
+const Controls = () => {
   return (
     <SectionWrapper text="Controls">
       <div className="flex flex-col gap-2 items-start">

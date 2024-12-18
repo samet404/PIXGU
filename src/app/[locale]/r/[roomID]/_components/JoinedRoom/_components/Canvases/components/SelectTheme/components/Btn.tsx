@@ -2,7 +2,7 @@
 
 import { sendToHostPeer } from '@/utils/sendToHostPeer'
 import { postMsgToPlayerTimerWorker } from '@/workers'
-import { useCoins, useMatchStatusClient, useMyCoin, useOwnedPowerups, usePlayersOwnedPowerups, useSelectThemePanel, useWhoIsPainter, useWhoIsPainterClient } from '@/zustand/store'
+import { useCoins, useMatchStatusClient, useMyCoin, useOwnedPowerups, usePlayersOwnedPowerups, useSelectThemePanel, useWhoIsPainterClient } from '@/zustand/store'
 import { useEffect, useRef } from 'react'
 import clsx from 'clsx'
 

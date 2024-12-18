@@ -16,7 +16,7 @@ export const Change = () => {
     },
   }))
 
-  const change = async () => {
+  const change = () => {
     const currentChat = useGuessChatLayout.getState().value.isOpen ? 'guessChat' : 'winnersChat'
     switch (currentChat) {
       case 'guessChat':

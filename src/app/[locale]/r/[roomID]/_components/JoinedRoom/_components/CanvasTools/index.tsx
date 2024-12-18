@@ -33,7 +33,7 @@ const CanvasTools = () => {
     return () => {
       if (!mainRef.current) return
 
-      mainRef.current!.removeEventListener('mousemove', (e) => {
+      mainRef.current.removeEventListener('mousemove', (e) => {
         e.preventDefault()
       })
     }

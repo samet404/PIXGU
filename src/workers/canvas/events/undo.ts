@@ -17,7 +17,7 @@ export const undo = ({ undoRedo }: UndoInput) => {
 
             // Set to last group of previous operation
             undoRedo.current.undoRedoGroup.index =
-                undoRedo.current.stack[newOperationIndex!]!.length - 1;
+                undoRedo.current.stack[newOperationIndex]!.length - 1;
             undoRedo.current.operationIndex = newOperationIndex;
 
         }

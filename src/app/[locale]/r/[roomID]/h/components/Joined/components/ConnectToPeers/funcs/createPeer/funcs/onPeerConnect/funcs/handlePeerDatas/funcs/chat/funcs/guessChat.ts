@@ -12,7 +12,7 @@ import { createMatch } from '@/helpers/room'
 import { MATCH_TIME_MINUTES } from '@/constants'
 import { postMsgToHostTimerWorker } from '@/workers'
 
-export const guessChat = async (
+export const guessChat = (
   data: GuessChatFromClient['data'],
   userID: string,
   msgID: number,
@@ -149,7 +149,7 @@ export const guessChat = async (
       event: 'everyoneGuessed',
     })
 
-    await createMatch(roomID)
+    createMatch(roomID)
   }
 
 }

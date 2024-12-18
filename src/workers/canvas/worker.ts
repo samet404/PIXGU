@@ -26,7 +26,7 @@ const mousedown: {
     smooth: null
 }
 
-const pixelsOnDraw: Set<`${number},${number}`> = new Set()
+const pixelsOnDraw = new Set<`${number},${number}`>()
 const blurInfo: BlurInfo = {
     blurStack: new Set(),
     hasBlur: false
@@ -60,7 +60,7 @@ self.onmessage = (e) => {
                 const value = blurArray[i]
                 const [x, y] = value!
                 blurInfo.blurStack.delete(value!)
-                pixelsToBeFilled.push([new Uint16Array([x!, y!]), pixels[x!]![y!]!])
+                pixelsToBeFilled.push([new Uint16Array([x, y]), pixels[x]![y]!])
             }
 
             postMessage({
@@ -73,14 +73,14 @@ self.onmessage = (e) => {
             blurInfo.hasBlur = true
             break
         }
-        case 'bucket':
+        case 'bucket': {
             const bucketData = bucket({
                 ...workerData.data,
                 cellSideCount: CELL_SIDE_COUNT,
                 pixels,
                 blurInfo,
                 undoRedo
-            }) as CanvasWorkerPostMsgData
+            })
 
             postMessage(bucketData)
             stringifiedLog({
@@ -89,8 +89,9 @@ self.onmessage = (e) => {
                 stack: undoRedo.current.stack.map(arr => arr.length)
             })
             break
+        }
 
-        case 'pencil':
+        case 'pencil': {
             const pencilData = pencil({
                 ...workerData.data,
                 cellSideCount: CELL_SIDE_COUNT,
@@ -99,7 +100,7 @@ self.onmessage = (e) => {
                 pixelsOnDraw,
                 undoRedo,
                 blurInfo
-            }) as CanvasWorkerPostMsgData
+            })
 
             postMessage(pencilData)
             lastPixel = [workerData.data.startX, workerData.data.startY]
@@ -109,8 +110,8 @@ self.onmessage = (e) => {
                 stack: undoRedo.current.stack.map(arr => arr.length)
             })
             break
-
-        case 'eraser':
+        }
+        case 'eraser': {
 
             const eraserData = eraser({
                 ...workerData.data,
@@ -120,7 +121,7 @@ self.onmessage = (e) => {
                 pixelsOnDraw,
                 undoRedo,
                 blurInfo
-            }) as CanvasWorkerPostMsgData
+            })
 
             stringifiedLog({
                 name: 'after eraser',
@@ -130,6 +131,7 @@ self.onmessage = (e) => {
             postMessage(eraserData)
             lastPixel = [workerData.data.startX, workerData.data.startY]
             break
+        }
 
         case 'reset':
 
@@ -157,14 +159,14 @@ self.onmessage = (e) => {
             postMessage(pixels)
             break
 
-        case 'eyedropper':
-
+        case 'eyedropper': {
             const [x, y] = workerData.data
             postMessage({
                 e: 'eyedropper',
                 data: pixels[x]![y]!
             })
             break
+        }
 
         case 'getPixels':
 
@@ -180,9 +182,9 @@ self.onmessage = (e) => {
 
                 for (let i = 0; i < undoPixels.length; i++) {
                     const pixel = undoPixels[i]!
-                    const [x, y] = pixel[0]!
-                    const [r, g, b, a] = pixel[1]!
-                    pixels[x!]![y!]! = new Uint8ClampedArray([r!, g!, b!, a!])
+                    const [x, y] = pixel[0]
+                    const [r, g, b, a] = pixel[1]
+                    pixels[x!]![y!] = new Uint8ClampedArray([r!, g!, b!, a!])
                 }
 
                 stringifiedLog({
@@ -204,9 +206,9 @@ self.onmessage = (e) => {
 
                 for (let i = 0; i < redoPixels.length; i++) {
                     const pixel = redoPixels[i]!
-                    const [x, y] = pixel[0]!
-                    const [r, g, b, a] = pixel[1]!
-                    pixels[x!]![y!]! = new Uint8ClampedArray([r!, g!, b!, a!])
+                    const [x, y] = pixel[0]
+                    const [r, g, b, a] = pixel[1]
+                    pixels[x!]![y!] = new Uint8ClampedArray([r!, g!, b!, a!])
                 }
 
                 stringifiedLog({
@@ -250,9 +252,9 @@ self.onmessage = (e) => {
 
                 for (let i = 0; i < undoPixels.length; i++) {
                     const pixel = undoPixels[i]!
-                    const [x, y] = pixel[0]!
-                    const [r, g, b, a] = pixel[1]!
-                    pixels[x!]![y!]! = new Uint8ClampedArray([r!, g!, b!, a!])
+                    const [x, y] = pixel[0]
+                    const [r, g, b, a] = pixel[1]
+                    pixels[x!]![y!] = new Uint8ClampedArray([r!, g!, b!, a!])
                 }
 
                 stringifiedLog({
@@ -281,9 +283,9 @@ self.onmessage = (e) => {
 
                 for (let i = 0; i < redoPixels.length; i++) {
                     const pixel = redoPixels[i]!
-                    const [x, y] = pixel[0]!
-                    const [r, g, b, a] = pixel[1]!
-                    pixels[x!]![y!]! = new Uint8ClampedArray([r!, g!, b!, a!])
+                    const [x, y] = pixel[0]
+                    const [r, g, b, a] = pixel[1]
+                    pixels[x!]![y!] = new Uint8ClampedArray([r!, g!, b!, a!])
                 }
 
                 stringifiedLog({

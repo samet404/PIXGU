@@ -1,9 +1,7 @@
-import { useHostingHealth } from '@/zustand/store'
 import { useSpring, animated } from '@react-spring/web'
 import Link from 'next/link'
 
 export const JoinBtn = () => {
-  const hostStatus = useHostingHealth((s) => s.status)
   const [springs, api] = useSpring(() => ({
     from: {
       scale: 1,
@@ -14,7 +12,7 @@ export const JoinBtn = () => {
     },
   }))
 
-  const handleClick = async () => {
+  const handleClick = () => {
     api.start({
       from: {
         scale: 0.9,

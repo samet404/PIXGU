@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { Tool } from '../Tool'
 
 export const Circle = () => {

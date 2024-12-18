@@ -1,13 +1,12 @@
 'use client'
 
-import { useCanvasesMainData, useGameToolAlert } from '@/zustand/store'
+import { useCanvasesMainData } from '@/zustand/store'
 import { Fragment, useEffect, useRef } from 'react'
 import { Button } from './Button'
 import { Svg } from '@/components/Svg'
 
 export const Download = () => {
   const linkRef = useRef<HTMLAnchorElement>()
-  const setToolAlert = useGameToolAlert((s) => s.setAlert)
 
   useEffect(() => {
     linkRef.current = document.createElement<'a'>('a')

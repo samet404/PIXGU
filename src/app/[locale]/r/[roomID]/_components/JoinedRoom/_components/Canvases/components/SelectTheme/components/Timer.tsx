@@ -1,11 +1,9 @@
 'use client'
 
-import { percentageOf } from '@/utils/percentageOf'
 import { usePainterSelectingRemainTime } from '@/zustand/store'
-import { useEffect, useRef, useState, type PropsWithChildren } from 'react'
+import { type PropsWithChildren } from 'react'
 
 export const Timer = ({ children }: PropsWithChildren) => {
-  const start = useRef<number | null>(null)
   const height = usePainterSelectingRemainTime((s) => s.passedMilisecondsWithPercent)
 
   return (

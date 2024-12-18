@@ -1,4 +1,4 @@
-import { joinedUserProducure, loggedUserProducure } from '@/procedure'
+import { joinedUserProducure } from '@/procedure'
 import { TRPCError } from '@trpc/server'
 import z from 'zod'
 

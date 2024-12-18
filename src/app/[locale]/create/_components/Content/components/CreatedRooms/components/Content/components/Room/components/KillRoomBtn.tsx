@@ -8,7 +8,7 @@ export const KillRoomBtn = ({ roomID }: Props) => {
 
     return (
         <button
-            onMouseDown={async () => {
+            onMouseDown={() => {
                 setIsLoading(true)
                 io!.emit('kill', roomID)
             }}

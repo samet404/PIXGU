@@ -28,9 +28,8 @@ const Start = () => {
         />
         <div className="absolute bottom-0 left-0 flex h-full  w-full flex-col gap-4 items-center pt-12 ">
 
-          <div className='text-white text-[1.2rem] drop-shadow-[0_0px_2px_rgba(0,0,0,0.3)]'>
-            Start shape your imagination. Think fast, draw faster, win bigger.
-          </div>
+          <div className='text-white text-[1.2rem] text-center max-w-[50rem] leading-6 drop-shadow-[0_0px_10px_rgba(0,0,0,0.8)]'>
+            Welcome to PIXGU, where creativity meets competition.</div>
 
           <div className="hover:opacity-60 backdrop-blur-md">
             <Link

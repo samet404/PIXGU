@@ -1,6 +1,6 @@
 import { useAmIGuessed, useGuessChatLayout, useRoomGuessChatMsgsStore, useRoomWinnersChatMsgsStore, useWinnersChatLayout } from '@/zustand/store'
 
-export const getYouGuessed = async () => {
+export const getYouGuessed = () => {
   useAmIGuessed.getState().iGuessed()
   useRoomWinnersChatMsgsStore.getState().reset()
   useWinnersChatLayout.getState().setIGuessed()

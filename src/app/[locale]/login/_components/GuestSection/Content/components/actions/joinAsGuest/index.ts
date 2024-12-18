@@ -8,7 +8,6 @@ import { generateGuestUsernameID } from './funcs/generateGuestUsernameID'
 import { TRPCError } from '@trpc/server'
 import { wToMs } from '@/utils'
 import { redisDb } from '@/db/redis'
-import { redirect } from 'next/navigation'
 import { killGuest } from '@/auth/guest'
 import { api } from '@/trpc/server'
 

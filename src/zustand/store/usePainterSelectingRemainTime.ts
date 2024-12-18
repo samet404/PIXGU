@@ -12,7 +12,7 @@ export const usePainterSelectingRemainTime = create<State & Action>((set, get) =
     add50ms: () =>
         set({
             ...get(),
-            passedMiliseconds: get().passedMiliseconds! + 50,
+            passedMiliseconds: get().passedMiliseconds + 50,
             passedMilisecondsWithPercent: percentageOf(get().passedMiliseconds, 20000)
         }),
 

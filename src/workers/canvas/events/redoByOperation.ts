@@ -30,8 +30,8 @@ export const redoByOperation = ({ undoRedo }: UndoInput) => {
             if (!group) console.log('no group: ', group)
             if (!group) console.log('no group because i guess because of this: ', typeof undoRedo.current.stack[currentOperationIndex])
             // [1] means reddo part of the group
-            for (let redoI = 0; redoI < group[1]!.length; redoI++) {
-                result.push(undoRedo.current.stack[currentOperationIndex]![groupI]![1]![redoI]!)
+            for (let redoI = 0; redoI < group[1].length; redoI++) {
+                result.push(undoRedo.current.stack[currentOperationIndex]![groupI]![1][redoI]!)
             }
         }
 

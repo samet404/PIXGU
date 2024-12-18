@@ -1,4 +1,3 @@
-import type { Powerup } from '@/types/powerups'
 import { create } from 'zustand'
 
 const initState: State = {
@@ -12,8 +11,7 @@ export const useMarketplacePrices = create<State & Action>((set, get) => ({
 }))
 
 type State = {
-    value: Record<Powerup | string, number>
+    value: Record<string, number>
 }
 
-type Action = {
-}
+type Action = object

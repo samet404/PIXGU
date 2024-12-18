@@ -11,7 +11,7 @@ export const killGuest = async () => {
   if (authToken) {
     z.string().min(10).cuid2().parse(authToken)
 
-    const guestID = await redisDb.get(`guest:session:${authToken}:ID`)!
+    const guestID = await redisDb.get(`guest:session:${authToken}:ID`)
     await redisDb.del(`guest:session:${authToken}:ID`)
     await redisDb.del(`guest:${guestID}:name`)
     await redisDb.del(`guest:${guestID}:name_ID`)

@@ -12,7 +12,7 @@ export const ChatWrapper = ({
     return (
         <div className="flex w-full relative grow animate-fade flex-col gap-2 rounded-lg overflow-y-auto">
             {
-                !!haveAccess ? <Fragment>
+                haveAccess ? <Fragment>
                     <div className='left-2 top-1 z-[10] text-[#ffffff66] backdrop-blur-sm  px-1 rounded-md absolute text-sm'>{name}</div>
                     <div
                         style={{

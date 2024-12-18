@@ -19,6 +19,8 @@ export const metadata: Metadata = {
 
 
 const JoinRoom = async ({ params }: Props) => {
+  // eslint-disable-next-line no-unused-vars
+  const { locale } = await params
   return (
     <div
       style={{

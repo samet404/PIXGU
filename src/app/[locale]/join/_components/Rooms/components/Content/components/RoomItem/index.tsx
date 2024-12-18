@@ -1,7 +1,6 @@
 import { api } from '@/trpc/react'
 import Link from 'next/link'
 import { PinkValue } from './components/PinkValue'
-import Image from 'next/image'
 import { Svg } from '@/components/Svg'
 
 export const RoomItem = ({ ID }: Props) => {

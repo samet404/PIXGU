@@ -2,7 +2,6 @@
 
 import { useSpring, animated } from '@react-spring/web'
 import { Outfit } from 'next/font/google'
-import { useRouter } from 'next/navigation'
 import { useMutation } from '@tanstack/react-query'
 import { logout } from './actions/logout'
 import Spinner from '@/components/Spinner'
@@ -13,7 +12,6 @@ const outfit = Outfit({
 })
 
 export const LogoutBtn = () => {
-  const router = useRouter()
   const { mutate, isLoading } = useMutation({
     mutationFn: logout,
   })

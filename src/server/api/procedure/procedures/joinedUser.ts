@@ -1,6 +1,5 @@
 import { TRPCError } from '@trpc/server'
 import { publicProcedure } from '@/server/api/trpc'
-import { cookies } from 'next/headers'
 
 export const joinedUserProducure = publicProcedure.use(
   async ({ next, ctx, path, type }) => {

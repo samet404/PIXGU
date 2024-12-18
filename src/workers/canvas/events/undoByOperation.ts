@@ -11,8 +11,8 @@ export const undoByOperation = ({ undoRedo }: UndoInput) => {
     if (currentOperationIndex === -1) {
         // push all the color and coords to result
         for (let groupI = 0; groupI < undoRedo.current.stack[0]!.length; groupI++) {
-            for (let undoI = 0; undoI < undoRedo.current.stack[0]![groupI]![0]!.length; undoI++) {
-                result.push(undoRedo.current.stack[0]![groupI]![0]![undoI]!)
+            for (let undoI = 0; undoI < undoRedo.current.stack[0]![groupI]![0].length; undoI++) {
+                result.push(undoRedo.current.stack[0]![groupI]![0][undoI]!)
             }
         }
 
@@ -27,8 +27,8 @@ export const undoByOperation = ({ undoRedo }: UndoInput) => {
 
     // push all the color and coords to result
     for (let groupI = 0; groupI < undoRedo.current.stack[currentOperationIndex]!.length; groupI++) {
-        for (let undoI = 0; undoI < undoRedo.current.stack[currentOperationIndex]![groupI]![0]!.length; undoI++) {
-            result.push(undoRedo.current.stack[currentOperationIndex]![groupI]![0]![undoI]!)
+        for (let undoI = 0; undoI < undoRedo.current.stack[currentOperationIndex]![groupI]![0].length; undoI++) {
+            result.push(undoRedo.current.stack[currentOperationIndex]![groupI]![0][undoI]!)
         }
     }
 

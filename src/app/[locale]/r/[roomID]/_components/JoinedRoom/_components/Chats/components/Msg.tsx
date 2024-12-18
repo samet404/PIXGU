@@ -6,9 +6,8 @@ import { UserPfp } from '@/components/UserPfp'
 
 export const Msg = ({ ID, msg, similarity }: Props) => {
     const player = usePlayers((s) => s.getPlayer(ID))
-    if (!player) return null
 
-    const isGuest = 'ID' in player
+    const isGuest = 'ID' in player!
     const name = isGuest ? player?.name : player?.usernameWithUsernameID
     const pfp = isGuest ? null : player?.profilePicture
 
@@ -19,6 +18,8 @@ export const Msg = ({ ID, msg, similarity }: Props) => {
 
         messageList!.scrollTop = scrollHeight - clientHeight
     })
+
+    if (!player) return null
 
     return (
         <div className="flex flex-row justify-start gap-[0.40rem] first:!mt-auto">

@@ -3,7 +3,7 @@ import type { PlayerLeft } from '@/types'
 import { postMsgToCanvasWorker, postMsgToPlayerTimerWorker } from '@/workers'
 import { useCoins, useGuessedPlayers, useIsGameStopped, useLetterHint, useMatchStatusClient, useMyCoin, useNewPainterPanel, useOwnedPowerups, usePlayers, usePlayersOwnedPowerups, useRoomGuessChatMsgsStore, useRoomWinnersChatMsgsStore, useSelectThemePanel, useTotalMatchCount, useWhoIsPainterClient, useXY } from '@/zustand/store'
 
-export const getLeftPlayers = async (data: PlayerLeft['data']) => {
+export const getLeftPlayers = (data: PlayerLeft['data']) => {
   const isPainter = useWhoIsPainterClient.getState().isPainter(data.ID)
 
   usePlayers.getState().removePlayer(data.ID)

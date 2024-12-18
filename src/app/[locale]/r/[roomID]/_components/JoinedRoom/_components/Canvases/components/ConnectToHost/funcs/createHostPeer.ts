@@ -23,7 +23,7 @@ export const createHostPeer = (roomID: string, myUserID: string) => {
 
   useHostPeer
     .getState()
-    .peer!.on('signal', async (signalData: WebRTCSignalData) => {
+    .peer!.on('signal', (signalData: WebRTCSignalData) => {
       goldLog(`${signalData.type.toUpperCase()} SENT TO HOST`)
       io!.emit('send-webrtc-signal', signalData)
     })
