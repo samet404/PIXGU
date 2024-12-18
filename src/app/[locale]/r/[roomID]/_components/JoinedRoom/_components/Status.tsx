@@ -12,7 +12,7 @@ import Link from 'next/link'
 export const Status = ({ children }: PropsWithChildren) => {
   // return children
   const playerCount = usePlayers((s) => s.value.count)
-  const inDeveloperMode = useDeveloperSettings((s) => s.developerMode)
+  const inDeveloperMode = useDeveloperSettings((s) => s.isOpen)
   const isGameStopped = useIsGameStopped((s) => s.value)
   const hostPeerStatus = useHostPeer((s) => s.status)
   const { code, isStopped } = isGameStopped

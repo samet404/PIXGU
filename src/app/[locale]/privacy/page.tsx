@@ -28,7 +28,7 @@ const Privacy = () => {
         <div className='pb-10'>
             <h2>Contact us</h2>
 
-            <p>Email us at pixguu@gmail.com with any questions about this Privacy Policy or how we process your information. We’ll be happy to help.                    </p>
+            <p>Email us at support@pixgu.com with any questions about this Privacy Policy or how we process your information. We’ll be happy to help.</p>
 
             <h2>
                 Changes to this Privacy Policy
