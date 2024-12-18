@@ -6,7 +6,7 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev -p 4000",
-    "xata:auth": "xata auth login --api-key=xau_jKazmn27SxcCKWRfUdFnGcVWc2Yxj9Il --force --no-input",
+    "xata:auth": "bun add @xata.io/client@next && xata auth login --api-key=xau_jKazmn27SxcCKWRfUdFnGcVWc2Yxj9Il --force --no-input",
     "xata:init": "bun add @xata.io/client@next && xata init --db https://404-s-workspace-68cmk0.eu-central-1.xata.sh/db/main-database:main --package-manager bun --sdk --no-input --yes --codegen=src/xata.ts --force",
     "xata:init:canary": "bun add @xata.io/client@next && xata init --db https://404-s-workspace-68cmk0.eu-central-1.xata.sh/db/canary:main --package-manager bun --sdk --no-input --yes --codegen=src/xata.ts --force",
     "lint": "next lint",
