@@ -55,6 +55,7 @@ const config = {
     'react/react-hooks/exhaustive-deps': 'off',
     'react/no-unescaped-entities': 'off',
 
+    '@typescript-eslint/ban-types': 'warn',
     '@typescript-eslint/prefer-nullish-coalescing': 'off',
     '@typescript-eslint/prefer-optional-chain': 'off',
     '@typescript-eslint/no-floating-promises': 'off',
