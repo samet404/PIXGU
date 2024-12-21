@@ -81,8 +81,9 @@ export const UseTimersWorker = ({ roomID }: Props) => {
                 case 'RTT':
                     Object.keys(usePeers.getState().peers).forEach((ID) => {
                         const peer = usePeers.getState().peers[ID]!.peer as any
+                        const secretKey = usePeers.getState().secretKeys[ID]!
 
-                        sendToPeer(peer, {
+                        sendToPeer(peer, secretKey, {
                             event: 'loremForRTT',
                             data: 'Eu irure ea occaecat deserunt fugiat incididunt tempor est consectetur sit velit labore cillum.'
                         })

@@ -43,7 +43,14 @@ import {
  * This function handles different peer datas.
  */
 export const handlePeerDatas = (userID: string) => {
-  onPeerData<'fromHost'>(useHostPeer.getState().get()!, (rtcData) => {
+  const secretKey = useHostPeer.getState().secretKey
+
+  if (!secretKey) {
+    console.error('no secret key')
+    return
+  }
+
+  onPeerData<'fromHost'>(useHostPeer.getState().get()!, secretKey, (rtcData) => {
     const { event } = rtcData
 
     grayLog(`RECEIVED ${event} DATA FROM HOST`, rtcData)

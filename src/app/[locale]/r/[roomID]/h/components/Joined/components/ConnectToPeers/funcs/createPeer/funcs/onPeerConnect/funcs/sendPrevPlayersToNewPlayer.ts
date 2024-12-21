@@ -14,10 +14,10 @@ export const sendPrevPlayersToNewPlayer = (userID: string) => {
   }
 
   const playersDbInfo = usePlayers.getState().value.obj
+  const secretKey = usePeers.getState().secretKeys[userID]!
 
   grayLog('SENDING PREV PLAYERS TO NEW PLAYER')
-  sendToPeer(peer, {
-
+  sendToPeer(peer, secretKey, {
     event: 'prevPlayers',
     data: filterObj(playersDbInfo, ([k, v]) => k !== userID) as Record<
       string,

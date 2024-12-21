@@ -1,6 +1,6 @@
 import Image, { type StaticImageData } from 'next/image'
-import { useEffect, useState } from 'react'
 import { currentSectionIndexAtom } from '../atoms'
+import { useEffect, useState } from 'react'
 import { useAtomValue } from 'jotai'
 
 export const TipImage = () => {
@@ -22,13 +22,16 @@ export const TipImage = () => {
     }, [currentSelectedIndex])
 
 
-    if (currentImg === undefined) return <div className='size-[10rem] bg-[#ffffff82] animate-fade animate-infinite'></div>
+    if (currentImg === undefined) return <div className='w-full h-full absolute top-0 left-0 flex items-center justify-center bg-[#ffffff82]'></div>
     if (currentImg === null) return null
 
-    return <Image
-        src={currentImg}
-        alt="tips-modal-image"
-        sizes='puts the size of the image here'
-        className='size-[10rem] drop-shadow-[0_0px_10px_rgba(0,0,0,0.55)] rounded-lg'
-    />
+    return <div className='w-full h-full flex items-center justify-center absolute top-0 left-0'>
+        <Image
+            src={currentImg}
+            alt="tips-modal-image"
+            sizes='100vw'
+            placeholder='blur'
+            className='w-[50rem] left-0 top-0 drop-shadow-[0_0px_20px_rgba(0,0,0,0.8)] rounded-lg'
+        />
+    </div>
 }

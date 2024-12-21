@@ -4,11 +4,12 @@ import { create } from 'zustand'
 export type HostPeerState = {
   peer: SimplePeer.Instance | null
   status:
-    | 'connecting'
-    | 'connected'
-    | 'failed'
-    | 'disconnected'
-    | 'finding host'
+  | 'connecting'
+  | 'connected'
+  | 'failed'
+  | 'disconnected'
+  | 'finding host'
+  secretKey: string | null
 }
 
 type Action = {
@@ -17,9 +18,10 @@ type Action = {
   reset: () => void
 }
 
-const initValue = {
+const initValue: HostPeerState = {
   peer: null,
   status: 'finding host',
+  secretKey: null
 } as const
 
 export const useHostPeer = create<HostPeerState & Action>((set, get) => ({
@@ -39,6 +41,6 @@ export const useHostPeer = create<HostPeerState & Action>((set, get) => ({
       peer.destroy()
     }
 
-    set(initValue)
+    set({ ...initValue })
   },
 }))

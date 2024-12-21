@@ -5,21 +5,23 @@ import { PreventRefresh } from '@/components/PreventRefresh'
 import { redisDb } from '@/db/redis'
 import { redirect } from 'next/navigation'
 import Joined from './components/Joined'
+import { env } from '@/env/server'
 
 export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
   const { roomID } = await params
 
   const openGraph = {
-    title: `YOU INVITED TO ${roomID}`,
+    title: `YOU INVITED TO ROOM ${roomID}`,
     images: [
       {
-        url: '/image/png/startbg.png',
+        url: `${env.BASE_URL}/image/png/startbg.png`,
         alt: 'pixgu.com background',
       },
     ],
 
-    description: `Someone invited you to room ${roomID}, Create something amazing in PIXGU ✨ - No login required`,
+    description: "Someone invited you to PIXGU, Let's create something cool ✨ | Log in with your nickname",
   }
+
 
   return {
     title: `H-${roomID}`,

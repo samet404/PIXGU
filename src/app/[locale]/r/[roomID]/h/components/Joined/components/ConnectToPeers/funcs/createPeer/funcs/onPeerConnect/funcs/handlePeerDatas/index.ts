@@ -16,8 +16,14 @@ import {
 
 export const handlePeerDatas = (userID: string, roomID: string) => {
   const peers = usePeers.getState().get()
+  const secretKey = usePeers.getState().secretKeys[userID]
 
-  onPeerData<'fromClient'>(peers[userID]!.peer, (rtcData) => {
+  if (!secretKey) {
+    console.error('secretKey not found handling peer datas')
+    return
+  }
+
+  onPeerData<'fromClient'>(peers[userID]!.peer, secretKey, (rtcData) => {
     const { event } = rtcData
     grayLog(JSON.stringify({
       name: 'WEBRTC_DATA_FROM_CLIENT',

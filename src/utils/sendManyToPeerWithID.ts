@@ -15,5 +15,6 @@ export const sendManyToPeerWithID = (userID: string, datas: WebRTCConnData[]) =>
       return
     }
 
-    sendToPeer(peer, data)
+    const secretKey = usePeers.getState().secretKeys[userID]!
+    sendToPeer(peer, secretKey, data)
   })

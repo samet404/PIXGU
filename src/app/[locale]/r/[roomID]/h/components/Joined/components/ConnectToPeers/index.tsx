@@ -1,7 +1,7 @@
 'use client'
 
 import { useRoomIDStore } from '@/zustand/provider'
-import { getPrevPlayers, playerJoined, receiveSignal } from './funcs'
+import { getPrevPlayers, getSecretKey, playerJoined, receiveSignal } from './funcs'
 import { useHostingHealth, useSocketIO } from '@/zustand/store'
 import { useEffect, } from 'react'
 import { playerLeftFromSocket } from './funcs/playerLeftFromSocket'
@@ -17,6 +17,7 @@ export const ConnectToPeers = () => {
     io.on('connect', () => {
       setHostingHealth('waitingForPlayers')
     })
+    getSecretKey()
     receiveSignal()
     playerLeftFromSocket(roomID)
     playerJoined(roomID)

@@ -1,6 +1,7 @@
 import {
   useCoins,
   useHostingHealth,
+  usePeers,
   usePlayers,
   useSocketIO,
   useSpectators,
@@ -24,6 +25,8 @@ export const onPeerConnect = (
   user: User | Guest,
 ) =>
   peer.on('connect', () => {
+    const userSecretKey = usePeers.getState().secretKeys[userID]!
+
     positiveLog(`CONNECTED TO ${userID}`)
     useSocketIO.getState().io!.emit('connection-success', userID)
 
@@ -43,15 +46,16 @@ export const onPeerConnect = (
     const isSpectator = status === 'gameIsStarted'
 
     if (isSpectator) {
-      sendToPeer(peer, {
+      sendToPeer(peer, userSecretKey, {
 
         event: 'youAreSpectator',
       })
 
       useSpectators.getState().add(userID)
       Object.keys(useCoins.getState().coins).forEach((ID) => {
-        sendToPeer(peer, {
+        const secretKey = usePeers.getState().secretKeys[ID]!
 
+        sendToPeer(peer, secretKey, {
           event: 'coin',
           data: {
             to: ID,
@@ -72,7 +76,7 @@ export const onPeerConnect = (
 
     handlePeerDatas(userID, roomID)
     sendPrevPlayersToNewPlayer(userID)
-    sendToPeer(peer, {
+    sendToPeer(peer, userSecretKey, {
 
       event: 'prevSpectators',
       data: useSpectators.getState().playersIDs,

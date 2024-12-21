@@ -2,7 +2,7 @@
 
 import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { useRoomIDStore, useUserIDStore } from '@/zustand/provider'
-import { hostLeft, receiveSignal } from './funcs'
+import { getSecretKey, hostLeft, receiveSignal } from './funcs'
 import { useSocketIO } from '@/zustand/store'
 
 export const ConnectToHost = () => {
@@ -12,6 +12,7 @@ export const ConnectToHost = () => {
   console.log('myUserID: ', myUserID)
   useEffectOnce(() => {
     receiveSignal(roomID, myUserID)
+    getSecretKey()
     hostLeft()
     useSocketIO.getState().io?.emit('ready')
   })

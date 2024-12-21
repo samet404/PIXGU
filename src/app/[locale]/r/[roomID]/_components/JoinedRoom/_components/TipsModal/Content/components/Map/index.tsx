@@ -6,7 +6,6 @@ export const Map = () => {
       <Item type={1} />
       <Item type={2} />
       <Item type={3} />
-      <Item type={4} />
     </div>
   )
 }

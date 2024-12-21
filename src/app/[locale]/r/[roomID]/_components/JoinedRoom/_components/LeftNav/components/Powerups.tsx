@@ -17,7 +17,7 @@ export const Powerups = () => {
         else setOpenPanel('power-ups')
       }}
       className="hover:bg-[rgba(255,230,0,0.62)]"
-      icon={<Svg src='thunder-f-svgrepo-com.svg' alt="star" className="h-full w-full opacity-60" />}
+      icon={<Svg src='thunder-f-svgrepo-com.svg' alt="star" className="h-full w-full opacity-40" />}
     />
   )
 }

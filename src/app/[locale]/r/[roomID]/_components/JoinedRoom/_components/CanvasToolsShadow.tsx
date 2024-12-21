@@ -40,7 +40,7 @@ export const CanvasToolsShadow = () => {
 
     if (gameStatus === 'started') return (
         <div
-            className="absolute z-40 top-0 left-0 h-full pointer-events-none"
+            className="absolute animate-fade z-40 top-0 left-0 h-full pointer-events-none"
             style={amIPainter ? {
                 width: '30rem',
                 background: `linear-gradient(90deg, 
@@ -51,6 +51,7 @@ export const CanvasToolsShadow = () => {
             } : {
                 display: 'none'
             }}
-        ></div>
+        >
+        </div>
     )
 }

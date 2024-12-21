@@ -39,7 +39,7 @@ export const Download = () => {
         key={'download'}
         onMouseDown={download}
         className="hover:bg-[#ffffff45]"
-        icon={<Svg src='download-svgrepo-com.svg' alt="download" className="h-full w-full opacity-60" />}
+        icon={<Svg src='download-svgrepo-com.svg' alt="download" className="h-full w-full opacity-40" />}
       />
     </Fragment>
   )

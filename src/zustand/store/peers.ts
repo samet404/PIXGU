@@ -2,17 +2,26 @@ import type { Peers } from '@/types'
 import type SimplePeer from 'simple-peer'
 import { create } from 'zustand'
 
-type State = { peers: Peers }
+type State = {
+  peers: Peers
+  secretKeys: Record<string, string>
+}
 
 type Action = {
   add: (input: { ID: string; peer: SimplePeer.Instance }) => void
+  addSecretKey: (ID: string, key: string) => void
   removePeer: (ID: string) => void
   get: () => Peers
   reset: () => void
 }
 
-export const usePeers = create<State & Action>((set, get) => ({
+const initState: State = {
   peers: {},
+  secretKeys: {},
+}
+
+export const usePeers = create<State & Action>((set, get) => ({
+  ...initState,
 
   get: () => get().peers,
   removePeer: (ID) => {
@@ -22,6 +31,17 @@ export const usePeers = create<State & Action>((set, get) => ({
       delete get().peers[ID]
     }
   },
+
+  addSecretKey: (ID, key) => {
+    set({
+      ...get(),
+      secretKeys: {
+        ...get().secretKeys,
+        [ID]: key,
+      },
+    })
+  },
+
   add: (input) => {
     const { ID, peer } = input
 

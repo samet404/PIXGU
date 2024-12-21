@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 'use client'
 
-import type { PropsWithChildren } from 'react'
+import { useEffect, type PropsWithChildren } from 'react'
 import { useDeveloperSettings } from '@/zustand/store'
 
 export const InıtSettings = ({
@@ -10,28 +10,30 @@ export const InıtSettings = ({
   const setConsoleLogFuncs = useDeveloperSettings((s) => s.setConsoleLogFuncs)
   const isOpen = useDeveloperSettings(s => s.isOpen)
 
-  if (!isOpen) {
-    setConsoleLogFuncs(console.log, console.error, console.info, console.warn)
-    console.log = function () { }
-    console.error = function () { }
-    console.info = function () { }
-    console.warn = function () { }
+  useEffect(() => {
+    if (!isOpen) {
+      setConsoleLogFuncs(console.log, console.error, console.info, console.warn)
+      console.log = function () { }
+      console.error = function () { }
+      console.info = function () { }
+      console.warn = function () { }
 
-    return
-  }
+      return
+    }
 
-  const consoleLog = useDeveloperSettings.getState().others?.consoleLog
-  const consoleError = useDeveloperSettings.getState().others?.consoleError
-  const consoleInfo = useDeveloperSettings.getState().others?.consoleInfo
-  const consoleWarn = useDeveloperSettings.getState().others?.consoleWarn
+    const consoleLog = useDeveloperSettings.getState().others?.consoleLog
+    const consoleError = useDeveloperSettings.getState().others?.consoleError
+    const consoleInfo = useDeveloperSettings.getState().others?.consoleInfo
+    const consoleWarn = useDeveloperSettings.getState().others?.consoleWarn
 
-  if (consoleLog && consoleError && consoleInfo && consoleWarn) {
-    console.log = consoleLog
-    console.error = consoleError
-    console.info = consoleInfo
-    console.warn = consoleWarn
-    setConsoleLogFuncs(undefined, undefined, undefined, undefined)
-  }
+    if (consoleLog && consoleError && consoleInfo && consoleWarn) {
+      console.log = consoleLog
+      console.error = consoleError
+      console.info = consoleInfo
+      console.warn = consoleWarn
+      setConsoleLogFuncs(undefined, undefined, undefined, undefined)
+    }
+  }, [isOpen])
 
 
   return children

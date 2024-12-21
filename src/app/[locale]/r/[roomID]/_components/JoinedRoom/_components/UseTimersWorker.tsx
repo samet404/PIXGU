@@ -63,8 +63,9 @@ export const UseTimersWorker = () => {
                     break
                 case 'RTT': {
                     const peer = useHostPeer.getState().peer as any
+                    const secretKey = useHostPeer.getState().secretKey!
 
-                    sendToPeer(peer, {
+                    sendToPeer(peer, secretKey, {
                         event: 'loremForRTT',
                         data: 'Eu irure ea occaecat deserunt fugiat incididunt tempor est consectetur sit velit labore cillum.'
                     })

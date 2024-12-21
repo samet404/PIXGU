@@ -51,7 +51,7 @@ export const Change = () => {
     <animated.button
       style={springs}
       onMouseDown={change}
-      className="h-7 flex-shrink-0 flex items-center justify-center bg-[#ffffff31] rounded-md text-[#0000005f] font-[700] gap-2"
+      className="h-7 flex-shrink-0 flex items-center justify-center bg-[#ffffff31] rounded-md text-[#ffffff5f] font-[700] gap-2"
     >
       <div className="text-[0.8rem] leading-3">CTRL + C</div>
       <div className="size-4 rounded-full">

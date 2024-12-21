@@ -15,7 +15,14 @@ export const sendManyToAllPeers = (
   datas.forEach(([data, config]) => {
     for (const userID in peers) {
       if (!peers[userID]?.peer || config?.except?.includes(userID)) continue
-      sendToPeer(peers[userID].peer, data)
+
+      const secretKey = usePeers.getState().secretKeys[userID]
+      if (!secretKey) {
+        console.error('secretKey not found')
+        continue
+      }
+
+      sendToPeer(peers[userID].peer, secretKey, data)
     }
   })
 }

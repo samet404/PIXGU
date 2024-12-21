@@ -1,5 +1,6 @@
 import { useAtomValue } from 'jotai'
 import { currentSectionIndexAtom } from '../atoms'
+import { clsxMerge } from '@/utils/clsxMerge'
 
 export const Text = () => {
     const currentSelectedIndex = useAtomValue(currentSectionIndexAtom)
@@ -7,17 +8,19 @@ export const Text = () => {
     const text = (() => {
         switch (currentSelectedIndex) {
             case 1:
-                return "Your turn? Pick a word and show off your artistic skills! Draw it for others to guess!"
+                return "Your turn! Pick a word and start drawing!"
             case 2:
-                return "Watch others draw and be the first to guess correctly! Type your answers quickly!"
+                return "Watch and guess fast to win!"
             case 3:
-                return "Earn coins by drawing well and guessing fast to rise in ranking!"
-            case 4:
-                return "Also you can change controls in the settings. Ready? Let's begin!"
+                return "Draw well, guess quick, earn coins!"
         }
     })()
 
-    return <div className='text-sm text-white text-center px-2 rounded-md py-1'>
+    return <div className={clsxMerge('text-[1.5rem] w-[50rem] animate-fade-blur font-[800] drop-shadow-[0_0px_2px_rgba(0,0,0,0.55)] text-center px-2 rounded-md py-1', {
+        'text-[#ffffff]': currentSelectedIndex === 1,
+        'text-[#ace4fe]': currentSelectedIndex === 2,
+        'text-[#faca20]': currentSelectedIndex === 3
+    })}>
         {text}
     </div>
 }

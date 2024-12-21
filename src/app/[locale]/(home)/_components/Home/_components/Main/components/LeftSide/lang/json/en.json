@@ -6,12 +6,12 @@
 
   "quick_match": {
     "name": "Quick match",
-    "description": "Find fast"
+    "description": "No time to wait!"
   },
 
   "join_room": {
     "name": "Join room",
-    "description": "Find and join"
+    "description": "Find your room and join"
   },
   "friends": {
     "name": "Social",
@@ -20,7 +20,7 @@
 
   "how_to_play": {
     "name": "How to play",
-    "description": "Don't know how to play ?"
+    "description": "Don't know how to play?"
   },
 
   "login": {

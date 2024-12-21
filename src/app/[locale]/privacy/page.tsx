@@ -22,7 +22,8 @@ const Privacy = () => {
 
     return <Template>
         <h1>PIXGU PRIVACY POLICY</h1>
-        {new Date(parseInt(lastArchive)).toLocaleString()}
+
+        Publish date: {new Date(parseInt(lastArchive)).toLocaleString()}
 
         <Content />
         <div className='pb-10'>

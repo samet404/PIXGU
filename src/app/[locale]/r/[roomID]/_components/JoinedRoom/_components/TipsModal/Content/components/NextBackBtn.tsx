@@ -3,13 +3,14 @@
 import { useAtom } from 'jotai'
 import { currentSectionIndexAtom } from '../atoms'
 import { clsxMerge } from '@/utils/clsxMerge'
+import { useGuide } from '@/zustand/store'
 
 export const NextBackBtn = ({ type }: Props) => {
     const [currentIndex, setCurrentIndex] = useAtom(currentSectionIndexAtom)
 
     const handleClick = () => {
         if (type === 'next') {
-            if (currentIndex === 4) return
+            if (currentIndex === 3) useGuide.setState({ first: false })
             setCurrentIndex(currentIndex + 1)
 
         }
@@ -20,11 +21,11 @@ export const NextBackBtn = ({ type }: Props) => {
     }
 
     return (
-        <button onMouseDown={handleClick} className={clsxMerge('text-[#000000a0] font-[500] flex first:rounded-bl-md last:rounded-br-md grow items-center justify-center bg-white px-2 py-1', {
+        <button onMouseDown={handleClick} className={clsxMerge('text-[#000000a0] font-[500] flex first:rounded-l-md last:rounded-r-md grow items-center justify-center bg-white px-2 py-1', {
             'bg-gray-200': (type === 'back' && currentIndex === 1) || (type === 'next' && currentIndex === 4),
 
         })}>
-            {type === 'next' ? 'Next' : 'Back'}
+            {type === 'next' ? currentIndex === 3 ? 'Got it!' : 'Next' : 'Back'}
         </button>
     )
 }

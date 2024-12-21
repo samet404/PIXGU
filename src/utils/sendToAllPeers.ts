@@ -11,6 +11,7 @@ export const sendToAllPeers = (
   const peers = usePeers.getState().peers
   for (const userID in peers) {
     if (!peers[userID]?.peer || config?.except?.includes(userID)) continue
-    sendToPeer(peers[userID].peer, data)
+    const secretKey = usePeers.getState().secretKeys[userID]!
+    sendToPeer(peers[userID].peer, secretKey, data)
   }
 }

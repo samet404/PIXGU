@@ -10,11 +10,12 @@ import './_styles/globals.css'
 // fontawesome
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
-import { Adsense } from './_components/Adsense'
 import { SmallScreenAlert } from './_components/SmallScreenAlert'
 import { DefaultShortcuts } from './_components/DefaultShortcuts'
 config.autoAddCss = false
 import { GoogleAnalytics } from '@next/third-parties/google'
+import { GlobalComponentsForJoinedUsers } from './_components/GlobalComponentsForJoinedUsers'
+import { CustomCursor } from './_components/CustomCursor'
 
 
 const description = 'PIXGU - Free online drawing and guessing game inspired by Gartic.io and Skribbl.io. Join rooms or host one to play with friends'
@@ -97,16 +98,17 @@ const RootLayout = async (props: {
         }}
       >
         <GoogleAnalytics gaId='G-PL9PWSE3JG' />
-        <Adsense />
         <SmallScreenAlert>
           <TRPCReactProvider cookies={(await cookies()).toString()}>
-            {/* <CustomCursor /> */}
-            <Providers>
-              <DefaultShortcuts />
-
-              {props.children}
-              <Version />
-            </Providers>
+            <CustomCursor />
+            {/* @ts-ignore https://github.com/microsoft/TypeScript/issues/59111 */}
+            <GlobalComponentsForJoinedUsers>
+              <Providers>
+                <DefaultShortcuts />
+                {props.children}
+                <Version />
+              </Providers>
+            </GlobalComponentsForJoinedUsers>
           </TRPCReactProvider>
         </SmallScreenAlert>
       </body>

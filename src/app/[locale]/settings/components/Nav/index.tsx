@@ -29,6 +29,7 @@ const Nav = () => {
         <NavItem name="Account" />
         <NavItem name="Controls" />
         <NavItem name="Sounds" />
+        <NavItem name="Appearance" />
         <NavItem name="Advanced" />
       </div>
     </nav>

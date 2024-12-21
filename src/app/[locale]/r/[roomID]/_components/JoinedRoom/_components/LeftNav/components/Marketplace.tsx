@@ -17,7 +17,7 @@ export const Marketplace = () => {
         if (openPanel === 'marketplace') setOpenPanel(null)
         else setOpenPanel('marketplace')
       }}
-      icon={<Svg src='shop.svg' alt="shop" className="h-full w-full opacity-60" />}
+      icon={<Svg src='shop.svg' alt="shop" className="h-full w-full opacity-40" />}
     />
   )
 }

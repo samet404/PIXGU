@@ -3,19 +3,24 @@ import type SimplePeer from 'simple-peer'
 import { isObject } from './isObject'
 import { grayLog } from './grayLog'
 import { negativeLog } from './negativeLog'
+import { AES } from 'crypto-js'
 
 /**
  * Send data to peer
  */
 export const sendToPeer = (
   peer: SimplePeer.Instance | undefined,
+  secretKey: string,
   data: WebRTCConnData | WebRTCConnData[],
 ) => {
+
   if (Array.isArray(data)) {
     data.forEach((d) => {
 
+      const encryptedData = AES.encrypt(JSON.stringify(d), secretKey).toString()
+
       try {
-        peer?.send(JSON.stringify(d))
+        peer?.send(encryptedData)
         grayLog(JSON.stringify({
           name: 'DATA_SENT_TO_PEER',
           data,
@@ -31,7 +36,9 @@ export const sendToPeer = (
 
   if (isObject(data)) {
     try {
-      peer?.send(JSON.stringify(data))
+      const encryptedData = AES.encrypt(JSON.stringify(data), secretKey).toString()
+
+      peer?.send(encryptedData)
       grayLog(JSON.stringify({
         name: 'SENDING_DATA_TO_PEER',
         data,

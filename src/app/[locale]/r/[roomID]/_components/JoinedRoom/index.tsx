@@ -1,6 +1,5 @@
 import './_styles/scrollbars.css'
 import { Providers } from './_components/Providers'
-import { Suspense } from 'react'
 import AnimatedDiv from './_components/AnimatedDiv'
 import { Status } from './_components/Status'
 import Canvases from './_components/Canvases'
@@ -26,6 +25,7 @@ import { TipsModal } from './_components/TipsModal'
 import type { Locale } from '@/types/locale'
 import { redisDb } from '@/db/redis'
 import { notFound } from 'next/navigation'
+import { PainterToolGuide } from './_components/PainterToolGuide'
 
 const outfit = Outfit({
     subsets: ['latin'],
@@ -64,6 +64,7 @@ const JoinedRoom = async ({
                     <AnimatedDiv />
                     <Nav />
                     <div className="h-full w-full">
+                        <PainterToolGuide />
                         <CanvasToolsShadow />
                         <ToolAlert />
                         <ResetStates />
@@ -71,17 +72,17 @@ const JoinedRoom = async ({
                         <GameEnd userID={user ? user.id : guest!.ID} />
                         <Status />
                         <Shortcuts />
-                        <div className="h-[100vh] w-full">
-                            <Suspense>
-                                <LetterHint />
-                                <Marketplace />
-                                <Powerups />
-                            </Suspense>
+                        <div className="h-full w-full">
+                            <LetterHint />
+                            <Marketplace />
+                            <Powerups />
+                            <TipsModal />
+
+
                             <div
                                 id="rootDiv"
                                 className="relative flex h-full w-full animate-fade flex-row items-start justify-between gap-2 overflow-y-scroll px-2 pb-24 pt-2"
                             >
-                                <TipsModal />
                                 <Spectator />
 
                                 <div

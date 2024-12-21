@@ -5,7 +5,7 @@ import { Trash } from './components/Trash'
 import { Bucket } from './components/Bucket'
 import { Pencil } from './components/Pencil'
 import { Eraser } from './components/Eraser'
-import { useWhoIsPainterClient } from '@/zustand/store'
+import { useGuide, useWhoIsPainterClient } from '@/zustand/store'
 import { isCanvasToolsOpenAtom } from '../atoms'
 import { useAtomValue } from 'jotai'
 import { useEffect, useRef } from 'react'
@@ -25,6 +25,8 @@ const CanvasTools = () => {
   useEffect(() => {
     if (!mainRef.current) return
     if (whoIsPainter.status === 'thereIsNoPainter') return
+
+    if (useGuide.getState().painterTool) useGuide.setState(s => ({ ...s, painterTool: false }))
 
     mainRef.current.addEventListener('mousemove', (e) => {
       e.preventDefault()

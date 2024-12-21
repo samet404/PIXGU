@@ -1,11 +1,12 @@
 'use client'
 
-import { clsxMerge } from '@/utils/clsxMerge'
 import { Fragment } from 'react'
 import dynamic from 'next/dynamic'
 import { useGameEndedPanel } from '@/zustand/store'
 import { Player } from './components/Player'
 import { Timer } from './components/Timer'
+import { Bg } from './components/Bg'
+
 
 const Confetti = dynamic(() =>
   import('./components/Confetti').then((m) => m.Confetti),
@@ -14,38 +15,35 @@ const Confetti = dynamic(() =>
 export const GameEnd = ({ userID }: Props) => {
   const panelInfo = useGameEndedPanel((s) => s.value)
 
-  panelInfo
-  return (
+  if (panelInfo.isOpen) return (
     <Fragment>
-      {panelInfo.isOpen ? <Confetti /> : null}
+      <Confetti />
 
       <div
         id="gameEnded"
-        className={`relative flex overflow-y-scroll pb-10 ${panelInfo.isOpen ? 'animate-fade-blur' : 'hidden animate-hide'} z-50 flex h-full w-full animate-fade flex-col items-center bg-gradient-to-tr from-[#bef5fe] via-[#ebffc5] to-[#bffcd9] pt-[20%]`}
+        className={`selection:!bg-[#dfb4b9] p-4 flex absolute  animate-fade-blur z-50  h-full w-full flex-col items-center`}
       >
-        {panelInfo.isOpen ? <Timer /> : null}
-        <div
-          className={clsxMerge(
-            `relative w-[40rem] text-8xl font-bold text-[#00000034]`,
-          )}
-        >
-          <div className="absolute bottom-7 left-0 flex h-full w-full items-center justify-center">
-            GAME ENDED
-          </div>
+        <Bg isOpen={!!panelInfo} />
+        <Timer />
+        <div className='text-[#ffffffe0] animate-fade-blur drop-shadow-[0_0px_10px_rgba(0,0,0,0.25)] text-[3rem] font-[700]'>
+          GAME ENDED
         </div>
-        <div className="z-10 flex min-h-[30rem] w-[30rem] animate-fade-up flex-col rounded-lg bg-gradient-to-tr from-gray-200 to-gray-50 p-1 shadow-[0_0px_20px_1px_rgba(0,0,0,0.5)]">
-          {panelInfo.isOpen &&
-            panelInfo.coins!.map(([ID, amount], i) => {
-              return (
-                <Player
-                  key={ID}
-                  myUserID={userID}
-                  ID={ID}
-                  index={i}
-                  coin={amount}
-                />
-              )
-            })}
+        <div
+          style={{
+            scrollbarWidth: 'none'
+          }}
+          className="z-10 animate-delay-1000 flex grow w-[30rem] overflow-y-scroll animate-fade-up flex-col rounded-lg bg-gradient-to-tr from-gray-200 to-gray-50 p-1 shadow-[0_0px_20px_1px_rgba(0,0,0,0.5)]">
+          {panelInfo.coins!.map(([ID, amount], i) => {
+            return (
+              <Player
+                key={ID}
+                myUserID={userID}
+                ID={ID}
+                index={i}
+                coin={amount}
+              />
+            )
+          })}
         </div>
       </div>
     </Fragment>

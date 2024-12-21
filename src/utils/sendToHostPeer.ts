@@ -9,5 +9,7 @@ export const sendToHostPeer = (data: WebRTCConnDataFromClient) => {
     return null
   }
 
-  sendToPeer(hostPeer, data)
+  const secretKey = useHostPeer.getState().secretKey!
+
+  sendToPeer(hostPeer, secretKey, data)
 }
