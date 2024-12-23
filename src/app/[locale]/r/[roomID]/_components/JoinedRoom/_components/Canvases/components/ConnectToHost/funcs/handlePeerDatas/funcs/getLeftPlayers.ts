@@ -16,6 +16,7 @@ export const getLeftPlayers = (data: PlayerLeft['data']) => {
     postMsgToCanvasWorker({
       e: 'reset',
     })
+
     postMsgToPlayerTimerWorker({
       event: 'stop',
       ID: 'MATCH_REMAIN_TIME'

@@ -5,11 +5,10 @@ import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { storePaintersAccess } from '@/store'
 import type { RTCStats } from '@/types/rtcStats'
 import { sendToAllPeers } from '@/utils/sendToAllPeers'
-import { sendToPeer } from '@/utils/sendToPeer'
 import { sendToPeerWithID } from '@/utils/sendToPeerWithID'
 import { violetLog } from '@/utils/violetLog'
 import { getHostTimerWorker, postMsgToHostTimerWorker, terminateTimerWorker, type TimerWorkerPostMsgData } from '@/workers'
-import { useCoins, useHostingHealth, useHostPainterData, useMatchStatus, usePeers, usePlayers, usePlayersPing, useWhoIsPainter } from '@/zustand/store'
+import { useCoins, useGuessedPlayers, useHostingHealth, useHostPainterData, useMatchStatus, usePeers, usePlayers, usePlayersPing, useWhoIsPainter } from '@/zustand/store'
 
 export const UseTimersWorker = ({ roomID }: Props) => {
     useEffectOnce(() => {
@@ -55,7 +54,7 @@ export const UseTimersWorker = ({ roomID }: Props) => {
                         event: 'stop',
                     })
 
-                    useCoins.getState().decrease(painterID, 100)
+                    if (useGuessedPlayers.getState().playersIDs.length === 0) useCoins.getState().decrease(painterID, 100)
 
                     sendToPeerWithID(painterID, {
 
@@ -81,12 +80,6 @@ export const UseTimersWorker = ({ roomID }: Props) => {
                 case 'RTT':
                     Object.keys(usePeers.getState().peers).forEach((ID) => {
                         const peer = usePeers.getState().peers[ID]!.peer as any
-                        const secretKey = usePeers.getState().secretKeys[ID]!
-
-                        sendToPeer(peer, secretKey, {
-                            event: 'loremForRTT',
-                            data: 'Eu irure ea occaecat deserunt fugiat incididunt tempor est consectetur sit velit labore cillum.'
-                        })
 
                         peer.getStats((err: Error | null, stats: RTCStats[]) => {
                             if (err) {
@@ -97,13 +90,13 @@ export const UseTimersWorker = ({ roomID }: Props) => {
 
                             stats.forEach((report) => {
                                 if (report.type === 'candidate-pair') {
-                                    const rtt = report.currentRoundTripTime
+                                    const rtt = report.currentRoundTripTime * 1000
                                     if (!rtt) {
                                         violetLog(`RTT is undefined`)
                                         return
                                     }
 
-                                    violetLog(`RTT ${rtt / 1000}ms`)
+                                    violetLog(`RTT ${rtt}ms`)
                                     usePlayersPing.getState().set(rtt, ID)
                                 }
                             })

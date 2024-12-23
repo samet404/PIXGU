@@ -51,6 +51,10 @@ export const playerLeft = (userID: string, roomID: string) => {
       ID: 'PAINTER_TIME_IS_UP',
       event: 'stop',
     })
+    postMsgToHostTimerWorker({
+      ID: 'MATCH_ENDED',
+      event: 'stop',
+    })
     postMsgToCanvasWorker({
       e: 'reset',
     })
@@ -84,8 +88,6 @@ export const playerLeft = (userID: string, roomID: string) => {
       if (useCoins.getState().prevCoins) useCoins.getState().returnPrev()
       if (usePlayersOwnedPowerups.getState().prevValue) usePlayersOwnedPowerups.getState().returnPrev()
     }
-
-
 
     useWhoIsPainter.getState().reset()
     useMatchStatus.getState().cancelMatch()

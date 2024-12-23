@@ -1,3 +1,4 @@
+import { storePaintersAccess } from '@/store'
 import { postMsgToPlayerTimerWorker } from '@/workers'
 import {
   useCoins,
@@ -8,6 +9,7 @@ import {
   usePlayersOwnedPowerups,
   useRoomGuessChatMsgsStore,
   useSelectThemePanel,
+  useTotalMatchCount,
   useWhoIsPainterClient,
 } from '@/zustand/store'
 
@@ -23,6 +25,9 @@ export const getPainterSelectedTheme = () => {
     ID: 'PAINTER_SELECTING_REMAIN_TIME',
     event: 'stop',
   })
+
+
+  storePaintersAccess.selectedAsPainter(useWhoIsPainterClient.getState().value.painterID!, useTotalMatchCount.getState().value.userPainterAccesCount!)
 
   useCoins.getState().newMatch()
   useMyCoin.getState().newMatch()

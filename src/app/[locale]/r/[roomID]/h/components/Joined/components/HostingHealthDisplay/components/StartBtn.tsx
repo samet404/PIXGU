@@ -29,8 +29,9 @@ export const StartBtn = ({ roomID }: Props) => {
   const handleClick = () => {
     sfx.current.play()
     io!.emit('game-started', true)
-    useTotalMatchCount.getState().set(usePlayers.getState().value.count)
     storePaintersAccess.initUsers(usePlayers.getState().getPlayersIDs())
+
+    useTotalMatchCount.getState().set(usePlayers.getState().value.count)
     useHostingHealth.getState().set('gameIsStarted')
 
     createMatch(roomID)

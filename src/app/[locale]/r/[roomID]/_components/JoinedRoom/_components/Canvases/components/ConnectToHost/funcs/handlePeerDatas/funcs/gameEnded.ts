@@ -12,6 +12,15 @@ export const gameEnded = (data: GameEnded['data']) => {
     type: 'interval'
   })
   resetMatchStates()
+  postMsgToPlayerTimerWorker({
+    event: 'stop',
+    ID: 'MATCH_REMAIN_TIME'
+  })
+  postMsgToPlayerTimerWorker({
+    event: 'stop',
+    ID: 'PAINTER_SELECTING_REMAIN_TIME'
+  })
+
   useSpectators.getState().reset()
   useAmISpectator.getState().reset()
   useNewPainterPanel.getState().reset()

@@ -34,7 +34,7 @@ export const Ping = () => {
       case 'finding host':
         return '-'
       default:
-        return typeof ping === 'number' ? `${(ping).toFixed(1)}ms` : 'Calculating...'
+        return typeof ping === 'number' ? `${ping}ms` : 'Calculating...'
     }
   })()
 

@@ -9,6 +9,7 @@ import {
   useMatchStatus,
   usePlayers,
   usePlayersOwnedPowerups,
+  useTotalMatchCount,
   useWhoIsPainter,
 } from '@/zustand/store'
 
@@ -56,7 +57,7 @@ export const getSelectedTheme = (
   })
 
 
-  storePaintersAccess.selectedAsPainter(useWhoIsPainter.getState().value.painterID!, usePlayers.getState().value.count)
+  storePaintersAccess.selectedAsPainter(useWhoIsPainter.getState().value.painterID!, useTotalMatchCount.getState().value.userPainterAccesCount!)
   useHostPainterData.getState().painterSelectedTheme(data)
 
   sendToAllPeers({

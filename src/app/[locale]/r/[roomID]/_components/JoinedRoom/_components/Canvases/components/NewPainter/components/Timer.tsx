@@ -18,7 +18,7 @@ export const Timer = () => {
       <div className="h-[1rem] w-full rounded-[0.4rem] bg-violet-200 shadow-[0_0px_10px_1px_rgba(0,0,0,0.5)] ">
         <div
           style={{ width: `${width}%` }}
-          className="h-full animate-[pass-input_4s_ease-in-out_infinite] rounded-[0.4rem]  bg-gradient-to-r  from-violet-600 via-violet-200 to-violet-600 bg-[length:400%_400%]  duration-75"
+          className="h-full animate-[pass-input_4s_ease-in-out_infinite] rounded-[0.4rem]  bg-gradient-to-r  from-violet-600 via-violet-200 to-violet-600 bg-[length:400%_400%]"
         ></div>
       </div>
 

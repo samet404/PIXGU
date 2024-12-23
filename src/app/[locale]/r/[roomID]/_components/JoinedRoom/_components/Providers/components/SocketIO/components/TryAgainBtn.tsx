@@ -1,5 +1,5 @@
 
-export const TryAgainBtn = ({ tryAgain }: Props) => {
+export const TryAgainBtn = () => {
     return (
         <button onMouseDown={() => {
             window.location.reload()
@@ -8,8 +8,4 @@ export const TryAgainBtn = ({ tryAgain }: Props) => {
             Try again
         </button>
     )
-}
-
-type Props = {
-    tryAgain: () => void
 }

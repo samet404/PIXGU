@@ -5,7 +5,6 @@ import { useAmIPainting, useAmISpectator, useCoins, useGameEndedPanel, useGuessC
 import { getPlayerTimerWorker, postMsgToPlayerTimerWorker, terminatePlayerTimerWorker, type PlayerTimerWorkerPostMsgData } from '@/workers'
 import { violetLog } from '@/utils/violetLog'
 import { type RTCStats } from '@/types'
-import { sendToPeer } from '@/utils/sendToPeer'
 
 export const UseTimersWorker = () => {
     useEffectOnce(() => {
@@ -63,12 +62,6 @@ export const UseTimersWorker = () => {
                     break
                 case 'RTT': {
                     const peer = useHostPeer.getState().peer as any
-                    const secretKey = useHostPeer.getState().secretKey!
-
-                    sendToPeer(peer, secretKey, {
-                        event: 'loremForRTT',
-                        data: 'Eu irure ea occaecat deserunt fugiat incididunt tempor est consectetur sit velit labore cillum.'
-                    })
 
                     peer.getStats((err: Error | null, stats: RTCStats[]) => {
                         if (err) {
@@ -79,13 +72,13 @@ export const UseTimersWorker = () => {
 
                         stats.forEach((report) => {
                             if (report.type === 'candidate-pair') {
-                                const rtt = report.currentRoundTripTime
+                                const rtt = report.currentRoundTripTime * 1000
                                 if (!rtt) {
                                     violetLog(`RTT is undefined`)
                                     return
                                 }
 
-                                violetLog(`RTT ${rtt / 1000}ms`)
+                                violetLog(`RTT ${rtt}ms`)
                                 usePing.getState().set(rtt)
                             }
                         })

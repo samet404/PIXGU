@@ -7,15 +7,15 @@ import { MODIFIER_KEYS } from '@/constants';
 const initState: State = {
     combination: [],
     keys: {
-        Pencil: ['w'],
+        Pencil: ['W'],
         Bucket: ['A'],
         Eyedropper: ['S'],
         Eraser: ['E'],
         Powerups: ['U'],
         Download: ['D'],
         Trash: ['BACKSPACE'],
-        "Decrease tool size": ['-'],
-        "Increase tool size": ['+'],
+        "Decrease tool size": ['+'],
+        "Increase tool size": ['-'],
         Grid: ['G'],
         Marketplace: ['M'],
         Escape: ['ESCAPE'],

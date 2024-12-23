@@ -1,4 +1,5 @@
 import { resetMatchStates } from '@/helpers/room'
+import { storePaintersAccess } from '@/store'
 import type { CurrentPainter } from '@/types'
 import { postMsgToCanvasWorker, postMsgToPlayerTimerWorker } from '@/workers'
 import {
@@ -7,6 +8,7 @@ import {
   useGuessedPlayers,
   useIsGameStopped,
   useLetterHint,
+  useMatchStatusClient,
   useNewPainterPanel,
   useOwnedPowerups,
   usePainterSelectingRemainTime,
@@ -25,6 +27,11 @@ export const getPainter = (
 ) => {
   const amIPainter = myUserID === data
   console.log('amIPainter', amIPainter)
+
+  if (useMatchStatusClient.getState().isFirstMatch) {
+    useTotalMatchCount.getState().set(usePlayers.getState().value.count + 1)
+    storePaintersAccess.initUsers([...usePlayers.getState().getPlayersIDs(), myUserID])
+  }
 
   if (useIsGameStopped.getState().value.code?.includes('waitingForHost'))
     useIsGameStopped.getState().removeCode('waitingForHost')
@@ -50,7 +57,6 @@ export const getPainter = (
   useLetterHint.getState().reset()
   useGuessedPlayers.getState().reset()
   useAmIGuessed.getState().noIMNotGuessed()
-  useTotalMatchCount.getState().set(usePlayers.getState().value.count + 1)
 
   if (amIPainter) {
     console.log('amIPainter true')

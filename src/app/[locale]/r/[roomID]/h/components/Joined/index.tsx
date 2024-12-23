@@ -23,11 +23,11 @@ const Joined = ({ roomID, user, guest }: Props) => {
   const userID = user?.id ? user.id : guest!.ID
 
   return (
-    <Providers userID={userID} roomID={roomID} user={user ?? guest!}>
-      <div
-        id="root"
-        className={`${outfit.className} h-full w-full overflow-y-scroll`}
-      >
+    <div
+      id="root"
+      className={`${outfit.className} h-full w-full overflow-y-scroll`}
+    >
+      <Providers userID={userID} roomID={roomID} user={user ?? guest!}>
         <MatchTimer />
         <UseTimersWorker roomID={roomID} />
         <ResetStates />
@@ -41,8 +41,8 @@ const Joined = ({ roomID, user, guest }: Props) => {
 
           <States />
         </div>
-      </div>
-    </Providers>
+      </Providers>
+    </div>
   )
 }
 

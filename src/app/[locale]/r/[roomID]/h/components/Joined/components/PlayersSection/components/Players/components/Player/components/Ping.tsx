@@ -12,7 +12,7 @@ export const Ping = ({ userID }: Props) => {
       'text-yellow-400': ping && ping >= 30 && ping < 70,
       'text-red-400 animate-pulse animate-infinite': ping && ping >= 70,
     })}>
-      {typeof ping === 'number' ? (ping).toFixed(1) + 'ms' : <Spinner className='drop-shadow-none size-7' />}
+      {typeof ping === 'number' ? ping + 'ms' : <Spinner className='drop-shadow-none size-7' />}
     </div>
   )
 }
