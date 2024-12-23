@@ -1,3 +1,5 @@
+import 'server-only'
+
 import * as schema from './schema'
 import { drizzle } from 'drizzle-orm/xata-http'
 import { getXataClient } from '../../../xata'
