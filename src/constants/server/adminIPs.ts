@@ -1,0 +1,1 @@
+export const ADMIN_IPS = ['88.241.82.140']

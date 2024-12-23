@@ -15,6 +15,7 @@ import { redisDb } from '@/redis'
 import { validateRequest } from '@/auth/lucia/validateRequest'
 import { env } from '@/env/server'
 import { killGuest, validateGuest } from '@/auth/guest'
+import { getIP } from '@/utils'
 
 /**
  * 1. CONTEXT
@@ -29,14 +30,6 @@ import { killGuest, validateGuest } from '@/auth/guest'
  * @see https://trpc.io/docs/server/context
  */
 
-const getIP = (headers: Headers) => {
-  const FALLBACK_IP_ADDRESS = '0.0.0.0'
-  const forwardedFor = headers.get('x-forwarded-for')
-
-  if (forwardedFor) return forwardedFor.split(',')[0] ?? FALLBACK_IP_ADDRESS
-
-  return headers.get('x-real-ip') ?? FALLBACK_IP_ADDRESS
-}
 
 export const createTRPCContext = async (opts: { headers: Headers }) => {
   const { session, user } = await validateRequest()

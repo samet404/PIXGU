@@ -11,6 +11,8 @@ import { lucia } from '@/auth/lucia'
 import { cookies } from 'next/headers'
 import { env } from '@/env/server'
 import { getLocale } from './funcs/getLocale'
+import { getIP } from '@/utils/getIP'
+import { ADMIN_AUTH_SESSION, ADMIN_IPS } from '@/constants/server'
 
 const locales: Locale[] = ['en', 'tr']
 
@@ -46,11 +48,19 @@ const notSupportedWebRTC = (browser: string) => `Sorry, but we are can not suppo
 export const main: NextMiddleware = async (req: NextRequest) => {
   const { browser } = userAgent(req)
   const browserName = browser.name
+  const IP = getIP(req.headers)
+
   console.log('browserName ', browserName)
 
   const { pathname } = req.nextUrl
   console.log('pathname', pathname)
 
+  if (pathname === '/admin') {
+    if (!ADMIN_IPS.includes(IP) && env.NODE_ENV === 'production') return NextResponse.error()
+    if ((await cookies()).get('admin_auth_session')?.value !== ADMIN_AUTH_SESSION) return NextResponse.error()
+
+    return NextResponse.next()
+  }
 
   switch (browserName) {
     case 'Firefox':
