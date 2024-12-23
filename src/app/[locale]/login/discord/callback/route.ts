@@ -1,3 +1,5 @@
+import 'server-only'
+
 import { lucia } from '@/auth/lucia'
 import { discord } from '@/auth/lucia/providers'
 import type { DiscordUser } from '@/auth/lucia/providers/types'
