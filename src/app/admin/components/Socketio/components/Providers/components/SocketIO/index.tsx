@@ -1,7 +1,7 @@
 'use client'
 
 import { useSocketIO } from '@/zustand/store'
-import { Fragment, useEffect, useState, type PropsWithChildren } from 'react'
+import { useEffect, useState, type PropsWithChildren } from 'react'
 import { io as createIO, type ManagerOptions, type SocketOptions } from 'socket.io-client'
 import { env } from '@/env/client'
 import { DisconnectedView } from './components/DisconnectedView'

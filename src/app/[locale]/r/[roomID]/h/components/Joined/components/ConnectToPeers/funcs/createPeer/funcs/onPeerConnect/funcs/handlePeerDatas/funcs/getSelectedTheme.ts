@@ -7,7 +7,6 @@ import {
   useCoins,
   useHostPainterData,
   useMatchStatus,
-  usePlayers,
   usePlayersOwnedPowerups,
   useTotalMatchCount,
   useWhoIsPainter,

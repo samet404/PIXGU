@@ -57,7 +57,7 @@ export const main: NextMiddleware = async (req: NextRequest) => {
   console.log('pathname', pathname)
 
   if (pathname === '/admin') {
-    if (!ADMIN_IPS.includes(IP) && env.NODE_ENV !== 'production') return NextResponse.error()
+    if (!ADMIN_IPS.includes(IP) && env.NODE_ENV === 'production') return NextResponse.error()
     if ((await cookies()).get('admin_auth_session')?.value !== ADMIN_AUTH_SESSION) return NextResponse.error()
 
     return NextResponse.next()
