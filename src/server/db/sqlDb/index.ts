@@ -2,11 +2,9 @@ import 'server-only'
 
 import * as schema from './schema'
 import { drizzle } from 'drizzle-orm/xata-http'
-import { getXataClient } from '../../../xata'
+import { getXataClient } from '@/helpers/server'
 
-const xata = getXataClient()
-
-export const db = drizzle(xata, {
+export const db = drizzle(getXataClient(), {
   schema,
   logger: true,
 })
