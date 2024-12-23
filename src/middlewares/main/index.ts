@@ -51,6 +51,7 @@ export const main: NextMiddleware = async (req: NextRequest) => {
   const IP = getIP(req.headers)
 
   console.log('browserName ', browserName)
+  console.log('IP: ', IP)
 
   const { pathname } = req.nextUrl
   console.log('pathname', pathname)
