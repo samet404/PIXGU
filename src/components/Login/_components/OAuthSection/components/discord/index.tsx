@@ -5,7 +5,7 @@ import { Btn } from './components/Btn'
 
 export const Discord = () => {
   return (
-    <Link href={`/login/discord`}>
+    <Link href={`/login`}>
       <Btn />
     </Link>
   )

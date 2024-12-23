@@ -12,7 +12,10 @@ export const OAuthSection = async ({ locale }: Props) => {
 
   return (
     <Section title={langObj.oauthDesc}>
-      <div className="w-full flex flex-row justify-center flex-wrap gap-2 rounded-md ">
+      <div className='bg-red-500 w-full py-1 px-2 rounded-md'>
+        Temporily disabled. We are working on it.
+      </div>
+      <div className="w-full flex flex-row justify-center flex-wrap gap-2 rounded-md">
         <Discord />
         {/* <Google />
         <Spotify />
