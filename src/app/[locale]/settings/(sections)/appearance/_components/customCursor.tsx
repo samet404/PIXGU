@@ -10,7 +10,7 @@ export const CustomCursor = () => {
     return (
         <SettingsCheckbox
             onMouseDown={switchSettings}
-            name="Custom cursor"
+            name="Custom cursor (experimental)"
             description="A little circle follows your mouse cursor. Can cause performance issues little bit."
             isChecked={isOpen}
         />

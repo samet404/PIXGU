@@ -9,20 +9,22 @@ export const TipImage = () => {
     const currentImg = currentSelectedIndex === 4 ? null : images[currentSelectedIndex]
 
     useEffect(() => {
-        if (currentImg === undefined)
+        if (currentImg === undefined) {
             import(`@/png/tips-modal/${currentSelectedIndex}.png`)
-                .then(img => setImages(images => {
-                    const newImages = [...images]
-                    newImages[currentSelectedIndex] = img
-                    return newImages
-                }))
+                .then(img => {
+                    setImages(images => {
+                        const newImages = [...images]
+                        newImages[currentSelectedIndex] = img
+                        return newImages
+                    })
+                })
                 .catch(err => {
                     console.error('Failed to load image:', err);
                 })
+        }
     }, [currentSelectedIndex])
 
-
-    if (currentImg === undefined) return <div className='w-full h-full absolute top-0 left-0 flex items-center justify-center bg-[#ffffff82]'></div>
+    if (currentImg === undefined) return <div className='w-[50rem] bg-[#ffffff59] h-full absolute top-0 left-0 flex items-center justify-center'></div>
     if (currentImg === null) return null
 
     return <div className='w-full h-full flex items-center justify-center absolute top-0 left-0'>

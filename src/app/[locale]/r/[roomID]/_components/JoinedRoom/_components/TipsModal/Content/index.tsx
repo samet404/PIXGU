@@ -1,9 +1,16 @@
+import { useAtomValue } from 'jotai'
 import { Map } from './components/Map'
 import { NextBackBtn } from './components/NextBackBtn'
 import { Text } from './components/Text'
 import { TipImage } from './components/TipImage'
+import { currentSectionIndexAtom, isLoadingAtom } from './atoms'
 
 export const Content = () => {
+    const isLoading = useAtomValue(isLoadingAtom)
+    const currentSelectedIndex = useAtomValue(currentSectionIndexAtom)
+
+    console.log(isLoading, currentSelectedIndex)
+
     return (
         <div className='z-30 w-full absolute h-full backdrop-blur-sm flex top-0 left-0 '>
 
