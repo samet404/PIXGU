@@ -10,10 +10,7 @@ export const env = createEnv({
    * isn't built with invalid env vars.
    */
   server: {
-    XATA_BRANCH: z.string(),
-    XATA_API_KEY: z.string(),
-    XATA_CONNECTION_STRING: z.string(),
-
+    NEON_DATABASE_URL: z.string(),
     BASE_URL: z.string(),
 
     REDIS_URL: z
@@ -112,9 +109,7 @@ export const env = createEnv({
 
     BASE_URL: process.env.BASE_URL,
 
-    XATA_BRANCH: process.env.XATA_BRANCH,
-    XATA_API_KEY: process.env.XATA_API_KEY,
-    XATA_CONNECTION_STRING: process.env.XATA_CONNECTION_STRING,
+    NEON_DATABASE_URL: process.env.NEON_DATABASE_URL,
 
     REDIS_URL: process.env.REDIS_URL,
 
