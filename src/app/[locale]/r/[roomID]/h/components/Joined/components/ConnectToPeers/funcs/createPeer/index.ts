@@ -28,5 +28,5 @@ export const createPeer = (roomID: string, uniqueSocketID: string, user: User | 
   onPeerSignal(peer, ID)
   onPeerConnect(peer, ID, roomID, user)
   onPeerError(peer, ID)
-  onPeerClose(peer, ID, uniqueSocketID, roomID)
+  onPeerClose(peer, ID, roomID)
 }

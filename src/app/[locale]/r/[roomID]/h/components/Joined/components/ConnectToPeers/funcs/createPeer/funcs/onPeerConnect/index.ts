@@ -28,7 +28,7 @@ export const onPeerConnect = (
     const userSecretKey = usePeers.getState().secretKeys[userID]!
 
     positiveLog(`CONNECTED TO ${userID}`)
-    useSocketIO.getState().io!.emit('player-joined', userID)
+    console.log('sent player joined')
 
     postMsgToHostTimerWorker({
       ID: 'RTT',
@@ -82,4 +82,9 @@ export const onPeerConnect = (
       data: useSpectators.getState().playersIDs,
     })
     sendEveryoneNewPlayer(userID, isSpectator)
+
+    useSocketIO.getState().io!.emit('current-players', {
+      count: usePlayers.getState().value.count,
+      IDs: Object.keys(usePlayers.getState().value.obj),
+    })
   })
