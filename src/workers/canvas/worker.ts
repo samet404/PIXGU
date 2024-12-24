@@ -83,11 +83,11 @@ self.onmessage = (e) => {
             })
 
             postMessage(bucketData)
-            stringifiedLog({
-                name: 'after bucket',
-                ...undoRedo.current,
-                stack: undoRedo.current.stack.map(arr => arr.length)
-            })
+            // stringifiedLog({
+            //     name: 'after bucket',
+            //     ...undoRedo.current,
+            //     stack: undoRedo.current.stack.map(arr => arr.length)
+            // })
             break
         }
 
@@ -104,11 +104,11 @@ self.onmessage = (e) => {
 
             postMessage(pencilData)
             lastPixel = [workerData.data.startX, workerData.data.startY]
-            stringifiedLog({
-                name: 'after pencil',
-                ...undoRedo.current,
-                stack: undoRedo.current.stack.map(arr => arr.length)
-            })
+            // stringifiedLog({
+            //     name: 'after pencil',
+            //     ...undoRedo.current,
+            //     stack: undoRedo.current.stack.map(arr => arr.length)
+            // })
             break
         }
         case 'eraser': {
@@ -123,11 +123,11 @@ self.onmessage = (e) => {
                 blurInfo
             })
 
-            stringifiedLog({
-                name: 'after eraser',
-                ...undoRedo.current,
-                stack: undoRedo.current.stack.map(arr => arr.length)
-            })
+            // stringifiedLog({
+            //     name: 'after eraser',
+            //     ...undoRedo.current,
+            //     stack: undoRedo.current.stack.map(arr => arr.length)
+            // })
             postMessage(eraserData)
             lastPixel = [workerData.data.startX, workerData.data.startY]
             break
@@ -187,11 +187,11 @@ self.onmessage = (e) => {
                     pixels[x!]![y!] = new Uint8ClampedArray([r!, g!, b!, a!])
                 }
 
-                stringifiedLog({
-                    name: 'after undo',
-                    ...undoRedo.current,
-                    stack: undoRedo.current.stack.map(arr => arr.length)
-                })
+                // stringifiedLog({
+                //     name: 'after undo',
+                //     ...undoRedo.current,
+                //     stack: undoRedo.current.stack.map(arr => arr.length)
+                // })
                 postMessage({
                     e: 'undo-redo',
                     data: undoPixels
@@ -211,11 +211,11 @@ self.onmessage = (e) => {
                     pixels[x!]![y!] = new Uint8ClampedArray([r!, g!, b!, a!])
                 }
 
-                stringifiedLog({
-                    name: 'after redo',
-                    ...undoRedo.current,
-                    stack: undoRedo.current.stack.map(arr => arr.length)
-                })
+                // stringifiedLog({
+                //     name: 'after redo',
+                //     ...undoRedo.current,
+                //     stack: undoRedo.current.stack.map(arr => arr.length)
+                // })
                 postMessage({
                     e: 'undo-redo',
                     data: redoPixels
@@ -235,11 +235,11 @@ self.onmessage = (e) => {
 
         case 'undoByOperation':
             {
-                stringifiedLog({
-                    name: 'before undoByOperation',
-                    ...undoRedo.current,
-                    stack: undoRedo.current.stack.map(arr => arr.length)
-                })
+                // stringifiedLog({
+                //     name: 'before undoByOperation',
+                //     ...undoRedo.current,
+                //     stack: undoRedo.current.stack.map(arr => arr.length)
+                // })
 
                 const undoPixels = undoByOperation({ undoRedo })
                 if (!undoPixels) break
@@ -257,11 +257,11 @@ self.onmessage = (e) => {
                     pixels[x!]![y!] = new Uint8ClampedArray([r!, g!, b!, a!])
                 }
 
-                stringifiedLog({
-                    name: 'after undoByOperation',
-                    ...undoRedo.current,
-                    stack: undoRedo.current.stack.map(arr => arr.length)
-                })
+                // stringifiedLog({
+                //     name: 'after undoByOperation',
+                //     ...undoRedo.current,
+                //     stack: undoRedo.current.stack.map(arr => arr.length)
+                // })
 
                 postMessage({
                     e: 'undo-redo',
@@ -272,11 +272,11 @@ self.onmessage = (e) => {
 
         case 'redoByOperation':
             {
-                stringifiedLog({
-                    name: 'before redoByOperation',
-                    ...undoRedo.current,
-                    stack: undoRedo.current.stack.map(arr => arr.length)
-                })
+                // stringifiedLog({
+                //     name: 'before redoByOperation',
+                //     ...undoRedo.current,
+                //     stack: undoRedo.current.stack.map(arr => arr.length)
+                // })
 
                 const redoPixels = redoByOperation({ undoRedo })
                 if (!redoPixels) break
@@ -288,11 +288,11 @@ self.onmessage = (e) => {
                     pixels[x!]![y!] = new Uint8ClampedArray([r!, g!, b!, a!])
                 }
 
-                stringifiedLog({
-                    name: 'after redoByOperation',
-                    ...undoRedo.current,
-                    stack: undoRedo.current.stack.map(arr => arr.length)
-                })
+                // stringifiedLog({
+                //     name: 'after redoByOperation',
+                //     ...undoRedo.current,
+                //     stack: undoRedo.current.stack.map(arr => arr.length)
+                // })
 
                 postMessage({
                     e: 'undo-redo',
@@ -301,11 +301,11 @@ self.onmessage = (e) => {
                 break
             }
         case 'mousedown': {
-            stringifiedLog({
-                name: 'before mousedown',
-                ...undoRedo.current,
-                stack: undoRedo.current.stack.map(arr => arr.length)
-            })
+            // stringifiedLog({
+            //     name: 'before mousedown',
+            //     ...undoRedo.current,
+            //     stack: undoRedo.current.stack.map(arr => arr.length)
+            // })
             const data = workerData.data
 
             if (undoRedo.current.operationIndex === -1) {
@@ -320,31 +320,31 @@ self.onmessage = (e) => {
                 // check if the operation index is the last operation index
                 if (undoRedo.current.operationIndex !== lastArrIndex(undoRedo.current.stack)) {
                     console.log('oI: not last')
-                    stringifiedLog({
-                        name: 'before oI',
-                        ...undoRedo.current,
-                        stack: undoRedo.current.stack.map(arr => arr.length)
-                    })
-                    undoRedo.current.stack.length = undoRedo.current.operationIndex + 1 // delete  after operationIndex
-                    stringifiedLog({
-                        name: 'after oI',
-                        ...undoRedo.current,
-                        stack: undoRedo.current.stack.map(arr => arr.length)
-                    })
+                    // stringifiedLog({
+                    //     name: 'before oI',
+                    //     ...undoRedo.current,
+                    //     stack: undoRedo.current.stack.map(arr => arr.length)
+                    // })
+                    // undoRedo.current.stack.length = undoRedo.current.operationIndex + 1 // delete  after operationIndex
+                    // stringifiedLog({
+                    //     name: 'after oI',
+                    //     ...undoRedo.current,
+                    //     stack: undoRedo.current.stack.map(arr => arr.length)
+                    // })
                 }
                 if (undoRedo.current.undoRedoGroup.index !== lastArrIndex(undoRedo.current.stack[currentOperationIndex]!)) {
                     console.log('urgI: not last')
-                    stringifiedLog({
-                        name: 'before urgI',
-                        ...undoRedo.current,
-                        stack: undoRedo.current.stack.map(arr => arr.length)
-                    })
-                    undoRedo.current.stack[currentOperationIndex]!.length = undoRedo.current.undoRedoGroup.index + 1                 // delete after undoRedoGroup.index
-                    stringifiedLog({
-                        name: 'after urgI',
-                        ...undoRedo.current,
-                        stack: undoRedo.current.stack.map(arr => arr.length)
-                    })
+                    // stringifiedLog({
+                    //     name: 'before urgI',
+                    //     ...undoRedo.current,
+                    //     stack: undoRedo.current.stack.map(arr => arr.length)
+                    // })
+                    // undoRedo.current.stack[currentOperationIndex]!.length = undoRedo.current.undoRedoGroup.index + 1                 // delete after undoRedoGroup.index
+                    // stringifiedLog({
+                    //     name: 'after urgI',
+                    //     ...undoRedo.current,
+                    //     stack: undoRedo.current.stack.map(arr => arr.length)
+                    // })
                 }
             }
 
@@ -357,11 +357,11 @@ self.onmessage = (e) => {
             undoRedo.current.operationIndex++
             mousedown.smooth = data
 
-            stringifiedLog({
-                name: 'after mousedown',
-                ...undoRedo.current,
-                stack: undoRedo.current.stack.map(arr => arr.length),
-            })
+            // stringifiedLog({
+            //     name: 'after mousedown',
+            //     ...undoRedo.current,
+            //     stack: undoRedo.current.stack.map(arr => arr.length),
+            // })
         }
 
     }
