@@ -5,7 +5,7 @@ import { useRef, useState } from 'react'
 
 export const CustomCursor = () => {
     const cursorRef = useRef<HTMLDivElement>(null)
-    const visibleTimeoutRef = useRef<Timer | null>(null)
+    const visibleTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
     const [isVisible, setisVisible] = useState<boolean>(false)
 
     const handleMouseClick = () => {
