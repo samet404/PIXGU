@@ -76,11 +76,13 @@ export const useControls = create<State & Action>()(
                     combination: [...get().combination]
                 }),
 
-                clearCombination: () =>
+                clearCombination: () => {
+                    console.log('clearCombination')
                     set({
                         ...get(),
                         combination: []
-                    }),
+                    })
+                }
             }),
             { name: 'controls', exclude: ['combination'] },
         ),

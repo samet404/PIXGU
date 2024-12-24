@@ -19,7 +19,6 @@ import { storePaintersAccess } from '@/store'
 export const playerLeft = (userID: string, roomID: string) => {
   negativeLog(`PLAYER ${userID} LEFT THE GAME`)
 
-  console.log('sent player left')
   sendToAllPeers({
     event: 'gameLog',
     data: {
@@ -93,9 +92,10 @@ export const playerLeft = (userID: string, roomID: string) => {
     useWhoIsPainter.getState().reset()
     useMatchStatus.getState().cancelMatch()
     createMatch(roomID)
-    useSocketIO.getState().io!.emit('current-players', {
-      count: usePlayers.getState().value.count,
-      IDs: Object.keys(usePlayers.getState().value.obj),
-    })
   }
+
+  useSocketIO.getState().io!.emit('current-players', {
+    count: usePlayers.getState().value.count,
+    IDs: Object.keys(usePlayers.getState().value.obj),
+  })
 }

@@ -4,7 +4,6 @@ import { cookies } from 'next/headers'
 import { TRPCReactProvider } from '../trpc/react'
 import type { Locale } from '@/types'
 import { type Metadata } from 'next'
-import { Version } from './_components/Version'
 import './_styles/globals.css'
 
 // fontawesome
@@ -16,6 +15,7 @@ config.autoAddCss = false
 import { GoogleAnalytics } from '@next/third-parties/google'
 import { GlobalComponentsForJoinedUsers } from './_components/GlobalComponentsForJoinedUsers'
 import { CustomCursor } from './_components/CustomCursor'
+import { RightBottom } from './_components/RightBottom'
 
 
 const description = 'PIXGU - Free online drawing and guessing game inspired by Gartic.io and Skribbl.io. Join rooms or host one to play with friends'
@@ -106,7 +106,7 @@ const RootLayout = async (props: {
               <Providers>
                 <DefaultShortcuts />
                 {props.children}
-                <Version />
+                <RightBottom />
               </Providers>
             </GlobalComponentsForJoinedUsers>
           </TRPCReactProvider>
