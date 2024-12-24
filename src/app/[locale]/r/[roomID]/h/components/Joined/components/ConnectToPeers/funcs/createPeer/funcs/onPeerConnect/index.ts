@@ -28,7 +28,7 @@ export const onPeerConnect = (
     const userSecretKey = usePeers.getState().secretKeys[userID]!
 
     positiveLog(`CONNECTED TO ${userID}`)
-    useSocketIO.getState().io!.emit('connection-success', userID)
+    useSocketIO.getState().io!.emit('player-joined', userID)
 
     postMsgToHostTimerWorker({
       ID: 'RTT',

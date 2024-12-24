@@ -11,6 +11,7 @@ type Action = {
   add: (input: { ID: string; peer: SimplePeer.Instance }) => void
   addSecretKey: (ID: string, key: string) => void
   removePeer: (ID: string) => void
+  isExits: (ID: string) => boolean
   get: () => Peers
   reset: () => void
 }
@@ -23,6 +24,7 @@ const initState: State = {
 export const usePeers = create<State & Action>((set, get) => ({
   ...initState,
 
+  isExits: (ID) => get().peers[ID] !== undefined,
   get: () => get().peers,
   removePeer: (ID) => {
     const peer = get().peers[ID]?.peer

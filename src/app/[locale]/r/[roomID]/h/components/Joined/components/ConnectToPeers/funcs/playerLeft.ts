@@ -19,6 +19,9 @@ import { storePaintersAccess } from '@/store'
 export const playerLeft = (userID: string, roomID: string) => {
   negativeLog(`PLAYER ${userID} LEFT THE GAME`)
 
+  if (!usePeers.getState().isExits(userID)) return
+
+  useSocketIO.getState().io!.emit('player-left', userID)
   sendToAllPeers({
     event: 'gameLog',
     data: {

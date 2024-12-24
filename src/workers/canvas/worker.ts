@@ -2,7 +2,7 @@ import { lastArrIndex } from '@/utils/lastArrIndex'
 import { bucket, eraser, pencil, redo, redoByOperation, undo, undoByOperation } from './events'
 import type { BlurInfo, CanvasWorkerOnMsgData, CanvasWorkerPostMsgData, UndoRedo } from './types'
 import { initlizeCanvasPixels } from './utils/initlizeCanvasPixels'
-import { stringifiedLog } from '@/utils'
+// import { stringifiedLog } from '@/utils'
 
 const CELL_SIDE_COUNT = 80
 
