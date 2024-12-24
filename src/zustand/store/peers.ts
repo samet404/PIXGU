@@ -8,10 +8,10 @@ type State = {
 }
 
 type Action = {
-  add: (input: { ID: string; peer: SimplePeer.Instance }) => void
+  add: (input: { ID: string; peer: SimplePeer.Instance, uniqueSocketID: string }) => void
   addSecretKey: (ID: string, key: string) => void
   removePeer: (ID: string) => void
-  isExits: (ID: string) => boolean
+  isExits: (ID: string, uniqueSocketID: string) => boolean
   get: () => Peers
   reset: () => void
 }
@@ -24,7 +24,13 @@ const initState: State = {
 export const usePeers = create<State & Action>((set, get) => ({
   ...initState,
 
-  isExits: (ID) => get().peers[ID] !== undefined,
+  isExits: (ID) => {
+    const peer = get().peers[ID]
+    if (!peer) return false
+
+    return peer.uniqueSocketID === peer.uniqueSocketID
+  },
+
   get: () => get().peers,
   removePeer: (ID) => {
     const peer = get().peers[ID]?.peer
@@ -44,16 +50,13 @@ export const usePeers = create<State & Action>((set, get) => ({
     })
   },
 
-  add: (input) => {
-    const { ID, peer } = input
-
+  add: ({ ID, peer, uniqueSocketID }) =>
     set({
       peers: {
         ...get().peers,
-        [ID]: { peer },
+        [ID]: { peer, uniqueSocketID },
       },
-    })
-  },
+    }),
   reset: () => {
     for (const ID in get().peers) {
       get().removePeer(ID)

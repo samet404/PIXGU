@@ -1,12 +1,16 @@
 import { negativeLog } from '@/utils'
-import { useSocketIO } from '@/zustand/store'
+import { usePeers, useSocketIO } from '@/zustand/store'
 import { playerLeft } from './playerLeft'
 
 export const playerLeftFromSocket = (roomID: string) =>
   useSocketIO
     .getState()
-    .io!.on('player-left', (ID: string) => {
-      negativeLog(`USER ${ID} LEFT FROM SOCKET`)
+    .io!.on('player-left', ({ clientID, uniqueSocketID }: {
+      clientID: string
+      uniqueSocketID: string
+    }) => {
+      negativeLog(`USER ${clientID} LEFT FROM SOCKET`)
 
-      playerLeft(ID, roomID)
+      if (!usePeers.getState().isExits(clientID, uniqueSocketID)) return
+      playerLeft(clientID, roomID)
     })

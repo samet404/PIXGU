@@ -5,17 +5,20 @@ import { createPeer } from './createPeer'
 import type { Guest } from '@/types'
 
 export const playerJoined = (roomID: string) => {
-  useSocketIO.getState().io!.on('player-joined', (player: User | Guest) => {
-    console.log('player: ', player)
-    const userID = 'id' in player ? player.id : player.ID
+  useSocketIO.getState().io!.on('player-joined', ({ clientInfo, uniqueSocketID }: {
+    clientInfo: User | Guest
+    uniqueSocketID: string
+  }) => {
+    console.log('clientInfo: ', clientInfo)
+    const userID = 'id' in clientInfo ? clientInfo.id : clientInfo.ID
 
-    if (usePeers.getState().isExits(userID)) {
+    if (usePeers.getState().peers[userID]) {
       useSocketIO.getState().io!.emit('connection-failed', userID)
       return
     }
 
     positiveLog(`USER ${userID} ENTERED >`)
     positiveLog(`INITIATING PEER CONNECTION TO ${userID}`)
-    createPeer(roomID, player)
+    createPeer(roomID, uniqueSocketID, clientInfo)
   })
 }
