@@ -85,10 +85,14 @@ export async function GET(request: Request): Promise<Response> {
 
         const session = await lucia.createSession(userId, {})
         const sessionCookie = lucia.createSessionCookie(session.id)
+        const newSessionAttributes = {
+            ...sessionCookie.attributes,
+            domain: `.${sessionCookie.attributes.domain}`
+        }
             ; (await cookies()).set(
                 sessionCookie.name,
                 sessionCookie.value,
-                sessionCookie.attributes,
+                newSessionAttributes,
             )
         return new Response(null, {
             status: 302,
