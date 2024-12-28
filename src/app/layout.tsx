@@ -2,7 +2,6 @@ import { type ReactNode } from 'react'
 import Providers from './_components/Providers'
 import { cookies } from 'next/headers'
 import { TRPCReactProvider } from '../trpc/react'
-import type { Locale } from '@/types'
 import { type Metadata } from 'next'
 import './_styles/globals.css'
 
@@ -13,7 +12,6 @@ import { SmallScreenAlert } from './_components/SmallScreenAlert'
 import { DefaultShortcuts } from './_components/DefaultShortcuts'
 config.autoAddCss = false
 import { GoogleAnalytics } from '@next/third-parties/google'
-import { GlobalComponentsForJoinedUsers } from './_components/GlobalComponentsForJoinedUsers'
 import { CustomCursor } from './_components/CustomCursor'
 import { RightBottom } from './_components/RightBottom'
 
@@ -81,11 +79,9 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://pixgu.com'),
 }
 
-const RootLayout = async (props: {
+const RootLayout = async ({ children, }: {
   children: ReactNode
-  params: Promise<{
-    locale: Locale
-  }>
+
 }) => {
   return (
     <html lang="en">
@@ -101,14 +97,11 @@ const RootLayout = async (props: {
         <SmallScreenAlert>
           <TRPCReactProvider cookies={(await cookies()).toString()}>
             <CustomCursor />
-            {/* @ts-ignore https://github.com/microsoft/TypeScript/issues/59111 */}
-            <GlobalComponentsForJoinedUsers>
-              <Providers>
-                <DefaultShortcuts />
-                {props.children}
-                <RightBottom />
-              </Providers>
-            </GlobalComponentsForJoinedUsers>
+            <Providers>
+              <DefaultShortcuts />
+              {children}
+              <RightBottom />
+            </Providers>
           </TRPCReactProvider>
         </SmallScreenAlert>
       </body>

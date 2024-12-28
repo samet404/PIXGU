@@ -1,0 +1,23 @@
+{
+  "heading": "Kontroller",
+  "description": "Kontrol tuşlarını aşağıda özelleştirebilirsiniz.",
+  "keys": {
+    "Pencil": "Kalem",
+    "Bucket": "Kovası",
+    "Eyedropper": "Göz çekici",
+    "Eraser": "Silgi",
+    "Powerups": "Powerups",
+    "Download": "İndir",
+    "Trash": "Çöp",
+    "Decrease tool size": "Araç boyutunu azalt",
+    "Increase tool size": "Araç boyutunu artır",
+    "Grid": "Izgara",
+    "Marketplace": "Market",
+    "Escape": "Çık",
+    "Refresh": "Yenile",
+    "Undo": "Geri al",
+    "Redo": "Yinele",
+    "Change Undo/Redo type": "Geri/İleri alma türünü değiştir",
+    "Change in-game chat": "Oyun içi sohbeti değiştir"
+  }
+}

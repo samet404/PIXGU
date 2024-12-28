@@ -1,7 +1,7 @@
 import { useSpring, animated } from '@react-spring/web'
 import type { MutableRefObject } from 'react'
 
-export const RefetchBtn = ({ roomsRef }: Props) => {
+export const RefetchBtn = ({ roomsRef, refreshText }: Props) => {
   const [springs, api] = useSpring(() => ({
     from: {
       opacity: 1,
@@ -32,12 +32,13 @@ export const RefetchBtn = ({ roomsRef }: Props) => {
       onMouseDown={handleClick}
       className="w-full items-center justify-center rounded-md bg-[#d953a5] px-2 py-1 font-[600] text-[#ffffffc2]"
     >
-      Refresh
+      {refreshText}
     </animated.button>
   )
 }
 
 type Props = {
+  refreshText: string
   roomsRef: MutableRefObject<{
     refetch: () => void
   } | null>

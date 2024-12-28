@@ -13,7 +13,7 @@ import {
   useCoins,
   useSpectators,
   useGuessedPlayers,
-  usePlayersOwnedPowerups,
+  usePlayersPowerups,
 } from '@/zustand/store'
 
 export const ResetStates = () => {
@@ -24,7 +24,7 @@ export const ResetStates = () => {
       useHostPainterData.getState().reset()
       useMatchStatus.getState().reset()
       useHostingHealth.getState().reset()
-      usePlayersOwnedPowerups.getState().reset()
+      usePlayersPowerups.getState().reset()
       usePeers.getState().reset()
       usePlayers.getState().reset()
       useWhoIsPainter.getState().reset()

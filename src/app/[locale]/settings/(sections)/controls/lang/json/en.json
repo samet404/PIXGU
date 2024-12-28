@@ -1,0 +1,23 @@
+{
+  "heading": "Controls",
+  "description": "You can customize your key bindings below.",
+  "keys": {
+    "Pencil": "Pencil",
+    "Bucket": "Bucket",
+    "Eyedropper": "Eyedropper",
+    "Eraser": "Eraser",
+    "Powerups": "Powerups",
+    "Download": "Download",
+    "Trash": "Trash",
+    "Decrease tool size": "Decrease tool size",
+    "Increase tool size": "Increase tool size",
+    "Grid": "Grid",
+    "Marketplace": "Marketplace",
+    "Escape": "Escape",
+    "Refresh": "Refresh",
+    "Undo": "Undo",
+    "Redo": "Redo",
+    "Change Undo/Redo type": "Change Undo/Redo type",
+    "Change in-game chat": "Change in-game chat"
+  }
+}

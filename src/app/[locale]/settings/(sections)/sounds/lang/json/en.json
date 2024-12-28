@@ -1,0 +1,10 @@
+{
+  "heading": "Sounds",
+  "sfxVolume": "Sfx volume",
+  "music": "Music player",
+  "musicDesc": "Your own music player. Only available in one tab in the browser.",
+  "musicLinksHeading": "Music player links",
+  "musicLinkAdd": "Add",
+  "musicLinkRemove": "Remove",
+  "musicLinkOpen": "Open"
+}

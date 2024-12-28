@@ -8,7 +8,7 @@ const inter = Inter({
 const OpenerBtn = ({ lang }: Props) => {
   return (
     <button
-      className={`${inter.className} rounded-md bg-[rgba(255,255,255,0.5)] px-3 py-1`}
+      className={`${inter.className} rounded-md bg-[rgba(255,255,255,0.4)] px-3 py-1`}
     >
       {lang.toUpperCase()}
     </button>

@@ -1,15 +1,18 @@
 import { Outfit } from 'next/font/google'
-import Content from './Content.mdx'
 import Image from 'next/image'
 import Logo from '@/png/logo.png'
 import Link from 'next/link'
+import type { Locale } from '@/types/locale'
 
 const outfit = Outfit({
   subsets: ['latin'],
   weight: ['500', '600', '700', '400', '300'],
 })
 
-const HowToPlay = () => {
+const HowToPlay = async ({ params }: Props) => {
+  const { locale } = await params
+  const Content = await import(`./md/${locale}.mdx`).then((m) => m.default)
+
   return (
     <div
       style={{
@@ -44,3 +47,9 @@ const HowToPlay = () => {
 }
 
 export default HowToPlay
+
+type Props = {
+  params: Promise<{
+    locale: Locale
+  }>
+}

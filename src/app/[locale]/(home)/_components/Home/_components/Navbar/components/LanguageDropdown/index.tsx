@@ -1,8 +1,13 @@
+import type { Locale } from '@/types/locale'
 import dynamic from 'next/dynamic'
 
-const Content = dynamic(() => import('./components/Content'))
+const Content = dynamic(() => import('./components/Content').then(m => m.Content))
 
-const LanguageDropdown = () => {
-  return <Content />
+export const LanguageDropdown = ({ locale }: Props) => {
+  return <Content locale={locale} />
 }
-export default LanguageDropdown
+
+type Props = {
+  locale: Locale
+}
+

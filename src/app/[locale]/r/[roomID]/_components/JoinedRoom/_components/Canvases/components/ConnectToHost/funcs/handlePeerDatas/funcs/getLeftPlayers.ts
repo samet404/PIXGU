@@ -1,7 +1,7 @@
 import { storePaintersAccess } from '@/store'
 import type { PlayerLeft } from '@/types'
 import { postMsgToCanvasWorker, postMsgToPlayerTimerWorker } from '@/workers'
-import { useCoins, useGuessedPlayers, useIsGameStopped, useLetterHint, useMatchStatusClient, useMyCoin, useNewPainterPanel, useOwnedPowerups, usePlayers, usePlayersOwnedPowerups, useRoomGuessChatMsgsStore, useRoomWinnersChatMsgsStore, useSelectThemePanel, useTotalMatchCount, useWhoIsPainterClient, useXY } from '@/zustand/store'
+import { useCoins, useGuessedPlayers, useIsGameStopped, useLetterHint, useMatchStatusClient, useMyCoin, useNewPainterPanel, usePlayers, usePowerups, useRoomGuessChatMsgsStore, useRoomWinnersChatMsgsStore, useSelectThemePanel, useTotalMatchCount, useWhoIsPainterClient, useXY } from '@/zustand/store'
 
 export const getLeftPlayers = (data: PlayerLeft['data']) => {
   const isPainter = useWhoIsPainterClient.getState().isPainter(data.ID)
@@ -28,8 +28,7 @@ export const getLeftPlayers = (data: PlayerLeft['data']) => {
     useMatchStatusClient.getState().clearMatch()
     useIsGameStopped.getState().addCode('waitingForHost')
     useIsGameStopped.getState().addCode('waitingForPlayers')
-    useOwnedPowerups.getState().reset()
-    usePlayersOwnedPowerups.getState().reset()
+    usePowerups.getState().reset()
     useGuessedPlayers.getState().reset()
     useMyCoin.getState().reset()
     useCoins.getState().reset()
@@ -56,8 +55,7 @@ export const getLeftPlayers = (data: PlayerLeft['data']) => {
       useMatchStatusClient.getState().clearMatch()
       useMyCoin.getState().returnPrev()
       useCoins.getState().returnPrev()
-      usePlayersOwnedPowerups.getState().returnPrev()
-      useOwnedPowerups.getState().returnPrev()
+      usePowerups.getState().reset()
     }
     else if (painterStatus === 'selectingTheme') {
       postMsgToPlayerTimerWorker({

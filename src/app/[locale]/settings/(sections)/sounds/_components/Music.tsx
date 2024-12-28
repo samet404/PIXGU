@@ -3,11 +3,16 @@
 import { useSoundSettings } from '@/zustand/store'
 import { SettingsCheckbox } from '../../_components/SettingsCheckbox'
 
-export const Music = () => {
+export const Music = ({ description, title }: Props) => {
     const isMusicOpen = useSoundSettings((s) => s.music)
     const toggleMusic = useSoundSettings((s) => s.toggleMusic)
 
     return (
-        <SettingsCheckbox name="Music player" description='Your own music player. Only available in one tab in the browser.' isChecked={isMusicOpen} onMouseDown={toggleMusic} />
+        <SettingsCheckbox name={title} description={description} isChecked={isMusicOpen} onMouseDown={toggleMusic} />
     )
+}
+
+type Props = {
+    title: string
+    description: string
 }

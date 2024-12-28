@@ -1,10 +1,14 @@
 "use client"
 
-import { useControls } from '@/zustand/store'
+import { useControls, type ControlsState } from '@/zustand/store'
 import { Item } from './_components/Item'
 
-export const Items = () => {
+export const Items = ({ names }: Props) => {
     const keys = useControls(s => s.getKeys())
+    console.log('keys', names)
+    return keys.map((key) => <Item key={key} name={key} displayName={names[key as keyof ControlsState['keys']]} />)
+}
 
-    return keys.map((key) => <Item key={key} name={key} />)
+type Props = {
+    names: Record<keyof ControlsState['keys'], string>
 }

@@ -5,7 +5,7 @@ import clsx from 'clsx'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-const NavItem = ({ name }: { name: string }) => {
+const NavItem = ({ name, link }: { name: string, link: string }) => {
   const pathname = usePathname()
 
   const [springs, api] = useSpring(() => ({
@@ -34,7 +34,7 @@ const NavItem = ({ name }: { name: string }) => {
   return (
     <Link
       className=""
-      href={`/settings/${name.toLowerCase()}`}
+      href={`/settings/${link}`}
       prefetch={true}
       replace
     >

@@ -28,15 +28,13 @@ import {
   getPainterTrash,
   getPainterBucket,
   getPrevCanvas,
-  getYouPurchasedMarketItem,
   getPowerupUsed,
-  getYouUsedPowerup,
-  getPurchasedMarketItem,
   getPainterEraserOrPencilOut,
   getPainterMouseDown,
   getPainterSelectedThemeTimeIsUp,
   getGameLog,
-  getUndoRedo
+  getUndoRedo,
+  getYouUsedPowerup
 } from './funcs'
 
 /**
@@ -140,18 +138,11 @@ export const handlePeerDatas = (userID: string) => {
       case 'prevCanvas':
         getPrevCanvas(rtcData.data)
         break
-      case 'youPurchasedMarketItem':
-        getYouPurchasedMarketItem(rtcData.data)
-        break
       case 'powerupUsed':
         getPowerupUsed(rtcData.data)
         break
       case 'youUsedPowerup':
-        console.log('you used powerup case')
         getYouUsedPowerup(rtcData.data)
-        break
-      case 'purchasedMarketItem':
-        getPurchasedMarketItem(rtcData.data)
         break
       case 'painterEraserOrPencilOut':
         getPainterEraserOrPencilOut()

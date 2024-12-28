@@ -1,0 +1,15 @@
+{
+  "dontforget": "Don't forget, join rooms near you to reduce ping",
+  "join": "Join",
+  "refresh": "Refresh",
+  "noroom": "No available room found but ou can create one.",
+  "roomKeysTexts": {
+    "country": "Country",
+    "createdAt": "Created at",
+    "distance": "km away from you",
+    "public": "Public",
+    "private": "Private",
+    "playerCount": "Players",
+    "version": "Version"
+  }
+}

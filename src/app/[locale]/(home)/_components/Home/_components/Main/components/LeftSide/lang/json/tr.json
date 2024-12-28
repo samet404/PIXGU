@@ -6,7 +6,7 @@
 
   "quick_match": {
     "name": "Şipşak maç",
-    "description": "Hızlı bul"
+    "description": "Hızlı bul ve katıl"
   },
 
   "join_room": {
@@ -14,8 +14,8 @@
     "description": "Bul ve katıl!"
   },
   "friends": {
-    "name": "Arkadaşlar",
-    "description": "Arkadas edinin ve daha fazlası"
+    "name": "Sosyal",
+    "description": "Çok yakında..."
   },
 
   "how_to_play": {

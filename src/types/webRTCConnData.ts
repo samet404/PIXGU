@@ -1,6 +1,6 @@
 import type { Player } from '@/zustand/store'
 import type { User } from 'lucia'
-import type { Powerup } from './powerups'
+import type { ChangeThemesPowerupData, LetterHintPowerupData, Powerup, RainingColorsPowerupData, WordsLengthPowerupData } from './powerups'
 
 /**
  * WebRTCConnData is the type of data that
@@ -213,30 +213,6 @@ export type GameEnded = {
   }
 }
 
-export type BuyMarketItem = {
-  event: 'buyMarketItem'
-  data: {
-    name: Powerup
-  }
-}
-
-export type YouPurchasedMarketItem = {
-  event: 'youPurchasedMarketItem'
-  data: {
-    name: Powerup
-    price: number
-  }
-}
-
-export type PurchasedMarketItem = {
-  event: 'purchasedMarketItem'
-  data: {
-    userID: string
-    price: number
-    name: Powerup
-  }
-}
-
 export type UsePowerup = {
   event: 'usePowerup'
   data: {
@@ -249,6 +225,14 @@ export type PowerupUsed = {
   data: {
     name: Powerup
     userID: string
+  } | {
+    name: 'rainingColors'
+    userID: string
+    data: RainingColorsPowerupData
+  } | {
+    name: 'pencilSize'
+    userID: string
+    data?: number
   }
 }
 
@@ -256,8 +240,61 @@ export type YouUsedPowerup = {
   event: 'youUsedPowerup'
   data: {
     name: 'letterHint'
-    data: string
+    data: LetterHintPowerupData
+  } | {
+    name: 'changeThemes'
+    data: ChangeThemesPowerupData
+  } | {
+    name: 'rainingColors'
+    data: RainingColorsPowerupData
+  } | {
+    name: 'wordsLength'
+    data: WordsLengthPowerupData
+  } | {
+    name: 'pencilSize'
+  } | {
+    name: 'rotate'
+  } | {
+    name: 'mirror'
+  } | {
+    name: 'giveUp'
+  } | {
+    name: 'zaWarudo'
+  } | {
+    name: 'colorChaos'
+  } | {
+    name: 'invisiblePencil'
+  } | {
+    name: 'undoBlock'
   }
+}
+
+export type PowerupTimeIsUp = {
+  event: 'powerupTimeIsUp'
+  data: ({
+    name: 'rotate'
+  } | {
+    name: 'mirror'
+  } | {
+    name: 'zaWarudo'
+  } | {
+    name: 'undoBlock'
+  }) & {
+    userID: string
+  }
+}
+
+export type YourPowerupTimeIsUp = {
+  event: 'yourPowerupTimeIsUp'
+  data: ({
+    name: 'rotate'
+  } | {
+    name: 'mirror'
+  } | {
+    name: 'zaWarudo'
+  } | {
+    name: 'undoBlock'
+  })
 }
 
 export type GameLog = {
@@ -277,17 +314,12 @@ export type UndoRedo = {
   }
 }
 
-export type LoremForRTT = {
-  event: 'loremForRTT'
-  data: 'Eu irure ea occaecat deserunt fugiat incididunt tempor est consectetur sit velit labore cillum.'
-}
-
 export type WebRTCConnDataFromHost = (
   | PlayerLeft
   | PlayerJoined
   | PrevPlayers
+  | PowerupTimeIsUp
   | GameLog
-  | LoremForRTT
   | CurrentPainter
   | GuessChatFromHost
   | WinnersChatFromHost
@@ -296,6 +328,7 @@ export type WebRTCConnDataFromHost = (
   | SelectThemeFromHost
   | PainterSelectedTheme
   | PainterSelectingTheme
+  | YourPowerupTimeIsUp
   | PainterSelectedThemeTimeIsUp
   | Guessed
   | Coin
@@ -314,8 +347,6 @@ export type WebRTCConnDataFromHost = (
   | PainterPencil
   | PrevCanvas
   | PainterEraserOrPencilOut
-  | YouPurchasedMarketItem
-  | PurchasedMarketItem
   | PowerupUsed
   | YouUsedPowerup
   | PainterMouseDown
@@ -330,11 +361,9 @@ export type WebRTCConnDataFromClient = (
   | GuessChatFromClient
   | PainterPencil
   | PainterEraser
-  | LoremForRTT
   | PainterBucket
   | PainterTrash
   | SelectThemeFromClient
-  | BuyMarketItem
   | PainterMouseDown
   | UsePowerup
   | UndoRedo

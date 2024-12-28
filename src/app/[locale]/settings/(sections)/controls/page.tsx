@@ -1,17 +1,22 @@
+import type { Locale } from '@/types'
 import SectionWrapper from '../_components/SectionWrapper'
 import { Alert } from './_components/Alert'
 import { Items } from './_components/Items'
 import { RecordBinding } from './_components/RecordBinding'
+import { getLangObj } from './lang'
 
-const Controls = () => {
+const Controls = async ({ params }: Props) => {
+  const { locale } = await params
+  const { heading, description, keys } = await getLangObj(locale)
+
   return (
-    <SectionWrapper text="Controls">
+    <SectionWrapper text={heading}>
       <div className="flex flex-col gap-2 items-start">
         <div className='pb-2 text-sm text-[#0000009b]'>
-          You can customize your key bindings below.
+          {description}
         </div>
 
-        <Items />
+        <Items names={keys} />
         <Alert />
       </div>
       <RecordBinding />
@@ -20,3 +25,9 @@ const Controls = () => {
 }
 
 export default Controls
+
+type Props = {
+  params: Promise<{
+    locale: Locale
+  }>
+}

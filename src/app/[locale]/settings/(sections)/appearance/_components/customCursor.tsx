@@ -3,16 +3,21 @@
 import { useCustomCursor } from '@/zustand/store'
 import { SettingsCheckbox } from '../../_components/SettingsCheckbox'
 
-export const CustomCursor = () => {
+export const CustomCursor = ({ name, description }: Props) => {
     const isOpen = useCustomCursor((s) => s.isOpen)
     const switchSettings = useCustomCursor((s) => s.switch)
 
     return (
         <SettingsCheckbox
             onMouseDown={switchSettings}
-            name="Custom cursor (experimental)"
-            description="A little circle follows your mouse cursor. Can cause performance issues little bit."
+            name={name}
+            description={description}
             isChecked={isOpen}
         />
     )
+}
+
+type Props = {
+    name: string
+    description: string
 }

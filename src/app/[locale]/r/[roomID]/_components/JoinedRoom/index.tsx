@@ -7,7 +7,6 @@ import { Chats } from './_components/Chats'
 import Nav from './_components/Nav'
 import PlayersSection from './_components/PlayersSection'
 import { LeftNav } from './_components/LeftNav'
-import { Marketplace } from './_components/Marketplace'
 import { ResetStates } from './_components/ResetStates'
 import { Spectator } from './_components/Spectator'
 import { Outfit } from 'next/font/google'
@@ -33,7 +32,8 @@ const outfit = Outfit({
 })
 
 const JoinedRoom = async ({
-    roomID
+    roomID,
+    locale
 }: Props) => {
     const havePassword = await api.gameRoom.isHavePass.query({
         roomID,
@@ -74,8 +74,7 @@ const JoinedRoom = async ({
                         <Shortcuts />
                         <div className="h-full w-full">
                             <LetterHint />
-                            <Marketplace />
-                            <Powerups />
+                            <Powerups locale={locale} />
                             <TipsModal />
 
 

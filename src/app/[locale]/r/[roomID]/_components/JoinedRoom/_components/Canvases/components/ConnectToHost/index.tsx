@@ -9,7 +9,6 @@ export const ConnectToHost = () => {
   const roomID = useRoomIDStore((state) => state.roomID)
   const myUserID = useUserIDStore((state) => state.userID)
 
-  console.log('myUserID: ', myUserID)
   useEffectOnce(() => {
     receiveSignal(roomID, myUserID)
     getSecretKey()

@@ -1,0 +1,7 @@
+{
+  "heading": "Advanced",
+  "clearLocalstorageHeading": "Clear local storage",
+  "clearLocalstorageDesc": "Clears all local data on browser such as music links, control settings, etc.",
+  "developerModeHeading": "Enable developer mode",
+  "developerModeDesc": "If you don't know what you are doing, don't enable it. Reduces performance and degrades site appearance."
+}

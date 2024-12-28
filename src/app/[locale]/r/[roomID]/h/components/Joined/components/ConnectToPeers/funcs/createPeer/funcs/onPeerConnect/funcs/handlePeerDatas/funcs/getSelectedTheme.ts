@@ -7,7 +7,8 @@ import {
   useCoins,
   useHostPainterData,
   useMatchStatus,
-  usePlayersOwnedPowerups,
+  usePlayers,
+  usePlayersPowerups,
   useTotalMatchCount,
   useWhoIsPainter,
 } from '@/zustand/store'
@@ -64,5 +65,10 @@ export const getSelectedTheme = (
   })
 
   useCoins.getState().newMatch()
-  usePlayersOwnedPowerups.getState().newMatch()
+
+  usePlayersPowerups.getState().setPainterPowerups(userID)
+  usePlayers.getState().getPlayersIDs().forEach(ID => {
+    if (ID === userID) return
+    usePlayersPowerups.getState().setGuessrPowerups(ID)
+  })
 }

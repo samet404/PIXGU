@@ -4,7 +4,7 @@ import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { useSoundSettings } from '@/zustand/store'
 import { useRef } from 'react'
 
-export const SfxVolume = () => {
+export const SfxVolume = ({ title }: Props) => {
     const setSfxVolume = useSoundSettings((s) => s.setSfxSoundLevel)
     const rangeRef = useRef<HTMLInputElement>(null)
 
@@ -22,8 +22,12 @@ export const SfxVolume = () => {
 
     return (
         <div className='text-[#000000b1]'>
-            Sfx volume
+            {title}
             <input ref={rangeRef} onInput={onInput} type="range" min="0" max="100" className="sound-range w-full" />
         </div>
     )
+}
+
+type Props = {
+    title: string
 }

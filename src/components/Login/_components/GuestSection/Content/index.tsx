@@ -15,7 +15,7 @@ export const Content = ({ redirectToRoomID }: Props) => {
       <Input ref={receivedInputRef} />
       <div className='flex flex-row gap-2 w-full'>
         <Btn inputRef={receivedInputRef} joinGame={true} />
-        {!redirectToRoomID && <Btn inputRef={receivedInputRef} joinGame={false} />}
+        {!redirectToRoomID && <Btn inputRef={receivedInputRef} redirectToRoomID={redirectToRoomID} joinGame={false} />}
       </div>
     </Fragment>
   )

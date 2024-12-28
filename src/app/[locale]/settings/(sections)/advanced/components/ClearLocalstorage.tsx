@@ -1,26 +1,19 @@
 'use client'
 
-import { useRef, useState } from 'react'
 import { SettingsBtn } from '../../_components/SettingsBtn'
 
-export const ClearLocalstorage = () => {
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const [isClicked, setIsClicked] = useState<boolean>(false)
-
+export const ClearLocalstorage = ({ description, heading }: Props) => {
   return (
     <SettingsBtn
-      onMouseDown={() => {
-        if (timeoutRef.current) clearTimeout(timeoutRef.current)
-
-        localStorage.clear()
-        timeoutRef.current = setTimeout(() => {
-          setIsClicked(false)
-        }, 3000)
-        setIsClicked(true)
-      }}
+      onMouseDown={() => localStorage.clear()}
       className="bg-rose-500"
-      name={isClicked ? 'Cleaned' : 'Clear local storage'}
-      description="Clears all local data on browser such as music links, control settings, etc."
+      name={heading}
+      description={description}
     />
   )
+}
+
+type Props = {
+  description: string
+  heading: string
 }

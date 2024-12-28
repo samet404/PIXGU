@@ -1,4 +1,4 @@
-import Navbar from './_components/Navbar'
+import { Navbar } from './_components/Navbar'
 import { Main } from './_components/Main'
 import type { Locale } from '@/types'
 import { Outfit } from 'next/font/google'
@@ -19,7 +19,7 @@ const Home = ({ locale }: Props) => {
         >
             <div className="flex animate-fade flex-col items-center duration-[100ms]  animate-duration-1000">
                 <div className='flex flex-col items-center'>
-                    <Navbar />
+                    <Navbar locale={locale} />
                     <Main locale={locale} />
                 </div>
             </div>

@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { Outfit } from 'next/font/google'
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { getLangObj } from './lang'
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -19,8 +20,9 @@ export const metadata: Metadata = {
 
 
 const JoinRoom = async ({ params }: Props) => {
-  // eslint-disable-next-line no-unused-vars
   const { locale } = await params
+  const { dontforget, join, refresh, noroom, roomKeysTexts } = await getLangObj(locale)
+
   return (
     <div
       style={{
@@ -39,9 +41,9 @@ const JoinRoom = async ({ params }: Props) => {
             sizes="calc(2.33vw + 90px)"
           ></Image>
         </Link>
-        <div className="text-[#be2796]">Don't forget, join rooms near you to reduce ping</div>
+        <div className="text-[#be2796]">{dontforget}</div>
       </div>
-      <Rooms />
+      <Rooms joinText={join} refreshText={refresh} noroomText={noroom} roomsKeysTexts={roomKeysTexts} />
     </div>
   )
 }

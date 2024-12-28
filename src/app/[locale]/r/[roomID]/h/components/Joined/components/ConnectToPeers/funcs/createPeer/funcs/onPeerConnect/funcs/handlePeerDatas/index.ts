@@ -3,7 +3,6 @@ import { usePeers } from '@/zustand/store'
 import { getUndoRedo } from './funcs/getUndoRedo'
 import {
   chat,
-  getBuyMarketItem,
   getPainterBucket,
   getPainterEraser,
   getPainterMouseDown,
@@ -53,11 +52,8 @@ export const handlePeerDatas = (userID: string, roomID: string) => {
       case 'painterBucket':
         getPainterBucket(rtcData.data, userID)
         break
-      case 'buyMarketItem':
-        getBuyMarketItem(rtcData.data, userID)
-        break
       case 'usePowerup':
-        getUsePowerup(rtcData.data, userID)
+        getUsePowerup(rtcData.data, userID, roomID)
         break
       case 'painterMouseDown':
         getPainterMouseDown(rtcData.data, userID)

@@ -2,7 +2,7 @@
 
 import { sendToHostPeer } from '@/utils/sendToHostPeer'
 import { postMsgToPlayerTimerWorker } from '@/workers'
-import { useCoins, useMatchStatusClient, useMyCoin, useOwnedPowerups, usePlayersOwnedPowerups, useSelectThemePanel, useWhoIsPainterClient } from '@/zustand/store'
+import { useCoins, useMatchStatusClient, useMyCoin, usePowerups, useSelectThemePanel, useWhoIsPainterClient } from '@/zustand/store'
 import { useEffect, useRef } from 'react'
 import clsx from 'clsx'
 
@@ -38,9 +38,6 @@ export const Btn = ({ theme, position }: Props) => {
     })
     useCoins.getState().newMatch()
     useMyCoin.getState().newMatch()
-    usePlayersOwnedPowerups.getState().newMatch()
-    useOwnedPowerups.getState().newMatch()
-    useWhoIsPainterClient.getState().selectedTheme()
   }
   return (
     <button

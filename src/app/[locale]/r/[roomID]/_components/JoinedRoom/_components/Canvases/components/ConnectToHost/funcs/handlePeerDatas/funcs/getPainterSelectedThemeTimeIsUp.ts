@@ -1,5 +1,5 @@
 import { postMsgToPlayerTimerWorker } from '@/workers'
-import { useNewPainterPanel, useOwnedPowerups, usePainterSelectingRemainTime, useRoomGuessChatMsgsStore, useRoomWinnersChatMsgsStore, useSelectThemePanel } from '@/zustand/store'
+import { useNewPainterPanel, usePainterSelectingRemainTime, useRoomGuessChatMsgsStore, useRoomWinnersChatMsgsStore, useSelectThemePanel } from '@/zustand/store'
 
 export const getPainterSelectedThemeTimeIsUp = () => {
   postMsgToPlayerTimerWorker({
@@ -11,5 +11,4 @@ export const getPainterSelectedThemeTimeIsUp = () => {
   useSelectThemePanel.getState().close()
   useRoomGuessChatMsgsStore.getState().reset()
   useRoomWinnersChatMsgsStore.getState().reset()
-  useOwnedPowerups.getState().newMatch()
 }

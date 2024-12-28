@@ -1,13 +1,16 @@
-// import OpenerBtn from './components/OpenerBtn'
-// import Dropdown from './components/DropdownContent'
+import OpenerBtn from './components/OpenerBtn'
+import Dropdown from './components/DropdownContent'
+import type { Locale } from '@/types/locale'
 
-const Content = () => {
+export const Content = ({ locale }: Props) => {
   return (
     <div className="group relative z-10">
-      {/**<OpenerBtn lang={getLocale()} />
-      <Dropdown />*/}
+      <OpenerBtn lang={locale} />
+      <Dropdown />
     </div>
   )
 }
 
-export default Content
+type Props = {
+  locale: Locale
+}

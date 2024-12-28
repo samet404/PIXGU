@@ -1,19 +1,19 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
+import type { PropsWithChildren } from 'react'
 
-const HomeBtn = () => {
+const HomeBtn = ({ children }: PropsWithChildren) => {
   const router = useRouter()
-
   const handleClick = () => router.push('/')
 
   return (
-    <div
+    <button
       className="cursor-pointer rounded-lg p-2 text-[#ffffff9c]"
       onClick={handleClick}
     >
-      {`Home`}
-    </div>
+      {children}
+    </button>
   )
 }
 

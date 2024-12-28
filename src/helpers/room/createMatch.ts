@@ -50,7 +50,6 @@ export const createMatch = (roomID: string) => {
       return
     }
 
-
     if (playersIDs.length === 1) {
       useWhoIsPainter.getState().painterSelected({
         nextPainterI: null,

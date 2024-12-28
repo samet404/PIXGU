@@ -12,10 +12,10 @@ import {
   usePing,
   useCanvasesMainData,
   useHostPeer,
-  useOwnedPowerups,
   useCoins,
   useMatchStatus,
   useIsGameStopped,
+  usePowerups,
 } from '@/zustand/store'
 
 export const ResetStates = () => {
@@ -28,11 +28,10 @@ export const ResetStates = () => {
   const resetMyCoin = useMyCoin.getState().reset
   const resetCanvasesMainData = useCanvasesMainData.getState().reset
   const resetHostPeer = useHostPeer.getState().reset
-  const resetOwnedPowerups = useOwnedPowerups.getState().reset
-  const resetPlayersOwnedPowerups = useOwnedPowerups.getState().reset
   const resetCoins = useCoins.getState().reset
   const resetMatchStates = useMatchStatus.getState().reset
   const resetIsGameStopped = useIsGameStopped.getState().reset
+  const resetPowerups = usePowerups.getState().reset
 
   useEffectReturnOnce(() => {
     terminateCanvasWorker()
@@ -45,8 +44,7 @@ export const ResetStates = () => {
     resetMyCoin()
     resetCanvasesMainData()
     resetHostPeer()
-    resetPlayersOwnedPowerups()
-    resetOwnedPowerups()
+    resetPowerups()
     resetMatchStates()
     resetCoins()
     resetIsGameStopped()

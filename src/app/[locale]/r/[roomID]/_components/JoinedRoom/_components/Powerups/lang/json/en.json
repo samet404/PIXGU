@@ -1,0 +1,66 @@
+{
+  "letterHint": {
+    "title": "Letter Reveal",
+    "description": "Need a clue? Get a random letter from the secret word to help you out!"
+  },
+
+  "changeThemes": {
+    "title": "Theme Shuffle",
+    "description": "Instantly switch to a different drawing themes for a fresh challenge"
+  },
+
+  "rotate": {
+    "title": "Canvas Spin",
+    "description": "Make everyone's canvas do a 360° spin for 10 seconds - good luck everyone!"
+  },
+
+  "mirror": {
+    "title": "Mirror Mode",
+    "description": "Flip everyone's canvas horizontally - watch the confusion begin!"
+  },
+
+  "giveUp": {
+    "title": "Surrender",
+    "description": "Too tough? Give up and lose 50 coins - sometimes it's worth it!"
+  },
+
+  "undoBlock": {
+    "title": "No Take-Backs",
+    "description": "Block undo button for 10 seconds - every stroke counts!"
+  },
+
+  "colorChaos": {
+    "title": "Color Chaos",
+    "description": "Randomly change painter colors - can you adapt to the new palette?"
+  },
+
+  "pencilSize": {
+    "title": "Pencil Chaos",
+    "description": "Change painter pencil size randomly - precision not guaranteed!"
+  },
+
+  "invisiblePencil": {
+    "title": "Invisible Pencil",
+    "description": "Make painter pencil invisible for 10 seconds - good luck to painter!"
+  },
+
+  "zaWarudo": {
+    "title": "Za Warudo",
+    "description": "Pause the timer for 10 seconds - create a momentary time stop!"
+  },
+
+  "rainingColors": {
+    "title": "Raining Colors",
+    "description": "Random colors drop onto the canvas - watch out for unwanted!"
+  },
+
+  "wordsLength": {
+    "title": "Length Reveal",
+    "description": "Reveals the exact length of the secret word - gives you the edge you need!"
+  },
+
+  "categoryHint": {
+    "title": "Category Clue",
+    "description": "Reveals a hint about the drawing category - narrow down your guesses!"
+  }
+}

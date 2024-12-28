@@ -1,0 +1,15 @@
+{
+  "dontforget": "Unutma, yakınınızdaki odalara katılmak pingi azaltır.",
+  "join": "Katıl",
+  "refresh": "Yenile",
+  "noroom": "Katılmaya uygun oda bulunamadı fakat kendiniz oluşturabilirsiniz.",
+  "roomKeysTexts": {
+    "country": "Ülke",
+    "createdAt": "Oluşturuldu",
+    "distance": "km senden uzakta",
+    "public": "Herkese açık",
+    "private": "Özel",
+    "playerCount": "Oyuncular",
+    "version": "Versiyon"
+  }
+}

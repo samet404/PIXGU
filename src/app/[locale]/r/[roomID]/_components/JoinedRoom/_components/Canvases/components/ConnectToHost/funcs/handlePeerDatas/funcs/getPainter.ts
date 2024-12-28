@@ -10,7 +10,7 @@ import {
   useLetterHint,
   useMatchStatusClient,
   useNewPainterPanel,
-  useOwnedPowerups,
+  usePowerups,
   usePainterSelectingRemainTime,
   usePlayers,
   useRoomGuessChatMsgsStore,
@@ -36,7 +36,6 @@ export const getPainter = (
   if (useIsGameStopped.getState().value.code?.includes('waitingForHost'))
     useIsGameStopped.getState().removeCode('waitingForHost')
 
-  useOwnedPowerups.getState().reset()
   useWhoIsPainterClient.getState().setPainterSelected({
     painterID: data,
     amIPainter,
@@ -59,6 +58,7 @@ export const getPainter = (
   useAmIGuessed.getState().noIMNotGuessed()
 
   if (amIPainter) {
+    usePowerups.getState().setPainterCardsWhileThemeIsSelecting()
     console.log('amIPainter true')
     useSelectThemePanel.getState().open()
     useNewPainterPanel.getState().close()
@@ -68,6 +68,7 @@ export const getPainter = (
     useGuessChatLayout.getState().setPainterLayout()
     useRoomGuessChatMsgsStore.getState().reset()
   } else {
+    usePowerups.getState().setGuessrCardsWhileThemeIsSelecting()
     console.log('amIPainter false')
     useNewPainterPanel.getState().open({ painterID: data })
     useSelectThemePanel.getState().close()

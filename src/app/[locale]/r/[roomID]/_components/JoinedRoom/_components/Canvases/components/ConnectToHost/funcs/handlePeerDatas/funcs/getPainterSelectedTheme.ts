@@ -5,8 +5,7 @@ import {
   useMatchStatusClient,
   useMyCoin,
   useNewPainterPanel,
-  useOwnedPowerups,
-  usePlayersOwnedPowerups,
+  usePowerups,
   useRoomGuessChatMsgsStore,
   useSelectThemePanel,
   useTotalMatchCount,
@@ -15,12 +14,14 @@ import {
 
 export const getPainterSelectedTheme = () => {
   useMatchStatusClient.getState().startMatch()
+
   postMsgToPlayerTimerWorker({
     ID: 'MATCH_REMAIN_TIME',
     event: 'start',
     ms: 1000,
     type: 'interval'
   })
+
   postMsgToPlayerTimerWorker({
     ID: 'PAINTER_SELECTING_REMAIN_TIME',
     event: 'stop',
@@ -29,10 +30,13 @@ export const getPainterSelectedTheme = () => {
 
   storePaintersAccess.selectedAsPainter(useWhoIsPainterClient.getState().value.painterID!, useTotalMatchCount.getState().value.userPainterAccesCount!)
 
+  const amIPainter = useWhoIsPainterClient.getState().value.amIPainter
+  if (amIPainter) usePowerups.getState().setPainterCards()
+  else usePowerups.getState().setGuessrCards()
+
   useCoins.getState().newMatch()
   useMyCoin.getState().newMatch()
-  usePlayersOwnedPowerups.getState().newMatch()
-  useOwnedPowerups.getState().newMatch()
+
   useWhoIsPainterClient.getState().selectedTheme()
   useNewPainterPanel.getState().close()
   useSelectThemePanel.getState().close()

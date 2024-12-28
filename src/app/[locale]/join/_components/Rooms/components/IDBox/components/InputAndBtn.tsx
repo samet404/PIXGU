@@ -4,7 +4,7 @@ import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { useRouter } from 'next/navigation'
 import { Fragment, useRef } from 'react'
 
-export const InputAndBtn = () => {
+export const InputAndBtn = ({ joinText }: Props) => {
   const inputRef = useRef<HTMLInputElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
   const router = useRouter()
@@ -47,8 +47,12 @@ export const InputAndBtn = () => {
         }}
         className="flex items-center justify-center rounded-md bg-[#fc56ba] px-2 text-[#ffffffb4]"
       >
-        Join
+        {joinText}
       </button>
     </Fragment>
   )
+}
+
+type Props = {
+  joinText: string
 }

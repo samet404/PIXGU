@@ -46,6 +46,11 @@ export default {
     },
     extend: {
       animation: {
+        'border-flow': 'border-flow 3s linear infinite',
+        'title-shine': 'title-shine 7s linear infinite',
+
+        pulseCard: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        bounceCard: 'bounce 0.5s infinite',
         'throw': 'throw .5s ease-in-out',
         'fade-blur-bright': 'fade-blur-bright .5 both ease-in',
         'fade-blur': 'fade-blur .5s both ease-in',
@@ -58,6 +63,24 @@ export default {
         'animate-err-pulse-shadow': 'err-pulse-shadow 3s ease-in-out infinite',
       },
       keyframes: {
+        'border-spin': {
+          '0%, 100%': {
+            'background-size': '200% 200%',
+            'background-position': 'left center',
+          },
+          '50%': {
+            'background-size': '200% 200%',
+            'background-position': 'right center',
+          },
+        },
+        'title-shine': {
+          '0%': {
+            'background-position': '400%',
+          },
+          '100%': {
+            'background-position': '-200%',
+          },
+        },
         throw: {
           '0%': {
             transform: 'translateY(100%) translateX(50%) rotate(90deg) scale(2)',

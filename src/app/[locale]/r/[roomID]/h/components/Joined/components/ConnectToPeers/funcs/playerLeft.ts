@@ -5,7 +5,7 @@ import {
   useMatchStatus,
   usePeers,
   usePlayers,
-  usePlayersOwnedPowerups,
+  usePlayersPowerups,
   useSocketIO,
   useTotalMatchCount,
   useWhoIsPainter,
@@ -41,6 +41,7 @@ export const playerLeft = (userID: string, roomID: string) => {
   usePeers.getState().removePeer(userID)
   usePlayers.getState().removePlayer(userID)
   useGuessedPlayers.getState().reset()
+  usePlayersPowerups.getState().removeUser(userID)
 
   if (usePlayers.getState().value.count <= 1) {
     postMsgToHostTimerWorker({
@@ -61,7 +62,6 @@ export const playerLeft = (userID: string, roomID: string) => {
     useHostingHealth.getState().set('waitingForPlayers')
     useMatchStatus.getState().reset()
     useCoins.getState().reset()
-    usePlayersOwnedPowerups.getState().reset()
     useSocketIO.getState().io!.emit('game-started', false)
   }
   else if (useWhoIsPainter.getState().isPainter(userID)) {
@@ -86,7 +86,6 @@ export const playerLeft = (userID: string, roomID: string) => {
     }
     else if (painterStatus === 'selectedTheme') {
       if (useCoins.getState().prevCoins) useCoins.getState().returnPrev()
-      if (usePlayersOwnedPowerups.getState().prevValue) usePlayersOwnedPowerups.getState().returnPrev()
     }
 
     useWhoIsPainter.getState().reset()

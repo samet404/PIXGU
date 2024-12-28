@@ -13,10 +13,6 @@ export async function GET(req: Request) {
   }
 
   const guestID = await redisDb.get(`guest:session:${authToken}:ID`)
-  console.log('guestID: ', guestID)
-  const isValid = guestID ? true : false
 
-  console.log('isValid23: ', isValid)
-
-  return new Response(JSON.stringify(isValid))
+  return new Response(JSON.stringify(guestID))
 }

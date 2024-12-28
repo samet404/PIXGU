@@ -2,8 +2,9 @@ import { api } from '@/trpc/react'
 import Link from 'next/link'
 import { PinkValue } from './components/PinkValue'
 import { Svg } from '@/components/Svg'
+import type { LangObj } from '@/app/[locale]/join/lang'
 
-export const RoomItem = ({ ID }: Props) => {
+export const RoomItem = ({ ID, roomsKeysTexts }: Props) => {
   const { data, isLoading, isError, error } = api.gameRoom.getByID.useQuery(ID, {
     refetchOnWindowFocus: true
   })
@@ -30,14 +31,14 @@ export const RoomItem = ({ ID }: Props) => {
           {name}
         </div>
         <div className='flex flex-row flex-wrap gap-2'>
-          <PinkValue value={'Host ' + distanceInKm + ' km away from you'} />
+          <PinkValue value={'Host ' + distanceInKm + roomsKeysTexts.distance} />
           <PinkValue value={`ID: ${ID}`} />
-          <PinkValue value={isPublic ? 'Public' : 'Private'} />
-          <PinkValue value={'Country: ' + country} />
-          <PinkValue value={`Players: ${playerCount}/10`} />
-          <PinkValue value={`Version: ${version}`} />
+          <PinkValue value={isPublic ? roomsKeysTexts.public : roomsKeysTexts.private} />
+          <PinkValue value={`${roomsKeysTexts.country}: ${country}`} />
+          <PinkValue value={`${roomsKeysTexts.playerCount}: ${playerCount}/10`} />
+          <PinkValue value={`${roomsKeysTexts.version}: ${version}`} />
           <PinkValue
-            value={`Created at: ${new Date(createdAt).toDateString()} ${new Date(createdAt).getHours()}:${new Date(createdAt).getMinutes()}:${new Date(createdAt).getSeconds()}`}
+            value={`${roomsKeysTexts.createdAt}: ${new Date(createdAt).toDateString()} ${new Date(createdAt).getHours()}:${new Date(createdAt).getMinutes()}:${new Date(createdAt).getSeconds()}`}
           />
         </div>
 
@@ -55,4 +56,5 @@ export const RoomItem = ({ ID }: Props) => {
 
 type Props = {
   ID: string
+  roomsKeysTexts: LangObj['roomKeysTexts']
 }

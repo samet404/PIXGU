@@ -1,29 +1,26 @@
+
+import { POWERUP_PRICES } from '@/constants'
+import { sendCoinInfo } from '@/helpers/room'
 import { sendToPeerWithID, randomOneCharacterFromStr, sendToAllPeers } from '@/utils'
-import { useHostPainterData, usePlayersOwnedPowerups, useWhoIsPainter } from '@/zustand/store'
+import { useCoins, useHostPainterData, usePlayersPowerups, useWhoIsPainter } from '@/zustand/store'
 
 export const letterHint = (userID: string) => {
-    console.log('letterHint')
     const painterData = useHostPainterData.getState().value
-    if (painterData.status !== 'painterSelectedTheme') {
-        console.log('letterHint0')
-        return
-    }
-    if (useWhoIsPainter.getState().isPainter(userID)) {
-        console.log('letterHint1')
-        return
-    }
+    if (
+        useWhoIsPainter.getState().isPainter(userID) ||
+        painterData.status !== 'painterSelectedTheme' ||
+        useCoins.getState().coins[userID]! < POWERUP_PRICES.letterHint
+    ) return
+
 
     const theme = painterData.selectedTheme.toLocaleLowerCase().trim()
-    if (!theme) {
-        console.log('letterHint2')
-        return
-    }
+    if (!theme) return
+    if (!usePlayersPowerups.getState().users[userID]?.powerups.letterHint.isActive) return
 
-    const letterHintCount = usePlayersOwnedPowerups.getState().value[userID]?.letterHint
-    if (!letterHintCount) return
-    if (letterHintCount < 1) return
+    useCoins.getState().decrease(userID, POWERUP_PRICES.letterHint)
+    sendCoinInfo([userID])
 
-    usePlayersOwnedPowerups.getState().remove(userID, 'letterHint')
+    usePlayersPowerups.getState().setPowerupInActive(userID, 'letterHint')
     sendToPeerWithID(userID, {
         event: 'youUsedPowerup',
         data: {
@@ -31,7 +28,6 @@ export const letterHint = (userID: string) => {
             data: randomOneCharacterFromStr(theme)
         }
     })
-
     sendToAllPeers({
         event: 'powerupUsed',
         data: {

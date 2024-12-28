@@ -4,7 +4,7 @@ import { sendToAllPeers } from '@/utils/sendToAllPeers'
 import { sendToPainterPeer } from '@/utils/sendToPainterPeer'
 import { sToMs } from '@/utils/sToMs'
 import { postMsgToHostTimerWorker } from '@/workers'
-import { useTotalMatchCount, useWhoIsPainter } from '@/zustand/store'
+import { usePlayers, usePlayersPowerups, useTotalMatchCount, useWhoIsPainter } from '@/zustand/store'
 import { useHostPainterData } from '@/zustand/store/useHostPainterData'
 
 export const updatePainterToPlayers = async (roomID: string) => {
@@ -50,5 +50,11 @@ export const updatePainterToPlayers = async (roomID: string) => {
 
     event: 'selectTheme',
     data: themes,
+  })
+
+  usePlayersPowerups.getState().setPainterCardsWhileThemeIsSelecting(painterID)
+  usePlayers.getState().getPlayersIDs().forEach(ID => {
+    if (ID === painterID) return
+    usePlayersPowerups.getState().setGuessrCardsWhileThemeIsSelecting(ID)
   })
 }

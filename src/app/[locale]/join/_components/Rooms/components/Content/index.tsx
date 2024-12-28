@@ -6,13 +6,14 @@ import dynamic from 'next/dynamic'
 import { forwardRef, useImperativeHandle, type Ref } from 'react'
 import { sortByAtom } from '../atoms'
 import { useAtomValue } from 'jotai'
+import type { LangObj } from '@/app/[locale]/join/lang'
 
 const ErrDisplay = dynamic(() => import('@/components/ErrDisplay'))
 const Spinner = dynamic(() => import('@/components/Spinner'))
 
 export const Content = forwardRef(
   (
-    _: unknown,
+    { noroomText, roomsKeysTexts }: Props,
     ref: Ref<{
       refetch: () => void
     }>,
@@ -43,12 +44,17 @@ export const Content = forwardRef(
     if (data.length === 0)
       return (
         <div className="w-full animate-fade text-center text-white">
-          No available room found
+          {noroomText}
         </div>
       )
 
-    return data.map((ID) => <RoomItem key={ID} ID={ID} />)
+    return data.map((ID) => <RoomItem key={ID} ID={ID} roomsKeysTexts={roomsKeysTexts} />)
   },
 )
 
 Content.displayName = 'RoomsContent'
+
+type Props = {
+  noroomText: string
+  roomsKeysTexts: LangObj['roomKeysTexts']
+}
