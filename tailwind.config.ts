@@ -46,9 +46,9 @@ export default {
     },
     extend: {
       animation: {
+        'slow-spin': 'slow-spin 10s linear infinite',
         'border-flow': 'border-flow 3s linear infinite',
         'title-shine': 'title-shine 7s linear infinite',
-
         pulseCard: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         bounceCard: 'bounce 0.5s infinite',
         'throw': 'throw .5s ease-in-out',
@@ -63,6 +63,11 @@ export default {
         'animate-err-pulse-shadow': 'err-pulse-shadow 3s ease-in-out infinite',
       },
       keyframes: {
+        'slow-spin': {
+          from: { transform: 'rotate(0deg)' },
+          to: { transform: 'rotate(360deg)' }
+        },
+
         'border-spin': {
           '0%, 100%': {
             'background-size': '200% 200%',

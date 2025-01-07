@@ -2,7 +2,6 @@
 
 import { GridAndTopCanvas } from './components/GridAndTopCanvas'
 import { MainCanvas } from './components/MainCanvas'
-import { Suspense } from 'react'
 import { ConnectToHost } from './components/ConnectToHost'
 import { NewPainter } from './components/NewPainter'
 import { SelectTheme } from './components/SelectTheme'
@@ -10,14 +9,18 @@ import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
 import { useAmIPainting, useCanvasesMainData } from '@/zustand/store'
 import { UseCanvasWorker } from './components/UseCanvasWorker'
 import { BlurFocus } from './components/BlurFocus'
+import { Container } from './components/Container'
+import type { LangObj } from '../../lang'
 
-const Canvases = () => {
+export const Canvases = ({ langObj }: Props) => {
+  console.log('canvasesLangObj: ', langObj)
   const updateZoom = (scale: number) => {
     useAmIPainting.getState().imNotPainting()
     useCanvasesMainData.getState().add({ zoom: 1 / scale })
   }
 
   return (
+
     <div
       id="canvasesContainer"
       className="flex h-[90vh] w-full overflow-hidden rounded-lg bg-[#00000020]"
@@ -36,31 +39,32 @@ const Canvases = () => {
           velocityDisabled: true,
           allowLeftClickPan: false,
         }}
+
         initialPositionX={0}
         initialPositionY={0}
       >
         {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
-          <div className="relative h-full w-full">
+          <div className="relative h-full w-full flex items-center justify-center">
             <TransformComponent>
-              <div
-                className={`relative flex select-none rounded-[0.7rem] border-[0.2rem] border-[#ffffff37]`}
-              >
-                <MainCanvas key={'MainCanvas'} />
-                <GridAndTopCanvas key={'GridAndTopCanvas'} />
+              <Container>
+                <MainCanvas />
+                <GridAndTopCanvas />
                 <BlurFocus />
-                <NewPainter key={'NewPainter'} />
-                <SelectTheme key={'SelectTheme'} />
-              </div>
+                <NewPainter langObj={langObj} />
+                <SelectTheme langObj={langObj} />
+              </Container>
             </TransformComponent>
+
           </div>
         )}
       </TransformWrapper>
-      <Suspense>
-        <UseCanvasWorker />
-        <ConnectToHost />
-      </Suspense>
+
+      <UseCanvasWorker />
+      <ConnectToHost />
     </div>
   )
 }
 
-export default Canvases
+type Props = {
+  langObj: LangObj['canvases']
+}

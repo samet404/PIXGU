@@ -2,7 +2,12 @@ import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { useSpring, animated } from '@react-spring/web'
 import { useRef, useState } from 'react'
 
-export const CopyBtn = () => {
+type Props = {
+  displayText1: string
+  displayText2: string
+}
+
+export const CopyBtn = ({ displayText1, displayText2 }: Props) => {
   const [isCopied, setIsCopied] = useState<boolean>(false)
   const divRef = useRef<HTMLDivElement>(document.createElement('div'))
   const copiedTimeout = useRef<ReturnType<typeof setTimeout>>()
@@ -55,7 +60,7 @@ export const CopyBtn = () => {
       style={springs}
       className="!hover:opactiy-60 rounded-md bg-[#ffffff82] px-4 leading-8 text-[#02020285] disabled:cursor-not-allowed disabled:opacity-65"
     >
-      {isCopied ? 'Copied!' : 'Copy link'}
+      {isCopied ? displayText1 : displayText2}
     </animated.button>
   )
 }

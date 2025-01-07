@@ -1,11 +1,12 @@
 'use client'
 
-import { useXY } from '@/zustand/store'
+import { useMatchStatusClient, useXY } from '@/zustand/store'
 
 export const XY = () => {
+  const status = useMatchStatusClient((s) => s.status)
   const XY = useXY((s) => s.value)
 
-  if (XY) {
+  if (XY && status === 'started') {
     const { x, y } = XY
 
     return (

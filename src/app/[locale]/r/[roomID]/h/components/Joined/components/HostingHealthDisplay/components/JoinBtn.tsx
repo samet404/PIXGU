@@ -1,7 +1,7 @@
 import { useSpring, animated } from '@react-spring/web'
 import Link from 'next/link'
 
-export const JoinBtn = () => {
+export const JoinBtn = ({ displayText }: Props) => {
   const [springs, api] = useSpring(() => ({
     from: {
       scale: 1,
@@ -33,8 +33,12 @@ export const JoinBtn = () => {
         prefetch={false}
         className="flex h-full w-full items-center flex-shrink justify-center rounded-md bg-[#ffffff82] px-4 py-1  text-[#02020285] hover:opacity-60 disabled:cursor-not-allowed disabled:opacity-65"
       >
-        Join the game
+        {displayText}
       </Link>
     </animated.button>
   )
+}
+
+type Props = {
+  displayText: string
 }

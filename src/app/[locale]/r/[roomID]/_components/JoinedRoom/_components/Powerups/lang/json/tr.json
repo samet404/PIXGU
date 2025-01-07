@@ -1,66 +1,66 @@
 {
   "letterHint": {
-    "title": "Harf İpucu",
+    "title": "Harf Kazanımı",
     "description": "İpucuna mı ihtiyacın var? Gizli kelimeden rastgele bir harf al!"
   },
 
   "changeThemes": {
-    "title": "Tema Değiştir",
-    "description": "Yeni bir heyecan için hemen farklı bir çizim kategorisine geç"
+    "title": "Tema Değiştirme",
+    "description": "Hızlıca başka çizim temalarına geç"
   },
 
   "rotate": {
-    "title": "Tuval Döndürme",
-    "description": "Herkesin tuvalini 360° döndür - kolay gelsin herkese!"
+    "title": "Dönen Tuval",
+    "description": "Herkesin tuvalini 360° döndürür"
   },
 
   "mirror": {
     "title": "Ayna Modu",
-    "description": "Herkesin tuvalini yatay çevir - karmaşayı izle!"
+    "description": "Ayna etkisi ile herkesin tuvalini yatay olarak çevirir"
   },
 
   "giveUp": {
     "title": "Pes Et",
-    "description": "Çok mu zor geldi? Pes et ve 200 jeton kaybet - bazen değer!"
+    "description": "Çok mu zor geldi? Pes et ve 50 jeton kaybet. Bazen değiyor!"
   },
 
   "undoBlock": {
     "title": "Geri Alma Engeli",
-    "description": "Geri alma düğmesini 10 saniye boyunca engelle - her piksel önemli!"
+    "description": "Ressamın geri alma düğmesini engelle"
   },
 
   "colorChaos": {
     "title": "Renk Kaosu",
-    "description": "Çizicinin renklerini rastgele değiştir - yeni palete uyum sağlayabilecek misin?"
+    "description": "Ressamın renk paletini karıştırır"
   },
 
   "pencilSize": {
     "title": "Kalem Kaosu",
-    "description": "Çizicinin kalem boyutunu rastgele değiştir - hassasiyet garantisi yok!"
+    "description": "Ressamın kalem boyutunu rastgele değiştir"
   },
 
   "invisiblePencil": {
     "title": "Görünmez Kalem",
-    "description": "Çizicinin kalemini görünmez yap - çiziciye bol şans!"
+    "description": "Ressamın kalemini görünmez yap"
   },
 
   "zaWarudo": {
     "title": "Za Warudo",
-    "description": "Sayacı 10 saniye durdur - anlık bir zaman durması yarat!"
+    "description": "Sayacı 10 saniye durdurur ve 10 saniye içerisinde tuvale 10 piksel çizme hakkı verir."
   },
 
   "rainingColors": {
     "title": "Renk Yağmuru",
-    "description": "Tuvale rastgele renkler düşüyor - istenmeyen renklere dikkat!"
+    "description": "Tuvale rastgele renkler düşer"
   },
 
   "categoryHint": {
     "title": "Kategori",
-    "description": "Çizim kategorisi hakkında bir ipucu ortaya çıkarır - tahminlerinizi daraltın!"
+    "description": "Temanın kategorisi hakkında bir ipucu ortaya çıkarır"
   },
 
   "wordsLength": {
     "title": "Uzunluk",
-    "description": "Gizli kelimenin tam uzunluğunu ortaya çıkarır - ihtiyaç duyduğunuz avantajı sağlayabilir!"
+    "description": "Gizli kelimelerin tam uzunluğunu boşluk dahil olmayacak şekilde ortaya çıkarır"
   }
 }

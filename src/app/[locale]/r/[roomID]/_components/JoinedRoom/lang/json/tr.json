@@ -1,0 +1,111 @@
+{
+  "canvases": {
+    "chooseTheme": "Temanı seç",
+    "selectingThemeTimerDescs": {
+      "0": "Tema seçimi devam ediyor",
+      "25": "Tema seçimi bekleniyor...",
+      "50": "Ressam tema seçiyor...  sanırım",
+      "60": "Evet... (saatine bakar)",
+      "100": "Zaman aşımı bitti bitiyor!"
+    },
+
+    "loading": "Yükleniyor..."
+  },
+  "nav": {
+    "matchCount": {
+      "heading": "Maç",
+      "description": "Maç sayısı kullanıcı sayısına göre hesaplanır"
+    },
+    "theme": "Tema",
+    "hostConnection": {
+      "connected": "Bağlanıldı",
+      "failed": "Başarısız",
+      "disconnected": "Bağlantı Kesildi",
+      "connecting": "Bağlanıyor",
+      "findingHost": "Host Aranıyor"
+    },
+    "matchTime": {
+      "remainTime": { "minutes": "d", "seconds": "s" },
+      "info": {
+        "coinAlert": "30 saniyenin altında, normalde kazanacağınız para miktarının yarısını kazanırsınız.",
+        "runningPowerups": {
+          "running": "Aktif power-uplar:",
+          "noRunning": "Aktif power-up bulunmuyor"
+        },
+        "yourEarning": {
+          "painter": "Diğerlerinin doğru tahmin etmesinden kazanılan jetonlar:",
+          "guesser": "Doğru tahmin için kazanılan jetonlar:",
+          "coins": "jeton"
+        }
+      }
+    },
+    "btnOptionsShortcut": { "loading": "Seçenekler yükleniyor..." },
+    "btnOptions": {
+      "controls": "KONTROLLER",
+      "sounds": "SESLER",
+      "exit": "ÇIKIŞ",
+      "back": "GERİ"
+    }
+  },
+  "painterToolGuideText": "Çizim araçlarını açmak için farenizi sola hareket ettirebilirsiniz",
+  "gameEnded": { "heading": "OYUN BİTTİ" },
+  "status": {
+    "connecting": { "heading": "Hosta bağlanılıyor" },
+    "webrtcFailed": { "heading": "WebRTC bağlantısı başarısız" },
+    "disconnected": {
+      "heading": "Bağlantı Kesildi"
+    },
+    "finding": {
+      "heading": "Host aranıyor",
+      "hostIsNotFound": "Görünüşe göre host odada değil."
+    },
+    "tryAgain": "Tekrar dene?",
+    "goToActiveRooms": "Aktif odalara git",
+    "waitingForPlayers": "Oyuncuların katılması bekleniyor",
+    "waitingForHost": "Host'un oyunu başlatması bekleniyor"
+  },
+  "shortcuts": {
+    "toolAlert": {
+      "pencil": "Kalem seçildi",
+      "bucket": "Kova seçildi",
+      "eyeDropper": "Renk seçici seçildi",
+      "eraser": "Silgi seçildi",
+      "increaseToolSize": "Araç boyutu artırıldı",
+      "decreaseToolSize": "Araç boyutu azaltıldı",
+      "gridOpened": "Izgara açıldı",
+      "gridClosed": "Izgara kapatıldı",
+      "undo": "Geri al",
+      "redo": "İleri al",
+      "UR": "Gİ",
+      "PBP": "PG",
+      "BO": "OG",
+      "changeURType": {
+        "BO": "OG'ya değiştirildi",
+        "PBP": "PG'ye değiştirildi"
+      }
+    }
+  },
+
+  "chats": {
+    "guessChat": { "displayName": "Tahmin etme sohbeti" },
+    "generalChat": { "displayName": "Sohbet" }
+  },
+
+  "canvasTools": {
+    "changeUR": {
+      "heading": "İleri/Geri Türü",
+      "BO": "Operasyon",
+      "PBP": "Piksel"
+    },
+
+    "layers": {
+      "heading": "Katmanlar"
+    },
+
+    "gradientType": {
+      "heading": "Gradient Türü"
+    },
+
+    "comingSoon": "Yakında"
+  }
+}

@@ -1,8 +1,20 @@
-import type { UsePowerup } from '@/types'
-import { changeThemes, colorChaos, giveUp, invisiblePencil, letterHint, mirror, pencilSize, rainingColors, rotate, undoBlock, wordsLength } from './powerups'
-import { usePlayersPowerups } from '@/zustand/store'
+import type { Locale, UsePowerup } from '@/types'
+import {
+    categoryHint,
+    changeThemes,
+    colorChaos,
+    giveUp,
+    invisiblePencil,
+    letterHint,
+    mirror,
+    pencilSize,
+    rainingColors,
+    rotate,
+    undoBlock,
+    wordsLength
+} from './powerups'
 
-export const getUsePowerup = (data: UsePowerup['data'], userID: string, roomID: string) => {
+export const getUsePowerup = (data: UsePowerup['data'], userID: string, roomID: string, locale: Locale) => {
     const { name } = data
 
     switch (name) {
@@ -10,7 +22,7 @@ export const getUsePowerup = (data: UsePowerup['data'], userID: string, roomID: 
             letterHint(userID)
             break
         case 'changeThemes':
-            changeThemes(userID, roomID)
+            changeThemes(locale, userID)
             break
         case 'rotate':
             rotate(userID)
@@ -19,7 +31,7 @@ export const getUsePowerup = (data: UsePowerup['data'], userID: string, roomID: 
             mirror(userID)
             break
         case 'giveUp':
-            giveUp(userID, roomID)
+            giveUp(userID, locale)
             break
         case 'undoBlock':
             undoBlock(userID)
@@ -42,8 +54,7 @@ export const getUsePowerup = (data: UsePowerup['data'], userID: string, roomID: 
             wordsLength(userID)
             break
         case 'categoryHint':
+            categoryHint(userID, locale)
             break
     }
-
-    usePlayersPowerups.getState().setPowerupInActive(userID, name)
 }

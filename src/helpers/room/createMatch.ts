@@ -1,7 +1,9 @@
-import { getNextArrElmI } from '@/utils'
 import { updatePainterToPlayers } from './updatePainterToPlayers'
-import { useMatchStatus } from '@/zustand/store/useMatchStatus'
+import { useHostPlayersMsgs, useLoserPlayers, useMatchStatus, usePlayersWhoGaveUp } from '@/zustand/store'
+import { postMsgToCanvasWorker } from '@/workers'
 import { storePaintersAccess } from '@/store'
+import { getNextArrElmI } from '@/utils'
+import type { Locale } from '@/types'
 import { gameEnded } from './_index'
 import {
   useGuessedPlayers,
@@ -11,10 +13,9 @@ import {
   useTotalMatchCount,
   useWhoIsPainter,
 } from '@/zustand/store'
-import { postMsgToCanvasWorker } from '@/workers'
 
 
-export const createMatch = (roomID: string) => {
+export const createMatch = (locale: Locale) => {
   const players = usePlayers.getState().get
   const isGameEnded = (useMatchStatus.getState().value.matchCount === useTotalMatchCount.getState().value.totalMatchCount) || storePaintersAccess.value.paintersToBeSelected.length === 0
   const { mctx } = useHostCanvasesData.getState()
@@ -25,6 +26,9 @@ export const createMatch = (roomID: string) => {
   mctx?.closePath()
   postMsgToCanvasWorker({ e: 'reset' })
 
+  useHostPlayersMsgs.getState().resetGuessChatMsgCounts()
+  usePlayersWhoGaveUp.getState().everyoneNotGaveUp()
+  useLoserPlayers.getState().everyoneIsNotLoser()
 
   if (isGameEnded && players().count > 1) gameEnded()
   else if (players().count >= 2) {
@@ -45,7 +49,7 @@ export const createMatch = (roomID: string) => {
       })
 
       useHostPainterData.getState().reset()
-      updatePainterToPlayers(roomID)
+      updatePainterToPlayers({ locale })
 
       return
     }
@@ -66,6 +70,6 @@ export const createMatch = (roomID: string) => {
     }
 
     useHostPainterData.getState().reset()
-    updatePainterToPlayers(roomID)
+    updatePainterToPlayers({ locale })
   }
 }

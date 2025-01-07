@@ -9,10 +9,11 @@ import {
 } from '@/zustand/provider'
 import { type MyUserInfoForRoomStoreState } from '@/zustand/store'
 import { SocketIOProvider } from './components/SocketIO'
+import type { Locale } from '@/types/locale'
 
-export const Providers = ({ roomID, userID, user, children }: Props) => {
+export const Providers = ({ roomID, userID, user, locale, children }: Props) => {
   return (
-    <SocketIOProvider roomID={roomID}>
+    <SocketIOProvider roomID={roomID} locale={locale}>
       <UserIDStoreProvider
         initState={{
           userID,
@@ -37,6 +38,7 @@ export const Providers = ({ roomID, userID, user, children }: Props) => {
 }
 
 type Props = {
+  locale: Locale
   userID: string
   roomID: string
   user: MyUserInfoForRoomStoreState['user']

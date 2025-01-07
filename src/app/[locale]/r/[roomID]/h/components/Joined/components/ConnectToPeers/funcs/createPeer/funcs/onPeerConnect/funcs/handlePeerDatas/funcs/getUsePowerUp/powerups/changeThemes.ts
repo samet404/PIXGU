@@ -1,25 +1,33 @@
 import { POWERUP_PRICES } from '@/constants'
 import { sendCoinInfo } from '@/helpers/room'
-import { api } from '@/trpc/server'
-import { sendToPeerWithID } from '@/utils/sendToPeerWithID'
-import { useCoins, usePlayersPowerups, useWhoIsPainter } from '@/zustand/store'
+import type { Locale } from '@/types/locale'
+import { useCoins, useHostPainterData, usePlayersPowerups, useSocketIO, useWhoIsPainter } from '@/zustand/store'
 
-export const changeThemes = async (userID: string, roomID: string) => {
+export const changeThemes = (locale: Locale, userID: string) => {
     if (
         !useWhoIsPainter.getState().isPainter(userID) ||
-        useWhoIsPainter.getState().value.status !== 'selectingTheme' ||
-        !usePlayersPowerups.getState().users[userID]?.powerups.changeThemes.isActive ||
+        useHostPainterData.getState().value.status !== 'painterSelectingTheme' ||
+        !usePlayersPowerups.getState().users[userID]!.powerups!.changeThemes!.isActive ||
         useCoins.getState().coins[userID]! < POWERUP_PRICES.changeThemes
-    ) return
+    ) {
+        // TODO: fix useWhoIsPainter status for host
+        console.log('change themes exit')
+        console.log(
+            !useWhoIsPainter.getState().isPainter(userID),
+            useWhoIsPainter.getState().value.status !== 'selectingTheme',
+            useHostPainterData.getState().value.status !== 'painterSelectingTheme',
+            !usePlayersPowerups.getState().users[userID]!.powerups!.changeThemes!.isActive,
+            useCoins.getState().coins[userID]! < POWERUP_PRICES.changeThemes
+        )
+        return
+    }
 
     useCoins.getState().decrease(userID, POWERUP_PRICES.changeThemes)
-    usePlayersPowerups.getState().setPowerupInActive(userID, 'changeThemes')
     sendCoinInfo([userID])
-    sendToPeerWithID(userID, {
-        event: 'youUsedPowerup',
-        data: {
-            name: 'changeThemes',
-            data: await api.gameRoom.getThemes.query({ roomID })
-        }
+
+    useSocketIO.getState().io!.emit('change-themes', {
+        locale: locale,
+        count: 2,
+        userID
     })
 }

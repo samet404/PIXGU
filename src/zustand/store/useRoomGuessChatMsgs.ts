@@ -2,6 +2,7 @@ import type { GuessChatFromHost, YourGuessChatFromHost } from '@/types'
 import { create } from 'zustand'
 
 type State = {
+  myMsgCount: number
   msgs: Msg[]
 }
 
@@ -10,22 +11,30 @@ type Action = {
   reset: () => void
 }
 
-export const useRoomGuessChatMsgsStore = create<State & Action>((set) => ({
+const initState: State = {
   msgs: [],
+  myMsgCount: 0,
+}
+
+export const useRoomGuessChatMsgsStore = create<State & Action>((set) => ({
+  ...initState,
 
   add: (data) => {
-    set((state) => {
+    set((s) => {
       const prev = (() => {
-        const msgs = state.msgs
+        const msgs = s.msgs
         if (msgs.length === 30) return msgs.slice(1, 30)
         return msgs
       })()
 
-      return { msgs: [...prev, data] }
+      return {
+        myMsgCount: data.myMsg ? s.myMsgCount + 1 : s.myMsgCount,
+        msgs: [...prev, data]
+      }
     })
   },
 
-  reset: () => set({ msgs: [] }),
+  reset: () => set({ ...initState }),
 }))
 
 export type Msg =

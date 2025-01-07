@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { YoutubeLinkSchema } from '@/zod/schema'
 import { useSoundSettings } from '@/zustand/store'

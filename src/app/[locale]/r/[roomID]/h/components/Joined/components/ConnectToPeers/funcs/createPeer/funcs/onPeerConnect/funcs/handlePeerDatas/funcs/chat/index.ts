@@ -1,25 +1,22 @@
-import type { GuessChatFromClient, WinnersChatFromClient } from '@/types'
-import { guessChat } from './funcs/guessChat'
-import { winnersChat } from './funcs/winnersChat'
+import type { GuessChatFromClient, Locale, GeneralChatFromClient } from '@/types'
+import { guessChat, generalChat } from './funcs'
 import { useHostPlayersMsgs } from '@/zustand/store'
 
 export const chat = (
-  data: (GuessChatFromClient | WinnersChatFromClient)['data'],
-  event: (GuessChatFromClient | WinnersChatFromClient)['event'],
+  data: (GuessChatFromClient | GeneralChatFromClient)['data'],
+  event: (GuessChatFromClient | GeneralChatFromClient)['event'],
   userID: string,
-  roomID: string,
+  locale: Locale,
 ) => {
   if (data.msg.trim() === '') return
   const msgID = useHostPlayersMsgs.getState().addMsg(userID, data.msg)
 
   switch (event) {
-    case 'winnersChat':
-      winnersChat(data, userID, msgID)
+    case 'generalChat':
+      generalChat(data, userID, msgID)
       break
     case 'guessChat':
-      guessChat(data, userID, msgID, roomID)
+      guessChat(data, userID, msgID, locale)
       break
   }
-
-
 }

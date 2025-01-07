@@ -3,10 +3,11 @@ import { createPortal } from 'react-dom'
 import { Fragment } from 'react'
 import dynamic from 'next/dynamic'
 import { useWebRTCTroubleshootingGuideModal } from '@/zustand/store'
+import type { Locale } from '@/types'
 
 const Modal = dynamic(() => import('@/components/WebRTCTroubleshootingModal').then((m) => m.Modal))
 
-export const NeedHelpBtn = () => {
+export const NeedHelpBtn = ({ locale }: Props) => {
     const isOpen = useWebRTCTroubleshootingGuideModal((s) => s.isOpen)
     const switchModal = useWebRTCTroubleshootingGuideModal((s) => s.switch)
 
@@ -45,9 +46,13 @@ export const NeedHelpBtn = () => {
             </animated.button>
             {typeof window !== 'undefined'
                 ? isOpen
-                    ? createPortal(<Modal />, document.body)
+                    ? createPortal(<Modal locale={locale} />, document.body)
                     : null
                 : null}
         </Fragment>
     )
+}
+
+type Props = {
+    locale: Locale
 }

@@ -1,12 +1,62 @@
-import { GUESSR_CARDS, GUESSR_CARDS_WHILE_THEME_IS_SELECTING, INIT_RUNNING_POWERUPS, PAINTER_CARDS, PAINTER_CARDS_WHILE_THEME_IS_SELECTING, WINNERS_CARDS } from '@/constants'
+import {
+    GUESSR_CARDS,
+    GUESSR_CARDS_WHILE_THEME_IS_SELECTING,
+    PAINTER_CARDS,
+    PAINTER_CARDS_WHILE_THEME_IS_SELECTING,
+    WINNERS_CARDS
+} from '@/constants'
 import { create } from 'zustand'
 import type { PowerupState } from './usePowerups'
 import type { PartialRecord } from '@/types/partialRecord'
-import type { Powerup, TimeBasedPowerups } from '@/types'
+import type { OverrideProps, Powerup, TimeBasedPowerups } from '@/types'
+import { stringifiedLog } from '@/utils/stringifiedLog'
 
+type ID = string
+
+type State = {
+    users: PartialRecord<ID, Partial<OverrideProps<PowerupState, {
+        powerups: Partial<PowerupState['powerups']>
+    }>>>
+    runningPowerupsArray: TimeBasedPowerups[]
+    runningPowerups: Record<TimeBasedPowerups, {
+        IDs: string[]
+        process: {
+            ID: string
+            startAt: number
+        }[]
+    }>
+}
+
+type Action = {
+    setPowerupInActive: (ID: ID, powerup: Powerup) => void
+    setPainterCardsWhileThemeIsSelecting: (ID: ID) => void
+    setGuessrCardsWhileThemeIsSelecting: (ID: ID) => void
+    setPainterPowerups: (ID: ID) => void
+    setIsPowerupRunning: (ID: ID, powerup: TimeBasedPowerups, value: boolean) => void
+    setPowerupRunning: (ID: ID, powerup: TimeBasedPowerups) => void
+    setPowerupIsNotRunning: (ID: ID, powerup: TimeBasedPowerups) => void
+    setGuessrPowerups: (ID: ID) => void
+    setWinnersPowerups: (ID: ID) => void
+    removeUser: (ID: ID) => void
+    reset: () => void
+}
+
+const INIT_GENERAL_RUNNING_POWERUPS: {
+    runningPowerups: State['runningPowerups']
+    runningPowerupsArray: State['runningPowerupsArray']
+} = {
+    runningPowerupsArray: [],
+    runningPowerups: {
+        invisiblePencil: { IDs: [], process: [] },
+        rotate: { IDs: [], process: [] },
+        mirror: { IDs: [], process: [] },
+        undoBlock: { IDs: [], process: [] },
+        zaWarudo: { IDs: [], process: [] },
+    }
+}
 
 const initState: State = {
-    runningPowerups: INIT_RUNNING_POWERUPS,
+    ...INIT_GENERAL_RUNNING_POWERUPS,
     users: {}
 }
 
@@ -19,23 +69,43 @@ export const usePlayersPowerups = create<State & Action>((set, get) => ({
         ),
     }),
 
-    setIsPowerupRunning: (ID: ID, powerup: Powerup, value: boolean) => {
-        const user = get().users[ID]
-        if (!user) return
+    setIsPowerupRunning: (ID, powerup, value) => {
+        // stringifiedLog({ msg: 'setting is powerup running ', ID, powerup, value, data: get() })
+
+        const currentPowerups = get().runningPowerups[powerup]
 
         set({
+            runningPowerupsArray: value
+                ? [...(get().runningPowerupsArray ?? []), powerup]
+                : get().runningPowerupsArray.filter(p => p !== powerup)
+            ,
             runningPowerups: {
                 ...get().runningPowerups,
-                [powerup]: value
+                [powerup]: {
+                    ...currentPowerups,
+                    IDs: value
+                        ? [...(currentPowerups.IDs ?? []), ID]
+                        : currentPowerups.IDs.filter(p => p !== ID),
+                    process: value
+                        ? [...(currentPowerups.process ?? []), { ID, startAt: Date.now() }]
+                        : currentPowerups.process.filter(p => p.ID !== ID)
+                }
             },
             users: {
                 ...get().users,
                 [ID]: {
-                    ...user,
+                    ...get().users[ID],
+                    runningPowerups: {
+                        ...get().users[ID]!.runningPowerups!,
+                        [powerup]: value
+                    },
+                    runningPowerupsArray: value
+                        ? [...(get().users[ID]?.runningPowerupsArray ?? []), powerup]
+                        : get().users[ID]?.runningPowerupsArray?.filter(p => p !== powerup),
                     powerups: {
-                        ...user.powerups,
+                        ...(get().users[ID]?.powerups ?? {}),
                         [powerup]: {
-                            ...user.powerups[powerup],
+                            ...(get().users[ID]?.powerups?.[powerup] ?? {}),
                             running: value
                         }
                     }
@@ -43,24 +113,28 @@ export const usePlayersPowerups = create<State & Action>((set, get) => ({
             }
         })
 
+        // stringifiedLog({ msg: 'after setting is powerup running ', ID, powerup, value, data: get() })
     },
 
-    setPowerupRunning: (ID: ID, powerup: Powerup) => get().setIsPowerupRunning(ID, powerup, true),
-    setPowerupIsNotRunning: (ID: ID, powerup: Powerup) => get().setIsPowerupRunning(ID, powerup, false),
+    setPowerupRunning: (ID, powerup) =>
+        get().setIsPowerupRunning(ID, powerup, true),
+
+    setPowerupIsNotRunning: (ID, powerup) =>
+        get().setIsPowerupRunning(ID, powerup, false),
 
     setPowerupInActive: (ID: ID, powerup: Powerup) => {
-        const user = get().users[ID]
-        if (!user) return
-
+        console.log(get().users, ID, powerup)
         set({
+            ...get(),
             users: {
                 ...get().users,
                 [ID]: {
-                    ...user,
-                    activePowerups: user.activePowerups.filter(p => p !== powerup),
+                    ...(get().users?.[ID] ?? {}),
+                    activePowerups: get().users[ID]!.activePowerups!.filter(p => p !== powerup),
                     powerups: {
-                        ...user.powerups,
+                        ...get().users[ID]?.powerups,
                         [powerup]: {
+                            ...get().users[ID]?.powerups?.[powerup],
                             isActive: false
                         }
                     }
@@ -83,28 +157,17 @@ export const usePlayersPowerups = create<State & Action>((set, get) => ({
         }
     }),
 
-    setGuessrPowerups: (ID: ID) => set({ users: { ...get().users, [ID]: GUESSR_CARDS } }),
-    setPainterPowerups: (ID: ID) => set({ users: { ...get().users, [ID]: PAINTER_CARDS } }),
-    setWinnersPowerups: (ID: ID) => set({ users: { ...get().users, [ID]: WINNERS_CARDS } }),
+    setGuessrPowerups: (ID: ID) => set({
+        users: { ...get().users, [ID]: GUESSR_CARDS }
+    }),
+
+    setPainterPowerups: (ID: ID) => set({
+        users: { ...get().users, [ID]: PAINTER_CARDS }
+    }),
+
+    setWinnersPowerups: (ID: ID) => set({
+        users: { ...get().users, [ID]: WINNERS_CARDS }
+    }),
+
     reset: () => set({ ...initState })
 }))
-
-type ID = string
-type State = {
-    users: PartialRecord<ID, PowerupState>
-    runningPowerups: Record<TimeBasedPowerups, ID[]>
-}
-
-type Action = {
-    setPowerupInActive: (ID: ID, powerup: Powerup) => void
-    setPainterCardsWhileThemeIsSelecting: (ID: ID) => void
-    setGuessrCardsWhileThemeIsSelecting: (ID: ID) => void
-    setPainterPowerups: (ID: ID) => void
-    setIsPowerupRunning: (ID: ID, powerup: Powerup, value: boolean) => void
-    setPowerupRunning: (ID: ID, powerup: Powerup) => void
-    setPowerupIsNotRunning: (ID: ID, powerup: Powerup) => void
-    setGuessrPowerups: (ID: ID) => void
-    setWinnersPowerups: (ID: ID) => void
-    removeUser: (ID: ID) => void
-    reset: () => void
-}

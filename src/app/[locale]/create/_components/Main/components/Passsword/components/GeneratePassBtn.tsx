@@ -6,7 +6,7 @@ import { inputInfoTextAtom, isPublicAtom } from '../atoms'
 import { useSetAtom } from 'jotai'
 import { useCreateRoomInputs } from '@/zustand/store'
 
-export const GeneratePassBtn = ({ inputRef }: Props) => {
+export const GeneratePassBtn = ({ inputRef, displayText }: Props) => {
     const setInputInfoText = useSetAtom(inputInfoTextAtom)
     const setIsPublic = useSetAtom(isPublicAtom)
     const copyDivRef = useRef<HTMLDivElement | null>(null)
@@ -14,8 +14,6 @@ export const GeneratePassBtn = ({ inputRef }: Props) => {
     const { data, isLoading, refetch } = api.auth.getCuid2.useQuery(undefined, {
         enabled: false,
     })
-
-
 
     useEffectOnce(() => {
         copyDivRef.current = document.createElement('div')
@@ -43,7 +41,7 @@ export const GeneratePassBtn = ({ inputRef }: Props) => {
             onMouseDown={() => refetch()}
             className="rounded-md flex flex-row gap-3 items-center bg-[#0000001f] hover:bg-[#00000038]  px-2 py-1 text-sm text-[rgba(255,255,255,0.6)]"
         >
-            <div>Generate password and copy</div>
+            <div>{displayText}</div>
             {isLoading === true && data ? <Spinner className='size-4' /> : null}
         </button>
     )
@@ -51,4 +49,5 @@ export const GeneratePassBtn = ({ inputRef }: Props) => {
 
 type Props = {
     inputRef: MutableRefObject<HTMLInputElement | null>
+    displayText: string
 }

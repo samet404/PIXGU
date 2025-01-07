@@ -14,6 +14,7 @@ type Action = {
   set: (userID: string, amount: number) => void
   decrease: (userID: string, amount: number) => void
   getSortedByAmount: () => [string, number][]
+  initUser: (userID: string) => void
   reset: () => void
 }
 
@@ -24,6 +25,15 @@ const initValue: State = {
 
 export const useCoins = create<State & Action>((set, get) => ({
   ...initValue,
+
+  initUser: (userID) =>
+    set({
+      ...get(),
+      coins: {
+        ...get().coins,
+        [userID]: 50,
+      }
+    }),
 
   newMatch: () =>
     set({
@@ -75,7 +85,7 @@ export const useCoins = create<State & Action>((set, get) => ({
     }
 
     const sorted = sortable.sort((a, b) => {
-      return a[1] - b[1]
+      return b[1] - a[1]
     })
 
     return sorted

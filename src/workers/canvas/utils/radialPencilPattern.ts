@@ -1,5 +1,5 @@
 import { alphaBlendRGBA, calculatePixelsBetween } from '@/utils'
-import type { BlurInfo, UndoRedo } from '../types'
+import type { BlurInfo, InvisiblePencil, UndoRedo } from '../types'
 import { addNewUndoRedoGroup } from './addNewUndoRedoGroup'
 
 const OFFSETS = {
@@ -7,10 +7,8 @@ const OFFSETS = {
     3: [[0, 0], [0, -1], [0, 1], [-1, 0], [1, 0]]
 }
 
-export const radialPencilPattern = ({ cellSideCount, color, lastPixel, pixels, pixelsOnDraw, size, startX, startY, undoRedo, blurInfo }: RadialPencilPatternInput) => {
+export const radialPencilPattern = ({ cellSideCount, color, lastPixel, pixels, pixelsOnDraw, invisiblePencil, size, startX, startY, undoRedo, blurInfo }: RadialPencilPatternInput) => {
     const pixelsToBeFilled: [coors: Uint16Array, color: Uint8ClampedArray][] = []
-
-
     const undoRedoOperationIndex = undoRedo.current.operationIndex
 
     const isInside = (x: number, y: number) => x >= 0 && y >= 0 && x < cellSideCount && y < cellSideCount && !pixelsOnDraw.has(`${x},${y}`)
@@ -28,6 +26,12 @@ export const radialPencilPattern = ({ cellSideCount, color, lastPixel, pixels, p
 
             pixels[x]![y] = newColor
             pixelsOnDraw.add(`${x},${y}`)
+
+            if (invisiblePencil.hasInvisiblePencil) {
+                invisiblePencil.stack.add([x, y])
+                return
+            }
+
             if (blurInfo.hasBlur) blurInfo.blurStack.add([x, y])
             else pixelsToBeFilled.push([new Uint16Array([x, y]), newColor])
         }
@@ -80,6 +84,7 @@ export type RadialPencilPatternInput = {
     pixels: Uint8ClampedArray[][]
     pixelsOnDraw: Set<`${number},${number}`>
     lastPixel: [x: number, y: number] | null
+    invisiblePencil: InvisiblePencil
     blurInfo: BlurInfo
 }
 

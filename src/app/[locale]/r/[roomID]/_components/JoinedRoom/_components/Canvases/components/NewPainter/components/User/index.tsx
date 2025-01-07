@@ -11,23 +11,20 @@ export const User = () => {
   const user = usePlayers.getState().getPlayer(whoIsPainter.painterID!)
   if (!user) return
 
-  const isGuest = 'ID' in user
-  const ID = isGuest ? user.ID : user.id
-  const name = isGuest ? user.name : user.usernameWithUsernameID
-  const pfp = isGuest ? null : user.profilePicture
+  const { id, profilePicture, usernameWithUsernameID } = user
 
   return (
     <div className="flex animate-fade flex-col items-center">
       <UserPfp
-        ID={ID}
-        src={pfp}
+        ID={id}
+        src={profilePicture}
         className="size-24 rounded-full"
         sizes="dsa"
         width={32}
         height={32}
         alt="pfp"
       />
-      <div className="text-[1rem] font-bold text-violet-500">{name}</div>
+      <div className="text-[1rem] font-bold text-violet-500">{usernameWithUsernameID}</div>
     </div>
   )
 }

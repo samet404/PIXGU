@@ -8,6 +8,7 @@ import { useAtom } from 'jotai'
 import { roomPasswordAtom } from '../../atoms'
 import { DisconnectedView } from './components/DisconnectedView'
 import { LoadingView } from './components/LoadingView'
+import type { Locale } from '@/types'
 
 const SOCKET_EVENTS = {
   CONNECT: 'connect',
@@ -144,7 +145,7 @@ const useSocketSetup = (roomID: string) => {
   }
 }
 
-export const SocketIOProvider = ({ roomID, children }: Props) => {
+export const SocketIOProvider = ({ roomID, locale, children }: Props) => {
   const {
     status,
     setupSocketListeners,
@@ -169,6 +170,7 @@ export const SocketIOProvider = ({ roomID, children }: Props) => {
         errors={error}
         password={password}
         onPasswordReset={() => setPassword(null)}
+        locale={locale}
       />
     )
   }
@@ -178,6 +180,7 @@ export const SocketIOProvider = ({ roomID, children }: Props) => {
 
 type Props = PropsWithChildren<{
   roomID: string
+  locale: Locale
 }>
 
 type PlayerAuthStatus =

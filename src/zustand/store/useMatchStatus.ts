@@ -32,7 +32,6 @@ const initValue: State = {
 export const useMatchStatus = create<State & Action>((set, get) => ({
   ...initValue,
   decreaseRemainSeconds: () => {
-    console.log('decreased remain seconds')
     set({
       value: {
         ...get().value,

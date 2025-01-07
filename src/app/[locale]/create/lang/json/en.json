@@ -1,0 +1,39 @@
+{
+  "createdRoomsText": "Created rooms",
+  "createdRoomsCount": "You can create up to 4 rooms",
+  "createRoomBtnText": {
+    "idle": "Create",
+    "loading": "Creating...",
+    "success": "Created!",
+    "error": "Something went wrong"
+  },
+  "roomsData": {
+    "goToRoomBtnText": "Go to room",
+    "killRoomBtnText": "Kill room",
+    "noRoomsText": "There are no rooms",
+    "errorText": "Something went wrong :(",
+    "name": "Name",
+    "password": "Password",
+    "extensions": "Extensions",
+    "playerCount": "Players",
+    "version": "Version",
+    "date": "Date"
+  },
+  "main": {
+    "mods": {
+      "heading": "Mods",
+      "comingSoonText": "Coming soon..."
+    },
+
+    "name": {
+      "heading": "Room Name",
+      "placeholder": "Your room name here"
+    },
+
+    "password": {
+      "heading": "Password",
+      "placeholder": "If you want to keep the room private",
+      "generateBtnText": "Generate random password and copy"
+    }
+  }
+}

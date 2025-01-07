@@ -1,0 +1,35 @@
+{
+  "health": {
+    "waitingForPlayers": {
+      "title": "Oyuncular bekleniyor",
+      "description": "Linki kopyalayıp arkadaşlarınızla paylaşabilirsiniz"
+    },
+
+    "gameIsStarted": {
+      "title": "Başlatıldı",
+      "description": "Oyun başladı, host araçlarını kullanarak oyunu yönetebilirsiniz"
+    },
+
+    "readyToStart": {
+      "title": "Hazır",
+      "description": "Her şey başlamaya uygun görünüyor"
+    },
+
+    "gameEnded": {
+      "title": "Oyun bitti",
+      "description": "Son sonuçları inceleyebilirsiniz. Hazır olduğunuzda yeni bir oyun başlatabilirsiniz."
+    },
+
+    "copy": "Linki kopyala",
+    "copied": "Kopyalandı!",
+    "join": "Oyuna katıl",
+    "help": "Yardım lazım?",
+    "start": "Oyunu başlat",
+    "stop": "Oyunu durdur"
+  },
+
+  "navbar": {
+    "players": "Oyuncular",
+    "canvas": "Kanvas"
+  }
+}

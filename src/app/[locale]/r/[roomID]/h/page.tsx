@@ -1,11 +1,11 @@
 import type { Locale } from '@/types'
 import { api } from '@/trpc/server'
 import type { Metadata } from 'next'
-import { PreventRefresh } from '@/components/PreventRefresh'
 import { redisDb } from '@/db/redis'
 import { redirect } from 'next/navigation'
 import Joined from './components/Joined'
 import { env } from '@/env/server'
+import { getLangObj } from './lang'
 
 export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
   const { roomID } = await params
@@ -44,6 +44,7 @@ const Content = async ({ params }: Props) => {
   const isJoined = await api.auth.isJoined.query()
   if (!isJoined) redirect(`/${locale}/r/${roomID}`)
 
+  const langObj = await getLangObj(locale)
   const user = await api.auth.getUser.query()
   const guest = await api.auth.getGuest.query()
   const hostID = await redisDb.get(`room:${roomID}:host_ID`)
@@ -55,9 +56,7 @@ const Content = async ({ params }: Props) => {
 
   if (hostID !== clientID) redirect(`/${locale}/r/${roomID}`)
 
-  return <PreventRefresh>
-    <Joined roomID={roomID} user={user} guest={guest} />
-  </PreventRefresh>
+  return <Joined langObj={langObj} roomID={roomID} user={user} guest={guest} locale={locale} />
 }
 
 export default Content

@@ -1,8 +1,8 @@
-"use client"
+'use client'
 
-import { useAtom } from 'jotai'
+import { useAtom, useAtomValue } from 'jotai'
 import { useState, useEffect } from 'react'
-import { isCanvasToolsOpenAtom } from './atoms'
+import { isCanvasToolsOpenAtom, isCanvasToolsPinnedAtom } from './atoms'
 import { useMatchStatusClient, useWhoIsPainterClient } from '@/zustand/store'
 
 const REM_TO_PX = 16 // 1rem = 16px by default
@@ -14,11 +14,18 @@ export const CanvasToolsShadow = () => {
     const gameStatus = useMatchStatusClient(s => s.status)
     const [opacity, setOpacity] = useState(0)
     const [isToolsOpen, setIsToolsOpen] = useAtom(isCanvasToolsOpenAtom)
+    const isPinned = useAtomValue(isCanvasToolsPinnedAtom)
 
     useEffect(() => {
-
         const handleMouseMove = (e: MouseEvent) => {
             if (gameStatus !== 'started') return
+            if (isPinned) {
+                if (isToolsOpen) return
+                else {
+                    setIsToolsOpen(true)
+                    return
+                }
+            }
             if (!amIPainter) return
             const mouseX = e.clientX
 
@@ -36,7 +43,7 @@ export const CanvasToolsShadow = () => {
 
         window.addEventListener('mousemove', handleMouseMove)
         return () => window.removeEventListener('mousemove', handleMouseMove)
-    }, [isToolsOpen, setIsToolsOpen, gameStatus, amIPainter])
+    }, [isToolsOpen, setIsToolsOpen, gameStatus, amIPainter, isPinned])
 
     if (gameStatus === 'started') return (
         <div

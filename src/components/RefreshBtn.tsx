@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import type { OverrideProps } from '@/types'
 import type { ComponentProps, PropsWithChildren } from 'react'

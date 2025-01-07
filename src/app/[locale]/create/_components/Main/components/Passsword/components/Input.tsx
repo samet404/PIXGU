@@ -6,7 +6,12 @@ import { useEffect, useRef, type PropsWithChildren } from 'react'
 import { inputInfoTextAtom, isPublicAtom } from '../atoms'
 import { GeneratePassBtn } from './GeneratePassBtn'
 
-const InputContainer = ({ children }: PropsWithChildren) => {
+type Props = PropsWithChildren<{
+  placeholder: string
+  generateBtnText: string
+}>
+
+export const InputContainer = ({ children, placeholder, generateBtnText }: Props) => {
   const setInputInfoText = useSetAtom(inputInfoTextAtom)
   const setIsPublic = useSetAtom(isPublicAtom)
   const inputRef = useRef<HTMLInputElement | null>(null)
@@ -46,15 +51,14 @@ const InputContainer = ({ children }: PropsWithChildren) => {
         maxLength={50}
         onInput={() => handleOnInput()}
         ref={inputRef}
-        placeholder={'If you want a private room'}
+        placeholder={placeholder}
         className="w-full rounded-md bg-[rgba(255,255,255,0.2)] px-[0.40rem] py-1 text-white shadow-lg outline-none placeholder:text-[#ffffff72]"
       />
       <div className="flex flex-row items-center gap-1">
-        <GeneratePassBtn inputRef={inputRef} />
+        <GeneratePassBtn displayText={generateBtnText} inputRef={inputRef} />
         {children}
       </div>
     </div>
   )
 }
 
-export default InputContainer

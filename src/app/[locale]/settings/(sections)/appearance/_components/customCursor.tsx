@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { useCustomCursor } from '@/zustand/store'
 import { SettingsCheckbox } from '../../_components/SettingsCheckbox'

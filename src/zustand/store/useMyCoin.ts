@@ -17,7 +17,7 @@ type Action = {
 
 const initValue: State = {
   prevCoin: null,
-  coin: 0,
+  coin: 50,
 }
 
 export const useMyCoin = create<State & Action>((set, get) => ({

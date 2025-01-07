@@ -1,13 +1,13 @@
 import {
   useCoins,
-  useHostingHealth,
   usePeers,
   usePlayers,
   useSocketIO,
   useSpectators,
+  useHostingHealth,
 } from '@/zustand/store'
 import type { User } from 'lucia'
-import type { Guest } from '@/types'
+import type { Guest, Locale } from '@/types'
 import type SimplePeer from 'simple-peer'
 import { sendToPeer } from '@/utils/sendToPeer'
 import { positiveLog } from '@/utils/positiveLog'
@@ -23,9 +23,11 @@ export const onPeerConnect = (
   userID: string,
   roomID: string,
   user: User | Guest,
+  locale: Locale,
 ) =>
   peer.on('connect', () => {
     const userSecretKey = usePeers.getState().secretKeys[userID]!
+    const isGuest = 'ID' in user
 
     positiveLog(`CONNECTED TO ${userID}`)
     console.log('sent player joined')
@@ -71,18 +73,20 @@ export const onPeerConnect = (
     } as CanvasWorkerOnMsgData)
 
     usePlayers.getState().addPlayer(userID, {
-      ...user,
+      id: userID,
+      username: (isGuest ? (user).name : (user).username),
+      usernameWithUsernameID: (isGuest ? (user).nameWithNameID : (user).usernameWithUsernameID),
+      profilePicture: (!isGuest && (user).profilePicture) as string | undefined
     })
 
-    handlePeerDatas(userID, roomID)
+    handlePeerDatas(userID, roomID, locale)
     sendPrevPlayersToNewPlayer(userID)
     sendToPeer(peer, userSecretKey, {
-
       event: 'prevSpectators',
       data: useSpectators.getState().playersIDs,
     })
-    sendEveryoneNewPlayer(userID, isSpectator)
-
+    sendEveryoneNewPlayer(userID)
+    useCoins.getState().initUser(userID)
     useSocketIO.getState().io!.emit('current-players', {
       count: usePlayers.getState().value.count,
       IDs: Object.keys(usePlayers.getState().value.obj),

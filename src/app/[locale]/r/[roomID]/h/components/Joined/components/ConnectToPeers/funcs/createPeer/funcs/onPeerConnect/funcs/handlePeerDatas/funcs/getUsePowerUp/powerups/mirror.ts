@@ -8,21 +8,25 @@ import { useCoins, useGuessedPlayers, usePlayersPowerups } from '@/zustand/store
 export const mirror = (userID: string) => {
     if (
         !useGuessedPlayers.getState().isGuessed(userID) ||
-        !usePlayersPowerups.getState().users[userID]?.powerups.mirror.isActive ||
+        !usePlayersPowerups.getState().users[userID]!.powerups!.mirror!.isActive ||
         useCoins.getState().coins[userID]! < POWERUP_PRICES.mirror
     ) return
+
+
+    useCoins.getState().decrease(userID, POWERUP_PRICES.mirror)
+    sendCoinInfo([userID])
+
+    usePlayersPowerups.getState().setPowerupInActive(userID, 'mirror')
+    usePlayersPowerups.getState().setPowerupRunning(userID, 'mirror')
 
     postMsgToHostTimerWorker({
         ID: 'MIRROR_POWERUP',
         event: 'start',
         ms: POWERUP_DURATIONS.mirror,
         type: 'timeout',
-        data: { userID }
+        otherIDs: [userID]
     })
-    useCoins.getState().decrease(userID, POWERUP_PRICES.mirror)
-    sendCoinInfo([userID])
 
-    usePlayersPowerups.getState().setPowerupInActive(userID, 'mirror')
     sendToAllPeers({
         event: 'powerupUsed',
         data: {

@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { MODIFIER_KEYS } from '@/constants'
 import { useControls } from '@/zustand/store'

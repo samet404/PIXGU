@@ -14,8 +14,8 @@ const initState: State = {
         Powerups: ['U'],
         Download: ['D'],
         Trash: ['BACKSPACE'],
-        "Decrease tool size": ['+'],
-        "Increase tool size": ['-'],
+        "Decrease tool size": ['-'],
+        "Increase tool size": ['+'],
         Grid: ['G'],
         Marketplace: ['M'],
         Escape: ['ESCAPE'],
@@ -24,6 +24,7 @@ const initState: State = {
         Redo: ['CONTROL', 'Y'],
         "Change Undo/Redo type": ['CONTROL', 'SHIFT', 'V'],
         "Change in-game chat": ['CONTROL', 'C'],
+        "Toggle In-Game Logs": ['CONTROL', 'SHIFT', 'J']
     }
 }
 
@@ -91,7 +92,7 @@ export const useControls = create<State & Action>()(
 
 type State = {
     combination: string[]
-    keys: Record<'Pencil' | 'Bucket' | 'Eyedropper' | 'Powerups' | 'Marketplace' | 'Escape' | 'Grid' | 'Increase tool size' | 'Decrease tool size' | 'Eraser' | 'Trash' | 'Download' | 'Refresh' | 'Undo' | 'Redo' | 'Change Undo/Redo type' | 'Change in-game chat', Key>
+    keys: Record<'Pencil' | 'Bucket' | 'Eyedropper' | 'Powerups' | 'Marketplace' | 'Escape' | 'Grid' | 'Increase tool size' | 'Decrease tool size' | 'Eraser' | 'Trash' | 'Download' | 'Refresh' | 'Undo' | 'Redo' | 'Change Undo/Redo type' | 'Change in-game chat' | 'Toggle In-Game Logs', Key>
 }
 
 export type ControlsState = State

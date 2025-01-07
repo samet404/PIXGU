@@ -18,6 +18,7 @@
     "Undo": "Undo",
     "Redo": "Redo",
     "Change Undo/Redo type": "Change Undo/Redo type",
-    "Change in-game chat": "Change in-game chat"
+    "Change in-game chat": "Change in-game chat",
+    "Toggle In-Game Logs": "Toggle In-Game Logs"
   }
 }

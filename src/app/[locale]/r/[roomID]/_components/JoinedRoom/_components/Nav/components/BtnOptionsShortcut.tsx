@@ -1,21 +1,27 @@
-"use client"
+'use client'
 
 import { useShortcut } from '@/hooks'
 import { switchModalAtom } from './BtnOptions/atoms'
 import { useSetAtom } from 'jotai'
-import { useGameToolAlert } from '@/zustand/store'
+import { useCurrentPanel, useGameToolAlert } from '@/zustand/store'
 import { useRef } from 'react'
 
-export const BtnOptionsShortcut = () => {
+export const BtnOptionsShortcut = ({ alertText }: Props) => {
     const isLoaded = useRef<boolean>(false)
     const switchModal = useSetAtom(switchModalAtom)
+    const currentPanel = useCurrentPanel(s => s.currentPanel)
+    const setCurrentPanel = useCurrentPanel(s => s.setPanel)
 
     useShortcut({
         keyName: 'Escape',
         onShortcut: () => {
-            console.log('shortcut')
+            if (currentPanel !== null) {
+                setCurrentPanel(null)
+                return
+            }
+
             if (!isLoaded.current) {
-                useGameToolAlert.getState().setAlert('Options Loading...')
+                useGameToolAlert.getState().setAlert(alertText)
                 isLoaded.current = true
             }
 
@@ -24,4 +30,8 @@ export const BtnOptionsShortcut = () => {
     })
 
     return null
+}
+
+type Props = {
+    alertText: string
 }

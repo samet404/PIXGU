@@ -6,7 +6,7 @@ import { useCoins, useGuessedPlayers, usePlayersPowerups } from '@/zustand/store
 export const colorChaos = (userID: string) => {
     if (
         !useGuessedPlayers.getState().isGuessed(userID) ||
-        !usePlayersPowerups.getState().users[userID]?.powerups.colorChaos.isActive ||
+        !usePlayersPowerups.getState().users[userID]!.powerups!.colorChaos!.isActive ||
         useCoins.getState().coins[userID]! < POWERUP_PRICES.colorChaos
     ) return
 

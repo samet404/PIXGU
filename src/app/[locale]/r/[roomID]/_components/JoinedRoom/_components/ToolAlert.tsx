@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { useGameToolAlert } from '@/zustand/store'
 import { useEffect, useRef } from 'react'

@@ -1,6 +1,6 @@
 /**
- * Define a readonly property on an object
- */
+* Define a readonly property on an object
+*/
 export const objDefineReadonly = (
   obj: Record<any, any>,
   key: string,

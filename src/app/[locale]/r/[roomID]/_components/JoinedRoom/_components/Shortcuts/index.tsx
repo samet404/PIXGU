@@ -1,15 +1,17 @@
-"use client"
+'use client'
 
 import { useShortcut } from '@/hooks'
 import { sendToHostPeer } from '@/utils/sendToHostPeer'
 import { getCanvasWorker, type CanvasWorkerOnMsgData } from '@/workers'
-import { toolsHaveSizeProperty, useGameToolAlert, usePainterTool, useWhoIsPainterClient, type ToolHaveSizeProperty } from '@/zustand/store'
+import { toolsHaveSizeProperty, useCurrentPanel, useGameToolAlert, usePainterTool, usePlayersPowerups, useWhoIsPainterClient, type ToolHaveSizeProperty } from '@/zustand/store'
+import type { LangObj } from '../../lang'
 
 const canvasWorker = getCanvasWorker()
 
-export const Shortcuts = () => {
+export const Shortcuts = ({ langObj }: Props) => {
     const setTool = usePainterTool((s) => s.setCurrent)
     const setToolAlert = useGameToolAlert((s) => s.setAlert)
+    const setCurrentPanel = useCurrentPanel(s => s.setPanel)
 
 
     useShortcut({
@@ -18,7 +20,7 @@ export const Shortcuts = () => {
             if (!whoIsPainter.amIPainter) return
 
             setTool('pencil')
-            setToolAlert('Pencil selected')
+            setToolAlert(langObj.toolAlert.pencil)
         }
     })
 
@@ -28,7 +30,7 @@ export const Shortcuts = () => {
             if (!whoIsPainter.amIPainter) return
 
             setTool('bucket')
-            setToolAlert('Bucket selected')
+            setToolAlert(langObj.toolAlert.bucket)
         }
     })
 
@@ -38,7 +40,7 @@ export const Shortcuts = () => {
             if (!whoIsPainter.amIPainter) return
 
             setTool('eyedropper')
-            setToolAlert('Eye dropper selected')
+            setToolAlert(langObj.toolAlert.eyeDropper)
         }
     })
 
@@ -48,7 +50,7 @@ export const Shortcuts = () => {
             if (!whoIsPainter.amIPainter) return
 
             setTool('eraser')
-            setToolAlert('Eraser selected')
+            setToolAlert(langObj.toolAlert.eraser)
         }
     })
 
@@ -59,8 +61,9 @@ export const Shortcuts = () => {
 
             const current = usePainterTool.getState().current
             if (toolsHaveSizeProperty.includes(current)) {
+                console.log('increasing tool size for: ', current)
                 usePainterTool.getState().increaseSize(current as ToolHaveSizeProperty)
-                setToolAlert(`Tool size: ${usePainterTool.getState().options[current as ToolHaveSizeProperty].size}`)
+                setToolAlert(`${langObj.toolAlert.increaseToolSize} ${usePainterTool.getState().options[current as ToolHaveSizeProperty].size}`)
             }
         }
     })
@@ -72,8 +75,9 @@ export const Shortcuts = () => {
 
             const current = usePainterTool.getState().current
             if (toolsHaveSizeProperty.includes(current)) {
+                console.log('decreasing tool size for: ', current)
                 usePainterTool.getState().decreaseSize(current as ToolHaveSizeProperty)
-                setToolAlert(`Tool size: ${usePainterTool.getState().options[current as ToolHaveSizeProperty].size}`)
+                setToolAlert(`${langObj.toolAlert.decreaseToolSize} ${usePainterTool.getState().options[current as ToolHaveSizeProperty].size}`)
             }
         }
     })
@@ -81,6 +85,9 @@ export const Shortcuts = () => {
     useShortcut({
         keyName: 'Undo',
         onShortcut: () => {
+            const isBlocked = usePlayersPowerups.getState().runningPowerups.undoBlock.process.length > 0
+            if (isBlocked) return
+
             const whoIsPainter = useWhoIsPainterClient.getState().value
             if (!whoIsPainter.amIPainter) return
 
@@ -98,7 +105,7 @@ export const Shortcuts = () => {
                 }
             })
 
-            setToolAlert(undoRedoType === 0 ? 'Undo-BO' : 'Undo-PBP')
+            setToolAlert(undoRedoType === 0 ? `${langObj.toolAlert.undo} ${langObj.toolAlert.BO}` : `${langObj.toolAlert.undo} ${langObj.toolAlert.PBP}`)
         }
     })
 
@@ -107,13 +114,16 @@ export const Shortcuts = () => {
     useShortcut({
         keyName: 'Grid', onShortcut: () => {
             switchGrid()
-            setToolAlert(`Grid ${usePainterTool.getState().with.grid ? 'Grid opened' : 'Grid closed'}`)
+            setToolAlert(`${usePainterTool.getState().with.grid ? langObj.toolAlert.gridOpened : langObj.toolAlert.gridClosed}`)
         }
     })
 
     useShortcut({
         keyName: 'Redo',
         onShortcut: () => {
+            const isBlocked = usePlayersPowerups.getState().runningPowerups.undoBlock.process.length > 0
+            if (isBlocked) return
+
             const whoIsPainter = useWhoIsPainterClient.getState().value
             if (!whoIsPainter.amIPainter) return
 
@@ -130,7 +140,7 @@ export const Shortcuts = () => {
                 }
             })
 
-            setToolAlert(undoRedoType === 0 ? 'Redo-BO' : 'Redo-PBP')
+            setToolAlert(undoRedoType === 0 ? `${langObj.toolAlert.redo} ${langObj.toolAlert.BO}` : `${langObj.toolAlert.redo} ${langObj.toolAlert.PBP}`)
         }
     })
 
@@ -145,10 +155,22 @@ export const Shortcuts = () => {
             const undoRedoType = usePainterTool.getState().with.undoRedoType
             setUndoRedoType(undoRedoType === 0 ? 1 : 0)
 
-            setToolAlert(undoRedoType === 0 ? 'Changed to UR-BO' : 'Changed to UR-PBP')
+            setToolAlert(undoRedoType === 0 ? langObj.toolAlert.changeURType.BO : langObj.toolAlert.changeURType.PBP)
+        }
+    })
+
+    useShortcut({
+        keyName: 'Powerups',
+        onShortcut: () => {
+            if (useCurrentPanel.getState().currentPanel === 'power-ups') setCurrentPanel(null)
+            else setCurrentPanel('power-ups')
         }
     })
 
     return null
 
+}
+
+type Props = {
+    langObj: LangObj['shortcuts']
 }

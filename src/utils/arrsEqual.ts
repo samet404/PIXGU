@@ -1,15 +1,22 @@
-export const arrsEqual = (a: any[], b: any[]) => {
-    if (a === b) return true;
-    if (a == null || b == null) return false;
-    if (a.length !== b.length) return false;
+export const arrsEqual = (a: any[], b: any[], dontCheckOrder = false) => {
+    if (a === b) return true
+    if (a == null || b == null) return false
+    if (a.length !== b.length) return false
 
-    // If you don't care about the order of the elements inside
-    // the array, you should sort both arrays here.
-    // Please note that calling sort on an array will modify that array.
-    // you might want to clone your array first.
+    if (dontCheckOrder) {
+        // Create clones to avoid modifying original arrays
+        const sortedA = [...a].sort()
+        const sortedB = [...b].sort()
 
-    for (let i = 0; i < a.length; ++i) {
-        if (a[i] !== b[i]) return false;
+        for (let i = 0; i < sortedA.length; ++i) {
+            if (sortedA[i] !== sortedB[i]) return false
+        }
+        return true
     }
-    return true;
+
+    // Regular ordered comparison
+    for (let i = 0; i < a.length; ++i) {
+        if (a[i] !== b[i]) return false
+    }
+    return true
 }

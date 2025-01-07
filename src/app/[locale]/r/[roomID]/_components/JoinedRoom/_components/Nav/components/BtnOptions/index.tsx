@@ -7,12 +7,13 @@ import { isModalOpenAtom } from './atoms'
 import dynamic from 'next/dynamic'
 import { Svg } from '@/components/Svg'
 import Spinner from '@/components/Spinner'
+import type { LangObj } from '../../../../lang'
 
-const Modal = dynamic(() => import('./components/Modal').then((m) => m.default), {
+const Modal = dynamic(() => import('./components/Modal').then((m) => m.Modal), {
   loading: () => <Spinner />
 })
 
-const BtnOptions = () => {
+export const BtnOptions = ({ langObj }: Props) => {
   const [isModalOpen, setIsModalOpen] = useAtom(isModalOpenAtom)
 
   return (
@@ -24,7 +25,7 @@ const BtnOptions = () => {
         <Svg src='more-vertical-svgrepo-com.svg' alt="options" className="w-full h-full opacity-20" />
         {typeof window !== 'undefined'
           ? isModalOpen
-            ? createPortal(<Modal />, document.body)
+            ? createPortal(<Modal langObj={langObj} />, document.body)
             : null
           : null}
       </button>
@@ -33,4 +34,6 @@ const BtnOptions = () => {
   )
 }
 
-export default BtnOptions
+type Props = {
+  langObj: LangObj['nav']['btnOptions']
+}

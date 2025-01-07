@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { useAtomValue } from 'jotai'
 import { ChangeWsUrl } from './components/ChangeWsUrl'
@@ -19,7 +19,9 @@ export const Socketio = () => {
                     <SendEvent event='set-last-version' />
                     <SendEvent event='version-changed' />
                     <SendEvent event='prepare-restart' />
-                    <SendEvent event='flushall-except-users' />
+                    <SendEvent event='set-themes' />
+                    <SendEvent event='clear-themes' />
+                    <SendEvent event='flushall-except-essential' />
                     <SendEvent event='flushall' danger />
                 </div>
             </Providers>

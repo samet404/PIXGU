@@ -20,6 +20,7 @@ export type PencilInputFromMain = {
 }
 
 export type PencilInputFromWorker = {
+    invisiblePencil: InvisiblePencil
     cellSideCount: number
     pixels: Uint8ClampedArray[][]
     pixelsOnDraw: Set<`${number},${number}`>
@@ -35,6 +36,7 @@ export type EraserInputMain = {
 }
 
 export type EraserInputFromWorker = {
+    invisiblePencil: InvisiblePencil
     cellSideCount: number
     pixels: Uint8ClampedArray[][]
     pixelsOnDraw: Set<`${number},${number}`>
@@ -86,6 +88,10 @@ export type CanvasWorkerOnMsgData = {
     e: 'focus'
 } | {
     e: 'blur'
+} | {
+    e: 'pencilIsInvisible'
+} | {
+    e: 'pencilIsVisible'
 }
 
 
@@ -121,6 +127,9 @@ export type CanvasWorkerPostMsgData =
         data: [coor: Uint16Array, color: Uint8ClampedArray][]
     } | {
         e: 'clear-canvas'
+    } | {
+        e: 'invisiblePencilStack'
+        data: [coor: Uint16Array, color: Uint8ClampedArray][]
     }
 
 
@@ -151,4 +160,9 @@ export type UndoRedo = {
 export type BlurInfo = {
     blurStack: Set<[number, number]>
     hasBlur: boolean
+}
+
+export type InvisiblePencil = {
+    stack: Set<[number, number]>
+    hasInvisiblePencil: boolean
 }

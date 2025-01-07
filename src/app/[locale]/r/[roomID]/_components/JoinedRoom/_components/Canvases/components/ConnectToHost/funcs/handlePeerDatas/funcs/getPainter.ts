@@ -14,11 +14,17 @@ import {
   usePainterSelectingRemainTime,
   usePlayers,
   useRoomGuessChatMsgsStore,
-  useRoomWinnersChatMsgsStore,
+  useRoomGeneralChatMsgsStore,
   useSelectThemePanel,
   useTotalMatchCount,
   useWhoIsPainterClient,
-  useWinnersChatLayout,
+  useGeneralChatLayout,
+  usePlayersPowerups,
+  useAmIGaveUp,
+  usePlayersWhoGaveUp,
+  useLoserPlayers,
+  useAmILoser,
+
 } from '@/zustand/store'
 
 export const getPainter = (
@@ -51,31 +57,43 @@ export const getPainter = (
 
   resetMatchStates()
 
+  usePlayers.getState().getPlayersIDs().forEach(ID => {
+    if (ID === data) return
+    usePlayersPowerups.getState().setGuessrCardsWhileThemeIsSelecting(ID)
+  })
 
+  usePlayersWhoGaveUp.getState().everyoneNotGaveUp()
+  usePlayersPowerups.getState().setPainterCardsWhileThemeIsSelecting(data)
+  useAmIGaveUp.getState().reset()
+  useAmILoser.getState().reset()
   usePainterSelectingRemainTime.getState().reset()
   useLetterHint.getState().reset()
+  useLoserPlayers.getState().everyoneIsNotLoser()
   useGuessedPlayers.getState().reset()
   useAmIGuessed.getState().noIMNotGuessed()
 
   if (amIPainter) {
     usePowerups.getState().setPainterCardsWhileThemeIsSelecting()
+
     console.log('amIPainter true')
     useSelectThemePanel.getState().open()
     useNewPainterPanel.getState().close()
 
-    useRoomWinnersChatMsgsStore.getState().reset()
-    useWinnersChatLayout.getState().setPainterLayout()
+    useRoomGeneralChatMsgsStore.getState().reset()
+    useGeneralChatLayout.getState().setPainterLayout()
     useGuessChatLayout.getState().setPainterLayout()
     useRoomGuessChatMsgsStore.getState().reset()
-  } else {
-    usePowerups.getState().setGuessrCardsWhileThemeIsSelecting()
-    console.log('amIPainter false')
-    useNewPainterPanel.getState().open({ painterID: data })
-    useSelectThemePanel.getState().close()
-
-    useWinnersChatLayout.getState().setImNotGuessed()
-    useRoomWinnersChatMsgsStore.getState().reset()
-    useGuessChatLayout.getState().setImNotGuessed()
-    useRoomGuessChatMsgsStore.getState().reset()
+    return
   }
+
+  usePowerups.getState().setGuessrCardsWhileThemeIsSelecting()
+
+  console.log('amIPainter false')
+  useNewPainterPanel.getState().open({ painterID: data })
+  useSelectThemePanel.getState().close()
+
+  useGeneralChatLayout.getState().setNotAvailable()
+  useRoomGeneralChatMsgsStore.getState().reset()
+  useGuessChatLayout.getState().setAvailable()
+  useRoomGuessChatMsgsStore.getState().reset()
 }

@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { useAtom } from 'jotai'
 import { currentSectionIndexAtom } from '../atoms'

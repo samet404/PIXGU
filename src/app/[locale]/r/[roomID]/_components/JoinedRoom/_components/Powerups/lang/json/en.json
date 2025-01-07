@@ -6,42 +6,42 @@
 
   "changeThemes": {
     "title": "Theme Shuffle",
-    "description": "Instantly switch to a different drawing themes for a fresh challenge"
+    "description": "Instantly switch to a different drawing themes"
   },
 
   "rotate": {
     "title": "Canvas Spin",
-    "description": "Make everyone's canvas do a 360° spin for 10 seconds - good luck everyone!"
+    "description": "Make everyone's canvas do a 360° spin"
   },
 
   "mirror": {
     "title": "Mirror Mode",
-    "description": "Flip everyone's canvas horizontally - watch the confusion begin!"
+    "description": "Flip everyone's canvas horizontally"
   },
 
   "giveUp": {
     "title": "Surrender",
-    "description": "Too tough? Give up and lose 50 coins - sometimes it's worth it!"
+    "description": "Too tough? Give up and lose 50 coins. Sometimes it's worth it!"
   },
 
   "undoBlock": {
     "title": "No Take-Backs",
-    "description": "Block undo button for 10 seconds - every stroke counts!"
+    "description": "Block undo button of painter"
   },
 
   "colorChaos": {
     "title": "Color Chaos",
-    "description": "Randomly change painter colors - can you adapt to the new palette?"
+    "description": "Randomly change painter colors"
   },
 
   "pencilSize": {
     "title": "Pencil Chaos",
-    "description": "Change painter pencil size randomly - precision not guaranteed!"
+    "description": "Change painter pencil size randomly"
   },
 
   "invisiblePencil": {
     "title": "Invisible Pencil",
-    "description": "Make painter pencil invisible for 10 seconds - good luck to painter!"
+    "description": "Make painter pencil invisible"
   },
 
   "zaWarudo": {
@@ -51,16 +51,16 @@
 
   "rainingColors": {
     "title": "Raining Colors",
-    "description": "Random colors drop onto the canvas - watch out for unwanted!"
+    "description": "Random colors drop onto the canvas"
   },
 
   "wordsLength": {
     "title": "Length Reveal",
-    "description": "Reveals the exact length of the secret word - gives you the edge you need!"
+    "description": "Reveals the exact length of the secret word"
   },
 
   "categoryHint": {
     "title": "Category Clue",
-    "description": "Reveals a hint about the drawing category - narrow down your guesses!"
+    "description": "Reveals a hint about the drawing category"
   }
 }

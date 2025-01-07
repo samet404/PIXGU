@@ -1,4 +1,4 @@
-import Main from './_components/Main'
+import { Main } from './_components/Main'
 import BackgroundImages from './_components/BackgroundImages'
 import './_styles/scrollbars.css'
 import { Suspense } from 'react'
@@ -9,13 +9,26 @@ import { Content } from './_components/Content'
 import { SocketIOProvider } from './_components/SocketIOProvider'
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { getLangObj } from './lang'
+import type { Locale } from '@/types/locale'
 
 export const metadata: Metadata = {
   title: 'CREATE',
   description: 'Create and rule the room'
 }
 
-const CreateRoom = () => {
+type Props = {
+  params: Promise<{
+    locale: Locale
+  }>
+}
+
+const CreateRoom = async ({ params }: Props) => {
+  const { locale } = await params
+  const langObj = await getLangObj(locale)
+
+  console.log('langObj roomsDAta', langObj.roomsData)
+
   return (
     <div
       style={{
@@ -38,8 +51,8 @@ const CreateRoom = () => {
         </Link>
         <SocketIOProvider>
           <Suspense fallback={<Spinner />}>
-            <Content>
-              <Main />
+            <Content createRoomBtnText={langObj.createRoomBtnText} createdRoomsCount={langObj.createdRoomsCount} createdRoomsText={langObj.createdRoomsText} roomsDataLang={langObj.roomsData}>
+              <Main langObj={langObj.main} />
             </Content>
           </Suspense>
         </SocketIOProvider>

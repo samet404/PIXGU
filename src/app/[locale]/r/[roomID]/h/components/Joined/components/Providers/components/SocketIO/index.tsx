@@ -7,6 +7,7 @@ import { io as createIO, type ManagerOptions, type Socket, type SocketOptions } 
 import { env } from '@/env/client'
 import { DisconnectedView } from './components/DisconnectedView'
 import { LoadingView } from './components/LoadingView'
+import type { Locale } from '@/types/locale'
 
 const SOCKET_EVENTS = {
   CONNECT: 'connect',
@@ -123,7 +124,7 @@ const useSocketSetup = (roomID: string) => {
   return { status, setupSocketConnection }
 }
 
-export const SocketIOProvider = ({ roomID, children }: Props) => {
+export const SocketIOProvider = ({ roomID, children, locale }: Props) => {
   const { status, setupSocketConnection } = useSocketSetup(roomID)
   const { isConnected, isHostAuthSuccess, isAuthSuccess, isLoading, isDisconnected, error } = status
 
@@ -131,13 +132,14 @@ export const SocketIOProvider = ({ roomID, children }: Props) => {
 
   if (isConnected && isHostAuthSuccess && isAuthSuccess) return children
   if (isLoading) return <LoadingView />
-  if (isDisconnected || error) return <DisconnectedView errors={error} />
+  if (isDisconnected || error) return <DisconnectedView errors={error} locale={locale} />
 
   return null
 }
 
 type Props = PropsWithChildren<{
   roomID: string
+  locale: Locale
 }>
 
 type HostAuthStatus =

@@ -7,13 +7,14 @@ import { useEffect, useRef, useState, type RefObject } from 'react'
 import { useAtomValue } from 'jotai'
 import { createdRoomsCountAtom } from '../atoms'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
+import type { LangObj } from '@/app/[locale]/create/lang'
 
 const urbanist = Urbanist({
   subsets: ['latin'],
   weight: ['700'],
 })
 
-const CreateRoomButton = ({ createdRoomsRef }: Props) => {
+const CreateRoomButton = ({ createdRoomsRef, lang }: Props) => {
   const createdRoomsCount = useAtomValue(createdRoomsCountAtom)
   const resetTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const [status, setStatus] = useState<{
@@ -79,10 +80,10 @@ const CreateRoomButton = ({ createdRoomsRef }: Props) => {
   const password = useCreateRoomInputs((s) => s.password)
 
   const btnText = (() => {
-    if (isLoading) return 'Creating...'
-    if (error) return 'Something went wrong'
-    if (isSuccess) return 'Created'
-    return 'Create'
+    if (isLoading) return lang.loading
+    if (error) return lang.error
+    if (isSuccess) return lang.success
+    return lang.idle
   })()
 
   const handleClick = () => {
@@ -129,4 +130,5 @@ type Props = {
   createdRoomsRef: RefObject<{
     refetch: () => void
   }>
+  lang: LangObj['createRoomBtnText']
 }

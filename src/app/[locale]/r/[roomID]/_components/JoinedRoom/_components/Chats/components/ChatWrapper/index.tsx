@@ -1,19 +1,21 @@
 'use client'
 
 import { Fragment, type PropsWithChildren } from 'react'
-import { Input } from './components/Input'
+import { GeneralInput } from './components/GeneralInput'
+import { GuessInput } from './components/GuessInput'
 
 export const ChatWrapper = ({
     input,
     name,
     haveAccess,
-    children
+    children,
+    displayName
 }: Props) => {
     return (
         <div className="flex w-full relative grow animate-fade flex-col gap-2 rounded-lg overflow-y-auto">
             {
                 haveAccess ? <Fragment>
-                    <div className='left-2 top-1 z-[10] text-[#ffffff66] backdrop-blur-sm  px-1 rounded-md absolute text-sm'>{name}</div>
+                    <div className='left-2 top-1 z-[10] text-[#ffffff66] backdrop-blur-sm  px-1 rounded-md absolute text-sm'>{displayName}</div>
                     <div
                         style={{
                             overflowAnchor: 'auto',
@@ -23,7 +25,7 @@ export const ChatWrapper = ({
                     >
                         {children}
                     </div>
-                    {input ? <Input name={name} /> : null}
+                    {input ? name === 'guessChat' ? <GuessInput /> : <GeneralInput /> : null}
                 </Fragment> : <div className='text-[#ffffff80]'>Chat access unlocks after winning the match.</div>
             }
 
@@ -32,7 +34,8 @@ export const ChatWrapper = ({
 }
 
 type Props = PropsWithChildren<{
-    name: 'guessChat' | 'winnersChat'
+    name: 'guessChat' | 'generalChat'
     input: boolean
+    displayName: string
     haveAccess: boolean
 }>

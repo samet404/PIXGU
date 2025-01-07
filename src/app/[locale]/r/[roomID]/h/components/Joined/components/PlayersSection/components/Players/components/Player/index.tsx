@@ -1,17 +1,15 @@
 import { Img } from './components/Img'
-import { useCoins, useSpectators } from '@/zustand/store'
+import { useCoins, usePlayersWhoGaveUp, useSpectators } from '@/zustand/store'
 import { BlockBtn } from './components/BlockBtn'
 import { MessagesBtn } from './components/MessagesBtn'
 import { Messages } from './components/Messages'
 import { Ping } from './components/Ping'
-import { Svg } from '@/components/Svg'
 
 export const Player = ({
   ID,
   usernameWithUsernameID,
   profilePicture,
 }: Props) => {
-  const isSpectator = useSpectators((s) => s.isSpectator(ID))
   const coin = useCoins((s) => s.get(ID))
 
   return (
@@ -31,11 +29,6 @@ export const Player = ({
                 {coin}
               </div>
             </div>
-            {isSpectator && (
-              <button className="rounded-full bg-[#ffffff] p-1 duration-300 hover:opacity-80">
-                <Svg src='eye-svgrepo-com.svg' alt="spectator" className="h-full w-full opacity-50" />
-              </button>
-            )}
 
             <BlockBtn userID={ID} />
             <div className='relative'>

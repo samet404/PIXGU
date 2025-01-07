@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { Svg } from '@/components/Svg'
 import { usePeers, useSocketIO } from '@/zustand/store'

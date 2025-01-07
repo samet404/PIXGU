@@ -1,18 +1,13 @@
-import { useAtomValue } from 'jotai'
-import { openPanelAtom } from '../atoms'
+import type { Locale } from '@/types'
 import { getLangObj } from './lang'
-import type { Locale } from '@/types/locale'
-import dynamic from 'next/dynamic'
+import { Client } from './Client'
 
-const Content = dynamic(() => import('./Content').then(m => m.Content))
-
-export const Powerups = async ({ locale }: Params) => {
+export const Powerups = async ({ locale }: Props) => {
     const langObj = await getLangObj(locale)
-    const openPanel = useAtomValue(openPanelAtom)
 
-    if (openPanel === 'power-ups') return <Content langObj={langObj} />
+    return <Client langObj={langObj} />
 }
 
-type Params = {
+type Props = {
     locale: Locale
 }

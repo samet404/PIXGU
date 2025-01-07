@@ -1,12 +1,14 @@
 import { POWERUP_PRICES } from '@/constants'
 import { createMatch } from '@/helpers/room'
+import type { Locale } from '@/types/locale'
+import { arrsEqual } from '@/utils'
 import { sendToAllPeers } from '@/utils/sendToAllPeers'
 import { sendToPeerWithID } from '@/utils/sendToPeerWithID'
-import { useCoins, useGuessedPlayers, useGuessersWhoGaveUp, usePlayersPowerups, useWhoIsPainter } from '@/zustand/store'
+import { useCoins, useGuessedPlayers, usePlayersWhoGaveUp, usePlayers, usePlayersPowerups, useWhoIsPainter } from '@/zustand/store'
 
-export const giveUp = (userID: string, roomID: string) => {
+export const giveUp = (userID: string, locale: Locale) => {
     if (
-        !usePlayersPowerups.getState().users[userID]?.powerups.giveUp.isActive ||
+        !usePlayersPowerups.getState().users[userID]!.powerups!.giveUp!.isActive ||
         useCoins.getState().coins[userID]! < POWERUP_PRICES.giveUp
     ) return
 
@@ -33,14 +35,18 @@ export const giveUp = (userID: string, roomID: string) => {
             }
         })
 
-        createMatch(roomID)
+        createMatch(locale)
         return
     }
 
-    if (useGuessedPlayers.getState().isGuessed(userID)) return
-    if (useGuessersWhoGaveUp.getState().isGaveUp(userID)) return
+    if (
+        useGuessedPlayers.getState().isGuessed(userID) ||
+        usePlayersWhoGaveUp.getState().isGaveUp(userID)
+    ) return
 
-    useGuessersWhoGaveUp.getState().add(userID)
+    useGuessedPlayers.getState().guessed(userID)
+
+    usePlayersWhoGaveUp.getState().add(userID)
     usePlayersPowerups.getState().setPowerupInActive(userID, 'giveUp')
 
     sendToAllPeers({
@@ -59,4 +65,9 @@ export const giveUp = (userID: string, roomID: string) => {
             name: 'giveUp'
         }
     })
+
+    const usersWhoGaveUp = usePlayersWhoGaveUp.getState().users
+    const users = usePlayers.getState().getPlayersIDs()
+
+    if (arrsEqual(usersWhoGaveUp, users, true)) createMatch(locale)
 }

@@ -3,25 +3,28 @@ import { POWERUP_DURATIONS, POWERUP_PRICES } from '@/constants'
 import { sendCoinInfo } from '@/helpers/room'
 import { sendToAllPeers, sendToPeerWithID } from '@/utils'
 import { postMsgToHostTimerWorker } from '@/workers'
-import { useCoins, useGuessedPlayers, usePlayersPowerups, useWhoIsPainter } from '@/zustand/store'
+import { useCoins, useGuessedPlayers, useHostPainterData, usePlayersPowerups } from '@/zustand/store'
 
 export const undoBlock = (userID: string) => {
     if (
         !useGuessedPlayers.getState().isGuessed(userID) ||
-        !usePlayersPowerups.getState().users[userID]?.powerups.undoBlock.isActive ||
-        useWhoIsPainter.getState().value.status !== 'selectedTheme' ||
+        !usePlayersPowerups.getState().users[userID]!.powerups!.undoBlock!.isActive ||
+        useHostPainterData.getState().value.status !== 'painterSelectedTheme' ||
         useCoins.getState().coins[userID]! < POWERUP_PRICES.undoBlock
     ) return
 
     postMsgToHostTimerWorker({
         ID: 'UNDO_BLOCK_POWERUP',
         event: 'start',
-        ms: POWERUP_DURATIONS.rotate,
+        ms: POWERUP_DURATIONS.undoBlock,
         type: 'timeout',
-        data: { userID }
+        otherIDs: [userID]
     })
+
     useCoins.getState().decrease(userID, POWERUP_PRICES.undoBlock)
     sendCoinInfo([userID])
+
+    usePlayersPowerups.getState().setPowerupRunning(userID, 'undoBlock')
     usePlayersPowerups.getState().setPowerupInActive(userID, 'undoBlock')
 
     sendToAllPeers({

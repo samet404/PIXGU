@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { useCustomCursor } from '@/zustand/store/useCustomCursor'
 import dynamic from 'next/dynamic'

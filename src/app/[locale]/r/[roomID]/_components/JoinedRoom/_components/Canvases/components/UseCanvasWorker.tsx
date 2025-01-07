@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { fillOnePixel } from '@/helpers/room'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
@@ -81,6 +81,16 @@ export const UseCanvasWorker = () => {
                     const { mctx } = useCanvasesMainData.getState()
                     mctx!.fillStyle = '#ffffff'
                     mctx!.fillRect(0, 0, mctx!.canvas.width, mctx!.canvas.height)
+                    break
+                }
+
+                case 'invisiblePencilStack': {
+                    const { mctx, cellPixelLength } = useCanvasesMainData.getState()
+
+                    for (let i = 0; i < workerData.data.length; i++) {
+                        const [coors, color] = workerData.data[i]!
+                        fillOnePixel(mctx!, coors[0]!, coors[1]!, cellPixelLength!, color)
+                    }
                     break
                 }
 

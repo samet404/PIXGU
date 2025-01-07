@@ -4,8 +4,10 @@ import { User } from './components/User'
 import { Timer } from './components/Timer'
 import { useNewPainterPanel } from '@/zustand/store'
 import { Fragment, useRef } from 'react'
+import type { LangObj } from '../../../../lang'
 
-export const NewPainter = () => {
+export const NewPainter = ({ langObj }: Props) => {
+  console.log('newPainterLangObj: ', langObj)
   const newPainterSfxRef = useRef<HTMLAudioElement>(
     new Audio('/sound/sfx/newPainter.mp3'),
   )
@@ -21,7 +23,7 @@ export const NewPainter = () => {
         return (
           <Fragment>
             <div className="absolute left-0 top-1 flex w-full animate-fade items-center justify-center text-[1rem] text-violet-500">
-              Waiting host for themes...
+              {langObj.loading}
             </div>
             <User />
           </Fragment>
@@ -30,7 +32,7 @@ export const NewPainter = () => {
       case 'selectingTheme':
         return (
           <Fragment>
-            <Timer />
+            <Timer langObj={langObj.selectingThemeTimerDescs} />
             <User />
           </Fragment>
         )
@@ -49,4 +51,8 @@ export const NewPainter = () => {
         {content}
       </div>
     )
+}
+
+type Props = {
+  langObj: LangObj['canvases']
 }

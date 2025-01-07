@@ -4,8 +4,10 @@ import Spinner from '@/components/Spinner'
 import { api } from '@/trpc/react'
 import { KillRoomBtn } from './components/KillRoomBtn'
 import { GoToRoom } from './components/GoToRoom'
+import type { LangObj } from '@/app/[locale]/create/lang'
 
-export const Room = ({ ID }: Props) => {
+export const Room = ({ ID, lang }: Props) => {
+    console.log('lang', lang)
     const { data, error, isLoading } =
         api.gameRoom.getCreatedRoom.useQuery(
             { ID },
@@ -26,26 +28,26 @@ export const Room = ({ ID }: Props) => {
                     ID: {ID}
                 </div>
                 <div className="rounded-md bg-[#ffffff52] px-2 py-1 text-white">
-                    Name: {name}
+                    {lang.name}: {name}
                 </div>
 
                 <div className="rounded-md bg-[#ffffff52] px-2 py-1 text-white">
-                    {password ? `Password: ${password}` : 'Public'}
+                    {password ? `${lang.password}: ${password}` : 'Public'}
                 </div>
                 <div className="rounded-md bg-[#ffffff52] px-2 py-1 text-white">
-                    Date: {createdAt.toString()}
+                    {lang.date}: {createdAt.toString()}
                 </div>
 
                 <div className="rounded-md bg-[#ffffff52] px-2 py-1 text-white">
-                    Players: {playerCount}/10
+                    {lang.playerCount}: {playerCount}/10
                 </div>
                 <div className="rounded-md bg-[#ffffff52] px-2 py-1 text-white">
-                    Version: {version}
+                    {lang.version}: {version}
                 </div>
             </div>
             <div className='drop-shadow-[0_0px_6px_rgba(0,0,0,0.55)] flex flex-row items-start gap-2'>
-                <GoToRoom ID={ID} />
-                <KillRoomBtn roomID={ID} />
+                <GoToRoom displayText={lang.goToRoomBtnText} ID={ID} />
+                <KillRoomBtn displayText={lang.killRoomBtnText} roomID={ID} />
             </div>
         </div>
     )
@@ -54,4 +56,5 @@ export const Room = ({ ID }: Props) => {
 type Props = {
     ID: string
     refetch: () => void
+    lang: LangObj['roomsData']
 }

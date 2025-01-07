@@ -2,10 +2,11 @@ import { positiveLog } from '@/utils'
 import { usePeers, usePlayers, useSocketIO } from '@/zustand/store'
 import type { User } from 'lucia'
 import { createPeer } from './createPeer'
-import type { Guest } from '@/types'
+import type { Guest, Locale } from '@/types'
+import type { Socket } from 'socket.io-client'
 
-export const playerJoined = (roomID: string) => {
-  useSocketIO.getState().io!.on('player-joined', ({ clientInfo, uniqueSocketID }: {
+export const playerJoined = (io: Socket, roomID: string, locale: Locale) => {
+  io.on('player-joined', ({ clientInfo, uniqueSocketID }: {
     clientInfo: User | Guest
     uniqueSocketID: string
   }) => {
@@ -19,6 +20,6 @@ export const playerJoined = (roomID: string) => {
 
     positiveLog(`USER ${userID} ENTERED >`)
     positiveLog(`INITIATING PEER CONNECTION TO ${userID}`)
-    createPeer(roomID, uniqueSocketID, clientInfo)
+    createPeer(roomID, uniqueSocketID, clientInfo, locale)
   })
 }

@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { useState, type PropsWithChildren } from 'react'

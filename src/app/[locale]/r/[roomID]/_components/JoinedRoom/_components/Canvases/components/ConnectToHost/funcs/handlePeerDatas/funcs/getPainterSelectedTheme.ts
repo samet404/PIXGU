@@ -5,6 +5,8 @@ import {
   useMatchStatusClient,
   useMyCoin,
   useNewPainterPanel,
+  usePlayers,
+  usePlayersPowerups,
   usePowerups,
   useRoomGuessChatMsgsStore,
   useSelectThemePanel,
@@ -27,6 +29,15 @@ export const getPainterSelectedTheme = () => {
     event: 'stop',
   })
 
+
+  const painterID = useWhoIsPainterClient.getState().value.painterID!
+
+  usePlayers.getState().getPlayersIDs().forEach(ID => {
+    if (ID === painterID) return
+    usePlayersPowerups.getState().setGuessrPowerups(ID)
+  })
+
+  usePlayersPowerups.getState().setPainterPowerups(painterID)
 
   storePaintersAccess.selectedAsPainter(useWhoIsPainterClient.getState().value.painterID!, useTotalMatchCount.getState().value.userPainterAccesCount!)
 

@@ -1,7 +1,7 @@
 import { sendToAllPeers } from '@/utils/sendToAllPeers'
 import { usePlayers } from '@/zustand/store'
 
-export const sendEveryoneNewPlayer = (ID: string, isSpectator: boolean) => {
+export const sendEveryoneNewPlayer = (ID: string) => {
   const p = usePlayers.getState().value.obj[ID]!
 
   sendToAllPeers(
@@ -10,7 +10,6 @@ export const sendEveryoneNewPlayer = (ID: string, isSpectator: boolean) => {
       event: 'playerJoined',
       data: {
         ...p,
-        isSpectator,
       },
     },
     { except: [ID] },

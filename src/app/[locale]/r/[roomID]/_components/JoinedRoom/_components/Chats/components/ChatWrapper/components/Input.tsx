@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { useRef } from 'react'
 import { sendToHostPeer } from '@/utils/sendToHostPeer'
 
-export const Input = ({ name }: Props) => {
+export const Input = ({ name, placeholder }: Props) => {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const sendMsg = () => {
@@ -42,7 +42,8 @@ export const Input = ({ name }: Props) => {
         ref={inputRef}
         spellCheck={false}
         type="text"
-        className="w-full px-2  text-[#043243] selection:!bg-[#ffffff35]"
+        placeholder={placeholder}
+        className="w-full px-2  text-[#ffffffa3] selection:!bg-[#ffffff35]"
       />
       <button
         onMouseDown={sendMsg}
@@ -56,5 +57,6 @@ export const Input = ({ name }: Props) => {
 
 
 type Props = {
-  name: 'guessChat' | 'winnersChat'
+  name: 'guessChat' | 'generalChat'
+  placeholder?: string
 }

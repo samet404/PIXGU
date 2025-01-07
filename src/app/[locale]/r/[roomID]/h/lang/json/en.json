@@ -1,0 +1,35 @@
+{
+  "health": {
+    "waitingForPlayers": {
+      "title": "Waiting For Players",
+      "description": "You can copy the link and share it with your friends"
+    },
+
+    "gameIsStarted": {
+      "title": "Started",
+      "description": "Game is running right now, you can use host tools to manage game"
+    },
+
+    "readyToStart": {
+      "title": "Ready",
+      "description": "Everything is ready to start"
+    },
+
+    "gameEnded": {
+      "title": "Game has ended",
+      "description": "Check out the final results. Feel free to start a new game whenever you're ready."
+    },
+
+    "copy": "Copy link",
+    "copied": "Copied!",
+    "join": "Join the game",
+    "help": "Need help?",
+    "stop": "Stop the game",
+    "start": "Start the game"
+  },
+
+  "navbar": {
+    "players": "Players",
+    "canvas": "Canvas"
+  }
+}

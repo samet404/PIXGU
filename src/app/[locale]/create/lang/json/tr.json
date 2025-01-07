@@ -1,0 +1,40 @@
+{
+  "createdRoomsText": "Oluşturulan odalar",
+  "createdRoomsCount": "4 odaya kadar oluşturabilirsiniz",
+  "createRoomBtnText": {
+    "idle": "Oluştur",
+    "loading": "Oluşturuluyor...",
+    "success": "Oluşturuldu!",
+    "error": "Bir şeyler ters gitti"
+  },
+  "roomsData": {
+    "goToRoomBtnText": "Odaya git",
+    "killRoomBtnText": "Odayı öldür",
+    "noRoomsText": "Oluşturulan oda yok",
+    "errorText": "Bir şeyler ters gitti :(",
+    "name": "Ad",
+    "password": "Şifre",
+    "playerCount": "Oyuncular",
+    "version": "Versiyon",
+    "date": "Tarih"
+  },
+
+  "main": {
+    "mods": {
+      "heading": "Modlar",
+      "description": "Modlar, odanıza ekstra mekanikler eklemenin bir yoludur. Şu anda geliştirme aşamasında. Takipte kalın!",
+      "comingSoonText": "Yakında..."
+    },
+
+    "name": {
+      "heading": "Oda Adı",
+      "placeholder": "Oda adı buraya"
+    },
+
+    "password": {
+      "heading": "Şifre",
+      "placeholder": "Odayı özel tutmak istiyorsanız",
+      "generateBtnText": "Rastgele şifre oluştur ve kopyala"
+    }
+  }
+}

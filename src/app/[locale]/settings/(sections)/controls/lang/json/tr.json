@@ -18,6 +18,7 @@
     "Undo": "Geri al",
     "Redo": "Yinele",
     "Change Undo/Redo type": "Geri/İleri alma türünü değiştir",
-    "Change in-game chat": "Oyun içi sohbeti değiştir"
+    "Change in-game chat": "Oyun içi sohbeti değiştir",
+    "Toggle In-Game Logs": "Oyun içi logları aç/kapat"
   }
 }

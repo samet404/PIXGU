@@ -1,20 +1,37 @@
+"use client"
+
 import { Outfit } from 'next/font/google'
 import { useOnClickOutside } from 'usehooks-ts'
-import { useRef, type KeyboardEvent } from 'react'
-import Content from './Content.mdx'
+import { useEffect, useRef, useState, type KeyboardEvent } from 'react'
 import { useWebRTCTroubleshootingGuideModal } from '@/zustand/store'
+import type { Locale } from '@/types/locale'
+import { AlphaLoading } from '../AlphaLoading'
 
 const outfit = Outfit({ subsets: ['latin'], weight: ['500', '600', '700'] })
 
-export const Modal = () => {
+let Content: any
+
+export const Modal = ({ locale }: Props) => {
+  const [ready, setReady] = useState<boolean>(false)
   const switchModal = useWebRTCTroubleshootingGuideModal((s) => s.switch)
   const ref = useRef(null)
+
+  useEffect(() => {
+    if (!ready) {
+      import(`./Content/${locale}.mdx`).then(mdx => {
+        Content = mdx.default
+        setReady(true)
+      })
+    }
+  }, [])
 
   useOnClickOutside(ref, switchModal)
 
   const handleOnKeyDown = (e: KeyboardEvent) => {
     if (e.key === 'Escape') switchModal()
   }
+
+  if (!ready) return <AlphaLoading />
 
   return (
     <div
@@ -42,4 +59,6 @@ export const Modal = () => {
   )
 }
 
-
+type Props = {
+  locale: Locale
+}

@@ -13,8 +13,8 @@ export const eraser = (
 ) => {
     if (!useAmIPainting.getState().amIPainting) return
 
-    const size = usePainterTool.getState().options.pencil.size
-
+    const size = usePainterTool.getState().options.eraser.size
+    console.log('sending to worker with size: ', size)
 
     canvasWorker.current.postMessage({
         e: 'eraser',

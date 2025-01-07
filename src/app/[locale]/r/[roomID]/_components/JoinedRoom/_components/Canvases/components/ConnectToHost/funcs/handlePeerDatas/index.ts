@@ -5,8 +5,8 @@ import {
   getLeftPlayers,
   getPainter,
   getGuessChat,
-  getWinnersChat,
-  getYourWinnersChat,
+  getGeneralChat,
+  getYourGeneralChat,
   getYourGuessChat,
   getPainterSelectedTheme,
   getPainterSelectingTheme,
@@ -16,7 +16,6 @@ import {
   getGuessed,
   getYouGuessed,
   getThemes,
-  youAreSpectator,
   getSpectator,
   gameIsStopped,
   getPrevSpectators,
@@ -34,13 +33,14 @@ import {
   getPainterSelectedThemeTimeIsUp,
   getGameLog,
   getUndoRedo,
-  getYouUsedPowerup
+  getYouUsedPowerup,
+  getYourPowerupTimeIsUp,
+  getPowerupTimeIsUp,
+  getYouLosedAsGuessr,
+  getLosedAsGuessr
 } from './funcs'
 
-/**
- * This function handles different peer datas.
- */
-export const handlePeerDatas = (userID: string) => {
+export const handlePeerDatas = (myUserID: string) => {
   const secretKey = useHostPeer.getState().secretKey
 
   if (!secretKey) {
@@ -70,7 +70,7 @@ export const handlePeerDatas = (userID: string) => {
         getPainterSelectingTheme()
         break
       case 'currentPainter':
-        getPainter(rtcData.data, userID)
+        getPainter(rtcData.data, myUserID)
         break
       case 'playerLeft':
         getLeftPlayers(rtcData.data)
@@ -81,17 +81,17 @@ export const handlePeerDatas = (userID: string) => {
       case 'guessChat':
         getGuessChat(rtcData.data)
         break
-      case 'winnersChat':
-        getWinnersChat(rtcData.data)
+      case 'generalChat':
+        getGeneralChat(rtcData.data)
         break
-      case 'yourWinnersChat':
-        getYourWinnersChat(rtcData.data)
+      case 'yourGeneralChat':
+        getYourGeneralChat(rtcData.data)
         break
       case 'yourGuessChat':
         getYourGuessChat(rtcData.data)
         break
       case 'prevPlayers':
-        getPrevPlayers(rtcData.data, userID)
+        getPrevPlayers(rtcData.data, myUserID)
         break
       case 'guessed':
         getGuessed(rtcData.data)
@@ -107,9 +107,6 @@ export const handlePeerDatas = (userID: string) => {
         break
       case 'selectTheme':
         getThemes(rtcData.data)
-        break
-      case 'youAreSpectator':
-        youAreSpectator()
         break
       case 'spectator':
         getSpectator(rtcData.data)
@@ -142,7 +139,7 @@ export const handlePeerDatas = (userID: string) => {
         getPowerupUsed(rtcData.data)
         break
       case 'youUsedPowerup':
-        getYouUsedPowerup(rtcData.data)
+        getYouUsedPowerup(rtcData.data, myUserID)
         break
       case 'painterEraserOrPencilOut':
         getPainterEraserOrPencilOut()
@@ -155,6 +152,18 @@ export const handlePeerDatas = (userID: string) => {
         break
       case 'undoRedo':
         getUndoRedo(rtcData.data)
+        break
+      case 'yourPowerupTimeIsUp':
+        getYourPowerupTimeIsUp(rtcData.data)
+        break
+      case 'powerupTimeIsUp':
+        getPowerupTimeIsUp(rtcData.data)
+        break
+      case 'youLosedAsGuesser':
+        getYouLosedAsGuessr()
+        break
+      case 'losedAsGuesser':
+        getLosedAsGuessr(rtcData.data)
         break
       default:
         negativeLog('RECEIVED UNKNOWN EVENT FROM HOST', rtcData)

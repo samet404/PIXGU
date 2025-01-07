@@ -1,6 +1,6 @@
-import type { TimerWorkerOnMsgData } from './types'
+import type { TimerWorkerOnMsgData, TimerWorkerPostMsgData } from './types'
 
-const timers: Record<number | string, ReturnType<typeof setInterval>> = {}
+const timers: Record<string, ReturnType<typeof setInterval>> = {}
 
 self.onmessage = (e) => {
     const workerData = e.data as TimerWorkerOnMsgData
@@ -10,41 +10,46 @@ self.onmessage = (e) => {
         case 'stop': {
             console.log('worker timer stopped', workerData)
 
-            const { ID } = workerData
+            const { ID, otherIDs } = workerData
+            const key = otherIDs ? ID + otherIDs.join(',') : ID
 
-            clearInterval(timers[ID])
-            delete timers[ID]
+            clearInterval(timers[key])
+            delete timers[key]
 
             break
         }
         case 'start': {
             console.log('worker timer started', workerData)
-            const { ID, ms, type, triggerNow, data } = workerData
+            const { ID, ms, type, triggerNow, otherIDs } = workerData
             const start = performance.now()
 
-            if (triggerNow) self.postMessage({
-                ID
-            })
+            const key = otherIDs ? ID + otherIDs.join(',') : ID
 
-            if (type === 'timeout')
-                timers[ID] = setInterval(() => {
+            if (triggerNow) self.postMessage({
+                ID,
+                otherIDs
+            } as TimerWorkerPostMsgData)
+
+            if (type === 'timeout') {
+                timers[key] = setInterval(() => {
                     if ((performance.now() - start) < ms) return
 
-                    clearInterval(timers[ID])
-                    delete timers[ID]
+                    clearInterval(timers[key])
+                    delete timers[key]
                     self.postMessage({
                         ID,
-                        data
-                    })
+                        otherIDs
+                    } as TimerWorkerPostMsgData)
                 }, 50)
-            else
-                timers[ID] = setInterval(() => {
-                    self.postMessage({
-                        ID,
-                        data
-                    })
-                }, ms)
+                break
+            }
 
+            timers[ID] = setInterval(() => {
+                self.postMessage({
+                    ID,
+                    otherIDs
+                } as TimerWorkerPostMsgData)
+            }, ms)
             break
         }
         case 'clear': {

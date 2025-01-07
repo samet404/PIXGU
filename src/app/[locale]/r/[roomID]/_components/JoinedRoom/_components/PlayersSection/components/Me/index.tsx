@@ -4,8 +4,9 @@ import { useMyUserInfoForRoomStore } from '@/zustand/provider'
 import { Inter, Urbanist } from 'next/font/google'
 import { Coin } from './components/Coin'
 import {
+  useAmIGaveUp,
   useAmIGuessed,
-  useAmISpectator,
+  useAmILoser,
   useWhoIsPainterClient,
 } from '@/zustand/store'
 import { clsxMerge } from '@/utils/clsxMerge'
@@ -22,26 +23,20 @@ const urbanist = Urbanist({
   weight: '700',
 })
 
-
 const Me = () => {
   const successSfxRef = useRef<HTMLAudioElement>(
     new Audio('/sound/sfx/success.mp3'),
   )
   const user = useMyUserInfoForRoomStore((state) => state.user)
-  const amISpectator = useAmISpectator((s) => s.amISpectator)
   const whoIsPainter = useWhoIsPainterClient((s) => s.value)
   const amIGuessed = useAmIGuessed((s) => s.amIGuessed)
   const isGuest = 'ID' in user
   const ID = isGuest ? user?.ID : user?.id
   const name = isGuest ? user?.name : user?.usernameWithUsernameID
   const pfp = isGuest ? null : user?.profilePicture
+  const amIGaveUp = useAmIGaveUp((s) => s.value.amIGaveUp)
+  const amILoser = useAmILoser((s) => s.value.amILoser)
 
-  console.log('my user info: ', {
-    amIGuessed,
-    amISpectator,
-    whoIsPainter,
-    ID,
-  })
   useEffect(() => {
     if (!amIGuessed) return
 
@@ -56,7 +51,7 @@ const Me = () => {
         {
           'bg-[rgba(254,240,41,0.22)]': amIGuessed,
           'bg-[rgba(179,104,255,0.33)]': whoIsPainter.amIPainter,
-          'opacity-50': amISpectator,
+          'bg-[rgba(255,104,104,0.33)]': amIGaveUp || amILoser,
         },
       )}
     >

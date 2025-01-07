@@ -8,14 +8,16 @@ import { RefreshBtn } from './components/RefreshBtn'
 import { useSetAtom } from 'jotai'
 import { createdRoomsCountAtom } from '../../../atoms'
 import { useSocketIO } from '@/zustand/store'
+import type { LangObj } from '@/app/[locale]/create/lang'
 
 export const Content = forwardRef(
   (
-    _: unknown,
+    { roomsDataLang }: Props,
     ref: Ref<{
       refetch: () => void
     }>,
   ) => {
+    console.log('roomsDataLang', roomsDataLang)
     const io = useSocketIO(s => s.io)
     const setCount = useSetAtom(createdRoomsCountAtom)
     const { data, isError, refetch, isLoading, isRefetching } =
@@ -43,16 +45,20 @@ export const Content = forwardRef(
         {(isLoading || isRefetching) && <Spinner />}
 
         {!data ||
-          (data.length === 0 && <div className="text-[#f1ffbf]">No rooms</div>)}
-        {isError && <div>error</div>}
+          (data.length === 0 && <div className="text-[#f1ffbf]">{roomsDataLang.noRoomsText}</div>)}
+        {isError && <div>{roomsDataLang.errorText}</div>}
 
         {!isLoading &&
           !isRefetching &&
           !isError &&
-          data.map((ID) => <Room key={ID} ID={ID} refetch={refetch} />)}
+          data.map((ID) => <Room key={ID} ID={ID} refetch={refetch} lang={roomsDataLang} />)}
       </div>
     )
   },
 )
 
 Content.displayName = 'CreatedRoomsContent'
+
+type Props = {
+  roomsDataLang: LangObj['roomsData']
+}

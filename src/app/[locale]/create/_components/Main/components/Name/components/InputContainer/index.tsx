@@ -5,7 +5,11 @@ import { useEffect, useRef, type PropsWithChildren } from 'react'
 import { inputInfoTextAtom } from './atoms'
 import { useCreateRoomInputs } from '@/zustand/store'
 
-const InputContainer = ({ children }: PropsWithChildren) => {
+type Props = PropsWithChildren<{
+  placeholder: string
+}>
+
+export const InputContainer = ({ children, placeholder }: Props) => {
   const inputRef = useRef<HTMLInputElement | null>(null)
   const setInputInfoText = useSetAtom(inputInfoTextAtom)
   const value = useCreateRoomInputs((s) => s.name)
@@ -41,7 +45,7 @@ const InputContainer = ({ children }: PropsWithChildren) => {
         maxLength={20}
         onInput={() => handleOnInput()}
         ref={inputRef}
-        placeholder={'Name here ✨'}
+        placeholder={placeholder}
         type="text"
         className="w-full rounded-md bg-[rgba(255,255,255,0.2)] px-[0.40rem] py-1 text-white shadow-lg outline-none placeholder:text-[#ffffff72]"
       />
@@ -49,5 +53,3 @@ const InputContainer = ({ children }: PropsWithChildren) => {
     </div>
   )
 }
-
-export default InputContainer

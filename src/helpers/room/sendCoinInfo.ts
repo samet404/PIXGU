@@ -1,4 +1,5 @@
 import { sendToAllPeers } from '@/utils/sendToAllPeers'
+import { sendToPeerWithID } from '@/utils/sendToPeerWithID'
 import { useCoins } from '@/zustand/store'
 
 export const sendCoinInfo = (
@@ -11,6 +12,17 @@ export const sendCoinInfo = (
                 to: ID,
                 amount: useCoins.getState().coins[ID]!
             }
+        }, {
+            except: [ID]
+        })
+
+        sendToPeerWithID(ID, {
+            event: 'yourCoin',
+            data: {
+                amount: useCoins.getState().coins[ID]!
+            }
         })
     })
+
+
 }

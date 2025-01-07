@@ -7,10 +7,6 @@ import { UserPfp } from '@/components/UserPfp'
 export const Msg = ({ ID, msg, similarity }: Props) => {
     const player = usePlayers((s) => s.getPlayer(ID))
 
-    const isGuest = 'ID' in player!
-    const name = isGuest ? player?.name : player?.usernameWithUsernameID
-    const pfp = isGuest ? null : player?.profilePicture
-
     useEffectOnce(() => {
         const messageList = document.getElementById('msgContainer')
         const scrollHeight = messageList!.scrollHeight
@@ -25,7 +21,7 @@ export const Msg = ({ ID, msg, similarity }: Props) => {
         <div className="flex flex-row justify-start gap-[0.40rem] first:!mt-auto">
             <UserPfp
                 ID={ID}
-                src={pfp}
+                src={player.profilePicture}
                 width={32}
                 height={32}
                 alt="pfp"
@@ -35,7 +31,7 @@ export const Msg = ({ ID, msg, similarity }: Props) => {
             />
             <div className="flex flex-col gap-1 items-start">
                 <div className="overflow-ellipsis text-[1rem] leading-3 text-white">
-                    {name ?? ID}
+                    {player.usernameWithUsernameID ?? ID}
                 </div>
                 <div className="flex break-all rounded-md bg-gradient-to-r from-[#ffffff5f] to-transparent px-2 py-1 leading-5 text-[#0000006d]">
                     {msg}

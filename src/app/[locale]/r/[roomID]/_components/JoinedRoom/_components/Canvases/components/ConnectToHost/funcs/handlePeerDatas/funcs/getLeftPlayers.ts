@@ -1,7 +1,7 @@
 import { storePaintersAccess } from '@/store'
 import type { PlayerLeft } from '@/types'
 import { postMsgToCanvasWorker, postMsgToPlayerTimerWorker } from '@/workers'
-import { useCoins, useGuessedPlayers, useIsGameStopped, useLetterHint, useMatchStatusClient, useMyCoin, useNewPainterPanel, usePlayers, usePowerups, useRoomGuessChatMsgsStore, useRoomWinnersChatMsgsStore, useSelectThemePanel, useTotalMatchCount, useWhoIsPainterClient, useXY } from '@/zustand/store'
+import { useCoins, useGuessedPlayers, useIsGameStopped, useLetterHint, useMatchStatusClient, useMyCoin, useNewPainterPanel, usePlayers, usePowerups, useRoomGuessChatMsgsStore, useRoomGeneralChatMsgsStore, useSelectThemePanel, useTotalMatchCount, useWhoIsPainterClient, useXY, usePlayersWhoGaveUp } from '@/zustand/store'
 
 export const getLeftPlayers = (data: PlayerLeft['data']) => {
   const isPainter = useWhoIsPainterClient.getState().isPainter(data.ID)
@@ -9,6 +9,7 @@ export const getLeftPlayers = (data: PlayerLeft['data']) => {
   usePlayers.getState().removePlayer(data.ID)
   useXY.getState().reset()
 
+  usePlayersWhoGaveUp.getState().remove(data.ID)
   const userReamainPainterAccessCount = storePaintersAccess.removePlayerFromPaintersToBeSelected(data.ID, useTotalMatchCount.getState().value.userPainterAccesCount!)
   useTotalMatchCount.getState().decreaseTotalMatchCount(userReamainPainterAccessCount)
 
@@ -38,7 +39,7 @@ export const getLeftPlayers = (data: PlayerLeft['data']) => {
     const painterStatus = useWhoIsPainterClient.getState().value.status
 
     useLetterHint.getState().reset()
-    useRoomWinnersChatMsgsStore.getState().reset()
+    useRoomGeneralChatMsgsStore.getState().reset()
     useRoomGuessChatMsgsStore.getState().reset()
     useGuessedPlayers.getState().reset()
     useNewPainterPanel.getState().reset()

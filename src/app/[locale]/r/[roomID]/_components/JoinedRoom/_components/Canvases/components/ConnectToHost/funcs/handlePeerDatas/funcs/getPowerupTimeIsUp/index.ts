@@ -1,6 +1,19 @@
 import type { PowerupTimeIsUp } from '@/types'
-import { usePlayersPowerups } from '@/zustand/store'
+import { invisiblePencil, mirror, rotate, undoBlock } from './powerups'
 
 export const getPowerupTimeIsUp = ({ name, userID }: PowerupTimeIsUp['data']) => {
-    usePlayersPowerups.getState().setIsPowerupRunning(userID, name, false)
+    switch (name) {
+        case 'rotate':
+            rotate(userID)
+            break
+        case 'invisiblePencil':
+            invisiblePencil(userID)
+            break
+        case 'undoBlock':
+            undoBlock(userID)
+            break
+        case 'mirror':
+            mirror(userID)
+            break
+    }
 }

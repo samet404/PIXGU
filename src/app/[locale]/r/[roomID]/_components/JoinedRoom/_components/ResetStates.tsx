@@ -6,7 +6,7 @@ import {
   usePeers,
   usePlayers,
   useBrokenUserPfps,
-  useRoomWinnersChatMsgsStore,
+  useRoomGeneralChatMsgsStore,
   useIsOnlineStore,
   useMyCoin,
   usePing,
@@ -22,7 +22,7 @@ export const ResetStates = () => {
   const resetPlayers = usePlayers.getState().reset
   const resetPeers = usePeers.getState().reset
   const resetBrokenPlayersPfp = useBrokenUserPfps.getState().reset
-  const resetWinnersChat = useRoomWinnersChatMsgsStore.getState().reset
+  const resetgeneralChat = useRoomGeneralChatMsgsStore.getState().reset
   const resetIsOnline = useIsOnlineStore.getState().reset
   const resetPing = usePing.getState().reset
   const resetMyCoin = useMyCoin.getState().reset
@@ -38,7 +38,7 @@ export const ResetStates = () => {
     resetPlayers()
     resetPeers()
     resetBrokenPlayersPfp()
-    resetWinnersChat()
+    resetgeneralChat()
     resetIsOnline()
     resetPing()
     resetMyCoin()

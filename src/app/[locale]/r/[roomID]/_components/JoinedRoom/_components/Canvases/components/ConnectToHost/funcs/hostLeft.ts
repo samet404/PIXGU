@@ -8,7 +8,7 @@ import {
   usePeers,
   usePing,
   usePlayers,
-  useRoomWinnersChatMsgsStore,
+  useRoomGeneralChatMsgsStore,
   useSocketIO,
 } from '@/zustand/store'
 
@@ -16,7 +16,7 @@ export const hostLeft = () => {
   const resetPlayers = usePlayers.getState().reset
   const resetPeers = usePeers.getState().reset
   const resetBrokenPlayersPfp = useBrokenUserPfps.getState().reset
-  const resetWinnersChat = useRoomWinnersChatMsgsStore.getState().reset
+  const resetgeneralChat = useRoomGeneralChatMsgsStore.getState().reset
   const resetIsOnline = useIsOnlineStore.getState().reset
   const resetPing = usePing.getState().reset
   const resetMyCoin = useMyCoin.getState().reset
@@ -27,7 +27,7 @@ export const hostLeft = () => {
     resetPlayers()
     resetPeers()
     resetBrokenPlayersPfp()
-    resetWinnersChat()
+    resetgeneralChat()
     resetIsOnline()
     resetPing()
     resetMyCoin()

@@ -6,7 +6,7 @@ import { useCoins, useGuessedPlayers, usePlayersPowerups, useWhoIsPainter } from
 export const pencilSize = (userID: string) => {
     if (
         !useGuessedPlayers.getState().isGuessed(userID) ||
-        !usePlayersPowerups.getState().users[userID]?.powerups.pencilSize.isActive ||
+        !usePlayersPowerups.getState().users[userID]!.powerups!.pencilSize!.isActive ||
         useCoins.getState().coins[userID]! < POWERUP_PRICES.pencilSize
     ) return
 

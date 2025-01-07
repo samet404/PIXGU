@@ -1,15 +1,13 @@
 'use client'
 
 import { useShortcut } from '@/hooks/useShortcut'
-import type { ControlsState } from '@/zustand/store'
+import { useControls, type ControlsState } from '@/zustand/store'
 import { useSpring, animated } from '@react-spring/web'
 import { type ReactNode } from 'react'
 
 // @ts-nocheck
 export const Button = ({ className, onMouseDown, icon, shortcutName }: Props) => {
-  // const clickSfxRef = useRef<HTMLAudioElement>(
-  //   new Audio('/sound/sfx/button/crystal_panel_button.mp3'),
-  // )
+  const binding = useControls(s => s.keys[shortcutName])
   const [springs, api] = useSpring(() => ({
     from: {
       scale: 1,
@@ -18,6 +16,7 @@ export const Button = ({ className, onMouseDown, icon, shortcutName }: Props) =>
       duration: 400,
     },
   }))
+
 
   const clickAnimation = () =>
     api.start({
@@ -43,13 +42,19 @@ export const Button = ({ className, onMouseDown, icon, shortcutName }: Props) =>
 
 
   return (
-    <animated.button
-      style={springs}
-      onMouseDown={handleClick}
-      className={`flex size-9 flex-row items-center gap-2 rounded-lg bg-[#ffffff2f] to-transparent p-1 ${className}`}
-    >
-      {icon}
-    </animated.button>
+    <div className='relative group size-9'>
+      <animated.button
+        style={springs}
+        onMouseDown={handleClick}
+        className={`flex w-full h-full flex-row group items-center gap-2 rounded-lg bg-[#ffffff2f] to-transparent p-1 ${className}`}
+      >
+        {icon}
+      </animated.button>
+
+      <div className='absolute group-hover:flex font-[700] hidden px-2 w-[20rem] text-[0.5rem] leading-4 break-keep top-[35] text-white left-0'>
+        {binding.join(' + ')}
+      </div>
+    </div>
   )
 }
 

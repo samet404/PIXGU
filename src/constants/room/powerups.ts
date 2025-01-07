@@ -2,18 +2,19 @@ import type { Powerup, TimeBasedPowerups } from '@/types'
 import type { PowerupState } from '@/zustand/store'
 
 export type ID = string
-export const INIT_RUNNING_POWERUPS: Record<TimeBasedPowerups, ID[]> = {
-    invisiblePencil: [],
-    rotate: [],
-    mirror: [],
-    undoBlock: [],
-    zaWarudo: [],
+export const INIT_RUNNING_POWERUPS = {
+    invisiblePencil: false,
+    rotate: false,
+    mirror: false,
+    undoBlock: false,
+    zaWarudo: false,
 }
 
 
 export const PAINTER_CARDS: PowerupState = {
+    runningPowerupsArray: [],
     runningPowerups: INIT_RUNNING_POWERUPS,
-    activePowerups: ['changeThemes', 'giveUp', 'zaWarudo'],
+    activePowerups: ['giveUp'],
     powerups: {
         rotate: {
             isActive: false,
@@ -28,7 +29,7 @@ export const PAINTER_CARDS: PowerupState = {
             running: false
         },
         zaWarudo: {
-            isActive: true,
+            isActive: false,
             running: false
         },
         letterHint: { isActive: false },
@@ -44,8 +45,9 @@ export const PAINTER_CARDS: PowerupState = {
 }
 
 export const GUESSR_CARDS_WHILE_THEME_IS_SELECTING: PowerupState = {
+    runningPowerupsArray: [],
     runningPowerups: INIT_RUNNING_POWERUPS,
-    activePowerups: ['rotate'],
+    activePowerups: [],
     powerups: {
         rotate: {
             isActive: false,
@@ -60,7 +62,7 @@ export const GUESSR_CARDS_WHILE_THEME_IS_SELECTING: PowerupState = {
             running: false
         },
         zaWarudo: {
-            isActive: true,
+            isActive: false,
             running: false
         },
         letterHint: { isActive: false },
@@ -76,8 +78,9 @@ export const GUESSR_CARDS_WHILE_THEME_IS_SELECTING: PowerupState = {
 }
 
 export const PAINTER_CARDS_WHILE_THEME_IS_SELECTING: PowerupState = {
+    runningPowerupsArray: [],
     runningPowerups: INIT_RUNNING_POWERUPS,
-    activePowerups: ['changeThemes', 'zaWarudo'],
+    activePowerups: ['changeThemes'],
     powerups: {
         rotate: {
             isActive: false,
@@ -92,7 +95,7 @@ export const PAINTER_CARDS_WHILE_THEME_IS_SELECTING: PowerupState = {
             running: false
         },
         zaWarudo: {
-            isActive: true,
+            isActive: false,
             running: false
         },
         letterHint: { isActive: false },
@@ -108,6 +111,7 @@ export const PAINTER_CARDS_WHILE_THEME_IS_SELECTING: PowerupState = {
 }
 
 export const GUESSR_CARDS: PowerupState = {
+    runningPowerupsArray: [],
     runningPowerups: INIT_RUNNING_POWERUPS,
     activePowerups: ['letterHint', 'giveUp', 'categoryHint', 'wordsLength'],
     powerups: {
@@ -124,7 +128,7 @@ export const GUESSR_CARDS: PowerupState = {
             running: false
         },
         zaWarudo: {
-            isActive: true,
+            isActive: false,
             running: false
         },
         letterHint: { isActive: true },
@@ -140,19 +144,20 @@ export const GUESSR_CARDS: PowerupState = {
 }
 
 export const WINNERS_CARDS: PowerupState = {
+    runningPowerupsArray: [],
     runningPowerups: INIT_RUNNING_POWERUPS,
-    activePowerups: ['rotate', 'mirror', 'undoBlock', 'colorChaos', 'pencilSize', 'invisiblePencil', 'rainingColors'],
+    activePowerups: ['rotate', 'mirror', 'undoBlock', 'colorChaos', 'pencilSize', 'invisiblePencil', 'rainingColors', 'zaWarudo'],
     powerups: {
         rotate: {
-            isActive: false,
+            isActive: true,
             running: false
         },
         mirror: {
-            isActive: false,
+            isActive: true,
             running: false
         },
         undoBlock: {
-            isActive: false,
+            isActive: true,
             running: false
         },
         zaWarudo: {
@@ -174,6 +179,7 @@ export const WINNERS_CARDS: PowerupState = {
 }
 
 export const INITIAL_POWERUP_STATE: PowerupState = {
+    runningPowerupsArray: [],
     runningPowerups: INIT_RUNNING_POWERUPS,
     activePowerups: [],
     powerups: {
@@ -190,7 +196,7 @@ export const INITIAL_POWERUP_STATE: PowerupState = {
             running: false
         },
         zaWarudo: {
-            isActive: true,
+            isActive: false,
             running: false
         },
         letterHint: { isActive: false },
@@ -206,25 +212,27 @@ export const INITIAL_POWERUP_STATE: PowerupState = {
 }
 
 export const POWERUP_PRICES: Record<Powerup, number> = {
-    letterHint: 100,
-    changeThemes: 100,
-    rotate: 100,
-    mirror: 100,
-    giveUp: 100,
-    undoBlock: 100,
-    colorChaos: 100,
-    pencilSize: 100,
-    invisiblePencil: 100,
-    zaWarudo: 100,
-    rainingColors: 100,
-    wordsLength: 100,
-    categoryHint: 100
+    letterHint: 10,
+    changeThemes: 20,
+    rotate: 20,
+    mirror: 20,
+    giveUp: 50,
+    undoBlock: 30,
+    colorChaos: 10,
+    pencilSize: 30,
+    invisiblePencil: 30,
+    zaWarudo: 30,
+    rainingColors: 20,
+    wordsLength: 10,
+    categoryHint: 10
 }
 
 export const POWERUP_DURATIONS: Record<TimeBasedPowerups, number> = {
     undoBlock: 1000 * 10,
     zaWarudo: 1000 * 10,
     rotate: 1000 * 10,
-    mirror: 1000 * 10,
+    mirror: 1000 * 20,
     invisiblePencil: 1000 * 10,
 }
+
+export const POWERUPS_SHOWS_TEXT: Powerup[] = ['letterHint', 'wordsLength', 'categoryHint']

@@ -15,7 +15,7 @@ export const Navbar = async ({ locale }: Props) => {
         <Image
           src={Logo}
           alt="logo"
-          className="h-[6rem] w-[6rem] select-none object-contain"
+          className="h-[6rem] w-[6rem] select-none object-contain drop-shadow-[0_0px_2px_rgba(0,0,0,0.55)]"
           sizes="calc(2.33vw + 90px)"
         ></Image>
       </div>

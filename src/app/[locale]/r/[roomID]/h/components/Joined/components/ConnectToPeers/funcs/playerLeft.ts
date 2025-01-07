@@ -10,13 +10,14 @@ import {
   useTotalMatchCount,
   useWhoIsPainter,
 } from '@/zustand/store'
+import type { Locale } from '@/types/locale'
+import { createMatch } from '@/helpers/room'
+import { storePaintersAccess } from '@/store'
 import { negativeLog } from '@/utils/negativeLog'
 import { sendToAllPeers } from '@/utils/sendToAllPeers'
-import { createMatch } from '@/helpers/room'
 import { postMsgToCanvasWorker, postMsgToHostTimerWorker } from '@/workers'
-import { storePaintersAccess } from '@/store'
 
-export const playerLeft = (userID: string, roomID: string) => {
+export const playerLeft = (userID: string, roomID: string, locale: Locale) => {
   negativeLog(`PLAYER ${userID} LEFT THE GAME`)
 
   sendToAllPeers({
@@ -90,7 +91,7 @@ export const playerLeft = (userID: string, roomID: string) => {
 
     useWhoIsPainter.getState().reset()
     useMatchStatus.getState().cancelMatch()
-    createMatch(roomID)
+    createMatch(locale)
   }
 
   useSocketIO.getState().io!.emit('current-players', {

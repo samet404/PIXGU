@@ -8,13 +8,14 @@ import { Back } from './components/Back'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { Controls } from './components/Controls'
 import { Sounds } from './components/Sounds'
+import type { LangObj } from '../../../../../../lang'
 
 const urbanist = Urbanist({
   subsets: ['latin'],
   weight: ['500',],
 })
 
-const Modal = () => {
+export const Modal = ({ langObj }: Props) => {
   const setIsModalOpen = useSetAtom(isModalOpenAtom)
   const ref = useRef(null)
 
@@ -41,12 +42,16 @@ const Modal = () => {
         ref={ref}
         className="flex flex-col rotate-[-5deg] animate-flip-up rounded-md bg-[#ffffffb2] shadow-[0_0px_20px_1px_rgba(0,0,0,0.4)]"
       >
-        <Back />
-        <Controls />
-        <Sounds />
-        <Exit />
+        <Back text={langObj.back} />
+        <Controls text={langObj.controls} />
+        <Sounds text={langObj.sounds} />
+        <Exit text={langObj.exit} />
       </div>
     </div>
   )
 }
-export default Modal
+
+
+type Props = {
+  langObj: LangObj['nav']['btnOptions']
+}

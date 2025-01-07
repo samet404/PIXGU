@@ -12,6 +12,8 @@ import type { User } from 'lucia'
 import { UseTimersWorker } from './components/UseTimersWorker'
 import type { Guest } from '@/types/guest'
 import { MatchTimer } from './components/MatchTimer'
+import type { Locale } from '@/types/locale'
+import type { LangObj } from '../../lang'
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -19,7 +21,7 @@ const outfit = Outfit({
 })
 
 
-const Joined = ({ roomID, user, guest }: Props) => {
+const Joined = ({ roomID, user, langObj, guest, locale }: Props) => {
   const userID = user?.id ? user.id : guest!.ID
 
   return (
@@ -27,18 +29,17 @@ const Joined = ({ roomID, user, guest }: Props) => {
       id="root"
       className={`${outfit.className} h-full w-full overflow-y-scroll`}
     >
-      <Providers userID={userID} roomID={roomID} user={user ?? guest!}>
+      <Providers locale={locale} userID={userID} roomID={roomID} user={user ?? guest!}>
+        <ConnectToPeers locale={locale} />
+        <UseTimersWorker locale={locale} />
+        <HostingHealthDisplay langObj={langObj.health} locale={locale} />
         <MatchTimer />
-        <UseTimersWorker roomID={roomID} />
         <ResetStates />
-        <ConnectToPeers />
-        <HostingHealthDisplay />
         <div
           className="flex flex-col bg-[#ffffff13] items-center gap-4 pt-5 pb-[20rem]">
-          <Navbar />
+          <Navbar langObj={langObj.navbar} />
           <PlayersSection />
           <Canvases />
-
           <States />
         </div>
       </Providers>
@@ -49,7 +50,9 @@ const Joined = ({ roomID, user, guest }: Props) => {
 export default Joined
 
 type Props = {
+  langObj: LangObj
   roomID: string
+  locale: Locale
   guest: Guest | null
   user: User | null
 }

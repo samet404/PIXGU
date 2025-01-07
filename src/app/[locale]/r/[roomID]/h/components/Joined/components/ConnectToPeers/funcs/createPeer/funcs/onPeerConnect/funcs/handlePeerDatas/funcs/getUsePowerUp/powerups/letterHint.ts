@@ -15,7 +15,7 @@ export const letterHint = (userID: string) => {
 
     const theme = painterData.selectedTheme.toLocaleLowerCase().trim()
     if (!theme) return
-    if (!usePlayersPowerups.getState().users[userID]?.powerups.letterHint.isActive) return
+    if (!usePlayersPowerups.getState().users[userID]!.powerups!.letterHint!.isActive) return
 
     useCoins.getState().decrease(userID, POWERUP_PRICES.letterHint)
     sendCoinInfo([userID])
@@ -37,5 +37,7 @@ export const letterHint = (userID: string) => {
     }, {
         except: [userID]
     })
+
+    console.log('letterHint sent')
 
 }

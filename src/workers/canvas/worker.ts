@@ -1,10 +1,10 @@
 import { lastArrIndex } from '@/utils/lastArrIndex'
 import { bucket, eraser, pencil, redo, redoByOperation, undo, undoByOperation } from './events'
-import type { BlurInfo, CanvasWorkerOnMsgData, CanvasWorkerPostMsgData, UndoRedo } from './types'
+import type { BlurInfo, CanvasWorkerOnMsgData, CanvasWorkerPostMsgData, InvisiblePencil, UndoRedo } from './types'
 import { initlizeCanvasPixels } from './utils/initlizeCanvasPixels'
 // import { stringifiedLog } from '@/utils'
 
-const CELL_SIDE_COUNT = 80
+const CELL_SIDE_COUNT = 120
 
 const undoRedoInit: UndoRedo['current'] = {
     operationIndex: -1,
@@ -32,6 +32,11 @@ const blurInfo: BlurInfo = {
     hasBlur: false
 }
 
+const invisiblePencil: InvisiblePencil = {
+    stack: new Set<[number, number]>(),
+    hasInvisiblePencil: false
+}
+
 let pixels: Uint8ClampedArray[][] = []
 let lastPixel: [x: number, y: number] | null = null
 
@@ -43,6 +48,35 @@ self.onmessage = (e) => {
 
 
     switch (workerData.e) {
+        case 'pencilIsInvisible':
+            invisiblePencil.hasInvisiblePencil = true
+            break
+        case 'pencilIsVisible': {
+            invisiblePencil.hasInvisiblePencil = false
+
+            const stack = Array.from(invisiblePencil.stack)
+            const pixelsToBeFilled: [coors: Uint16Array, color: Uint8ClampedArray][] = []
+            for (let i = 0; i < stack.length; i++) {
+                if (invisiblePencil.hasInvisiblePencil) {
+                    postMessage({
+                        e: 'invisiblePencilStack',
+                        data: pixelsToBeFilled
+                    } as CanvasWorkerPostMsgData)
+                    break
+                }
+
+                const value = stack[i]
+                const [x, y] = value!
+                invisiblePencil.stack.delete(value!)
+                pixelsToBeFilled.push([new Uint16Array([x, y]), pixels[x]![y]!])
+            }
+
+            postMessage({
+                e: 'focus',
+                data: pixelsToBeFilled
+            } as CanvasWorkerPostMsgData)
+            break
+        }
         case 'focus': {
             blurInfo.hasBlur = false
 
@@ -95,6 +129,7 @@ self.onmessage = (e) => {
             const pencilData = pencil({
                 ...workerData.data,
                 cellSideCount: CELL_SIDE_COUNT,
+                invisiblePencil,
                 pixels,
                 lastPixel,
                 pixelsOnDraw,
@@ -117,6 +152,7 @@ self.onmessage = (e) => {
                 ...workerData.data,
                 cellSideCount: CELL_SIDE_COUNT,
                 pixels,
+                invisiblePencil,
                 lastPixel,
                 pixelsOnDraw,
                 undoRedo,

@@ -6,14 +6,15 @@ import { StartBtn } from './components/StartBtn'
 import { CopyBtn } from './components/CopyBtn'
 import { JoinBtn } from './components/JoinBtn'
 import { useHostingHealth } from '@/zustand/store'
-import { useRoomIDStore } from '@/zustand/provider'
 import { StopBtn } from './components/StopBtn'
 import { HavingIssuesBtn } from './components/HavingIssuesBtn'
 import { Svg } from '@/components/Svg'
+import type { Locale } from '@/types'
+import type { LangObj } from '../../../../lang'
 
-export const HostingHealthDisplay = () => {
+export const HostingHealthDisplay = ({ langObj, locale }: Props) => {
   const status = useHostingHealth((s) => s.status)
-  const roomID = useRoomIDStore((state) => state.roomID)
+  const { waitingForPlayers, gameEnded, readyToStart, gameIsStarted, copied, join, copy, help, start, stop } = langObj
 
   const radialGradientColor = (() => {
     switch (status) {
@@ -31,26 +32,26 @@ export const HostingHealthDisplay = () => {
   const lgText = (() => {
     switch (status) {
       case 'gameIsStarted':
-        return 'Started'
+        return gameIsStarted.title
       case 'readyToStart':
-        return 'Ready'
+        return readyToStart.title
       case 'waitingForPlayers':
-        return 'Waiting For Players'
+        return waitingForPlayers.title
       case 'gameEnded':
-        return 'Game has ended'
+        return gameEnded.title
     }
   })()
 
   const smText = (() => {
     switch (status) {
       case 'gameIsStarted':
-        return 'Game is running right now, you can use host tools to manage game'
+        return gameIsStarted.description
       case 'readyToStart':
-        return 'Everything is ready to start'
+        return readyToStart.description
       case 'waitingForPlayers':
-        return 'You can copy the link and share it with your friends'
+        return waitingForPlayers.description
       case 'gameEnded':
-        return "Check out the final results. Feel free to start a new game whenever you're ready."
+        return gameEnded.description
       default:
         return ''
     }
@@ -96,16 +97,21 @@ export const HostingHealthDisplay = () => {
         </div>
       </div>
       <div className="flex h-8 flex-row w-[90%] flex-wrap justify-center gap-3 drop-shadow-[0_0px_10px_rgba(0,0,0,0.2)]">
-        {status === 'readyToStart' ? <StartBtn roomID={roomID} /> : null}
-        {status === 'gameIsStarted' ? <StopBtn roomID={roomID} /> : null}
-        {status === 'readyToStart' || status === 'waitingForPlayers' ? <CopyBtn /> : null}
-        {status === 'readyToStart' || status === 'waitingForPlayers' ? <JoinBtn /> : null}
+        {status === 'readyToStart' ? <StartBtn displayText={start} locale={locale} /> : null}
+        {status === 'gameIsStarted' ? <StopBtn displayText={stop} /> : null}
+        {status === 'readyToStart' || status === 'waitingForPlayers' ? <CopyBtn displayText1={copied} displayText2={copy} /> : null}
+        {status === 'readyToStart' || status === 'waitingForPlayers' ? <JoinBtn displayText={join} /> : null}
 
-        <HavingIssuesBtn />
+        <HavingIssuesBtn displayText={help} locale={locale} />
       </div>
       <div className='absolute bottom-2 w-full flex items-center justify-center animate-fade-down aniamte-delay-[1000ms]'>
-        <Svg src='scroll-down-svgrepo-com.svg' alt="star" className="h-10 w-full opacity-20" />
+        <Svg src='scroll-down-svgrepo-com.svg' alt="scroll down" className="h-10 w-full opacity-20" />
       </div>
     </div>
   )
+}
+
+type Props = {
+  langObj: LangObj['health']
+  locale: Locale
 }

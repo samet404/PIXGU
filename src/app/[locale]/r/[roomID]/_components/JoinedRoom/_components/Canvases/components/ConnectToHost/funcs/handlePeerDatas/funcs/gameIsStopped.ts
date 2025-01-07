@@ -1,12 +1,12 @@
-import { useAmIPainting, useAmISpectator, useCoins, useGuessChatLayout, useGuessedPlayers, useIsGameStopped, useMatchStatusClient, useMyCoin, useNewPainterPanel, useRoomGuessChatMsgsStore, useRoomWinnersChatMsgsStore, useSelectThemePanel, useSpectators, useWhoIsPainterClient, useWinnersChatLayout } from '@/zustand/store'
+import { useAmIPainting, useAmISpectator, useCoins, useGuessChatLayout, useGuessedPlayers, useIsGameStopped, useMatchStatusClient, useMyCoin, useNewPainterPanel, useRoomGuessChatMsgsStore, useRoomGeneralChatMsgsStore, useSelectThemePanel, useSpectators, useWhoIsPainterClient, useGeneralChatLayout } from '@/zustand/store'
 
 export const gameIsStopped = () => {
   useIsGameStopped.getState().addCode('waitingForHost')
   useWhoIsPainterClient.getState().reset()
   useAmIPainting.getState().reset()
-  useWinnersChatLayout.getState().reset()
+  useGeneralChatLayout.getState().reset()
   useGuessChatLayout.getState().reset()
-  useRoomWinnersChatMsgsStore.getState().reset()
+  useRoomGeneralChatMsgsStore.getState().reset()
   useRoomGuessChatMsgsStore.getState().reset()
   useGuessedPlayers.getState().reset()
   useMyCoin.getState().reset()
@@ -16,5 +16,4 @@ export const gameIsStopped = () => {
   useNewPainterPanel.getState().reset()
   useMatchStatusClient.getState().reset()
   useSelectThemePanel.getState().reset()
-
 }

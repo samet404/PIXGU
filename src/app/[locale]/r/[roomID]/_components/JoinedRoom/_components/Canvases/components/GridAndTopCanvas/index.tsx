@@ -30,7 +30,7 @@ export const GridAndTopCanvas = () => {
       ref={canvasRef}
       id="grid-canvas"
       className={clsxMerge(
-        'absolute bottom-0 left-0 right-0 top-0 z-30 cursor-crosshair rounded-lg',
+        'absolute inset-0 z-30 rounded-lg',
       )}
     />
   )

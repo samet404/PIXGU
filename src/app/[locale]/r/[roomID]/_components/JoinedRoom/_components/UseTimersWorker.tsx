@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
 import { useEffectOnce } from '@/hooks/useEffectOnce'
-import { useAmIPainting, useAmISpectator, useCoins, useGameEndedPanel, useGuessChatLayout, useGuessedPlayers, useHostPeer, useIsGameStopped, useMatchStatusClient, useMyCoin, useNewPainterPanel, usePainterSelectingRemainTime, usePing, useRoomGuessChatMsgsStore, useRoomWinnersChatMsgsStore, useSelectThemePanel, useSpectators, useWhoIsPainterClient, useWinnersChatLayout, } from '@/zustand/store'
+import { useAmIPainting, useAmISpectator, useCoins, useGameEndedPanel, useGuessChatLayout, useGuessedPlayers, useHostPeer, useIsGameStopped, useMatchStatusClient, useMyCoin, useNewPainterPanel, usePainterSelectingRemainTime, usePing, useRoomGuessChatMsgsStore, useRoomGeneralChatMsgsStore, useSelectThemePanel, useSpectators, useWhoIsPainterClient, useGeneralChatLayout } from '@/zustand/store'
 import { getPlayerTimerWorker, postMsgToPlayerTimerWorker, terminatePlayerTimerWorker, type PlayerTimerWorkerPostMsgData } from '@/workers'
 import { violetLog } from '@/utils/violetLog'
 import { type RTCStats } from '@/types'
@@ -41,9 +41,9 @@ export const UseTimersWorker = () => {
                         useIsGameStopped.getState().addCode('waitingForHost')
                         useWhoIsPainterClient.getState().reset()
                         useAmIPainting.getState().reset()
-                        useWinnersChatLayout.getState().reset()
+                        useGeneralChatLayout.getState().reset()
                         useGuessChatLayout.getState().reset()
-                        useRoomWinnersChatMsgsStore.getState().reset()
+                        useRoomGeneralChatMsgsStore.getState().reset()
                         useRoomGuessChatMsgsStore.getState().reset()
                         useGuessedPlayers.getState().reset()
                         useMyCoin.getState().reset()
@@ -63,27 +63,33 @@ export const UseTimersWorker = () => {
                 case 'RTT': {
                     const peer = useHostPeer.getState().peer as any
 
-                    peer.getStats((err: Error | null, stats: RTCStats[]) => {
-                        if (err) {
-                            console.error('Failed to get peer stats:', err);
-                            peer.destroy()
-                            return
-                        }
-
-                        stats.forEach((report) => {
-                            if (report.type === 'candidate-pair') {
-                                const rtt = report.currentRoundTripTime * 1000
-                                if (!rtt) {
-                                    violetLog(`RTT is undefined`)
-                                    return
-                                }
-
-                                violetLog(`RTT ${rtt}ms`)
-                                usePing.getState().set(rtt)
+                    try {
+                        peer.getStats((err: Error | null, stats: RTCStats[]) => {
+                            if (err) {
+                                console.error('Failed to get peer stats:', err);
+                                peer.destroy()
+                                return
                             }
-                        })
 
-                    })
+                            stats.forEach((report) => {
+                                if (report.type === 'candidate-pair') {
+                                    const rtt = report.currentRoundTripTime * 1000
+                                    if (!rtt) {
+                                        violetLog(`RTT is undefined`)
+                                        return
+                                    }
+
+                                    violetLog(`RTT ${rtt}ms`)
+                                    usePing.getState().set(rtt)
+                                }
+                            })
+
+                        })
+                    } catch (error) {
+                        console.error('Failed to get peer stats:', error)
+                        peer.destroy()
+                        break
+                    }
                 }
 
 

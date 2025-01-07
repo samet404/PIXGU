@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { useSoundSettings } from '@/zustand/store'
 import { Item } from './Item'

@@ -11,7 +11,7 @@ import {
   useSpectators,
 } from '@/zustand/store'
 
-export const StopBtn = ({ roomID }: Props) => {
+export const StopBtn = ({ displayText }: Props) => {
   const buttonRef = useRef<HTMLButtonElement | null>(null)
   const sfx = useRef<HTMLAudioElement>(new Audio('/sound/sfx/painter.mp3'))
   const [remainSecond, setRemainSecond] = useState(5)
@@ -29,7 +29,6 @@ export const StopBtn = ({ roomID }: Props) => {
     }, 1000)
 
     return () => clearInterval(interval)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   })
 
   const handleClick = () => {
@@ -65,11 +64,11 @@ export const StopBtn = ({ roomID }: Props) => {
       onClick={handleClick}
       className="animate-fade-up rounded-md bg-[#e15a77] px-4 py-2 leading-3 text-[#02020285] disabled:cursor-not-allowed disabled:bg-[#e15a7795]"
     >
-      Stop the game {remainSecond !== 0 && `(${remainSecond}s)`}
+      {displayText} {remainSecond !== 0 && `(${remainSecond}s)`}
     </button>
   )
 }
 
 type Props = {
-  roomID: string
+  displayText: string
 }

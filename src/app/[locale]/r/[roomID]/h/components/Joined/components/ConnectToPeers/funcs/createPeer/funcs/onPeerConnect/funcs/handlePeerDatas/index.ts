@@ -12,8 +12,9 @@ import {
   getUsePowerup,
   painterTrash
 } from './funcs'
+import type { Locale } from '@/types/locale'
 
-export const handlePeerDatas = (userID: string, roomID: string) => {
+export const handlePeerDatas = (userID: string, roomID: string, locale: Locale) => {
   const peers = usePeers.getState().get()
   const secretKey = usePeers.getState().secretKeys[userID]
 
@@ -32,10 +33,10 @@ export const handlePeerDatas = (userID: string, roomID: string) => {
 
     switch (event) {
       case 'guessChat':
-        chat(rtcData.data, event, userID, roomID)
+        chat(rtcData.data, event, userID, locale)
         break
-      case 'winnersChat':
-        chat(rtcData.data, event, userID, roomID)
+      case 'generalChat':
+        chat(rtcData.data, event, userID, locale)
         break
       case 'selectTheme':
         getSelectedTheme(rtcData.data, userID, roomID)
@@ -53,7 +54,7 @@ export const handlePeerDatas = (userID: string, roomID: string) => {
         getPainterBucket(rtcData.data, userID)
         break
       case 'usePowerup':
-        getUsePowerup(rtcData.data, userID, roomID)
+        getUsePowerup(rtcData.data, userID, roomID, locale)
         break
       case 'painterMouseDown':
         getPainterMouseDown(rtcData.data, userID)

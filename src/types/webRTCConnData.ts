@@ -1,6 +1,6 @@
 import type { Player } from '@/zustand/store'
 import type { User } from 'lucia'
-import type { ChangeThemesPowerupData, LetterHintPowerupData, Powerup, RainingColorsPowerupData, WordsLengthPowerupData } from './powerups'
+import type { Powerup, RainingColorsPowerupData, TimeBasedPowerups } from './powerups'
 
 /**
  * WebRTCConnData is the type of data that
@@ -23,7 +23,7 @@ export type YourGuessChatFromHost = {
   data: {
     msgID: number
     msg: string
-    similarity: number
+    similarity?: number
   }
 }
 
@@ -34,8 +34,8 @@ export type GuessChatFromClient = {
   }
 }
 
-export type WinnersChatFromHost = {
-  event: 'winnersChat'
+export type GeneralChatFromHost = {
+  event: 'generalChat'
   data: {
     msgID: number
     from: string
@@ -43,16 +43,16 @@ export type WinnersChatFromHost = {
   }
 }
 
-export type YourWinnersChatFromHost = {
-  event: 'yourWinnersChat'
+export type YourGeneralChatFromHost = {
+  event: 'yourGeneralChat'
   data: {
     msgID: number
     msg: string
   }
 }
 
-export type WinnersChatFromClient = {
-  event: 'winnersChat'
+export type GeneralChatFromClient = {
+  event: 'generalChat'
   data: {
     msg: string
   }
@@ -124,9 +124,7 @@ export type PlayerLeft = {
 
 export type PlayerJoined = {
   event: 'playerJoined'
-  data: Player & {
-    isSpectator: boolean
-  }
+  data: Player
 }
 
 export type SelectThemeFromHost = {
@@ -222,34 +220,38 @@ export type UsePowerup = {
 
 export type PowerupUsed = {
   event: 'powerupUsed'
-  data: {
-    name: Powerup
-    userID: string
-  } | {
+  data: ({
     name: 'rainingColors'
-    userID: string
     data: RainingColorsPowerupData
   } | {
     name: 'pencilSize'
-    userID: string
     data?: number
+  } | {
+    name: 'letterHint' | 'zaWarudo' | 'giveUp' | 'categoryHint' | 'colorChaos' | 'undoBlock' | 'mirror' | 'invisiblePencil' | 'rotate' | 'wordsLength'
+  }) & {
+    userID: string
   }
+}
+
+export type YouUsedPowerupRainingColors = {
+  name: 'rainingColors'
+  data: RainingColorsPowerupData
 }
 
 export type YouUsedPowerup = {
   event: 'youUsedPowerup'
   data: {
     name: 'letterHint'
-    data: LetterHintPowerupData
+    data: string
   } | {
     name: 'changeThemes'
-    data: ChangeThemesPowerupData
-  } | {
-    name: 'rainingColors'
-    data: RainingColorsPowerupData
-  } | {
+    data: string
+  } | YouUsedPowerupRainingColors | {
     name: 'wordsLength'
-    data: WordsLengthPowerupData
+    data: string
+  } | {
+    name: 'categoryHint'
+    data: string
   } | {
     name: 'pencilSize'
   } | {
@@ -272,13 +274,7 @@ export type YouUsedPowerup = {
 export type PowerupTimeIsUp = {
   event: 'powerupTimeIsUp'
   data: ({
-    name: 'rotate'
-  } | {
-    name: 'mirror'
-  } | {
-    name: 'zaWarudo'
-  } | {
-    name: 'undoBlock'
+    name: TimeBasedPowerups
   }) & {
     userID: string
   }
@@ -286,15 +282,9 @@ export type PowerupTimeIsUp = {
 
 export type YourPowerupTimeIsUp = {
   event: 'yourPowerupTimeIsUp'
-  data: ({
-    name: 'rotate'
-  } | {
-    name: 'mirror'
-  } | {
-    name: 'zaWarudo'
-  } | {
-    name: 'undoBlock'
-  })
+  data: {
+    name: TimeBasedPowerups
+  }
 }
 
 export type GameLog = {
@@ -314,6 +304,17 @@ export type UndoRedo = {
   }
 }
 
+export type YouLosedAsGuesser = {
+  event: 'youLosedAsGuesser'
+}
+
+export type LosedAsGuesser = {
+  event: 'losedAsGuesser'
+  data: {
+    userID: string
+  }
+}
+
 export type WebRTCConnDataFromHost = (
   | PlayerLeft
   | PlayerJoined
@@ -322,9 +323,9 @@ export type WebRTCConnDataFromHost = (
   | GameLog
   | CurrentPainter
   | GuessChatFromHost
-  | WinnersChatFromHost
+  | GeneralChatFromHost
   | YourGuessChatFromHost
-  | YourWinnersChatFromHost
+  | YourGeneralChatFromHost
   | SelectThemeFromHost
   | PainterSelectedTheme
   | PainterSelectingTheme
@@ -351,13 +352,15 @@ export type WebRTCConnDataFromHost = (
   | YouUsedPowerup
   | PainterMouseDown
   | UndoRedo
+  | YouLosedAsGuesser
+  | LosedAsGuesser
 )
 /**
  * DirectlyFromClient is the type of data that is sent directly from the client.
  */
 export type WebRTCConnDataFromClient = (
   | PainterEraserOrPencilOut
-  | WinnersChatFromClient
+  | GeneralChatFromClient
   | GuessChatFromClient
   | PainterPencil
   | PainterEraser

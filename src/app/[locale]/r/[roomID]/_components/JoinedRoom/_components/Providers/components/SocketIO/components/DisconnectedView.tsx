@@ -3,14 +3,16 @@ import ToHomeButton from '@/components/ToHomeButton'
 import Link from 'next/link'
 import { TryAgainBtn } from './TryAgainBtn'
 import { NeedHelpBtn } from './NeedHelp'
+import type { Locale } from '@/types'
 
 type DisconnectedViewProps = {
     errors: string[]
     password: string | null
     onPasswordReset: () => void
+    locale: Locale
 }
 
-export const DisconnectedView = ({ errors, password, onPasswordReset }: DisconnectedViewProps) => (
+export const DisconnectedView = ({ errors, locale, password, onPasswordReset }: DisconnectedViewProps) => (
     <div className='animate-fade selection:!bg-rose-600 bg-gradient-to-tr from-rose-500 to-rose-400 flex h-full w-full flex-col items-center justify-center gap-6 rounded-lg text-white'>
         <div className='flex flex-col gap-1 items-center'>
             <div className="font-[700] text-[2.6rem]">
@@ -37,7 +39,7 @@ export const DisconnectedView = ({ errors, password, onPasswordReset }: Disconne
                         Try different password?
                     </button>
                 )}
-                <NeedHelpBtn />
+                <NeedHelpBtn locale={locale} />
             </div>
         </div>
     </div>

@@ -20,5 +20,5 @@ export const useGuessedPlayers = create<State & Action>((set, get) => ({
       playersIDs: [...get().playersIDs, userID],
     }),
   isGuessed: (userID) => get().playersIDs.includes(userID),
-  reset: () => set(initValue),
+  reset: () => set({ ...initValue }),
 }))

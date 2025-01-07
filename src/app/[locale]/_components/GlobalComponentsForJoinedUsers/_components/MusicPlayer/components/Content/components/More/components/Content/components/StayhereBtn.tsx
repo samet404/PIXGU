@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { clsxMerge } from '@/utils/clsxMerge'
 import { useTabs } from '@/zustand/store'

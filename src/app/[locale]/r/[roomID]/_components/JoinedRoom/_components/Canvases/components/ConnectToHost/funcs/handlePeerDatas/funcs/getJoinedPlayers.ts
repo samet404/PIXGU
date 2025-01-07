@@ -1,16 +1,13 @@
 import type { PlayerJoined } from '@/types'
-import { filterObj } from '@/utils/filterObj'
-import { usePlayers, type Player } from '@/zustand/store'
+import { useCoins, usePlayers, usePlayersWhoGaveUp } from '@/zustand/store'
 
 export const getJoinedPlayers = (data: PlayerJoined['data']) => {
   const isGuest = 'ID' in data
-  const ID = isGuest ? data.ID : data.id
-  const player = filterObj(
-    data,
-    ([key, value]) => key !== 'isSpectator',
-  ) as Player
+  const ID = (isGuest ? data.ID : data.id) as string
 
-  console.log('player count: ', usePlayers.getState().value.count)
-
-  usePlayers.getState().addPlayer(ID, player)
+  usePlayersWhoGaveUp.getState().initPlayer(ID)
+  useCoins.getState().initUser(ID)
+  usePlayers.getState().addPlayer(ID, {
+    ...data
+  })
 }

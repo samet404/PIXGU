@@ -1,4 +1,4 @@
-import { useAmIPainting, useAmISpectator, useCoins, useGuessChatLayout, useGuessedPlayers, useHostPeer, useIsGameStopped, useMatchStatusClient, useMyCoin, useNewPainterPanel, usePing, useRoomGuessChatMsgsStore, useRoomWinnersChatMsgsStore, useSelectThemePanel, useSpectators, useWhoIsPainterClient, useWinnersChatLayout } from '@/zustand/store'
+import { useAmIPainting, useAmISpectator, useCoins, useGuessChatLayout, useGuessedPlayers, useHostPeer, useIsGameStopped, useMatchStatusClient, useMyCoin, useNewPainterPanel, usePing, useRoomGuessChatMsgsStore, useRoomGeneralChatMsgsStore, useSelectThemePanel, useSpectators, useWhoIsPainterClient, useGeneralChatLayout } from '@/zustand/store'
 import { positiveLog } from '@/utils'
 import { createHostPeer } from './createHostPeer'
 
@@ -7,15 +7,15 @@ import { createHostPeer } from './createHostPeer'
  */
 export const hostJoined = (roomID: string, myUserID: string) => {
   positiveLog('HOST JOINED')
+  createHostPeer(roomID, myUserID)
 
   useHostPeer.getState().set({ status: 'connecting' })
-  createHostPeer(roomID, myUserID)
   useIsGameStopped.getState().addCode('connectingToHost')
   useWhoIsPainterClient.getState().reset()
   useAmIPainting.getState().reset()
-  useWinnersChatLayout.getState().reset()
+  useGeneralChatLayout.getState().reset()
   useGuessChatLayout.getState().reset()
-  useRoomWinnersChatMsgsStore.getState().reset()
+  useRoomGeneralChatMsgsStore.getState().reset()
   useRoomGuessChatMsgsStore.getState().reset()
   useGuessedPlayers.getState().reset()
   useMyCoin.getState().reset()

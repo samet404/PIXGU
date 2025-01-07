@@ -17,7 +17,7 @@ type Action = {
 }
 
 const initValue: State = {
-    cellSideCount: 80,
+    cellSideCount: 120,
 } as const
 
 export const useHostCanvasesData = create<State & Action>((set, get) => ({

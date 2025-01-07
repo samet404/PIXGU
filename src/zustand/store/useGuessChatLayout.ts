@@ -11,10 +11,9 @@ type State = {
 }
 
 type Action = {
-  setSpectatorLayout: () => void
   setPainterLayout: () => void
-  setImNotGuessed: () => void
-  setIGuessed: () => void
+  setAvailable: () => void
+  setNotAvailable: () => void
   open: () => void
   close: () => void
   reset: () => void
@@ -30,12 +29,6 @@ export const useGuessChatLayout = create<State & Action>((set, get) => ({
   open: () => set({ value: { ...get().value, isOpen: true } }),
   close: () => set({ value: { ...get().value, isOpen: false } }),
 
-  setSpectatorLayout: () => {
-    set({
-      value: { isOpen: true, input: false, change: true, info: false },
-    })
-  },
-
   setPainterLayout: () => {
     console.log("setting i'm painter layout")
 
@@ -44,18 +37,15 @@ export const useGuessChatLayout = create<State & Action>((set, get) => ({
     })
   },
 
-  setImNotGuessed: () => {
-    console.log("setting i'm not guessed layout")
+  setAvailable: () => {
     set({
       value: { isOpen: true, input: true, change: false, info: true },
     })
   },
 
-  setIGuessed: () => {
-    console.log("setting i'm guessed layout")
-
+  setNotAvailable: () => {
     set({
-      value: { isOpen: true, input: false, change: true, info: true },
+      value: { isOpen: false, input: false, change: true, info: true },
     })
 
   },

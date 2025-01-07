@@ -3,8 +3,9 @@ import { useHostingHealth, usePlayers, useSocketIO, useTotalMatchCount } from '@
 import { createMatch } from '@/helpers/room'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { storePaintersAccess } from '@/store'
+import type { Locale } from '@/types/locale'
 
-export const StartBtn = ({ roomID }: Props) => {
+export const StartBtn = ({ displayText, locale }: Props) => {
   const io = useSocketIO(s => s.io)
   const [remainSecond, setRemainSecond] = useState(5)
   const buttonRef = useRef<HTMLButtonElement | null>(null)
@@ -34,7 +35,7 @@ export const StartBtn = ({ roomID }: Props) => {
     useTotalMatchCount.getState().set(usePlayers.getState().value.count)
     useHostingHealth.getState().set('gameIsStarted')
 
-    createMatch(roomID)
+    createMatch(locale)
   }
 
   return (
@@ -44,11 +45,12 @@ export const StartBtn = ({ roomID }: Props) => {
       onClick={handleClick}
       className="animate-fade-up rounded-md bg-[#34d3cb] px-4 py-2 leading-3 text-[#02020285] disabled:cursor-not-allowed disabled:bg-[#34d3cb95]"
     >
-      Start the game {remainSecond !== 0 && `(${remainSecond}s)`}
+      {displayText} {remainSecond !== 0 && `(${remainSecond}s)`}
     </button>
   )
 }
 
 type Props = {
-  roomID: string
+  locale: Locale
+  displayText: string
 }

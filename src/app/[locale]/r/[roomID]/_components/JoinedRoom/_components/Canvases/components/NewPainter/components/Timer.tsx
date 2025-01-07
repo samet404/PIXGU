@@ -1,16 +1,17 @@
 'use client'
 
 import { usePainterSelectingRemainTime } from '@/zustand/store'
+import type { LangObj } from '../../../../../lang'
 
-export const Timer = () => {
+export const Timer = ({ langObj }: Props) => {
   const width = usePainterSelectingRemainTime((s) => s.passedMilisecondsWithPercent)
 
   const description = (() => {
-    if (width > 100) return 'Time is up?'
-    if (width > 60) return 'Time is running out'
-    if (width > 50) return 'Tick tock'
-    if (width > 25) return 'Painter selecting theme'
-    return 'Selecting theme'
+    if (width > 100) return langObj[100]
+    if (width > 60) return langObj[60]
+    if (width > 50) return langObj[50]
+    if (width > 25) return langObj[25]
+    return langObj[0]
   })()
 
   return (
@@ -27,4 +28,8 @@ export const Timer = () => {
       </div>
     </div>
   )
+}
+
+type Props = {
+  langObj: LangObj['canvases']['selectingThemeTimerDescs']
 }

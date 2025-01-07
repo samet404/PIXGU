@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { Socketio } from './components/Socketio'
 

@@ -9,14 +9,15 @@ import {
   MyUserInfoForRoomStoreProvider,
 } from '@/zustand/provider'
 import { SocketIOProvider } from './components/SocketIO'
-import type { Guest } from '@/types/guest'
 import type { User } from 'lucia'
 import { Password } from './components/Password'
+import type { Locale, Guest } from '@/types'
 
 export const Providers = ({
   roomID,
   userID,
   hostID,
+  locale,
   user,
   guest,
   havePassword,
@@ -25,7 +26,7 @@ export const Providers = ({
   console.log('providers: ', user, guest)
   return (
     <Password havePassword={havePassword}>
-      <SocketIOProvider roomID={roomID}>
+      <SocketIOProvider locale={locale} roomID={roomID}>
         <HostInfoStoreProvider
           initState={{
             amIHost: userID === hostID,
@@ -59,6 +60,7 @@ export const Providers = ({
 }
 
 type Props = {
+  locale: Locale
   userID: string
   roomID: string
   hostID: string

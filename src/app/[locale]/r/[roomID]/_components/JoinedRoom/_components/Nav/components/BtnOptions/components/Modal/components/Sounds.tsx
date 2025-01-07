@@ -1,7 +1,9 @@
 import { Btn } from './Btn'
 
-export const Sounds = () => {
-    return (
-        <Btn text='SOUNDS' link={{ href: '/settings/sounds' }} className='bg-[#6cecea]' />
-    )
+export const Sounds = ({ text }: Props) => {
+    return <Btn text={text} link={{ href: '/settings/sounds' }} className='bg-[#6cecea]' />
+}
+
+type Props = {
+    text: string
 }

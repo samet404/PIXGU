@@ -1,15 +1,14 @@
-import type { WebRTCSignalData } from '@/types'
 import { goldLog } from '@/utils/goldLog'
-import { positiveLog } from '@/utils/positiveLog'
-import { simplePeer } from '@/utils/simplePeer'
-import {
-  useHostPeer,
-  useIsGameStopped,
-  usePlayers,
-  useSocketIO,
-} from '@/zustand/store'
+import type { WebRTCSignalData } from '@/types'
+import { simplePeer, positiveLog } from '@/utils'
 import { handlePeerDatas } from './handlePeerDatas'
 import { postMsgToPlayerTimerWorker } from '@/workers'
+import {
+  usePlayers,
+  useHostPeer,
+  useSocketIO,
+  useIsGameStopped,
+} from '@/zustand/store'
 
 export const createHostPeer = (roomID: string, myUserID: string) => {
   const io = useSocketIO.getState().io

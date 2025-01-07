@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { useAtom, useSetAtom } from 'jotai'
 import { useEffect, useRef } from 'react'
