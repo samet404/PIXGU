@@ -23,7 +23,7 @@ export const Navbar = async ({ locale }: Props) => {
       <div className="flex flex-row items-center gap-5 text-[#ffffff82]">
         <SocialLinks />
         |
-        <Link className='text-[0.8rem] hover:text-white font-[500]' target='_blank' href='https://404portfolio.vercel.app' prefetch={false}>{portfolio}</Link>
+        <Link className='text-[0.8rem] hover:text-white font-[500]' target='_blank' href='https://notfound404.dev'>{portfolio}</Link>
         |
         <Link className='text-[0.8rem] hover:text-white font-[500]' href={'/privacy'} prefetch={false}>{privacy}</Link>
         <LanguageDropdown locale={locale} />
