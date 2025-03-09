@@ -1,4 +1,4 @@
-[icon](https://pixgu.com/image/png/logo.png)
+[![icon](https://pixgu.com/image/png/logo.png)]
 
 PIXGU is a real-time multiplayer drawing and guessing game platform inspired by popular games like Gartic.io and Skribbl.io. Players take turns drawing pictures while others try to guess what's being drawn. Create private rooms and invite friends to play together!
 
