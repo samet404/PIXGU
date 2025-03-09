@@ -31,3 +31,17 @@ PIXGU is a real-time multiplayer drawing and guessing game platform inspired by 
 - ESLint for code linting
 - Prettier for code formatting
 - Bun for fast package management and development
+
+### Related repositories
+
+- [Socket.io server](https://github.com/404nnotfoundddd/PIXGU-SOCKETIO)
+- [Socket.io admin client](https://github.com/404nnotfoundddd/PIXGU-SOCKETIO-ADMIN-CLIENT)
+
+### Known issues
+
+- The game is not supports mobile and tablet devices
+- There are some bugs causes infinite looping
+
+### Contributing
+
+You can contribute to this project by forking it and submitting a pull request.
