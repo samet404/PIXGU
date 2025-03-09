@@ -94,8 +94,8 @@ export const env = createEnv({
       .default('development'),
     ROOT_FOLDER_NAME: z.string().default('PIXGU'),
     IP_ADDRESS: z.string().default('66.6.44.4'),
-    CANARY: z.enum(['0', '1'])
-
+    CANARY: z.enum(['0', '1']),
+    ADMIN_AUTH_SECRET: z.string(),
   },
 
   /**
@@ -103,6 +103,8 @@ export const env = createEnv({
    * middlewares) or client-side so we need to destruct manually.
    */
   runtimeEnv: {
+    ADMIN_AUTH_SECRET: process.env.ADMIN_AUTH_SECRET,
+
     IP_ADDRESS: process.env.IP_ADDRESS,
     ROOT_FOLDER_NAME: process.env.ROOT_FOLDER_NAME,
     NODE_ENV: process.env.NODE_ENV,
