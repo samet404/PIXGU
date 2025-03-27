@@ -42,6 +42,11 @@ PIXGU is a real-time multiplayer drawing and guessing game platform inspired by 
 - The game is not supports mobile and tablet devices
 - There are some bugs causes infinite looping
 
+# Future plans
+
+- Add C code via wasm to improve performance
+- Fix small bugs 
+
 ### Contributing
 
 You can contribute to this project by forking it and submitting a pull request.
