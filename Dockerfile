@@ -21,6 +21,7 @@ COPY . .
 # Uncomment the following line in case you want to disable telemetry during the build.
 # ENV NEXT_TELEMETRY_DISABLED=1
 
+ENV NODE_ENV=production
 ENV SKIP_ENV_VALIDATION=1
 
 RUN bun run build 
@@ -49,5 +50,3 @@ EXPOSE 3000
 
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
-
-CMD ["bun", "server.js"]

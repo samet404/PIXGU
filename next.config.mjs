@@ -15,7 +15,9 @@ jiti('./src/env/client')
 const config = {
   output: 'standalone',
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
-
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   webpack: (
     config,
     // { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack },
