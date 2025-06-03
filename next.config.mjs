@@ -23,6 +23,7 @@ const config = {
     config.externals.push({
       'utf-8-validate': 'commonjs utf-8-validate',
       bufferutil: 'commonjs bufferutil',
+
     })
 
     // Important: return the modified config
@@ -49,8 +50,8 @@ const config = {
     config.resolve.fallback = {
       // if you miss it, all the other options in fallback, specified
       // by next.js will be dropped.
-      ...config.resolve.fallback,
 
+      ...config.resolve.fallback,
       fs: false,
     }
 

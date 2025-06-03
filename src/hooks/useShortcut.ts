@@ -1,3 +1,5 @@
+"use client"
+
 import { arrsEqual } from '@/utils'
 import { useControls, type ControlsState } from '@/zustand/store'
 import { useEffect } from 'react'

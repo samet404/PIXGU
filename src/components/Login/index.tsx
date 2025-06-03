@@ -22,7 +22,7 @@ export const Login = ({ locale, redirectToRoomID, guest, oauth }: Props) => {
       <Image
         src={bgImg}
         alt="background"
-        className="absolute z-0 w-full select-none brightness-[0.5]"
+        className="absolute z-0 w-full h-full object-cover select-none brightness-[0.5]"
         placeholder="blur"
         sizes="200vw"
       ></Image>

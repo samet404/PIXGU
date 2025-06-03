@@ -5,7 +5,7 @@ export const iceServers: RTCIceServer[] = [
     urls: [
       'stun:stun.l.google.com:19302',
       'stun:global.stun.twilio.com:3478',
-      "stun:stun.relay.metered.ca:80"
+      'stun:stun.relay.metered.ca:80'
     ]
   }
 ]
@@ -18,7 +18,6 @@ export const simplePeer = (opts?: SimplePeer.Options): SimplePeer.Instance => {
   const iceServersData = opts?.config?.iceServers ?? iceServers
   if (!iceServersData || iceServersData.length === 0)
     throw new Error('No iceServers provided')
-
 
   return new SimplePeer({
     initiator: opts?.initiator ?? false,
