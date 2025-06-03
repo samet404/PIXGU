@@ -13,6 +13,7 @@ jiti('./src/env/client')
 
 /** @type {import("next").NextConfig} */
 const config = {
+  output: 'standalone',
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
 
   webpack: (
