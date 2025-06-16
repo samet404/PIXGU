@@ -3,13 +3,17 @@ import { onPeerConnect, onPeerClose, onPeerError, onPeerSignal } from './funcs'
 import { useMatchStatus } from '@/zustand/store/useMatchStatus'
 import { usePeers } from '@/zustand/store/usePeers'
 import { useSocketIO } from '@/zustand/store/useSocketIO'
-import type { User } from 'lucia'
-import { pixguPeer } from 'src/pixgu-peer/pixguPeerClient'
+import PixguPeer from 'src/pixgu-peer/pixguPeer'
 
 /**
  * Create a webrtc peer connection to the given user.
  */
-export const createPeer = (roomID: string, uniqueSocketID: string, user: User | Guest, locale: Locale) => {
+export const createPeer = (
+  roomID: string,
+  uniqueSocketID: string,
+  user: Guest,
+  locale: Locale,
+) => {
   const ID = 'id' in user ? user.id : user.ID
 
   if (useMatchStatus.getState().value.matchCount !== 0) {
@@ -17,8 +21,12 @@ export const createPeer = (roomID: string, uniqueSocketID: string, user: User | 
     return
   }
 
-  const peer = pixguPeer({
+  const peer = new PixguPeer({
     initiator: true,
+    channelConfig: {
+      ordered: true,
+    },
+    objectMode: true,
   })
 
   usePeers.getState().add({

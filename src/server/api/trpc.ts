@@ -12,11 +12,9 @@ import { initTRPC } from '@trpc/server'
 import superjson from 'superjson'
 import { ZodError } from 'zod'
 
-import { db } from '@/sqlDb'
 import { redisDb } from '@/redis'
-import { validateRequest } from '@/auth/lucia/validateRequest'
 import { env } from '@/env/server'
-import { killGuest, validateGuest } from '@/auth/guest'
+import { validateGuest } from '@/auth/guest'
 import { getIP } from '@/utils'
 
 /**
@@ -32,9 +30,7 @@ import { getIP } from '@/utils'
  * @see https://trpc.io/docs/server/context
  */
 
-
 export const createTRPCContext = async (opts: { headers: Headers }) => {
-  const { session, user } = await validateRequest()
   const clientIP =
     process.env.NODE_ENV === 'development'
       ? env.IP_ADDRESS
@@ -42,16 +38,14 @@ export const createTRPCContext = async (opts: { headers: Headers }) => {
 
   const guest = await validateGuest()
 
-  if (guest && user && session) killGuest()
+  // TODO: Change it later when another auth system addded
+  // if (guest && user && session) killGuest()
 
   const isGuest = !!guest
 
   return {
     redisDb,
-    db,
     guest,
-    session,
-    user,
     isGuest,
     clientIP,
     ...opts,

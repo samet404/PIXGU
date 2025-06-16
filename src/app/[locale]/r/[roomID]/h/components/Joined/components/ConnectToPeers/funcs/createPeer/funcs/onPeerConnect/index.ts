@@ -1,32 +1,34 @@
-
 import { useCoins } from '@/zustand/store/useCoins'
 import { usePeers } from '@/zustand/store/usePeers'
 import { usePlayers } from '@/zustand/store/usePlayers'
 import { useSocketIO } from '@/zustand/store/useSocketIO'
 import { useSpectators } from '@/zustand/store/useSpectators'
 import { useHostingHealth } from '@/zustand/store/useHostingHealth'
-import type { User } from 'lucia'
 import type { Guest, Locale } from '@/types'
-import type SimplePeer from 'simple-peer'
+import type PixguPeer from 'simple-peer'
 import { sendToPeer } from '@/utils/sendToPeer'
 import { positiveLog } from '@/utils/positiveLog'
 import { handlePeerDatas } from './funcs/handlePeerDatas'
 import { sendEveryoneNewPlayer } from './funcs/sendEveryoneNewPlayer'
 import { sendPrevPlayersToNewPlayer } from './funcs/sendPrevPlayersToNewPlayer'
-import { getCanvasWorker, postMsgToHostTimerWorker, type CanvasWorkerOnMsgData } from '@/workers'
+import {
+  getCanvasWorker,
+  postMsgToHostTimerWorker,
+  type CanvasWorkerOnMsgData,
+} from '@/workers'
 
 const canvasWorker = getCanvasWorker()
 
 export const onPeerConnect = (
-  peer: SimplePeer.Instance,
+  peer: PixguPeer.Instance,
   userID: string,
   roomID: string,
-  user: User | Guest,
+  user: Guest,
   locale: Locale,
 ) =>
   peer.on('connect', () => {
     const userSecretKey = usePeers.getState().secretKeys[userID]!
-    const isGuest = 'ID' in user
+    // const isGuest = true
 
     positiveLog(`CONNECTED TO ${userID}`)
     console.log('sent player joined')
@@ -39,7 +41,6 @@ export const onPeerConnect = (
       ms: 5000,
     })
 
-
     if (usePlayers.getState().value.count === 1)
       useHostingHealth.getState().set('readyToStart')
 
@@ -48,7 +49,6 @@ export const onPeerConnect = (
 
     if (isSpectator) {
       sendToPeer(peer, userSecretKey, {
-
         event: 'youAreSpectator',
       })
 
@@ -64,18 +64,17 @@ export const onPeerConnect = (
           },
         })
       })
-
     }
 
     canvasWorker.current.postMessage({
-      e: 'pixels'
+      e: 'pixels',
     } as CanvasWorkerOnMsgData)
 
     usePlayers.getState().addPlayer(userID, {
       id: userID,
-      username: (isGuest ? (user).name : (user).username),
-      usernameWithUsernameID: (isGuest ? (user).nameWithNameID : (user).usernameWithUsernameID),
-      profilePicture: (!isGuest && (user).profilePicture) as string | undefined
+      username: user.name,
+      usernameWithUsernameID: user.nameWithNameID,
+      profilePicture: undefined,
     })
 
     handlePeerDatas(userID, roomID, locale)

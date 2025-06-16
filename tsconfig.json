@@ -18,6 +18,7 @@
     "noUncheckedIndexedAccess": true,
     "baseUrl": "./",
     "paths": {
+      "@/pixgu-peer": ["./src/pixgu-peer/pixguPeer.js"],
       "@/store/*": ["./src/store/*"],
       "@/middlewares": ["./src/middlewares/index.ts"],
       "@/helpers": ["./src/helpers/index.ts"],

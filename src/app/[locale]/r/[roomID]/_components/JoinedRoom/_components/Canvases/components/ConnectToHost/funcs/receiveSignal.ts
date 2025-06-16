@@ -1,7 +1,7 @@
 import { useHostPeer } from '@/zustand/store/useHostPeer'
 import { useSocketIO } from '@/zustand/store/useSocketIO'
-import type { SignalData } from 'simple-peer'
 import { hostJoined } from './hostJoined'
+import type SignalData from '@/pixgu-peer'
 
 export const receiveSignal = (roomID: string, myUserID: string) =>
   useSocketIO

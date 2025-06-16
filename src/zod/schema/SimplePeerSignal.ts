@@ -1,6 +1,6 @@
 import type { z as zod } from 'zod'
 
-export const SimplePeerSignal = (z: typeof zod) =>
+export const PixguPeerSignal = (z: typeof zod) =>
   z
     .object({
       type: z.literal('transceiverRequest'),

@@ -9,21 +9,20 @@ import {
   MyUserInfoForRoomStoreProvider,
 } from '@/zustand/provider'
 import { SocketIOProvider } from './components/SocketIO'
-import type { User } from 'lucia'
 import { Password } from './components/Password'
 import type { Locale, Guest } from '@/types'
+
+// TODO implement better auth
 
 export const Providers = ({
   roomID,
   userID,
   hostID,
   locale,
-  user,
   guest,
   havePassword,
   children,
 }: Props) => {
-  console.log('providers: ', user, guest)
   return (
     <Password havePassword={havePassword}>
       <SocketIOProvider locale={locale} roomID={roomID}>
@@ -36,7 +35,7 @@ export const Providers = ({
         >
           <UserIDStoreProvider
             initState={{
-              userID: user ? user.id : guest!.ID,
+              userID: userID,
             }}
           >
             <RoomIDStoreProvider
@@ -46,7 +45,7 @@ export const Providers = ({
             >
               <MyUserInfoForRoomStoreProvider
                 initState={{
-                  user: user ?? guest!,
+                  user: guest,
                 }}
               >
                 {children}
@@ -64,7 +63,6 @@ type Props = {
   userID: string
   roomID: string
   hostID: string
-  user: User | null
-  guest: Guest | null
+  guest: Guest
   havePassword: boolean
 } & PropsWithChildren

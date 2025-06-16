@@ -1,15 +1,15 @@
 // https://million.dev
 // import million from 'million/compiler'
-import createMDX from '@next/mdx'
-import { fileURLToPath } from 'node:url'
-import createJiti from 'jiti'
-import CircularDependencyPlugin from 'circular-dependency-plugin'
+import createMDX from '@next/mdx';
+import { fileURLToPath } from 'node:url';
+import createJiti from 'jiti';
+import CircularDependencyPlugin from 'circular-dependency-plugin';
 
-const jiti = createJiti(fileURLToPath(import.meta.url))
+const jiti = createJiti(fileURLToPath(import.meta.url));
 
 // Import env here to validate during build. Using jiti we can import .ts files :)
-jiti('./src/env/server')
-jiti('./src/env/client')
+jiti('./src/env/server');
+jiti('./src/env/client');
 
 /** @type {import("next").NextConfig} */
 const config = {
@@ -18,6 +18,10 @@ const config = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  experimental: {
+    nodeMiddleware: true,
+    reactCompiler: true,
+  },
   webpack: (
     config,
     // { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack },
@@ -25,13 +29,12 @@ const config = {
     config.externals.push({
       'utf-8-validate': 'commonjs utf-8-validate',
       bufferutil: 'commonjs bufferutil',
-
-    })
+    });
 
     // Important: return the modified config
     // https://nextjs.org/docs/app/api-reference/next-config-js/webpack
 
-    config.module.rules.push({})
+    config.module.rules.push({});
 
     config.plugins.push(
       new CircularDependencyPlugin({
@@ -47,7 +50,7 @@ const config = {
         // set the current working directory for displaying module paths
         cwd: process.cwd(),
       }),
-    )
+    );
 
     config.resolve.fallback = {
       // if you miss it, all the other options in fallback, specified
@@ -55,19 +58,16 @@ const config = {
 
       ...config.resolve.fallback,
       fs: false,
-    }
+    };
 
     config.module.rules.push({
       test: /\.svg$/,
       use: ['@svgr/webpack'],
-    })
+    });
 
-    return config
+    return config;
   },
   reactStrictMode: false,
-  experimental: {
-    reactCompiler: true,
-  },
   images: {
     remotePatterns: [
       {
@@ -90,13 +90,13 @@ const config = {
       },
     ],
   },
-}
+};
 
 // const millionConfig = { auto: { rsc: false } }
 
 const withMDX = createMDX({
   // Add markdown plugins here, as desired
-})
+});
 
-export default withMDX(config)
+export default withMDX(config);
 // export default million.next(config, millionConfig)

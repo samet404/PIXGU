@@ -1,5 +1,5 @@
 import type { Peers } from '@/types'
-import type SimplePeer from 'simple-peer'
+import type PixguPeer from 'src/pixgu-peer/pixguPeer'
 import { create } from 'zustand'
 
 type State = {
@@ -8,7 +8,11 @@ type State = {
 }
 
 type Action = {
-  add: (input: { ID: string; peer: SimplePeer.Instance, uniqueSocketID: string }) => void
+  add: (input: {
+    ID: string
+    peer: PixguPeer.Instance
+    uniqueSocketID: string
+  }) => void
   addSecretKey: (ID: string, key: string) => void
   removePeer: (ID: string) => void
   isExits: (ID: string, uniqueSocketID: string) => boolean

@@ -1,27 +1,27 @@
-import type SimplePeer from 'simple-peer'
+import type PixguPeer from 'simple-peer'
 import { create } from 'zustand'
 
 export type HostPeerState = {
-  peer: SimplePeer.Instance | null
+  peer: PixguPeer.Instance | null
   status:
-  | 'connecting'
-  | 'connected'
-  | 'failed'
-  | 'disconnected'
-  | 'finding host'
+    | 'connecting'
+    | 'connected'
+    | 'failed'
+    | 'disconnected'
+    | 'finding host'
   secretKey: string | null
 }
 
 type Action = {
   set: (input: Partial<HostPeerState>) => void
-  get: () => SimplePeer.Instance | null
+  get: () => PixguPeer.Instance | null
   reset: () => void
 }
 
 const initValue: HostPeerState = {
   peer: null,
   status: 'finding host',
-  secretKey: null
+  secretKey: null,
 } as const
 
 export const useHostPeer = create<HostPeerState & Action>((set, get) => ({

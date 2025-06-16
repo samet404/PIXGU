@@ -1,3 +1,3 @@
-import type SimplePeer from 'simple-peer'
+import type PixguPeer from 'simple-peer'
 
-export type WebRTCSignalData = SimplePeer.SignalData
+export type WebRTCSignalData = PixguPeer.SignalData

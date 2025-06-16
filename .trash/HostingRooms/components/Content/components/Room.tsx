@@ -1,6 +1,4 @@
-import type { RouterOutputs } from '@/trpc/shared'
-import type { Unarray } from '@/types'
-import Link from 'next/link'
+e
 
 export const Room = ({ ID, name, amIHost, isPublic, createdAt }: Props) => {
   return (

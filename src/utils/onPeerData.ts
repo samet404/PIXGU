@@ -2,13 +2,13 @@ import type {
   WebRTCConnDataFromClient,
   WebRTCConnDataFromHost,
 } from '@/types/webRTCConnData'
-import type SimplePeer from 'simple-peer'
+import type PixguPeer from 'simple-peer'
 import { AES, enc } from 'crypto-js'
 
 export const onPeerData = <T extends 'fromHost' | 'fromClient'>(
-  peer: SimplePeer.Instance,
+  peer: PixguPeer.Instance,
   secretKey: string,
-  callback: (decodedData: OnPeerData<T>) => void
+  callback: (decodedData: OnPeerData<T>) => void,
 ) => {
   peer.on('data', (encryptedData) => {
     const decryptedDataBytes = AES.decrypt(encryptedData, secretKey)

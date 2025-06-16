@@ -1,1 +1,0 @@
-export const ADMIN_AUTH_SESSION = 'k3wzeu2cfwvp3r1ojjmwy17e6fme8l8cc9t059fe'
