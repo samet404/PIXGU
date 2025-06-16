@@ -1,8 +1,6 @@
-import {
-  useAmIPainting,
-  useCanvasesMainData,
-  usePainterTool,
-} from '@/zustand/store'
+import { useAmIPainting, } from '@/zustand/store/useAmIPainting'
+import { useCanvasesMainData } from '@/zustand/store/useCanvasesMainData'
+import { usePainterTool } from '@/zustand/store/usePainterTool'
 import { amIPainter } from './func'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { sendToHostPeer } from '@/utils/sendToHostPeer'

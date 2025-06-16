@@ -1,6 +1,6 @@
 'use client'
 
-import { useMatchStatus } from '@/zustand/store'
+import { useMatchStatus } from '@/zustand/store/useMatchStatus'
 import { Fragment, useState } from 'react'
 
 export const Content = () => {

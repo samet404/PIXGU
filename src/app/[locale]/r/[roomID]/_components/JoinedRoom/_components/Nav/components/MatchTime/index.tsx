@@ -1,6 +1,6 @@
 'use client'
 
-import { useWhoIsPainterClient } from '@/zustand/store'
+import { useWhoIsPainterClient } from '@/zustand/store/useWhoIsPainterClient'
 import { Info } from './components/Info'
 import { RemainTime } from './components/RemainTime'
 import { useAtom } from 'jotai'

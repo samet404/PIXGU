@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffectOnce } from '@/hooks/useEffectOnce'
-import { useSoundSettings } from '@/zustand/store'
+import { useSoundSettings } from '@/zustand/store/useSoundSettings'
 import { useRef } from 'react'
 
 export const SfxVolume = ({ title }: Props) => {

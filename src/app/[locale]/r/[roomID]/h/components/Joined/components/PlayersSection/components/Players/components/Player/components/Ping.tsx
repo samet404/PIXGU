@@ -1,6 +1,6 @@
 import Spinner from '@/components/Spinner'
 import { clsxMerge } from '@/utils/clsxMerge'
-import { usePlayersPing } from '@/zustand/store'
+import { usePlayersPing } from '@/zustand/store/usePlayersPing'
 
 export const Ping = ({ userID }: Props) => {
   const ping = usePlayersPing(s => s.pings[userID])

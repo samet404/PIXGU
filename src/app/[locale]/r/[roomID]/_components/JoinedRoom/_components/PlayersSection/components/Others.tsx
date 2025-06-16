@@ -1,6 +1,6 @@
 'use client'
 
-import { usePlayers } from '@/zustand/store'
+import { usePlayers } from '@/zustand/store/usePlayers'
 import User from './User'
 import { useUserIDStore } from '@/zustand/provider'
 

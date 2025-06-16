@@ -2,9 +2,11 @@
 
 import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useGuessChatLayout, useGeneralChatLayout, useControls } from '@/zustand/store'
+import { useGuessChatLayout } from '@/zustand/store/useGuessChatLayout'
+import { useGeneralChatLayout } from '@/zustand/store/useGeneralChatLayout'
 import { useShortcut } from '@/hooks/useShortcut'
 import { useSpring, animated } from '@react-spring/web'
+import { useControls } from '@/zustand/store/useControls'
 
 export const Change = () => {
   const keyBind = useControls(s => s.keys['Change in-game chat'])

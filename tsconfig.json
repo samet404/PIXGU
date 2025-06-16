@@ -18,7 +18,7 @@
     "noUncheckedIndexedAccess": true,
     "baseUrl": "./",
     "paths": {
-      "@/store": ["./src/store/index.ts"],
+      "@/store/*": ["./src/store/*"],
       "@/middlewares": ["./src/middlewares/index.ts"],
       "@/helpers": ["./src/helpers/index.ts"],
       "@/helpers/room": ["./src/helpers/room/_index.ts"],

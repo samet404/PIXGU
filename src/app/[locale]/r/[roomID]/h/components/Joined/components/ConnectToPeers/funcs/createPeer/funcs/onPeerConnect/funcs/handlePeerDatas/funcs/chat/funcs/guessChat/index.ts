@@ -2,16 +2,14 @@ import { calculateCurrentCoin, matchEnd, sendMsg, isMatchEnd, sendOtherInfo } fr
 import { sendToAllPeers, sendToPeerWithID, strSimilarity } from '@/utils'
 import type { GuessChatFromClient } from '@/types/webRTCConnData'
 import type { Locale } from '@/types/locale'
-import {
-  useCoins,
-  useGuessedPlayers,
-  useHostPainterData,
-  useHostPlayersMsgs,
-  useLoserPlayers,
-  usePlayersPowerups,
-  usePlayersWhoGaveUp,
-  useWhoIsPainter,
-} from '@/zustand/store'
+import { useCoins } from '@/zustand/store/useCoins'
+import { useGuessedPlayers } from '@/zustand/store/useGuessedPlayers'
+import { useHostPainterData } from '@/zustand/store/useHostPainterData'
+import { useHostPlayersMsgs } from '@/zustand/store/useHostPlayersMsgs'
+import { useLoserPlayers } from '@/zustand/store/useLoserPlayers'
+import { usePlayersPowerups } from '@/zustand/store/usePlayersPowerups'
+import { usePlayersWhoGaveUp } from '@/zustand/store/usePlayersWhoGaveUp'
+import { useWhoIsPainter } from '@/zustand/store/useWhoIsPainter'
 import { sendCoinInfo } from '@/helpers/room'
 
 export const guessChat = (

@@ -1,4 +1,4 @@
-import { useWhoIsPainterClient } from '@/zustand/store'
+import { useWhoIsPainterClient } from '@/zustand/store/useWhoIsPainterClient'
 
 export const amIPainter = () => {
   const whoIsPainter = useWhoIsPainterClient.getState().value

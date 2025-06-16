@@ -1,7 +1,7 @@
 import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { negativeLog } from '@/utils'
 import { useRoomIDStore } from '@/zustand/provider'
-import { usePeers } from '@/zustand/store'
+import { usePeers } from '@/zustand/store/usePeers'
 
 /**
  * This hook unsubscribes from the room channel and the user's connect channel.

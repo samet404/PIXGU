@@ -1,6 +1,6 @@
 import { invisiblePencil, mirror, rotate, undoBlock, wordsLength, letterHint, categoryHint, rainingColors } from './powerups'
 import type { YouUsedPowerup } from '@/types'
-import { usePowerups } from '@/zustand/store'
+import { usePowerups } from '@/zustand/store/usePowerups'
 import { giveUp } from './powerups/giveUp'
 
 export const getYouUsedPowerup = (rtcData: YouUsedPowerup['data'], myUserID: string) => {

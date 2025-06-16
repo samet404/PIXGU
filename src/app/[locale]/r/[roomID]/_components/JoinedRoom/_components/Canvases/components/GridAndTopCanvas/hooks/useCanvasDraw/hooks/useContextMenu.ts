@@ -1,5 +1,5 @@
 import { useEffectOnce } from '@/hooks/useEffectOnce'
-import { useCanvasesMainData } from '@/zustand/store'
+import { useCanvasesMainData } from '@/zustand/store/useCanvasesMainData'
 
 export const useContextMenu = () => {
     const handler = (e: any) => e.preventDefault()

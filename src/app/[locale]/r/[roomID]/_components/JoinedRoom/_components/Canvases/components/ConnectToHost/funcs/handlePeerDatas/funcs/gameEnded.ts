@@ -1,5 +1,11 @@
 import type { GameEnded } from '@/types/webRTCConnData'
-import { useAmISpectator, useGameEndedPanel, useNewPainterPanel, useSelectThemePanel, useSpectators, useWhoIsPainterClient, useXY } from '@/zustand/store'
+import { useAmISpectator } from '@/zustand/store/useAmISpectator'
+import { useGameEndedPanel } from '@/zustand/store/useGameEndedPanel'
+import { useNewPainterPanel } from '@/zustand/store/useNewPainterPanel'
+import { useSelectThemePanel } from '@/zustand/store/useSelectThemePanel'
+import { useSpectators } from '@/zustand/store/useSpectators'
+import { useWhoIsPainterClient } from '@/zustand/store/useWhoIsPainterClient'
+import { useXY } from '@/zustand/store/useXY'
 import { resetMatchStates } from '@/helpers/room'
 import { postMsgToPlayerTimerWorker } from '@/workers'
 

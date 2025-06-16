@@ -1,7 +1,8 @@
 'use client'
 
 import { clsxMerge } from '@/utils/clsxMerge'
-import { useMatchStatusClient, useTotalMatchCount } from '@/zustand/store'
+import { useMatchStatusClient } from '@/zustand/store/useMatchStatusClient'
+import { useTotalMatchCount } from '@/zustand/store/useTotalMatchCount'
 
 export const MatchCount = ({ heading, description }: Props) => {
   const count = useMatchStatusClient((s) => s.matchCount)

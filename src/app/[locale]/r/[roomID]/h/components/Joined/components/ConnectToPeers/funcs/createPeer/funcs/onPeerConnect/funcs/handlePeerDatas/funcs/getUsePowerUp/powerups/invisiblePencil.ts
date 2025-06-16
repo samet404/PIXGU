@@ -3,7 +3,9 @@ import { sendCoinInfo } from '@/helpers/room'
 import { sendToAllPeers } from '@/utils/sendToAllPeers'
 import { sendToPeerWithID } from '@/utils/sendToPeerWithID'
 import { postMsgToCanvasWorker, postMsgToHostTimerWorker } from '@/workers'
-import { useCoins, useGuessedPlayers, usePlayersPowerups } from '@/zustand/store'
+import { useCoins } from '@/zustand/store/useCoins'
+import { useGuessedPlayers } from '@/zustand/store/useGuessedPlayers'
+import { usePlayersPowerups } from '@/zustand/store/usePlayersPowerups'
 
 export const invisiblePencil = (userID: string) => {
     if (

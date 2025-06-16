@@ -1,5 +1,5 @@
 import { clsxMerge } from '@/utils/clsxMerge'
-import { usePlayers } from '@/zustand/store'
+import { usePlayers } from '@/zustand/store/usePlayers'
 
 export const Player = ({ ID, myUserID, index, coin }: Props) => {
   const isMe = myUserID === ID

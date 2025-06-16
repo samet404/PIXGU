@@ -1,4 +1,5 @@
-import { useHostPeer, useSocketIO } from '@/zustand/store'
+import { useHostPeer } from '@/zustand/store/useHostPeer'
+import { useSocketIO } from '@/zustand/store/useSocketIO'
 import type { SignalData } from 'simple-peer'
 import { hostJoined } from './hostJoined'
 

@@ -3,7 +3,7 @@
 import { useSetAtom } from 'jotai'
 import { useEffect, useRef, type PropsWithChildren } from 'react'
 import { inputInfoTextAtom } from './atoms'
-import { useCreateRoomInputs } from '@/zustand/store'
+import { useCreateRoomInputs } from '@/zustand/store/useCreateRoomInputs'
 
 type Props = PropsWithChildren<{
   placeholder: string

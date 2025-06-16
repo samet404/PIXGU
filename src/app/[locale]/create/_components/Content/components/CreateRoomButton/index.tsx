@@ -1,7 +1,8 @@
 'use client'
 
 import { Urbanist } from 'next/font/google'
-import { useCreateRoomInputs, useSocketIO } from '@/zustand/store'
+import { useCreateRoomInputs } from '@/zustand/store/useCreateRoomInputs'
+import { useSocketIO } from '@/zustand/store/useSocketIO'
 import { clsxMerge } from '@/utils/clsxMerge'
 import { useEffect, useRef, useState, type RefObject } from 'react'
 import { useAtomValue } from 'jotai'

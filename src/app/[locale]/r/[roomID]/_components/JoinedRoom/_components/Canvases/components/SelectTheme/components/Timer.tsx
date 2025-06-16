@@ -1,6 +1,6 @@
 'use client'
 
-import { usePainterSelectingRemainTime } from '@/zustand/store'
+import { usePainterSelectingRemainTime } from '@/zustand/store/usePainterSelectingRemainTime'
 import { type PropsWithChildren } from 'react'
 
 export const Timer = ({ children }: PropsWithChildren) => {

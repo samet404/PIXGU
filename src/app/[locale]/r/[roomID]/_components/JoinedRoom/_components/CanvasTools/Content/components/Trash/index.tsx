@@ -3,7 +3,7 @@
 import { sendToHostPeer } from '@/utils/sendToHostPeer'
 import { useShortcut } from '@/hooks'
 import { trash } from '@/helpers/room'
-import { useGameToolAlert } from '@/zustand/store'
+import { useGameToolAlert } from '@/zustand/store/useGameToolAlert'
 import { Fragment } from 'react'
 import { Tool } from '../Tool'
 import { Svg } from '@/components/Svg'

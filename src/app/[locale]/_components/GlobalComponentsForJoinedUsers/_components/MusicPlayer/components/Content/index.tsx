@@ -1,6 +1,6 @@
 'use client'
 
-import { useTabs } from '@/zustand/store'
+import { useTabs } from '@/zustand/store/useTabs'
 import { Minimized } from './components/Minimized'
 import { MinimizedPlayer } from './components/MinimizedPlayer'
 import { Player } from './components/Player'

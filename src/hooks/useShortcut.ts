@@ -1,7 +1,7 @@
 "use client"
 
 import { arrsEqual } from '@/utils'
-import { useControls, type ControlsState } from '@/zustand/store'
+import { useControls, type ControlsState } from '@/zustand/store/useControls'
 import { useEffect } from 'react'
 
 export const useShortcut = ({ keyName, onShortcut }: Args) => {

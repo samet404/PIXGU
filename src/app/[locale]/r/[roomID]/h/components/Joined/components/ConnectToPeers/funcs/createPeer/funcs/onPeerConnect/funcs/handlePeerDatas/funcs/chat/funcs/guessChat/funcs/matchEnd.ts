@@ -2,8 +2,7 @@ import { createMatch } from '@/helpers/room'
 import type { Locale } from '@/types/locale'
 import { sendToAllPeers } from '@/utils/sendToAllPeers'
 import { postMsgToHostTimerWorker } from '@/workers'
-import { useMatchStatus } from '@/zustand/store'
-
+import { useMatchStatus } from '@/zustand/store/useMatchStatus'
 export const matchEnd = (locale: Locale) => {
     postMsgToHostTimerWorker({
         ID: 'MATCH_ENDED',

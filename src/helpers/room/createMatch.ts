@@ -1,19 +1,19 @@
 import { updatePainterToPlayers } from './updatePainterToPlayers'
-import { useHostPlayersMsgs, useLoserPlayers, useMatchStatus, usePlayersWhoGaveUp } from '@/zustand/store'
+import { useHostPlayersMsgs } from '@/zustand/store/useHostPlayersMsgs'
+import { useLoserPlayers } from '@/zustand/store/useLoserPlayers'
+import { useMatchStatus } from '@/zustand/store/useMatchStatus'
+import { usePlayersWhoGaveUp } from '@/zustand/store/usePlayersWhoGaveUp'
 import { postMsgToCanvasWorker } from '@/workers'
-import { storePaintersAccess } from '@/store'
+import { storePaintersAccess } from '@/store/storePaintersAccess'
 import { getNextArrElmI } from '@/utils'
 import type { Locale } from '@/types'
 import { gameEnded } from './_index'
-import {
-  useGuessedPlayers,
-  useHostCanvasesData,
-  useHostPainterData,
-  usePlayers,
-  useTotalMatchCount,
-  useWhoIsPainter,
-} from '@/zustand/store'
-
+import { useGuessedPlayers } from '@/zustand/store/useGuessedPlayers'
+import { useHostCanvasesData } from '@/zustand/store/useHostCanvasesData'
+import { useHostPainterData } from '@/zustand/store/useHostPainterData'
+import { usePlayers } from '@/zustand/store/usePlayers'
+import { useTotalMatchCount } from '@/zustand/store/useTotalMatchCount'
+import { useWhoIsPainter } from '@/zustand/store/useWhoIsPainter'
 
 export const createMatch = (locale: Locale) => {
   const players = usePlayers.getState().get

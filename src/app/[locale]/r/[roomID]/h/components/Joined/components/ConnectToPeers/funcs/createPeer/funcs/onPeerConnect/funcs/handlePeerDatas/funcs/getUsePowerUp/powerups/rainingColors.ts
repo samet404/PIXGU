@@ -1,7 +1,10 @@
 import { POWERUP_PRICES } from '@/constants'
 import { fillOnePixel, sendCoinInfo } from '@/helpers/room'
 import { getRandomNum, sendToAllPeers, sendToPeerWithID } from '@/utils'
-import { useCoins, useGuessedPlayers, useHostCanvasesData, usePlayersPowerups } from '@/zustand/store'
+import { useCoins } from '@/zustand/store/useCoins'
+import { useGuessedPlayers } from '@/zustand/store/useGuessedPlayers'
+import { useHostCanvasesData } from '@/zustand/store/useHostCanvasesData'
+import { usePlayersPowerups } from '@/zustand/store/usePlayersPowerups'
 
 const getRandomColorNum = () => getRandomNum(0, 255)
 const getRandomCoords = () => getRandomNum(0, 80)

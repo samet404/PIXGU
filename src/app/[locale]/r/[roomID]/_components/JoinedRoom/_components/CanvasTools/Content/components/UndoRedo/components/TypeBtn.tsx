@@ -1,5 +1,5 @@
 import { clsxMerge } from '@/utils/clsxMerge'
-import { usePainterTool } from '@/zustand/store'
+import { usePainterTool } from '@/zustand/store/usePainterTool'
 
 export const TypeBtn = ({ type, displayText }: Props) => {
     const selectedType = usePainterTool((s) => s.with.undoRedoType)

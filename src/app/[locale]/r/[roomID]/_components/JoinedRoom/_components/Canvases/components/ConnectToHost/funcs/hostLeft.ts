@@ -1,16 +1,14 @@
 import type { Guest } from '@/types'
-import {
-  useBrokenUserPfps,
-  useCanvasesMainData,
-  useHostPeer,
-  useIsOnlineStore,
-  useMyCoin,
-  usePeers,
-  usePing,
-  usePlayers,
-  useRoomGeneralChatMsgsStore,
-  useSocketIO,
-} from '@/zustand/store'
+import { useBrokenUserPfps } from '@/zustand/store/useBrokenUserPfps'
+import { useRoomGeneralChatMsgsStore } from '@/zustand/store/useRoomGeneralChatMsgs'
+import { useIsOnlineStore } from '@/zustand/store/useIsOnlineStore'
+import { useMyCoin } from '@/zustand/store/useMyCoin'
+import { usePing } from '@/zustand/store/usePing'
+import { useCanvasesMainData } from '@/zustand/store/useCanvasesMainData'
+import { useHostPeer } from '@/zustand/store/useHostPeer'
+import { usePlayers } from '@/zustand/store/usePlayers'
+import { usePeers } from '@/zustand/store/usePeers'
+import { useSocketIO } from '@/zustand/store/useSocketIO'
 
 export const hostLeft = () => {
   const resetPlayers = usePlayers.getState().reset

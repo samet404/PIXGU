@@ -4,7 +4,8 @@ import { useAtomValue } from 'jotai'
 import { selectedPanelItemAtom } from '../../atom'
 import { clsxMerge } from '@/utils/clsxMerge'
 import type { PropsWithChildren } from 'react'
-import { usePlayersPowerups, usePowerups } from '@/zustand/store'
+import { usePlayersPowerups } from '@/zustand/store/usePlayersPowerups'
+import { usePowerups } from '@/zustand/store/usePowerups'
 
 export const CanvasWrapper = ({ children }: PropsWithChildren) => {
     const rotatePowerup = usePlayersPowerups(s => s.runningPowerups.rotate)

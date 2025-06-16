@@ -1,4 +1,4 @@
-import { useCoins } from '@/zustand/store'
+import { useCoins } from '@/zustand/store/useCoins'
 
 export const Coin = ({ ID }: Props) => {
   const coin = useCoins((s) => s.coins[ID])

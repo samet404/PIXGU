@@ -2,14 +2,23 @@
 
 import { createMatch, gameEnded, sendCoinInfo } from '@/helpers/room'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
-import { storePaintersAccess } from '@/store'
+import { storePaintersAccess } from '@/store/storePaintersAccess'
 import type { Locale } from '@/types/locale'
 import type { RTCStats } from '@/types/rtcStats'
 import { sendToAllPeers } from '@/utils/sendToAllPeers'
 import { sendToPeerWithID } from '@/utils/sendToPeerWithID'
 import { violetLog } from '@/utils/violetLog'
 import { getHostTimerWorker, postMsgToCanvasWorker, postMsgToHostTimerWorker, terminateTimerWorker, type TimerWorkerPostMsgData } from '@/workers'
-import { useCoins, useGuessedPlayers, useHostingHealth, useHostPainterData, useMatchStatus, usePeers, usePlayers, usePlayersPing, usePlayersPowerups, useWhoIsPainter } from '@/zustand/store'
+import { useCoins } from '@/zustand/store/useCoins'
+import { useGuessedPlayers } from '@/zustand/store/useGuessedPlayers'
+import { useHostingHealth } from '@/zustand/store/useHostingHealth'
+import { useHostPainterData } from '@/zustand/store/useHostPainterData'
+import { useMatchStatus } from '@/zustand/store/useMatchStatus'
+import { usePeers } from '@/zustand/store/usePeers'
+import { usePlayers } from '@/zustand/store/usePlayers'
+import { usePlayersPing } from '@/zustand/store/usePlayersPing'
+import { usePlayersPowerups } from '@/zustand/store/usePlayersPowerups'
+import { useWhoIsPainter } from '@/zustand/store/useWhoIsPainter'
 
 export const UseTimersWorker = ({ locale }: Props) => {
     useEffectOnce(() => {

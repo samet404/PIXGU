@@ -1,18 +1,16 @@
-import {
-  useCoins,
-  useGuessedPlayers,
-  useHostingHealth,
-  useMatchStatus,
-  usePeers,
-  usePlayers,
-  usePlayersPowerups,
-  useSocketIO,
-  useTotalMatchCount,
-  useWhoIsPainter,
-} from '@/zustand/store'
+import { useWhoIsPainter } from '@/zustand/store/useWhoIsPainter'
+import { useCoins } from '@/zustand/store/useCoins'
+import { useGuessedPlayers } from '@/zustand/store/useGuessedPlayers'
+import { useHostingHealth } from '@/zustand/store/useHostingHealth'
+import { useMatchStatus } from '@/zustand/store/useMatchStatus'
+import { usePeers } from '@/zustand/store/usePeers'
+import { usePlayers } from '@/zustand/store/usePlayers'
+import { usePlayersPowerups } from '@/zustand/store/usePlayersPowerups'
+import { useSocketIO } from '@/zustand/store/useSocketIO'
+import { useTotalMatchCount } from '@/zustand/store/useTotalMatchCount'
 import type { Locale } from '@/types/locale'
 import { createMatch } from '@/helpers/room'
-import { storePaintersAccess } from '@/store'
+import { storePaintersAccess } from '@/store/storePaintersAccess'
 import { negativeLog } from '@/utils/negativeLog'
 import { sendToAllPeers } from '@/utils/sendToAllPeers'
 import { postMsgToCanvasWorker, postMsgToHostTimerWorker } from '@/workers'

@@ -2,7 +2,7 @@
 
 import dynamic from 'next/dynamic'
 import type { LangObj } from '../lang'
-import { useCurrentPanel } from '@/zustand/store'
+import { useCurrentPanel } from '@/zustand/store/useCurrentPanel'
 
 const Content = dynamic(() => import('./Content').then(m => m.Content))
 

@@ -1,6 +1,9 @@
 import { sendToAllPeers, sendToPainterPeer, sToMs } from '@/utils'
 import { postMsgToHostTimerWorker } from '@/workers'
-import { useHostPainterData, usePlayers, usePlayersPowerups, useWhoIsPainter } from '@/zustand/store'
+import { useHostPainterData } from '@/zustand/store/useHostPainterData'
+import { usePlayers } from '@/zustand/store/usePlayers'
+import { usePlayersPowerups } from '@/zustand/store/usePlayersPowerups'
+import { useWhoIsPainter } from '@/zustand/store/useWhoIsPainter'
 import type { Socket } from 'socket.io-client'
 
 export const randomThemes = (io: Socket, roomID: string) => io.on('random-themes', (themes: [string, string]) => {

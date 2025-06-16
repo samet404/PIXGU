@@ -1,6 +1,6 @@
 import type { WebRTCConnData } from '@/types/webRTCConnData'
 import { sendToPeerWithID } from './sendToPeerWithID'
-import { useWhoIsPainter } from '@/zustand/store'
+import { useWhoIsPainter } from '@/zustand/store/useWhoIsPainter'
 
 export const sendToPainterPeer = (rtcData: WebRTCConnData) => {
   const whoIsPainter = useWhoIsPainter.getState().value

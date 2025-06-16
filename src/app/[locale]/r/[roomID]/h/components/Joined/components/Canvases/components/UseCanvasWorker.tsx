@@ -4,7 +4,8 @@ import { fillOnePixel } from '@/helpers/room'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { sendToAllPeers } from '@/utils/sendToAllPeers'
 import { getCanvasWorker, terminateCanvasWorker, type CanvasWorkerPostMsgData } from '@/workers'
-import { useHostCanvasesData, useWhoIsPainter } from '@/zustand/store'
+import { useHostCanvasesData } from '@/zustand/store/useHostCanvasesData'
+import { useWhoIsPainter } from '@/zustand/store/useWhoIsPainter'
 
 export const UseCanvasWorker = () => {
 

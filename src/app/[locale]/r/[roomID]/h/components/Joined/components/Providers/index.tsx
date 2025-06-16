@@ -7,9 +7,9 @@ import {
   RoomIDStoreProvider,
   MyUserInfoForRoomStoreProvider,
 } from '@/zustand/provider'
-import { type MyUserInfoForRoomStoreState } from '@/zustand/store'
 import { SocketIOProvider } from './components/SocketIO'
 import type { Locale } from '@/types/locale'
+import type { MyUserInfoForRoomStoreState } from '@/zustand/store/myUserInfoForRoom'
 
 export const Providers = ({ roomID, userID, user, locale, children }: Props) => {
   return (

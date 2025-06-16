@@ -1,7 +1,7 @@
 
 'use client'
 
-import { usePlayers } from '@/zustand/store'
+import { usePlayers } from '@/zustand/store/usePlayers'
 
 export const Count = () => {
   const count = usePlayers((state) => state.value.count)

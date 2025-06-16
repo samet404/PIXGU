@@ -1,6 +1,6 @@
 'use client'
 
-import { useSoundSettings } from '@/zustand/store'
+import { useSoundSettings } from '@/zustand/store/useSoundSettings'
 import { SettingsCheckbox } from '../../_components/SettingsCheckbox'
 
 export const Sfx = () => {

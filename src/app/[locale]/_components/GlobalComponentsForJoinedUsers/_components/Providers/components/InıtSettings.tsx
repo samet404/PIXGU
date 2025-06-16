@@ -2,7 +2,7 @@
 'use client'
 
 import { useEffect, type PropsWithChildren } from 'react'
-import { useDeveloperSettings } from '@/zustand/store'
+import { useDeveloperSettings } from '@/zustand/store/useDeveloperSettings'
 
 export const InıtSettings = ({
   children,

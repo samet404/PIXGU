@@ -1,4 +1,4 @@
-import { useCanvasesMainData } from '@/zustand/store'
+import { useCanvasesMainData } from '@/zustand/store/useCanvasesMainData'
 
 export const clearGrid = () => {
   const { grid } = useCanvasesMainData.getState().get()

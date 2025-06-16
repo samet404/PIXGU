@@ -3,15 +3,13 @@
 import { useMyUserInfoForRoomStore } from '@/zustand/provider'
 import { Inter, Urbanist } from 'next/font/google'
 import { Coin } from './components/Coin'
-import {
-  useAmIGaveUp,
-  useAmIGuessed,
-  useAmILoser,
-  useWhoIsPainterClient,
-} from '@/zustand/store'
+import { useAmIGaveUp } from '@/zustand/store/useAmIGaveUp'
+import { useAmIGuessed } from '@/zustand/store/useAmIGuessed'
+import { useWhoIsPainterClient } from '@/zustand/store/useWhoIsPainterClient'
 import { clsxMerge } from '@/utils/clsxMerge'
 import { useEffect, useRef } from 'react'
 import { UserPfp } from '@/components/UserPfp'
+import { useAmILoser } from '@/zustand/store/useAmILoser'
 
 const inter = Inter({
   subsets: ['latin'],

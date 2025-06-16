@@ -1,6 +1,6 @@
 import { fillOnePixel } from '@/helpers/room';
 import type { PrevCanvas } from '@/types/webRTCConnData';
-import { useCanvasesMainData } from '@/zustand/store';
+import { useCanvasesMainData } from '@/zustand/store/useCanvasesMainData';
 
 export const getPrevCanvas = (data: PrevCanvas['data']) => {
     const { main, cellPixelLength } = useCanvasesMainData.getState()

@@ -1,4 +1,5 @@
-import { usePlayersPowerups, usePowerups } from '@/zustand/store'
+import { usePlayersPowerups } from '@/zustand/store/usePlayersPowerups'
+import { usePowerups } from '@/zustand/store/usePowerups'
 
 export const RunningPowerups = ({ noRunningPowerupsText, runningPowerupsText }: Props) => {
     const runningPowerups = usePlayersPowerups(s => s.runningPowerupsArray)

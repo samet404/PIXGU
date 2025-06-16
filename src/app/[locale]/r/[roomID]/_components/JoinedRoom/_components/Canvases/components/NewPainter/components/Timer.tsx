@@ -1,6 +1,6 @@
 'use client'
 
-import { usePainterSelectingRemainTime } from '@/zustand/store'
+import { usePainterSelectingRemainTime } from '@/zustand/store/usePainterSelectingRemainTime'
 import type { LangObj } from '../../../../../lang'
 
 export const Timer = ({ langObj }: Props) => {

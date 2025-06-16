@@ -1,5 +1,5 @@
 import { Img } from './components/Img'
-import { useCoins, usePlayersWhoGaveUp, useSpectators } from '@/zustand/store'
+import { useCoins } from '@/zustand/store/useCoins'
 import { BlockBtn } from './components/BlockBtn'
 import { MessagesBtn } from './components/MessagesBtn'
 import { Messages } from './components/Messages'

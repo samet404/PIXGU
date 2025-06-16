@@ -1,6 +1,6 @@
 'use client'
 
-import { useCanvasesMainData } from '@/zustand/store'
+import { useCanvasesMainData } from '@/zustand/store/useCanvasesMainData'
 import { Fragment, useEffect, useRef } from 'react'
 import { Button } from './Button'
 import { Svg } from '@/components/Svg'

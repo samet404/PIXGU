@@ -1,5 +1,5 @@
 import type { Powerup, TimeBasedPowerups } from '@/types'
-import type { PowerupState } from '@/zustand/store'
+import type { PowerupState } from '@/zustand/store/usePowerups'
 
 export type ID = string
 export const INIT_RUNNING_POWERUPS = {

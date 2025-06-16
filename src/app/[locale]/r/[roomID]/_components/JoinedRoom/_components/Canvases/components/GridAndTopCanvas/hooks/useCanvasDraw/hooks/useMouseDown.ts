@@ -1,14 +1,12 @@
 import { amIPainter, bucket, eraser, eyedropper, pencil } from './func'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
-import { storeMouseDownStartAt } from '@/store'
+import { storeMouseDownStartAt } from '@/store/storeMouseDownStartAt'
 import { sendToHostPeer } from '@/utils/sendToHostPeer'
 import { getCanvasWorker, type CanvasWorkerOnMsgData } from '@/workers'
-import {
-  useCanvasesMainData,
-  useXY,
-  usePainterTool,
-  useAmIPainting,
-} from '@/zustand/store'
+import { useAmIPainting } from '@/zustand/store/useAmIPainting'
+import { usePainterTool } from '@/zustand/store/usePainterTool'
+import { useXY } from '@/zustand/store/useXY'
+import { useCanvasesMainData } from '@/zustand/store/useCanvasesMainData'
 
 const canvasWorker = getCanvasWorker()
 

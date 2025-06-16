@@ -3,7 +3,7 @@
 import { useAtom } from 'jotai'
 import { currentSectionIndexAtom } from '../atoms'
 import { clsxMerge } from '@/utils/clsxMerge'
-import { useGuide } from '@/zustand/store'
+import { useGuide } from '@/zustand/store/useGuide'
 
 export const NextBackBtn = ({ type }: Props) => {
     const [currentIndex, setCurrentIndex] = useAtom(currentSectionIndexAtom)

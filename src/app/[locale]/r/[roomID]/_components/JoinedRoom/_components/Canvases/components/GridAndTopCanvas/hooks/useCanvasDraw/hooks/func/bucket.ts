@@ -1,7 +1,7 @@
 import { sendToHostPeer } from '@/utils/sendToHostPeer'
 import { postMsgToCanvasWorker } from '@/workers'
-import { useAmIPainting, usePainterTool } from '@/zustand/store'
-
+import { useAmIPainting } from '@/zustand/store/useAmIPainting'
+import { usePainterTool } from '@/zustand/store/usePainterTool'
 
 export const bucket = (smoothX: number, smoothY: number) => {
     const button = useAmIPainting.getState().button

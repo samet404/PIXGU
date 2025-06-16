@@ -1,4 +1,4 @@
-import { usePeers } from '@/zustand/store'
+import { usePeers } from '@/zustand/store/usePeers'
 import { sendToPeer } from './sendToPeer'
 import type { WebRTCConnData } from '@/types'
 

@@ -1,6 +1,6 @@
 import { sendToAllPeers } from '@/utils/sendToAllPeers'
 import { sendToPeerWithID } from '@/utils/sendToPeerWithID'
-import { useCoins } from '@/zustand/store'
+import { useCoins } from '@/zustand/store/useCoins'
 
 export const sendCoinInfo = (
     userIDs: string[],

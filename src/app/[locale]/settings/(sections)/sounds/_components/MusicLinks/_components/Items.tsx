@@ -1,6 +1,6 @@
 'use client'
 
-import { useSoundSettings } from '@/zustand/store'
+import { useSoundSettings } from '@/zustand/store/useSoundSettings'
 import { Item } from './Item'
 
 export const Items = ({ removeDesc, openDesc }: Props) => {

@@ -1,6 +1,6 @@
 import type { GuessChatFromClient, Locale, GeneralChatFromClient } from '@/types'
 import { guessChat, generalChat } from './funcs'
-import { useHostPlayersMsgs } from '@/zustand/store'
+import { useHostPlayersMsgs } from '@/zustand/store/useHostPlayersMsgs'
 
 export const chat = (
   data: (GuessChatFromClient | GeneralChatFromClient)['data'],

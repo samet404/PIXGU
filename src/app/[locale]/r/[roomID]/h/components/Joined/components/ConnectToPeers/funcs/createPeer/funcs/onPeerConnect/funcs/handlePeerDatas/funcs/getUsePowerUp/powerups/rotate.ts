@@ -3,7 +3,9 @@ import { sendCoinInfo } from '@/helpers/room'
 import { sendToAllPeers } from '@/utils/sendToAllPeers'
 import { sendToPeerWithID } from '@/utils/sendToPeerWithID'
 import { postMsgToHostTimerWorker } from '@/workers'
-import { useCoins, usePlayersPowerups, useWhoIsPainter } from '@/zustand/store'
+import { useCoins } from '@/zustand/store/useCoins'
+import { usePlayersPowerups } from '@/zustand/store/usePlayersPowerups'
+import { useWhoIsPainter } from '@/zustand/store/useWhoIsPainter'
 
 export const rotate = (userID: string) => {
     if (

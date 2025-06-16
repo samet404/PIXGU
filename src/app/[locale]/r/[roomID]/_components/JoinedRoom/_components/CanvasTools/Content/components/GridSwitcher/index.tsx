@@ -3,7 +3,7 @@
 import { drawGrid, clearGrid } from '@/helpers/room'
 import { Tool } from '../Tool'
 import { useEffect } from 'react'
-import { usePainterTool } from '@/zustand/store'
+import { usePainterTool } from '@/zustand/store/usePainterTool'
 import { Svg } from '@/components/Svg'
 
 export const GridSwitcher = () => {

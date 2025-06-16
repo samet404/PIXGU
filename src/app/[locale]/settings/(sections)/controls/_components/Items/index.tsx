@@ -1,6 +1,6 @@
 'use client'
 
-import { useControls, type ControlsState } from '@/zustand/store'
+import { useControls, type ControlsState } from '@/zustand/store/useControls'
 import { Item } from './_components/Item'
 
 export const Items = ({ names }: Props) => {

@@ -3,7 +3,7 @@
 import { clsxMerge } from '@/utils/clsxMerge'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { useRef } from 'react'
-import { useCanvasesMainData } from '@/zustand/store'
+import { useCanvasesMainData } from '@/zustand/store/useCanvasesMainData'
 import { useCanvasDraw } from './hooks/useCanvasDraw'
 
 export const GridAndTopCanvas = () => {

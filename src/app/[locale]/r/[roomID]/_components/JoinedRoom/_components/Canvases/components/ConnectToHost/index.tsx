@@ -3,7 +3,7 @@
 import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { useRoomIDStore, useUserIDStore } from '@/zustand/provider'
 import { getSecretKey, hostLeft, receiveSignal } from './funcs'
-import { useSocketIO } from '@/zustand/store'
+import { useSocketIO } from '@/zustand/store/useSocketIO'
 
 export const ConnectToHost = () => {
   const roomID = useRoomIDStore((state) => state.roomID)

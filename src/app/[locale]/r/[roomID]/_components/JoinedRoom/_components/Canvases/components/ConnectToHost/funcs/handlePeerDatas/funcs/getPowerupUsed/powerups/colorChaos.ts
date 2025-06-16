@@ -1,4 +1,5 @@
-import { usePainterTool, useWhoIsPainterClient } from '@/zustand/store'
+import { usePainterTool } from '@/zustand/store/usePainterTool'
+import { useWhoIsPainterClient } from '@/zustand/store/useWhoIsPainterClient'
 
 export const colorChaos = () => {
     const amIPainter = useWhoIsPainterClient.getState().value.amIPainter

@@ -1,18 +1,16 @@
-import { storePaintersAccess } from '@/store'
+import { storePaintersAccess } from '@/store/storePaintersAccess'
 import { postMsgToPlayerTimerWorker } from '@/workers'
-import {
-  useCoins,
-  useMatchStatusClient,
-  useMyCoin,
-  useNewPainterPanel,
-  usePlayers,
-  usePlayersPowerups,
-  usePowerups,
-  useRoomGuessChatMsgsStore,
-  useSelectThemePanel,
-  useTotalMatchCount,
-  useWhoIsPainterClient,
-} from '@/zustand/store'
+import { useCoins } from '@/zustand/store/useCoins'
+import { useMatchStatusClient } from '@/zustand/store/useMatchStatusClient'
+import { useMyCoin } from '@/zustand/store/useMyCoin'
+import { useNewPainterPanel } from '@/zustand/store/useNewPainterPanel'
+import { usePlayers } from '@/zustand/store/usePlayers'
+import { usePlayersPowerups } from '@/zustand/store/usePlayersPowerups'
+import { usePowerups } from '@/zustand/store/usePowerups'
+import { useRoomGuessChatMsgsStore } from '@/zustand/store/useRoomGuessChatMsgs'
+import { useSelectThemePanel } from '@/zustand/store/useSelectThemePanel'
+import { useTotalMatchCount } from '@/zustand/store/useTotalMatchCount'
+import { useWhoIsPainterClient } from '@/zustand/store/useWhoIsPainterClient'
 
 export const getPainterSelectedTheme = () => {
   useMatchStatusClient.getState().startMatch()

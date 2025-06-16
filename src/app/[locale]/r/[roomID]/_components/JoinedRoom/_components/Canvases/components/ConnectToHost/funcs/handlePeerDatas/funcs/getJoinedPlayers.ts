@@ -1,5 +1,7 @@
 import type { PlayerJoined } from '@/types'
-import { useCoins, usePlayers, usePlayersWhoGaveUp } from '@/zustand/store'
+import { useCoins } from '@/zustand/store/useCoins'
+import { usePlayers } from '@/zustand/store/usePlayers'
+import { usePlayersWhoGaveUp } from '@/zustand/store/usePlayersWhoGaveUp'
 
 export const getJoinedPlayers = (data: PlayerJoined['data']) => {
   const isGuest = 'ID' in data

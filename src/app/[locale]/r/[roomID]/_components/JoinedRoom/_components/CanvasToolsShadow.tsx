@@ -3,7 +3,8 @@
 import { useAtom, useAtomValue } from 'jotai'
 import { useState, useEffect } from 'react'
 import { isCanvasToolsOpenAtom, isCanvasToolsPinnedAtom } from './atoms'
-import { useMatchStatusClient, useWhoIsPainterClient } from '@/zustand/store'
+import { useMatchStatusClient } from '@/zustand/store/useMatchStatusClient'
+import { useWhoIsPainterClient } from '@/zustand/store/useWhoIsPainterClient'
 
 const REM_TO_PX = 16 // 1rem = 16px by default
 const TOOLS_WIDTH = 20 * REM_TO_PX // 30rem in pixels

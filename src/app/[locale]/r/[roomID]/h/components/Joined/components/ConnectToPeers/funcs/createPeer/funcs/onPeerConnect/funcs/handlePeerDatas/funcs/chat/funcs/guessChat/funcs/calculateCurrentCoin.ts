@@ -1,6 +1,5 @@
 import { MATCH_TIME_MINUTES, MATCH_TIME_SECONDS } from '@/constants'
-import { useMatchStatus } from '@/zustand/store'
-
+import { useMatchStatus } from '@/zustand/store/useMatchStatus'
 const totalCoinBonus = MATCH_TIME_MINUTES * 80
 
 export const calculateCurrentCoin = () => {

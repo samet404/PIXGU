@@ -1,8 +1,7 @@
 import { RgbaColorPicker, type RgbaColor } from "react-colorful"
 import { selectedColorAtom } from '../atoms'
 import { useAtomValue } from 'jotai'
-import { usePainterTool } from '@/zustand/store'
-
+import { usePainterTool } from '@/zustand/store/usePainterTool'
 
 export const ColorPicker = () => {
   const selectedColor = useAtomValue(selectedColorAtom)

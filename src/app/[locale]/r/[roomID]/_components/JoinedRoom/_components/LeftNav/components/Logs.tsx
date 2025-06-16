@@ -1,7 +1,7 @@
 'use client'
 
 import { Svg } from '@/components/Svg'
-import { useInGameLogs } from '@/zustand/store'
+import { useInGameLogs } from '@/zustand/store/useInGameLogs'
 import { Button } from './Button'
 
 export const Logs = () => {

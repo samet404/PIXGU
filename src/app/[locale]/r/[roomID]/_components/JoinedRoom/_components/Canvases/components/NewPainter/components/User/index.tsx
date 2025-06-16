@@ -1,6 +1,7 @@
 'use client'
 
-import { useWhoIsPainterClient, usePlayers } from '@/zustand/store'
+import { useWhoIsPainterClient } from '@/zustand/store/useWhoIsPainterClient'
+import { usePlayers } from '@/zustand/store/usePlayers'
 import { UserPfp } from '@/components/UserPfp'
 
 export const User = () => {

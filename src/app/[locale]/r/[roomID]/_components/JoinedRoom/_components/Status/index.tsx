@@ -2,7 +2,9 @@
 
 import type { PropsWithChildren } from 'react'
 import { useIsGameStopped } from '@/zustand/store/useIsGameStopped'
-import { useHostPeer, useDeveloperSettings, usePlayers } from '@/zustand/store'
+import { useHostPeer } from '@/zustand/store/useHostPeer'
+import { useDeveloperSettings } from '@/zustand/store/useDeveloperSettings'
+import { usePlayers } from '@/zustand/store/usePlayers'
 import Spinner from '@/components/Spinner'
 import { clsxMerge } from '@/utils/clsxMerge'
 import { RefreshBtn } from '@/components/RefreshBtn'

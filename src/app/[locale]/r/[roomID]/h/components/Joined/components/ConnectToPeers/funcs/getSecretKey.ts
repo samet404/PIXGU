@@ -1,5 +1,5 @@
 import { grayLog } from '@/utils/grayLog';
-import { usePeers } from '@/zustand/store';
+import { usePeers } from '@/zustand/store/usePeers';
 import type { Socket } from 'socket.io-client';
 
 export const getSecretKey = (io: Socket) =>

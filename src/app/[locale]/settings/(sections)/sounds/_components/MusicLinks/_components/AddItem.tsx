@@ -1,7 +1,7 @@
 'use client'
 
 import { YoutubeLinkSchema } from '@/zod/schema'
-import { useSoundSettings } from '@/zustand/store'
+import { useSoundSettings } from '@/zustand/store/useSoundSettings'
 import { useRef, useState } from 'react'
 
 export const AddItem = ({ addItemDesc }: Props) => {

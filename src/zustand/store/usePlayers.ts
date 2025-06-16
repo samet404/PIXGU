@@ -1,6 +1,7 @@
 import { filterObj } from '@/utils/filterObj'
 import { create } from 'zustand'
-import { usePeers } from './peers'
+import { usePeers } from './usePeers'
+import { useIsGameStopped } from './useIsGameStopped'
 
 export type Player = {
   id: string
@@ -102,7 +103,6 @@ export const usePlayers = create<State & Action>((set, get) => ({
 
     const playersCount = usePlayers.getState().value.count
     if (playersCount === 1) {
-      const { useIsGameStopped } = await import('@/zustand/store')
       useIsGameStopped.getState().removeCode('waitingForPlayers')
     }
   },

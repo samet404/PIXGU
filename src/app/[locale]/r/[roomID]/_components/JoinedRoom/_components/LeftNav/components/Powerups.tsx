@@ -1,6 +1,6 @@
 'use client'
 
-import { useCurrentPanel } from '@/zustand/store'
+import { useCurrentPanel } from '@/zustand/store/useCurrentPanel'
 import { Button } from './Button'
 import { Svg } from '@/components/Svg'
 

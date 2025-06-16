@@ -1,7 +1,7 @@
 'use client'
 
 import { clsxMerge } from '@/utils/clsxMerge'
-import { useTabs } from '@/zustand/store'
+import { useTabs } from '@/zustand/store/useTabs'
 
 export const StayhereBtn = () => {
     const isMusicPlayerStays = useTabs((s) => s.musicPlayerStayOpen)

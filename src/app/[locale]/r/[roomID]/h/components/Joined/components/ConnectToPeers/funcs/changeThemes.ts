@@ -1,5 +1,7 @@
 import { sendToPainterPeer } from '@/utils'
-import { useHostPainterData, usePlayersPowerups, useWhoIsPainter } from '@/zustand/store'
+import { useHostPainterData } from '@/zustand/store/useHostPainterData'
+import { usePlayersPowerups } from '@/zustand/store/usePlayersPowerups'
+import { useWhoIsPainter } from '@/zustand/store/useWhoIsPainter'
 import type { Socket } from 'socket.io-client'
 
 export const changeThemes = (io: Socket) =>

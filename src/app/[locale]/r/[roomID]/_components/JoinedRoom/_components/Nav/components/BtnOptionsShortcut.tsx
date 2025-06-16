@@ -3,7 +3,8 @@
 import { useShortcut } from '@/hooks'
 import { switchModalAtom } from './BtnOptions/atoms'
 import { useSetAtom } from 'jotai'
-import { useCurrentPanel, useGameToolAlert } from '@/zustand/store'
+import { useCurrentPanel } from '@/zustand/store/useCurrentPanel'
+import { useGameToolAlert } from '@/zustand/store/useGameToolAlert'
 import { useRef } from 'react'
 
 export const BtnOptionsShortcut = ({ alertText }: Props) => {

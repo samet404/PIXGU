@@ -7,7 +7,7 @@ import {
   type UserIDStore,
   type UserIDStoreState,
   createUserIDStore,
-} from '@/zustand/store'
+} from '@/zustand/store/userID'
 
 export type UserIDStoreApi = ReturnType<typeof createUserIDStore>
 

@@ -1,7 +1,7 @@
 import 'server-only'
 
 import type { Locale, PartialRecord } from '@/types'
-import type { ControlsState } from '@/zustand/store'
+import type { ControlsState } from '@/zustand/store/useControls'
 
 const langJSONs: LangJSONs = {
   en: () => import('./json/en.json').then((m) => m.default),

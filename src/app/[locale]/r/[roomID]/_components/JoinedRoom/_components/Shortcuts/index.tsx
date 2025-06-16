@@ -3,7 +3,12 @@
 import { useShortcut } from '@/hooks'
 import { sendToHostPeer } from '@/utils/sendToHostPeer'
 import { getCanvasWorker, type CanvasWorkerOnMsgData } from '@/workers'
-import { toolsHaveSizeProperty, useCurrentPanel, useGameToolAlert, usePainterTool, usePlayersPowerups, useWhoIsPainterClient, type ToolHaveSizeProperty } from '@/zustand/store'
+import { toolsHaveSizeProperty, type ToolHaveSizeProperty } from '@/zustand/store/usePainterTool'
+import { useCurrentPanel } from '@/zustand/store/useCurrentPanel'
+import { useGameToolAlert } from '@/zustand/store/useGameToolAlert'
+import { usePainterTool } from '@/zustand/store/usePainterTool'
+import { usePlayersPowerups } from '@/zustand/store/usePlayersPowerups'
+import { useWhoIsPainterClient } from '@/zustand/store/useWhoIsPainterClient'
 import type { LangObj } from '../../lang'
 
 const canvasWorker = getCanvasWorker()

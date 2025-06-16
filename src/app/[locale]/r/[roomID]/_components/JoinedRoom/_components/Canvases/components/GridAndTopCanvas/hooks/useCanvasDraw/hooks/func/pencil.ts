@@ -1,9 +1,7 @@
 import { sendToHostPeer } from '@/utils/sendToHostPeer'
 import { getCanvasWorker, type CanvasWorkerOnMsgData } from '@/workers'
-import {
-    useAmIPainting,
-    usePainterTool,
-} from '@/zustand/store'
+import { usePainterTool } from '@/zustand/store/usePainterTool'
+import { useAmIPainting } from '@/zustand/store/useAmIPainting'
 
 const canvasWorker = getCanvasWorker()
 

@@ -1,9 +1,7 @@
 import { useEffectOnce } from '@/hooks/useEffectOnce'
-import {
-  useAmIPainting,
-  useCanvasesMainData,
-  usePainterTool,
-} from '@/zustand/store'
+import { useAmIPainting } from '@/zustand/store/useAmIPainting'
+import { usePainterTool } from '@/zustand/store/usePainterTool'
+import { useCanvasesMainData } from '@/zustand/store/useCanvasesMainData'
 import { amIPainter } from './func'
 import { getCanvasWorker, type CanvasWorkerOnMsgData } from '@/workers'
 import { sendToHostPeer } from '@/utils/sendToHostPeer'

@@ -1,7 +1,7 @@
 'use client'
 
 import { Messages } from './components/Messages'
-import { useGuessChatLayout } from '@/zustand/store'
+import { useGuessChatLayout } from '@/zustand/store/useGuessChatLayout'
 import { ChatWrapper } from '../ChatWrapper'
 
 export const GuessChat = ({ displayName }: Props) => {

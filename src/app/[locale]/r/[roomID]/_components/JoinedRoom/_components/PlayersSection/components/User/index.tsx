@@ -1,15 +1,12 @@
 import { Urbanist, Inter } from 'next/font/google'
-import {
-  useGuessedPlayers,
-  useLoserPlayers,
-  usePlayersWhoGaveUp,
-  useSpectators,
-  useWhoIsPainterClient,
-} from '@/zustand/store'
+import { useGuessedPlayers } from '@/zustand/store/useGuessedPlayers'
+import { useLoserPlayers } from '@/zustand/store/useLoserPlayers'
+import { usePlayersWhoGaveUp } from '@/zustand/store/usePlayersWhoGaveUp'
 import Link from 'next/link'
 import { clsxMerge } from '@/utils/clsxMerge'
 import { Coin } from './components/Coin'
 import { UserPfp } from '@/components/UserPfp'
+import { useWhoIsPainterClient } from '@/zustand/store/useWhoIsPainterClient'
 
 const urbanist = Urbanist({
   subsets: ['latin'],

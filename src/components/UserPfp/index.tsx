@@ -1,6 +1,6 @@
 'use client'
 
-import { useBrokenUserPfps } from '@/zustand/store'
+import { useBrokenUserPfps } from '@/zustand/store/useBrokenUserPfps'
 import { useState, type ComponentProps } from 'react'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'

@@ -7,7 +7,7 @@ import {
   type MyUserInfoForRoomStore,
   type MyUserInfoForRoomStoreState,
   createMyUserInfoForRoomStore,
-} from '@/zustand/store'
+} from '@/zustand/store/myUserInfoForRoom'
 
 export type MyUserInfoForRoomStoreApi = ReturnType<
   typeof createMyUserInfoForRoomStore

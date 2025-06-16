@@ -1,7 +1,7 @@
 'use client'
 
 import { clsxMerge } from '@/utils/clsxMerge'
-import { useSocketIO } from '@/zustand/store'
+import { useSocketIO } from '@/zustand/store/useSocketIO'
 
 export const SendEvent = ({ event, className, danger }: Props) => {
     const io = useSocketIO(s => s.io)!

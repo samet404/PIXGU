@@ -1,6 +1,7 @@
 import { fillOnePixel } from '@/helpers/room'
 import type { RainingColorsPowerupData } from '@/types'
-import { useCanvasesMainData, usePlayersPowerups } from '@/zustand/store'
+import { useCanvasesMainData } from '@/zustand/store/useCanvasesMainData'
+import { usePlayersPowerups } from '@/zustand/store/usePlayersPowerups'
 
 export const rainingColors = (userID: string, data: RainingColorsPowerupData) => {
     const { cellPixelLength, mctx } = useCanvasesMainData.getState()

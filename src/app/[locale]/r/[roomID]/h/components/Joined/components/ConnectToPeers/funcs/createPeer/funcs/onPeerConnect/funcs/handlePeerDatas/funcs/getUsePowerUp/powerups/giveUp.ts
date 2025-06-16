@@ -4,7 +4,12 @@ import type { Locale } from '@/types/locale'
 import { arrsEqual } from '@/utils'
 import { sendToAllPeers } from '@/utils/sendToAllPeers'
 import { sendToPeerWithID } from '@/utils/sendToPeerWithID'
-import { useCoins, useGuessedPlayers, usePlayersWhoGaveUp, usePlayers, usePlayersPowerups, useWhoIsPainter } from '@/zustand/store'
+import { useCoins } from '@/zustand/store/useCoins'
+import { useGuessedPlayers } from '@/zustand/store/useGuessedPlayers'
+import { usePlayersWhoGaveUp } from '@/zustand/store/usePlayersWhoGaveUp'
+import { usePlayers } from '@/zustand/store/usePlayers'
+import { usePlayersPowerups } from '@/zustand/store/usePlayersPowerups'
+import { useWhoIsPainter } from '@/zustand/store/useWhoIsPainter'
 
 export const giveUp = (userID: string, locale: Locale) => {
     if (

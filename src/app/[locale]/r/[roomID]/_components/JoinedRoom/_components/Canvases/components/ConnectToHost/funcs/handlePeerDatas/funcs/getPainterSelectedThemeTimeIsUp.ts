@@ -1,5 +1,10 @@
 import { postMsgToPlayerTimerWorker } from '@/workers'
-import { useNewPainterPanel, usePainterSelectingRemainTime, useRoomGuessChatMsgsStore, useRoomGeneralChatMsgsStore, useSelectThemePanel } from '@/zustand/store'
+import { useNewPainterPanel } from '@/zustand/store/useNewPainterPanel'
+import { usePainterSelectingRemainTime } from '@/zustand/store/usePainterSelectingRemainTime'
+import { useRoomGuessChatMsgsStore } from '@/zustand/store/useRoomGuessChatMsgs'
+import { useRoomGeneralChatMsgsStore } from '@/zustand/store/useRoomGeneralChatMsgs'
+import { useSelectThemePanel } from '@/zustand/store/useSelectThemePanel'
+
 
 export const getPainterSelectedThemeTimeIsUp = () => {
   postMsgToPlayerTimerWorker({

@@ -1,7 +1,7 @@
 'use client'
 
 import { useShortcut } from '@/hooks/useShortcut'
-import { useControls, type ControlsState } from '@/zustand/store'
+import { useControls, type ControlsState } from '@/zustand/store/useControls'
 import { useSpring, animated } from '@react-spring/web'
 import { type ReactNode } from 'react'
 

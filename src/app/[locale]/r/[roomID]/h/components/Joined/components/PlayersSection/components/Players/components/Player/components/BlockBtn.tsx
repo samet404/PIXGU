@@ -1,7 +1,8 @@
 'use client'
 
 import { Svg } from '@/components/Svg'
-import { usePeers, useSocketIO } from '@/zustand/store'
+import { usePeers } from '@/zustand/store/usePeers'
+import { useSocketIO } from '@/zustand/store/useSocketIO'
 
 export const BlockBtn = ({ userID }: Props) => {
     const io = useSocketIO(s => s.io)!

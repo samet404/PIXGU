@@ -1,7 +1,7 @@
 import { resetMatchStates } from '@/helpers/room'
 import type { SelectThemeFromHost } from '@/types/webRTCConnData'
 import { postMsgToPlayerTimerWorker } from '@/workers'
-import { useSelectThemePanel } from '@/zustand/store'
+import { useSelectThemePanel } from '@/zustand/store/useSelectThemePanel'
 
 export const getThemes = (data: SelectThemeFromHost['data']) => {
   useSelectThemePanel.getState().setSelectingTheme({ themes: data })

@@ -1,6 +1,6 @@
 import { Msg } from '../../Msg'
 import { MyMsg } from '../../MyMsg'
-import { useRoomGuessChatMsgsStore } from '@/zustand/store'
+import { useRoomGuessChatMsgsStore } from '@/zustand/store/useRoomGuessChatMsgs'
 
 export const Messages = () => {
   const messages = useRoomGuessChatMsgsStore((state) => state.msgs)

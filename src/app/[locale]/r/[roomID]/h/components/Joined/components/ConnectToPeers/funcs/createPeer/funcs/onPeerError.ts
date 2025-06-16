@@ -1,5 +1,5 @@
 import { negativeLog } from '@/utils/negativeLog'
-import { useSocketIO } from '@/zustand/store'
+import { useSocketIO } from '@/zustand/store/useSocketIO'
 import type SimplePeer from 'simple-peer'
 
 export const onPeerError = (peer: SimplePeer.Instance, userID: string) =>

@@ -3,7 +3,7 @@
 import { Outfit } from 'next/font/google'
 import { useOnClickOutside } from 'usehooks-ts'
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react'
-import { useWebRTCTroubleshootingGuideModal } from '@/zustand/store'
+import { useWebRTCTroubleshootingGuideModal } from '@/zustand/store/useWebRTCTroubleshootingGuideModal'
 import type { Locale } from '@/types/locale'
 import { AlphaLoading } from '../AlphaLoading'
 

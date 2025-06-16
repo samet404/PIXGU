@@ -2,14 +2,12 @@ import { sendToAllPeers } from '@/utils/sendToAllPeers'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { postMsgToHostTimerWorker } from '@/workers'
 import { useRef, useState } from 'react'
-import {
-  useGuessedPlayers,
-  useHostingHealth,
-  useHostPainterData,
-  useMatchStatus,
-  useSocketIO,
-  useSpectators,
-} from '@/zustand/store'
+import { useGuessedPlayers } from '@/zustand/store/useGuessedPlayers'
+import { useHostingHealth } from '@/zustand/store/useHostingHealth'
+import { useHostPainterData } from '@/zustand/store/useHostPainterData'
+import { useMatchStatus } from '@/zustand/store/useMatchStatus'
+import { useSocketIO } from '@/zustand/store/useSocketIO'
+import { useSpectators } from '@/zustand/store/useSpectators'
 
 export const StopBtn = ({ displayText }: Props) => {
   const buttonRef = useRef<HTMLButtonElement | null>(null)

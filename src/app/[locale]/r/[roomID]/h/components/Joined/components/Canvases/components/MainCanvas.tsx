@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffectOnce } from '@/hooks/useEffectOnce'
-import { useHostCanvasesData } from '@/zustand/store'
+import { useHostCanvasesData } from '@/zustand/store/useHostCanvasesData'
 import { useRef } from 'react'
 
 export const MainCanvas = () => {

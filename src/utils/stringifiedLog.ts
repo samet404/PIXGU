@@ -1,4 +1,4 @@
-import { useDeveloperSettings } from '@/zustand/store'
+import { useDeveloperSettings } from '@/zustand/store/useDeveloperSettings'
 
 /**
  * Useful for debugging

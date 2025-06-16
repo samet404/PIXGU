@@ -1,6 +1,6 @@
 'use client'
 
-import { usePlayers } from '@/zustand/store'
+import { usePlayers } from '@/zustand/store/usePlayers'
 import { Player } from './components/Player'
 
 export const Players = () => {

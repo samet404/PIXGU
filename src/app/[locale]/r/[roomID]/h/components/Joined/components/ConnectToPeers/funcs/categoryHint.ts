@@ -1,5 +1,7 @@
 import { sendToAllPeers, sendToPeerWithID } from '@/utils'
-import { useGuessedPlayers, useHostPainterData, usePlayersPowerups } from '@/zustand/store'
+import { useGuessedPlayers } from '@/zustand/store/useGuessedPlayers'
+import { useHostPainterData } from '@/zustand/store/useHostPainterData'
+import { usePlayersPowerups } from '@/zustand/store/usePlayersPowerups'
 import type { Socket } from 'socket.io-client'
 
 export const categoryHint = (io: Socket) =>

@@ -1,6 +1,6 @@
 'use client'
 
-import { useSoundSettings } from '@/zustand/store'
+import { useSoundSettings } from '@/zustand/store/useSoundSettings'
 import dynamic from 'next/dynamic'
 
 const Content = dynamic(() => import('./components/Content').then((m) => m.Content))

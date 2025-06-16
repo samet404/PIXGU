@@ -1,6 +1,7 @@
 import { sendToAllPeers } from '@/utils/sendToAllPeers'
 import { sendToPeerWithID } from '@/utils/sendToPeerWithID'
-import { useGuessedPlayers, usePlayersPowerups } from '@/zustand/store'
+import { useGuessedPlayers } from '@/zustand/store/useGuessedPlayers'
+import { usePlayersPowerups } from '@/zustand/store/usePlayersPowerups'
 
 export const zaWarudo = (userID: string) => {
     if (

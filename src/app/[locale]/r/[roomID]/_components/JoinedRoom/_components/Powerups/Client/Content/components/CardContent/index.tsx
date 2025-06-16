@@ -5,7 +5,7 @@ import { sendToHostPeer } from '@/utils/sendToHostPeer'
 import { POWERUPS_SHOWS_TEXT } from '@/constants'
 import type { LangObj } from '../../../../lang'
 import type { Powerup, PowerupsShowsText } from '@/types/powerups'
-import { usePowerups } from '@/zustand/store'
+import { usePowerups } from '@/zustand/store/usePowerups'
 import { useEffect, useState } from 'react'
 import { Card } from './components/Card'
 

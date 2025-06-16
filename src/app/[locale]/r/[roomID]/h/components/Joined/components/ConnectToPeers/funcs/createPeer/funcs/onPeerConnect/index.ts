@@ -1,11 +1,10 @@
-import {
-  useCoins,
-  usePeers,
-  usePlayers,
-  useSocketIO,
-  useSpectators,
-  useHostingHealth,
-} from '@/zustand/store'
+
+import { useCoins } from '@/zustand/store/useCoins'
+import { usePeers } from '@/zustand/store/usePeers'
+import { usePlayers } from '@/zustand/store/usePlayers'
+import { useSocketIO } from '@/zustand/store/useSocketIO'
+import { useSpectators } from '@/zustand/store/useSpectators'
+import { useHostingHealth } from '@/zustand/store/useHostingHealth'
 import type { User } from 'lucia'
 import type { Guest, Locale } from '@/types'
 import type SimplePeer from 'simple-peer'

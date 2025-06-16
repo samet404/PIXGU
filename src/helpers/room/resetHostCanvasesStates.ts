@@ -1,5 +1,5 @@
 import { getCanvasWorker, type CanvasWorkerOnMsgData } from '@/workers'
-import { useHostCanvasesData } from '@/zustand/store'
+import { useHostCanvasesData } from '@/zustand/store/useHostCanvasesData'
 
 export const resetHostCanvasesStates = () => {
     const canvasWorker = getCanvasWorker()

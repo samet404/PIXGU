@@ -1,5 +1,5 @@
 import { onPeerData, grayLog, negativeLog } from '@/utils'
-import { useHostPeer } from '@/zustand/store'
+import { useHostPeer } from '@/zustand/store/useHostPeer'
 import {
   getJoinedPlayers,
   getLeftPlayers,

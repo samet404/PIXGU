@@ -1,5 +1,5 @@
 import { sendToAllPeers, sendToPeerWithID } from '@/utils'
-import { useHostPlayersMsgs } from '@/zustand/store'
+import { useHostPlayersMsgs } from '@/zustand/store/useHostPlayersMsgs'
 
 export const sendMsg = (msgID: number, msg: string, userID: string, similarity: number) => {
     if (similarity <= 0.6) sendToAllPeers(

@@ -1,7 +1,7 @@
 import { clsxMerge } from '@/utils/clsxMerge'
 import { useAtom } from 'jotai'
 import { recordingAtom } from '../../../../../atoms'
-import { useControls, type ControlsState } from '@/zustand/store'
+import { useControls, type ControlsState } from '@/zustand/store/useControls'
 import { useOnClickOutside } from 'usehooks-ts'
 import { useRef } from 'react'
 

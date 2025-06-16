@@ -1,7 +1,10 @@
 import { POWERUP_PRICES } from '@/constants'
 import { sendCoinInfo } from '@/helpers/room'
 import { sendToPeerWithID, sendToAllPeers, getRandomNum } from '@/utils'
-import { useCoins, useGuessedPlayers, usePlayersPowerups, useWhoIsPainter } from '@/zustand/store'
+import { useCoins } from '@/zustand/store/useCoins'
+import { useGuessedPlayers } from '@/zustand/store/useGuessedPlayers'
+import { usePlayersPowerups } from '@/zustand/store/usePlayersPowerups'
+import { useWhoIsPainter } from '@/zustand/store/useWhoIsPainter'
 
 export const pencilSize = (userID: string) => {
     if (

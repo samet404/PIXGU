@@ -1,6 +1,6 @@
 'use client'
 
-import { usePainterTool } from '@/zustand/store'
+import { usePainterTool } from '@/zustand/store/usePainterTool'
 import { Tool } from '../Tool'
 import { Svg } from '@/components/Svg'
 

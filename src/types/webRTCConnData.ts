@@ -1,4 +1,4 @@
-import type { Player } from '@/zustand/store'
+import type { Player } from '@/zustand/store/usePlayers'
 import type { User } from 'lucia'
 import type { Powerup, RainingColorsPowerupData, TimeBasedPowerups } from './powerups'
 

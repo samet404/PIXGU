@@ -1,6 +1,6 @@
 'use client'
 
-import { useSocketIO } from '@/zustand/store'
+import { useSocketIO } from '@/zustand/store/useSocketIO'
 import { useEffect, useState, type PropsWithChildren } from 'react'
 import { io as IOClient, type ManagerOptions, type Socket, type SocketOptions } from 'socket.io-client'
 import { env } from '@/env/client'

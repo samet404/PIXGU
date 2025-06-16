@@ -1,6 +1,6 @@
 "use client"
 
-import { useMatchStatusClient } from '@/zustand/store'
+import { useMatchStatusClient } from '@/zustand/store/useMatchStatusClient'
 import { useSetAtom } from 'jotai'
 import { Fragment, useEffect } from 'react'
 import { themeAtom } from '../atom'

@@ -1,6 +1,22 @@
-import { useAmIPainting, useAmISpectator, useCoins, useGuessChatLayout, useGuessedPlayers, useHostPeer, useIsGameStopped, useMatchStatusClient, useMyCoin, useNewPainterPanel, usePing, useRoomGuessChatMsgsStore, useRoomGeneralChatMsgsStore, useSelectThemePanel, useSpectators, useWhoIsPainterClient, useGeneralChatLayout } from '@/zustand/store'
+import { useAmIPainting } from '@/zustand/store/useAmIPainting'
+import { useAmISpectator } from '@/zustand/store/useAmISpectator'
+import { useCoins } from '@/zustand/store/useCoins'
+import { useGuessChatLayout } from '@/zustand/store/useGuessChatLayout'
+import { useGuessedPlayers } from '@/zustand/store/useGuessedPlayers'
+import { useHostPeer } from '@/zustand/store/useHostPeer'
+import { useIsGameStopped } from '@/zustand/store/useIsGameStopped'
+import { useMatchStatusClient } from '@/zustand/store/useMatchStatusClient'
+import { useMyCoin } from '@/zustand/store/useMyCoin'
+import { useNewPainterPanel } from '@/zustand/store/useNewPainterPanel'
+import { usePing } from '@/zustand/store/usePing'
+import { useRoomGuessChatMsgsStore } from '@/zustand/store/useRoomGuessChatMsgs'
+import { useRoomGeneralChatMsgsStore } from '@/zustand/store/useRoomGeneralChatMsgs'
+import { useSelectThemePanel } from '@/zustand/store/useSelectThemePanel'
 import { positiveLog } from '@/utils'
 import { createHostPeer } from './createHostPeer'
+import { useWhoIsPainterClient } from '@/zustand/store/useWhoIsPainterClient'
+import { useGeneralChatLayout } from '@/zustand/store/useGeneralChatLayout'
+import { useSpectators } from '@/zustand/store/useSpectators'
 
 /**
  * This function handles the event when the host joins the room.

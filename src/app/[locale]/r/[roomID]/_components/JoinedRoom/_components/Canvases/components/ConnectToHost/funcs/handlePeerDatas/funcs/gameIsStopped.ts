@@ -1,4 +1,18 @@
-import { useAmIPainting, useAmISpectator, useCoins, useGuessChatLayout, useGuessedPlayers, useIsGameStopped, useMatchStatusClient, useMyCoin, useNewPainterPanel, useRoomGuessChatMsgsStore, useRoomGeneralChatMsgsStore, useSelectThemePanel, useSpectators, useWhoIsPainterClient, useGeneralChatLayout } from '@/zustand/store'
+import { useAmIPainting } from '@/zustand/store/useAmIPainting'
+import { useAmISpectator } from '@/zustand/store/useAmISpectator'
+import { useCoins } from '@/zustand/store/useCoins'
+import { useGuessChatLayout } from '@/zustand/store/useGuessChatLayout'
+import { useGuessedPlayers } from '@/zustand/store/useGuessedPlayers'
+import { useIsGameStopped } from '@/zustand/store/useIsGameStopped'
+import { useMatchStatusClient } from '@/zustand/store/useMatchStatusClient'
+import { useMyCoin } from '@/zustand/store/useMyCoin'
+import { useNewPainterPanel } from '@/zustand/store/useNewPainterPanel'
+import { useRoomGuessChatMsgsStore } from '@/zustand/store/useRoomGuessChatMsgs'
+import { useRoomGeneralChatMsgsStore } from '@/zustand/store/useRoomGeneralChatMsgs'
+import { useSelectThemePanel } from '@/zustand/store/useSelectThemePanel'
+import { useSpectators } from '@/zustand/store/useSpectators'
+import { useWhoIsPainterClient } from '@/zustand/store/useWhoIsPainterClient'
+import { useGeneralChatLayout } from '@/zustand/store/useGeneralChatLayout'
 
 export const gameIsStopped = () => {
   useIsGameStopped.getState().addCode('waitingForHost')

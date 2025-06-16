@@ -2,7 +2,7 @@
 
 import { Fragment } from 'react'
 import dynamic from 'next/dynamic'
-import { useGameEndedPanel } from '@/zustand/store'
+import { useGameEndedPanel } from '@/zustand/store/useGameEndedPanel'
 import { Player } from './components/Player'
 import { Timer } from './components/Timer'
 import { Bg } from './components/Bg'

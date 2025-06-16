@@ -1,4 +1,4 @@
-import { useCanvasesMainData } from '@/zustand/store'
+import { useCanvasesMainData } from '@/zustand/store/useCanvasesMainData'
 
 export function drawGrid() {
   const { cellPixelLength, main, grid, gctx } = useCanvasesMainData.getState().get()

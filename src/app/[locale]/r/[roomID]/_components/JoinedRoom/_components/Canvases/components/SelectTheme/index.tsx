@@ -1,7 +1,7 @@
 import type { LangObj } from '../../../../lang'
 import { Btn } from './components/Btn'
 import { Timer } from './components/Timer'
-import { useSelectThemePanel } from '@/zustand/store'
+import { useSelectThemePanel } from '@/zustand/store/useSelectThemePanel'
 
 export const SelectTheme = ({ langObj }: Props) => {
   const panelValues = useSelectThemePanel((s) => s.value)

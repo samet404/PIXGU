@@ -1,6 +1,6 @@
 'use client'
 
-import { useAmISpectator } from '@/zustand/store'
+import { useAmISpectator } from '@/zustand/store/useAmISpectator'
 import dynamic from 'next/dynamic'
 
 const Content = dynamic(() =>

@@ -1,6 +1,6 @@
 'use client'
 
-import { useGameToolAlert } from '@/zustand/store'
+import { useGameToolAlert } from '@/zustand/store/useGameToolAlert'
 import { useEffect, useRef } from 'react'
 
 export const ToolAlert = () => {

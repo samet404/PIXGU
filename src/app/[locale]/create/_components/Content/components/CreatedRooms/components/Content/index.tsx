@@ -7,7 +7,7 @@ import { forwardRef, useEffect, useImperativeHandle, type Ref } from 'react'
 import { RefreshBtn } from './components/RefreshBtn'
 import { useSetAtom } from 'jotai'
 import { createdRoomsCountAtom } from '../../../atoms'
-import { useSocketIO } from '@/zustand/store'
+import { useSocketIO } from '@/zustand/store/useSocketIO'
 import type { LangObj } from '@/app/[locale]/create/lang'
 
 export const Content = forwardRef(

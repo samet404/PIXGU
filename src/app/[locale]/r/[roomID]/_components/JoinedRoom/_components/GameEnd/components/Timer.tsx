@@ -1,4 +1,4 @@
-import { useGameEndedPanel } from '@/zustand/store'
+import { useGameEndedPanel } from '@/zustand/store/useGameEndedPanel'
 
 export const Timer = () => {
   const width = useGameEndedPanel((s) => s.value.timerPassedMsWithPercent)

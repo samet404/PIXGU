@@ -1,6 +1,6 @@
 'use client'
 
-import { usePainterTool } from '@/zustand/store'
+import { usePainterTool } from '@/zustand/store/usePainterTool'
 import { useAtom } from 'jotai'
 import { selectedColorAtom } from '../atoms'
 import { clsxMerge } from '@/utils/clsxMerge'

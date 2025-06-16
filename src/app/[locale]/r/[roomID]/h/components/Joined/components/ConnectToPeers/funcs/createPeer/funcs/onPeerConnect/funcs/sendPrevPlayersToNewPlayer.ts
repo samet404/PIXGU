@@ -1,7 +1,8 @@
 import { filterObj } from '@/utils/filterObj'
 import { grayLog } from '@/utils/grayLog'
 import { sendToPeer } from '@/utils/sendToPeer'
-import { usePeers, usePlayers, type Player } from '@/zustand/store'
+import { usePeers } from '@/zustand/store/usePeers'
+import { usePlayers, type Player } from '@/zustand/store/usePlayers'
 
 export const sendPrevPlayersToNewPlayer = (userID: string) => {
   const peer = usePeers.getState().get()[userID]?.peer

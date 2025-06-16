@@ -1,5 +1,5 @@
 import type { PrevPlayers } from '@/types'
-import { usePlayers } from '@/zustand/store'
+import { usePlayers } from '@/zustand/store/usePlayers'
 
 export const getPrevPlayers = (data: PrevPlayers['data'], userID: string) => {
   const addPlayer = usePlayers.getState().addPlayer

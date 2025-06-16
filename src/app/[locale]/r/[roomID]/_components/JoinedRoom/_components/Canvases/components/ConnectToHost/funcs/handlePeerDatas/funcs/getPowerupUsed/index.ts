@@ -1,5 +1,5 @@
 import type { PowerupUsed } from '@/types'
-import { usePlayersPowerups } from '@/zustand/store'
+import { usePlayersPowerups } from '@/zustand/store/usePlayersPowerups'
 import { mirror, rotate, undoBlock, invisiblePencil, colorChaos, rainingColors, categoryHint, pencilSize } from './powerups'
 
 export const getPowerupUsed = (rtcData: PowerupUsed['data']) => {

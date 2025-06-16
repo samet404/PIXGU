@@ -1,6 +1,7 @@
 import { sendToAllPeers } from '@/utils/sendToAllPeers'
 import { getCanvasWorker, type CanvasWorkerOnMsgData } from '@/workers'
-import { useHostCanvasesData, useWhoIsPainter } from '@/zustand/store'
+import { useHostCanvasesData } from '@/zustand/store/useHostCanvasesData'
+import { useWhoIsPainter } from '@/zustand/store/useWhoIsPainter'
 
 const canvasWorker = getCanvasWorker()
 

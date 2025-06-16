@@ -13,12 +13,7 @@ export const env = createEnv({
     NEON_DATABASE_URL: z.string(),
     BASE_URL: z.string(),
 
-    REDIS_URL: z
-      .string()
-      .refine(
-        (str) => !str.includes('YOUR_REDIS_URL_HERE'),
-        'You forgot to change the default REDIS_URL',
-      ),
+
     DISCORD_CLIENT_ID: z
       .string()
       .refine(
@@ -88,14 +83,16 @@ export const env = createEnv({
         (str) => !str.includes('YOUR_GOOGLE_REDIRECT_URI_HERE'),
         'You forgot to change the default google redirect uri',
       ),
-
     NODE_ENV: z
-      .enum(['development', 'test', 'production'])
+      .enum(['development', 'production'])
       .default('development'),
     ROOT_FOLDER_NAME: z.string().default('PIXGU'),
     IP_ADDRESS: z.string().default('66.6.44.4'),
     CANARY: z.enum(['0', '1']),
     ADMIN_AUTH_SECRET: z.string(),
+    REDIS_HOST: z.string(),
+    REDIS_PORT: z.string().optional(),
+    REDIS_PASSWORD: z.string(),
   },
 
   /**
@@ -103,6 +100,10 @@ export const env = createEnv({
    * middlewares) or client-side so we need to destruct manually.
    */
   runtimeEnv: {
+    REDIS_HOST: process.env.REDIS_HOST,
+    REDIS_PORT: process.env.REDIS_PORT,
+    REDIS_PASSWORD: process.env.REDIS_PASSWORD,
+
     ADMIN_AUTH_SECRET: process.env.ADMIN_AUTH_SECRET,
 
     IP_ADDRESS: process.env.IP_ADDRESS,
@@ -112,8 +113,6 @@ export const env = createEnv({
     BASE_URL: process.env.BASE_URL,
 
     NEON_DATABASE_URL: process.env.NEON_DATABASE_URL,
-
-    REDIS_URL: process.env.REDIS_URL,
 
     DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,
     DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,

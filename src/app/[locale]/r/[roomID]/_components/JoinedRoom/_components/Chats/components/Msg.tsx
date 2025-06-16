@@ -1,6 +1,6 @@
 'use client'
 
-import { usePlayers } from '@/zustand/store'
+import { usePlayers } from '@/zustand/store/usePlayers'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { UserPfp } from '@/components/UserPfp'
 

@@ -1,7 +1,7 @@
 'use client'
 
 import { Svg } from '@/components/Svg'
-import { useCanvasesMainData } from '@/zustand/store'
+import { useCanvasesMainData } from '@/zustand/store/useCanvasesMainData'
 import { useEffect, useRef } from 'react'
 
 export const Download = () => {

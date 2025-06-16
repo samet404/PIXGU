@@ -4,7 +4,7 @@ import { api } from '@/trpc/react'
 import { useEffect, useRef, type MutableRefObject } from 'react'
 import { inputInfoTextAtom, isPublicAtom } from '../atoms'
 import { useSetAtom } from 'jotai'
-import { useCreateRoomInputs } from '@/zustand/store'
+import { useCreateRoomInputs } from '@/zustand/store/useCreateRoomInputs'
 
 export const GeneratePassBtn = ({ inputRef, displayText }: Props) => {
     const setInputInfoText = useSetAtom(inputInfoTextAtom)

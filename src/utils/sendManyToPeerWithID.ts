@@ -1,5 +1,5 @@
 import type { WebRTCConnData } from '@/types'
-import { usePeers } from '@/zustand/store'
+import { usePeers } from '@/zustand/store/usePeers'
 import { negativeLog } from './negativeLog'
 import { sendToPeer } from './sendToPeer'
 

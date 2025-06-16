@@ -1,6 +1,6 @@
 import type { PainterEraser } from '@/types/webRTCConnData';
 import { sendToAllPeers } from '@/utils/sendToAllPeers';
-import { useWhoIsPainter } from '@/zustand/store';
+import { useWhoIsPainter } from '@/zustand/store/useWhoIsPainter';
 import { getCanvasWorker, type CanvasWorkerOnMsgData } from '@/workers';
 
 const canvasWorker = getCanvasWorker()

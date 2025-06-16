@@ -1,6 +1,6 @@
 'use client'
 
-import { useMatchStatusClient } from '@/zustand/store'
+import { useMatchStatusClient } from '@/zustand/store/useMatchStatusClient'
 
 export const Theme = ({ themeText }: Props) => {
     const theme = useMatchStatusClient((s) => s.theme)

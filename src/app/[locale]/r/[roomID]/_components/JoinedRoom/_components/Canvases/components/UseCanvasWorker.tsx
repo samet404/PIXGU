@@ -3,7 +3,8 @@
 import { fillOnePixel } from '@/helpers/room'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { getCanvasWorker, terminateCanvasWorker, type CanvasWorkerPostMsgData } from '@/workers'
-import { useCanvasesMainData, usePainterTool } from '@/zustand/store'
+import { useCanvasesMainData } from '@/zustand/store/useCanvasesMainData'
+import { usePainterTool } from '@/zustand/store/usePainterTool'
 
 export const UseCanvasWorker = () => {
 

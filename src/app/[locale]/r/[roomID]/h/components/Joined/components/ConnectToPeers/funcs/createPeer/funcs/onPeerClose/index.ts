@@ -1,5 +1,5 @@
 import { negativeLog } from '@/utils'
-import { useSocketIO } from '@/zustand/store'
+import { useSocketIO } from '@/zustand/store/useSocketIO'
 import type SimplePeer from 'simple-peer'
 import { playerLeft } from '../../../playerLeft'
 import type { Locale } from '@/types/locale'

@@ -1,4 +1,4 @@
-import { useRoomGuessChatMsgsStore } from '@/zustand/store'
+import { useRoomGuessChatMsgsStore } from '@/zustand/store/useRoomGuessChatMsgs'
 import { Input } from './Input'
 
 export const GuessInput = () => {

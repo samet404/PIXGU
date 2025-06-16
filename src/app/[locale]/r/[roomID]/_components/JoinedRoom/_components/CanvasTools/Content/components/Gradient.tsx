@@ -1,5 +1,5 @@
 import { Tool } from './Tool'
-import { usePainterTool } from '@/zustand/store'
+import { usePainterTool } from '@/zustand/store/usePainterTool'
 import { Svg } from '@/components/Svg'
 
 export const Gradient = () => {

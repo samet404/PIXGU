@@ -1,7 +1,7 @@
 import type { UndoRedo } from '@/types'
 import { sendToAllPeers } from '@/utils'
 import { postMsgToCanvasWorker } from '@/workers'
-import { useWhoIsPainter } from '@/zustand/store'
+import { useWhoIsPainter } from '@/zustand/store/useWhoIsPainter'
 
 export const getUndoRedo = (data: UndoRedo['data'], userID: string) => {
     if (!useWhoIsPainter.getState().isPainter(userID)) return

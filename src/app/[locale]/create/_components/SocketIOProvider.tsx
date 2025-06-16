@@ -3,7 +3,7 @@
 import Spinner from '@/components/Spinner'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { clsxMerge } from '@/utils/clsxMerge'
-import { useSocketIO } from '@/zustand/store'
+import { useSocketIO } from '@/zustand/store/useSocketIO'
 import { useState, type PropsWithChildren } from 'react'
 import { io, type ManagerOptions, type SocketOptions } from 'socket.io-client'
 import { Inter } from 'next/font/google'
@@ -133,10 +133,10 @@ export const SocketIOProvider = ({ children }: Props) => {
 type Props = PropsWithChildren
 type AuthStatus =
   | {
-      isSuccess: true
-      as: string
-    }
+    isSuccess: true
+    as: string
+  }
   | {
-      isSuccess: false
-      required: string[]
-    }
+    isSuccess: false
+    required: string[]
+  }

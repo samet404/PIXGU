@@ -1,5 +1,7 @@
 import { positiveLog } from '@/utils'
-import { usePeers, usePlayers, useSocketIO } from '@/zustand/store'
+import { usePeers } from '@/zustand/store/usePeers'
+import { usePlayers } from '@/zustand/store/usePlayers'
+import { useSocketIO } from '@/zustand/store/useSocketIO'
 import type { User } from 'lucia'
 import { createPeer } from './createPeer'
 import type { Guest, Locale } from '@/types'

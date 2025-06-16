@@ -1,4 +1,4 @@
-import { useGameLogs } from '@/zustand/store'
+import { useGameLogs } from '@/zustand/store/gameLogs'
 import { Item } from './components/Item'
 
 export const Content = () => {

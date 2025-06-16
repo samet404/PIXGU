@@ -1,7 +1,6 @@
 'use client'
 
-import { useMatchStatus } from '@/zustand/store'
-
+import { useMatchStatus } from '@/zustand/store/useMatchStatus'
 export const MatchTimer = () => {
     const remainSeconds = useMatchStatus(s => s.value.remainSeconds)
 

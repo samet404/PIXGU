@@ -1,4 +1,4 @@
-import { useSoundSettings } from '@/zustand/store'
+import { useSoundSettings } from '@/zustand/store/useSoundSettings'
 import Link from 'next/link'
 
 export const Item = ({ link, openDesc, removeDesc }: Props) => {

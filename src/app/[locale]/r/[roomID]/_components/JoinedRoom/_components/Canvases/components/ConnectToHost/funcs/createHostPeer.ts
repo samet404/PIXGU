@@ -1,20 +1,19 @@
 import { goldLog } from '@/utils/goldLog'
 import type { WebRTCSignalData } from '@/types'
-import { simplePeer, positiveLog } from '@/utils'
+import { positiveLog } from '@/utils'
 import { handlePeerDatas } from './handlePeerDatas'
 import { postMsgToPlayerTimerWorker } from '@/workers'
-import {
-  usePlayers,
-  useHostPeer,
-  useSocketIO,
-  useIsGameStopped,
-} from '@/zustand/store'
+import { usePlayers } from '@/zustand/store/usePlayers'
+import { useHostPeer } from '@/zustand/store/useHostPeer'
+import { useIsGameStopped } from '@/zustand/store/useIsGameStopped'
+import { useSocketIO, } from '@/zustand/store/useSocketIO'
+import { pixguPeer } from 'src/pixgu-peer/pixguPeerClient'
 
 export const createHostPeer = (roomID: string, myUserID: string) => {
   const io = useSocketIO.getState().io
   const setHostPeer = useHostPeer.getState().set
 
-  const peer = simplePeer()
+  const peer = pixguPeer()
 
   setHostPeer({
     peer,

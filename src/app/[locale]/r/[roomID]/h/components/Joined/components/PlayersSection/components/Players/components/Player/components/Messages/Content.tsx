@@ -1,4 +1,4 @@
-import { useHostPlayersMsgs } from '@/zustand/store'
+import { useHostPlayersMsgs } from '@/zustand/store/useHostPlayersMsgs'
 
 export const Content = ({ userID }: Props) => {
     const msgs = useHostPlayersMsgs(s => s.msgs[userID])

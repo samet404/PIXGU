@@ -1,7 +1,11 @@
 import { POWERUP_PRICES } from '@/constants'
 import { sendCoinInfo } from '@/helpers/room'
 import type { Locale } from '@/types/locale'
-import { useCoins, useHostPainterData, usePlayersPowerups, useSocketIO, useWhoIsPainter } from '@/zustand/store'
+import { useCoins } from '@/zustand/store/useCoins'
+import { useHostPainterData } from '@/zustand/store/useHostPainterData'
+import { usePlayersPowerups } from '@/zustand/store/usePlayersPowerups'
+import { useSocketIO } from '@/zustand/store/useSocketIO'
+import { useWhoIsPainter } from '@/zustand/store/useWhoIsPainter'
 
 export const changeThemes = (locale: Locale, userID: string) => {
     if (

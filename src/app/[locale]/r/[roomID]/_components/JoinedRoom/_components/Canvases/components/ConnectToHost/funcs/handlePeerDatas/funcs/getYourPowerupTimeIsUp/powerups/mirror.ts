@@ -1,4 +1,5 @@
-import { usePowerups } from '@/zustand/store'
+import { usePowerups } from '@/zustand/store/usePowerups'
+
 
 export const mirror = () => {
     usePowerups.getState().setPowerupIsNotRunning('mirror')

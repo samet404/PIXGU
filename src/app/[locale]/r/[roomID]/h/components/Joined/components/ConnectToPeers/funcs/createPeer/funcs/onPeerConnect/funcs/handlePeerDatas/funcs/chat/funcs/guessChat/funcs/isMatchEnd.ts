@@ -1,4 +1,7 @@
-import { useGuessedPlayers, useLoserPlayers, usePlayers, usePlayersWhoGaveUp } from '@/zustand/store';
+import { useGuessedPlayers } from '@/zustand/store/useGuessedPlayers';
+import { useLoserPlayers } from '@/zustand/store/useLoserPlayers';
+import { usePlayers } from '@/zustand/store/usePlayers';
+import { usePlayersWhoGaveUp } from '@/zustand/store/usePlayersWhoGaveUp';
 
 export const isMatchEnd = () => {
     const guessedPlayersCount = useGuessedPlayers.getState().playersIDs.length

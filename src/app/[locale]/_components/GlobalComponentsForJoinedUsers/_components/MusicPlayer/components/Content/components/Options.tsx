@@ -4,7 +4,7 @@ import { type MutableRefObject, useRef } from 'react'
 import type { YouTubePlayer } from 'youtube-player/dist/types'
 import './styles/sound-slider.css'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
-import { useSoundSettings } from '@/zustand/store'
+import { useSoundSettings } from '@/zustand/store/useSoundSettings'
 import { More } from './More'
 
 export const Options = ({ youtubeVidRef }: Props) => {

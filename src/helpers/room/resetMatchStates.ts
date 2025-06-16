@@ -1,5 +1,11 @@
 import { getCanvasWorker, postMsgToPlayerTimerWorker, type CanvasWorkerOnMsgData } from '@/workers'
-import { useAmIPainting, useCanvasesMainData, useGuessedPlayers, useMatchStatusClient, usePlayersWhoGaveUp, useRoomGuessChatMsgsStore, useRoomGeneralChatMsgsStore } from '@/zustand/store'
+import { useAmIPainting } from '@/zustand/store/useAmIPainting'
+import { useGuessedPlayers } from '@/zustand/store/useGuessedPlayers'
+import { useMatchStatusClient } from '@/zustand/store/useMatchStatusClient'
+import { usePlayersWhoGaveUp } from '@/zustand/store/usePlayersWhoGaveUp'
+import { useRoomGuessChatMsgsStore } from '@/zustand/store/useRoomGuessChatMsgs'
+import { useRoomGeneralChatMsgsStore } from '@/zustand/store/useRoomGeneralChatMsgs'
+import { useCanvasesMainData } from '@/zustand/store/useCanvasesMainData'
 
 export const resetMatchStates = () => {
     const canvasWorker = getCanvasWorker()

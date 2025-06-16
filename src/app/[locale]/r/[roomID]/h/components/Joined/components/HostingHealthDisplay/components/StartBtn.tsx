@@ -1,8 +1,11 @@
 import { useRef, useState } from 'react'
-import { useHostingHealth, usePlayers, useSocketIO, useTotalMatchCount } from '@/zustand/store'
+import { useHostingHealth } from '@/zustand/store/useHostingHealth'
+import { usePlayers } from '@/zustand/store/usePlayers'
+import { useSocketIO } from '@/zustand/store/useSocketIO'
+import { useTotalMatchCount } from '@/zustand/store/useTotalMatchCount'
 import { createMatch } from '@/helpers/room'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
-import { storePaintersAccess } from '@/store'
+import { storePaintersAccess } from '@/store/storePaintersAccess'
 import type { Locale } from '@/types/locale'
 
 export const StartBtn = ({ displayText, locale }: Props) => {

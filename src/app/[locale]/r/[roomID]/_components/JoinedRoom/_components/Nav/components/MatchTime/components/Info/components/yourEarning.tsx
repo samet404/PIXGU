@@ -1,5 +1,6 @@
 import { MATCH_TIME_MINUTES, } from '@/constants'
-import { useMatchStatusClient, useWhoIsPainterClient } from '@/zustand/store'
+import { useMatchStatusClient } from '@/zustand/store/useMatchStatusClient'
+import { useWhoIsPainterClient } from '@/zustand/store/useWhoIsPainterClient'
 import { useAtomValue } from 'jotai'
 import { themeAtom } from '../../../atom'
 

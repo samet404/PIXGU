@@ -3,7 +3,7 @@
 import { useAtom, useSetAtom } from 'jotai'
 import { useEffect, useRef } from 'react'
 import { alertAtom, recordingAtom } from '../atoms'
-import { useControls } from '@/zustand/store'
+import { useControls } from '@/zustand/store/useControls'
 import { useEffectOnce } from '@/hooks/useEffectOnce'
 import { MODIFIER_KEYS } from '@/constants'
 

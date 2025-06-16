@@ -1,5 +1,5 @@
 import Spinner from '@/components/Spinner'
-import { useSocketIO } from '@/zustand/store'
+import { useSocketIO } from '@/zustand/store/useSocketIO'
 import { useState } from 'react'
 
 export const KillRoomBtn = ({ roomID, displayText }: Props) => {

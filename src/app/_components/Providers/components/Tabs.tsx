@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffectOnce } from '@/hooks/useEffectOnce'
-import { useTabs } from '@/zustand/store'
+import { useTabs } from '@/zustand/store/useTabs'
 import { useEffect, type PropsWithChildren } from 'react'
 
 export const Tabs = ({ children }: PropsWithChildren) => {

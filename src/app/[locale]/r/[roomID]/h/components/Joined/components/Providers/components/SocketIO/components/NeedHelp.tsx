@@ -2,7 +2,7 @@ import { useSpring, animated } from '@react-spring/web'
 import { createPortal } from 'react-dom'
 import { Fragment } from 'react'
 import dynamic from 'next/dynamic'
-import { useWebRTCTroubleshootingGuideModal } from '@/zustand/store'
+import { useWebRTCTroubleshootingGuideModal } from '@/zustand/store/useWebRTCTroubleshootingGuideModal'
 import type { Locale } from '@/types/locale'
 
 const Modal = dynamic(() => import('@/components/WebRTCTroubleshootingModal').then((m) => m.Modal))

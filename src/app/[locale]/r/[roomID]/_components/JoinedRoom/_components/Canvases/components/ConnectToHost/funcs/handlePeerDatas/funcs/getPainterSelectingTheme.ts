@@ -1,5 +1,7 @@
 import { postMsgToPlayerTimerWorker } from '@/workers';
-import { useNewPainterPanel, usePainterSelectingRemainTime, useWhoIsPainterClient } from '@/zustand/store';
+import { useNewPainterPanel } from '@/zustand/store/useNewPainterPanel';
+import { usePainterSelectingRemainTime } from '@/zustand/store/usePainterSelectingRemainTime';
+import { useWhoIsPainterClient } from '@/zustand/store/useWhoIsPainterClient';
 
 export const getPainterSelectingTheme = () => {
   usePainterSelectingRemainTime.getState().reset()

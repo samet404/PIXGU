@@ -1,7 +1,7 @@
 'use client'
 
 import { MODIFIER_KEYS } from '@/constants'
-import { useControls } from '@/zustand/store'
+import { useControls } from '@/zustand/store/useControls'
 import { useEffect, useRef, } from 'react'
 
 //  We are using a big delay for the first key press to avoid accidental key presses

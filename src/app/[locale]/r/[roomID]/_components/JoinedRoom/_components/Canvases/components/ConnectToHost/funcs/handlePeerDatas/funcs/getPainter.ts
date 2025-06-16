@@ -1,31 +1,28 @@
 import { resetMatchStates } from '@/helpers/room'
-import { storePaintersAccess } from '@/store'
+import { storePaintersAccess } from '@/store/storePaintersAccess'
 import type { CurrentPainter } from '@/types'
 import { postMsgToCanvasWorker, postMsgToPlayerTimerWorker } from '@/workers'
-import {
-  useAmIGuessed,
-  useGuessChatLayout,
-  useGuessedPlayers,
-  useIsGameStopped,
-  useLetterHint,
-  useMatchStatusClient,
-  useNewPainterPanel,
-  usePowerups,
-  usePainterSelectingRemainTime,
-  usePlayers,
-  useRoomGuessChatMsgsStore,
-  useRoomGeneralChatMsgsStore,
-  useSelectThemePanel,
-  useTotalMatchCount,
-  useWhoIsPainterClient,
-  useGeneralChatLayout,
-  usePlayersPowerups,
-  useAmIGaveUp,
-  usePlayersWhoGaveUp,
-  useLoserPlayers,
-  useAmILoser,
-
-} from '@/zustand/store'
+import { useAmIGuessed } from '@/zustand/store/useAmIGuessed'
+import { useGuessChatLayout } from '@/zustand/store/useGuessChatLayout'
+import { useGuessedPlayers } from '@/zustand/store/useGuessedPlayers'
+import { useIsGameStopped } from '@/zustand/store/useIsGameStopped'
+import { useMatchStatusClient } from '@/zustand/store/useMatchStatusClient'
+import { useNewPainterPanel } from '@/zustand/store/useNewPainterPanel'
+import { usePowerups } from '@/zustand/store/usePowerups'
+import { usePainterSelectingRemainTime } from '@/zustand/store/usePainterSelectingRemainTime'
+import { usePlayers } from '@/zustand/store/usePlayers'
+import { useRoomGuessChatMsgsStore } from '@/zustand/store/useRoomGuessChatMsgs'
+import { useRoomGeneralChatMsgsStore } from '@/zustand/store/useRoomGeneralChatMsgs'
+import { useSelectThemePanel } from '@/zustand/store/useSelectThemePanel'
+import { useTotalMatchCount } from '@/zustand/store/useTotalMatchCount'
+import { useWhoIsPainterClient } from '@/zustand/store/useWhoIsPainterClient'
+import { useGeneralChatLayout } from '@/zustand/store/useGeneralChatLayout'
+import { useLetterHint } from '@/zustand/store/useLetterHint'
+import { usePlayersPowerups } from '@/zustand/store/usePlayersPowerups'
+import { usePlayersWhoGaveUp } from '@/zustand/store/usePlayersWhoGaveUp'
+import { useLoserPlayers } from '@/zustand/store/useLoserPlayers'
+import { useAmILoser } from '@/zustand/store/useAmILoser'
+import { useAmIGaveUp } from '@/zustand/store/useAmIGaveUp'
 
 export const getPainter = (
   data: CurrentPainter['data'],

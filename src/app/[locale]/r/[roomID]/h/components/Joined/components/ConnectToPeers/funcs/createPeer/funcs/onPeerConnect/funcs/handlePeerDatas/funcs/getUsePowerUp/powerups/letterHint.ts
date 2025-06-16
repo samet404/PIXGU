@@ -2,7 +2,10 @@
 import { POWERUP_PRICES } from '@/constants'
 import { sendCoinInfo } from '@/helpers/room'
 import { sendToPeerWithID, randomOneCharacterFromStr, sendToAllPeers } from '@/utils'
-import { useCoins, useHostPainterData, usePlayersPowerups, useWhoIsPainter } from '@/zustand/store'
+import { useCoins } from '@/zustand/store/useCoins'
+import { useHostPainterData } from '@/zustand/store/useHostPainterData'
+import { usePlayersPowerups } from '@/zustand/store/usePlayersPowerups'
+import { useWhoIsPainter } from '@/zustand/store/useWhoIsPainter'
 
 export const letterHint = (userID: string) => {
     const painterData = useHostPainterData.getState().value

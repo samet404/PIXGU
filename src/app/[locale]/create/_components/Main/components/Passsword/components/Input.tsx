@@ -1,6 +1,6 @@
 'use client'
 
-import { useCreateRoomInputs } from '@/zustand/store'
+import { useCreateRoomInputs } from '@/zustand/store/useCreateRoomInputs'
 import { useSetAtom } from 'jotai'
 import { useEffect, useRef, type PropsWithChildren } from 'react'
 import { inputInfoTextAtom, isPublicAtom } from '../atoms'

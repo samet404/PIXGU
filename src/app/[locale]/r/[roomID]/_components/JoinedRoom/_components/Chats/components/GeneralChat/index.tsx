@@ -1,6 +1,6 @@
 'use client'
 
-import { useGeneralChatLayout } from '@/zustand/store'
+import { useGeneralChatLayout } from '@/zustand/store/useGeneralChatLayout'
 import { ChatWrapper } from '../ChatWrapper'
 import { Messages } from './components/Messages'
 

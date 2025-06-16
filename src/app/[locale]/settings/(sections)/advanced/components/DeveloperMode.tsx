@@ -1,6 +1,6 @@
 'use client'
 
-import { useDeveloperSettings } from '@/zustand/store'
+import { useDeveloperSettings } from '@/zustand/store/useDeveloperSettings'
 import { SettingsCheckbox } from '../../_components/SettingsCheckbox'
 
 export const DeveloperMode = ({ description, heading }: Props) => {

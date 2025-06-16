@@ -1,6 +1,6 @@
 import { CardContent } from './components/CardContent'
 import type { LangObj } from '../../lang'
-import { useCurrentPanel } from '@/zustand/store'
+import { useCurrentPanel } from '@/zustand/store/useCurrentPanel'
 
 export const Content = ({ langObj }: Props) => {
   const closePanel = useCurrentPanel(s => s.setPanel)

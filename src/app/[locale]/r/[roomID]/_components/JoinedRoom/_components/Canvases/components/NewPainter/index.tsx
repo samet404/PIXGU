@@ -2,7 +2,7 @@
 
 import { User } from './components/User'
 import { Timer } from './components/Timer'
-import { useNewPainterPanel } from '@/zustand/store'
+import { useNewPainterPanel } from '@/zustand/store/useNewPainterPanel'
 import { Fragment, useRef } from 'react'
 import type { LangObj } from '../../../../lang'
 

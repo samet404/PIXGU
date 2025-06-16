@@ -1,5 +1,5 @@
 import type { WebRTCConnData } from '@/types'
-import { usePeers } from '@/zustand/store'
+import { usePeers } from '@/zustand/store/usePeers'
 import { negativeLog, sendToPeer } from './_index'
 
 export const sendToPeerWithID = (userID: string, data: WebRTCConnData) => {

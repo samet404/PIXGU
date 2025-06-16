@@ -1,7 +1,14 @@
-import { storePaintersAccess } from '@/store'
+import { storePaintersAccess } from '@/store/storePaintersAccess'
 import { sToMs, sendToAllPeers } from '@/utils'
 import { postMsgToCanvasWorker, postMsgToHostTimerWorker } from '@/workers'
-import { useCoins, useGuessedPlayers, useHostingHealth, useHostPainterData, useMatchStatus, useSocketIO, useTotalMatchCount, useWhoIsPainter } from '@/zustand/store'
+import { useCoins } from '@/zustand/store/useCoins'
+import { useGuessedPlayers } from '@/zustand/store/useGuessedPlayers'
+import { useHostingHealth } from '@/zustand/store/useHostingHealth'
+import { useHostPainterData } from '@/zustand/store/useHostPainterData'
+import { useMatchStatus } from '@/zustand/store/useMatchStatus'
+import { useSocketIO } from '@/zustand/store/useSocketIO'
+import { useTotalMatchCount } from '@/zustand/store/useTotalMatchCount'
+import { useWhoIsPainter } from '@/zustand/store/useWhoIsPainter'
 
 export const gameEnded = () => {
     useSocketIO.getState().io!.emit('game-started', false)

@@ -1,4 +1,4 @@
-import { usePowerups } from '@/zustand/store'
+import { usePowerups } from '@/zustand/store/usePowerups'
 
 export const letterHint = (data: string) => {
     console.log('letterHint', data)

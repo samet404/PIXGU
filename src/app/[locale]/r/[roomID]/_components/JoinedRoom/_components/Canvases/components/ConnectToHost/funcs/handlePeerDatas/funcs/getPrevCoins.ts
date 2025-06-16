@@ -1,5 +1,5 @@
 import type { PrevCoins } from '@/types/webRTCConnData'
-import { useCoins } from '@/zustand/store'
+import { useCoins } from '@/zustand/store/useCoins'
 
 export const getPrevCoins = (data: PrevCoins['data']) => {
   const entries = Object.entries(data)

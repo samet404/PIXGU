@@ -2,7 +2,7 @@
 
 import { useAtomValue } from 'jotai'
 import { isCanvasToolsOpenAtom } from '../atoms'
-import { useWhoIsPainterClient } from '@/zustand/store'
+import { useWhoIsPainterClient } from '@/zustand/store/useWhoIsPainterClient'
 import dynamic from 'next/dynamic'
 import { AlphaLoading } from '@/components/AlphaLoading'
 import type { LangObj } from '../../lang'

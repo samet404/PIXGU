@@ -1,6 +1,6 @@
 'use client'
 
-import { useCustomCursor } from '@/zustand/store'
+import { useCustomCursor } from '@/zustand/store/useCustomCursor'
 import { SettingsCheckbox } from '../../_components/SettingsCheckbox'
 
 export const CustomCursor = ({ name, description }: Props) => {

@@ -1,5 +1,5 @@
 import { sendManyToAllPeers, sendManyToPeerWithID, sendToPeerWithID } from '@/utils'
-import { useCoins } from '@/zustand/store'
+import { useCoins } from '@/zustand/store/useCoins'
 
 export const sendOtherInfo = (userID: string, currentCoin: number, painterID: string) => {
     useCoins.getState().add(userID, currentCoin)

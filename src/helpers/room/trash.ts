@@ -1,5 +1,5 @@
 import { postMsgToCanvasWorker } from '@/workers'
-import { useCanvasesMainData } from '@/zustand/store'
+import { useCanvasesMainData } from '@/zustand/store/useCanvasesMainData'
 
 export const trash = () => {
     const { mctx } = useCanvasesMainData.getState().get()

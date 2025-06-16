@@ -1,17 +1,15 @@
 import { MATCH_TIME_MILISECONDS } from '@/constants'
-import { storePaintersAccess } from '@/store'
+import { storePaintersAccess } from '@/store/storePaintersAccess'
 import type { SelectThemeFromClient } from '@/types/webRTCConnData'
 import { negativeLog, sendToAllPeers } from '@/utils'
 import { postMsgToHostTimerWorker } from '@/workers'
-import {
-  useCoins,
-  useHostPainterData,
-  useMatchStatus,
-  usePlayers,
-  usePlayersPowerups,
-  useTotalMatchCount,
-  useWhoIsPainter,
-} from '@/zustand/store'
+import { useCoins } from '@/zustand/store/useCoins'
+import { useHostPainterData } from '@/zustand/store/useHostPainterData'
+import { useMatchStatus } from '@/zustand/store/useMatchStatus'
+import { usePlayers } from '@/zustand/store/usePlayers'
+import { usePlayersPowerups } from '@/zustand/store/usePlayersPowerups'
+import { useTotalMatchCount } from '@/zustand/store/useTotalMatchCount'
+import { useWhoIsPainter } from '@/zustand/store/useWhoIsPainter'
 
 export const getSelectedTheme = (
   data: SelectThemeFromClient['data'],

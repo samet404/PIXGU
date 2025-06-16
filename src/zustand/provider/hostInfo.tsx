@@ -7,7 +7,7 @@ import {
   type HostInfoStore,
   type HostInfoStoreState,
   createHostInfoStore,
-} from '@/zustand/store'
+} from '@/zustand/store/useHostInfo'
 
 export type HostInfoStoreApi = ReturnType<typeof createHostInfoStore>
 

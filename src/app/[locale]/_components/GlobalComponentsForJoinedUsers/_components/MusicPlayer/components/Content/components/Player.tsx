@@ -3,7 +3,7 @@
 import { Fragment, useEffect, useRef, useState } from 'react'
 import YouTubePlayer from 'youtube-player'
 import type { YouTubePlayer as YoutubePlayerType } from 'youtube-player/dist/types'
-import { useSoundSettings } from '@/zustand/store'
+import { useSoundSettings } from '@/zustand/store/useSoundSettings'
 import { Options } from './Options'
 
 export const Player = () => {

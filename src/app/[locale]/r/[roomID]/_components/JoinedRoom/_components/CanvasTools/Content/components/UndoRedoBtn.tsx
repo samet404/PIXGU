@@ -1,7 +1,9 @@
 import { Svg } from '@/components/Svg'
 import { clsxMerge } from '@/utils'
 import { postMsgToCanvasWorker } from '@/workers'
-import { useGameToolAlert, usePainterTool, usePlayersPowerups } from '@/zustand/store'
+import { useGameToolAlert } from '@/zustand/store/useGameToolAlert'
+import { usePainterTool } from '@/zustand/store/usePainterTool'
+import { usePlayersPowerups } from '@/zustand/store/usePlayersPowerups'
 
 export const UndoRedoBtn = ({ type }: Props) => {
     const setToolAlert = useGameToolAlert((s) => s.setAlert)

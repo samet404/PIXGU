@@ -3,7 +3,7 @@
 import type { OverrideProps, Powerup } from '@/types'
 import { POWERUP_PRICES, POWERUPS_SHOWS_TEXT } from '@/constants'
 import { clsxMerge } from '@/utils'
-import { useMyCoin } from '@/zustand/store'
+import { useMyCoin } from '@/zustand/store/useMyCoin'
 import { animated } from '@react-spring/web'
 import { useEffect, useRef, useState, type ComponentProps, type ReactNode } from 'react'
 import { useAnimation } from './hooks/useAnimation'

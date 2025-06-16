@@ -2,7 +2,8 @@
 
 import { useRoomIDStore } from '@/zustand/provider'
 import { categoryHint, changeThemes, getSecretKey, playerJoined, randomThemes, receiveSignal } from './funcs'
-import { useHostingHealth, useSocketIO } from '@/zustand/store'
+import { useHostingHealth } from '@/zustand/store/useHostingHealth'
+import { useSocketIO } from '@/zustand/store/useSocketIO'
 import { useEffect, } from 'react'
 import { playerLeftFromSocket } from './funcs/playerLeftFromSocket'
 import type { Locale } from '@/types/locale'

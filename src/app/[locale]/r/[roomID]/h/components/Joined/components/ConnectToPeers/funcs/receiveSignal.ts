@@ -1,4 +1,4 @@
-import { usePeers } from '@/zustand/store'
+import { usePeers } from '@/zustand/store/usePeers'
 import type { SignalData } from 'simple-peer'
 import type { Socket } from 'socket.io-client'
 

@@ -1,6 +1,7 @@
 'use client'
 
-import { useGuide, useWhoIsPainterClient } from '@/zustand/store'
+import { useGuide, } from '@/zustand/store/useGuide'
+import { useWhoIsPainterClient } from '@/zustand/store/useWhoIsPainterClient'
 import dynamic from 'next/dynamic'
 
 const Content = dynamic(() => import('./Content').then(m => m.Content))

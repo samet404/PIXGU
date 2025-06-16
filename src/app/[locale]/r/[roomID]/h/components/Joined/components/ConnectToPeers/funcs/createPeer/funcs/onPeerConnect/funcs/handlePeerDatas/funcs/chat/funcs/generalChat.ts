@@ -1,7 +1,10 @@
 import type { GeneralChatFromClient } from '@/types/webRTCConnData';
 import { sendToAllPeers } from '@/utils/sendToAllPeers';
 import { sendToPeerWithID } from '@/utils/sendToPeerWithID';
-import { useGuessedPlayers, useHostPainterData, usePlayersWhoGaveUp, useWhoIsPainter } from '@/zustand/store';
+import { useGuessedPlayers } from '@/zustand/store/useGuessedPlayers'
+import { useHostPainterData } from '@/zustand/store/useHostPainterData'
+import { usePlayersWhoGaveUp } from '@/zustand/store/usePlayersWhoGaveUp'
+import { useWhoIsPainter } from '@/zustand/store/useWhoIsPainter'
 
 export const generalChat = (
     data: GeneralChatFromClient['data'],

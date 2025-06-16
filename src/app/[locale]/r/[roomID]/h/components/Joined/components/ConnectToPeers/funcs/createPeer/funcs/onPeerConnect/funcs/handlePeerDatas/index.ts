@@ -1,5 +1,5 @@
 import { onPeerData, grayLog, negativeLog } from '@/utils'
-import { usePeers } from '@/zustand/store'
+import { usePeers } from '@/zustand/store/usePeers'
 import { getUndoRedo } from './funcs/getUndoRedo'
 import {
   chat,
