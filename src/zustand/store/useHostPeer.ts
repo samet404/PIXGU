@@ -1,4 +1,4 @@
-import type PixguPeer from 'simple-peer'
+import type PixguPeer from '@/pixgu-peer/types'
 import { create } from 'zustand'
 
 export type HostPeerState = {

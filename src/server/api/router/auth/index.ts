@@ -1,6 +1,5 @@
 import { createTRPCRouter } from '@/server/api/trpc'
 import {
-  isLogged,
   isJoined,
   getGuest,
   getJoinedUserID,
@@ -11,6 +10,5 @@ export const authRouter = createTRPCRouter({
   getGuest,
   getJoinedUserID,
   getCuid2,
-  isLogged,
   isJoined,
 })

@@ -1,16 +1,10 @@
 import { type ReactNode } from 'react'
 import Providers from './_components/Providers'
-import { cookies } from 'next/headers'
 import { TRPCReactProvider } from '../trpc/react'
 import { type Metadata } from 'next'
 import './_styles/globals.css'
-
-// fontawesome
-import { config } from '@fortawesome/fontawesome-svg-core'
-import '@fortawesome/fontawesome-svg-core/styles.css'
 import { SmallScreenAlert } from './_components/SmallScreenAlert'
 import { DefaultShortcuts } from './_components/DefaultShortcuts'
-config.autoAddCss = false
 import { GoogleAnalytics } from '@next/third-parties/google'
 import { CustomCursor } from './_components/CustomCursor'
 import { RightBottom } from './_components/RightBottom'
@@ -79,7 +73,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://pixgu.com'),
 }
 
-const RootLayout = async ({ children, }: {
+const RootLayout = ({ children, }: {
   children: ReactNode
 
 }) => {
@@ -95,7 +89,7 @@ const RootLayout = async ({ children, }: {
       >
         <GoogleAnalytics gaId='G-PL9PWSE3JG' />
         <SmallScreenAlert>
-          <TRPCReactProvider cookies={(await cookies()).toString()}>
+          <TRPCReactProvider>
             <CustomCursor />
             <Providers>
               <DefaultShortcuts />

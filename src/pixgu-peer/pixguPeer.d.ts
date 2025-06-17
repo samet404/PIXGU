@@ -84,7 +84,7 @@ declare namespace PixguPeer {
 
     type PixguPeerData = string | Buffer | TypedArray | ArrayBuffer | Blob;
 
-    type SignalData =
+    export type SignalData =
         | {
             type: "transceiverRequest";
             transceiverRequest: {

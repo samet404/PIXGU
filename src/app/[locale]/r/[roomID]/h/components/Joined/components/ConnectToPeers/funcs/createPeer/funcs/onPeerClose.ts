@@ -1,8 +1,8 @@
 import { negativeLog } from '@/utils'
 import { useSocketIO } from '@/zustand/store/useSocketIO'
-import type PixguPeer from 'simple-peer'
 import { playerLeft } from '../../playerLeft'
 import type { Locale } from '@/types/locale'
+import type PixguPeer from '@/pixgu-peer/types'
 // import { playerLeaved } from './funcs/playerLeaved'
 
 export const onPeerClose = (

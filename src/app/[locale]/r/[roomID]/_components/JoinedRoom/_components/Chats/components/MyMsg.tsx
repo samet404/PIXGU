@@ -6,10 +6,9 @@ import { useMyUserInfoForRoomStore } from '@/zustand/provider'
 
 export const MyMsg = ({ msg, similarity }: Props) => {
     const user = useMyUserInfoForRoomStore((state) => state.user)
-    const isGuest = 'ID' in user
-    const myID = isGuest ? user?.ID : user?.id
-    const name = isGuest ? user?.name : user?.usernameWithUsernameID
-    const pfp = isGuest ? null : user?.profilePicture
+    const myID = user?.ID
+    const name = user?.name
+    const pfp = null
 
     useEffectOnce(() => {
         const messageList = document.getElementById('msgContainer')

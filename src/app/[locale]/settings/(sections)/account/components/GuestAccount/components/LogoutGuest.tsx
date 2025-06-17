@@ -14,7 +14,7 @@ const outfit = Outfit({
 
 export const LogoutGuest = ({ text }: Props) => {
   const broadcastChannel = new BroadcastChannel('logout')
-  const { mutate, isLoading } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: exit,
     onSuccess: () => {
       broadcastChannel.postMessage(undefined)
@@ -50,7 +50,7 @@ export const LogoutGuest = ({ text }: Props) => {
       type="submit"
     >
       <div className={outfit.className}>{text}</div>
-      {isLoading && <Spinner className="size-4 drop-shadow-none" />}
+      {isPending && <Spinner className="size-4 drop-shadow-none" />}
     </animated.button>
   )
 }

@@ -51,7 +51,7 @@ export const Content = forwardRef(
         {!isLoading &&
           !isRefetching &&
           !isError &&
-          data.map((ID) => <Room key={ID} ID={ID} refetch={refetch} lang={roomsDataLang} />)}
+          data?.map((ID) => <Room key={ID} ID={ID} refetch={refetch} lang={roomsDataLang} />)}
       </div>
     )
   },

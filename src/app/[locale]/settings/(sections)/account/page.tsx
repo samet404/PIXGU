@@ -1,6 +1,6 @@
-import { api } from '@/trpc/server'
+// import { api } from '@/trpc/server'
+// import { AccountSection } from './components/Account'
 import dynamic from 'next/dynamic'
-import { AccountSection } from './components/Account'
 import type { Locale } from '@/types/locale'
 
 const GuestAccount = dynamic(() =>
@@ -9,9 +9,9 @@ const GuestAccount = dynamic(() =>
 
 const Account = async ({ params }: Props) => {
   const { locale } = await params
-  const user = await api.auth.getUser.query()
+  // const user = await api.auth.getUser.query()
 
-  if (user) return <AccountSection locale={locale} user={user} />
+  //  if (user) return <AccountSection locale={locale} user={user} />
   return <GuestAccount locale={locale} />
 }
 

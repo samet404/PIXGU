@@ -1,20 +1,18 @@
 import Image from 'next/image'
 import bgImg from '@/png/startbg.png'
 import { NavigationSection } from './_components/NavigationSection'
-import { OAuthSection } from './_components/OAuthSection'
 import Logo from '@/png/logo.png'
 import { Outfit } from 'next/font/google'
 import { GuestSection } from './_components/GuestSection'
 import Link from 'next/link'
 import type { Locale } from '@/types'
 
-
 const inter = Outfit({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700'],
 })
 
-export const Login = ({ locale, redirectToRoomID, guest, oauth }: Props) => {
+export const Login = ({ locale, redirectToRoomID, guest }: Props) => {
   return (
     <div
       className={`${inter.className} flex h-full w-full flex-col items-center`}
@@ -42,10 +40,6 @@ export const Login = ({ locale, redirectToRoomID, guest, oauth }: Props) => {
         <div className='h-full w-full flex max-w-[20rem] flex-col justify-between'>
           <div className='flex flex-col gap-2'>
             {guest && <GuestSection redirectToRoomID={redirectToRoomID} />}
-            {oauth && <p>OAuth login is not implemented yet</p>}
-            {
-              //  <OAuthSection locale={locale} /> : <Link className='text-[#ffffffb4] hover:text-white drop-shadow-lg text-xs' href="/login">I want to log in with oauth provider instead</Link>
-            }
           </div>
 
           <div className='text-xs text-[#ffffffc4] text-center'>
@@ -59,6 +53,5 @@ export const Login = ({ locale, redirectToRoomID, guest, oauth }: Props) => {
 type Props = {
   redirectToRoomID?: string
   locale: Locale
-  oauth: boolean
   guest: boolean
 }

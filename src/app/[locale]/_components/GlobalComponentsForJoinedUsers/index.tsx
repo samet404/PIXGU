@@ -6,7 +6,7 @@ import type { Locale } from '@/types/locale'
 
 // @ts-ignore https://github.com/microsoft/TypeScript/issues/59111
 export const GlobalComponentsForJoinedUsers = async ({ locale, children }: Props) => {
-  const isJoined = await api.auth.isJoined.query()
+  const isJoined = await api.auth.isJoined()
   console.log('global', locale)
   if (!isJoined) return children
 

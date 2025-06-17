@@ -1,5 +1,4 @@
 export { userRouter } from './user'
 export { authRouter } from './auth'
-export { articleRouter } from './article'
 export { gameRoomRouter } from './gameRoom'
-export { announcementRouter } from './announcement'
+export { settingsRouter } from './settings'

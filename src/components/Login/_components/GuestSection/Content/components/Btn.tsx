@@ -14,10 +14,9 @@ import { isLoadingAtom } from './atom'
 export const Btn = ({ inputRef, joinGame, redirectToRoomID }: Props) => {
   const router = useRouter()
   const [globalLoading, setGlobalLoading] = useAtom(isLoadingAtom)
-  const { mutate, isLoading, reset } = useMutation({
+  const { mutate, isPending, reset } = useMutation({
     mutationFn: joinAsGuest,
     onSuccess: (res) => router.push(res)
-
   })
   const [isActive, setIsActive] = useAtom(isActiveAtom)
 
@@ -32,9 +31,9 @@ export const Btn = ({ inputRef, joinGame, redirectToRoomID }: Props) => {
   }, [])
 
   useEffect(() => {
-    setGlobalLoading(isLoading)
+    setGlobalLoading(isPending)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading])
+  }, [isPending])
 
   useEventListener(
     'input',
@@ -67,18 +66,18 @@ export const Btn = ({ inputRef, joinGame, redirectToRoomID }: Props) => {
 
   return (
     <button
-      disabled={isLoading || globalLoading}
+      disabled={isPending || globalLoading}
       onMouseDown={handleMouseDown}
       className={clsxMerge(
         'flex items-center justify-center flex-row gap-2 rounded-md bg-[#ffffff57] shadow-sm px-2 py-1 font-[600] transition-colors duration-300 hover:opacity-60',
         {
           'bg-[#0dd5b7]': isActive,
           'cursor-not-allowed': globalLoading,
-          'cursor-wait': isLoading,
+          'cursor-wait': isPending,
         },
       )}
     >
-      <div>{joinGame ? `Log in and join game` : `Login`}</div>  {isLoading && <Spinner className="size-4 drop-shadow-none" />}
+      <div>{joinGame ? `Log in and join game` : `Login`}</div>  {isPending && <Spinner className="size-4 drop-shadow-none" />}
     </button>
   )
 }

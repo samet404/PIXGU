@@ -28,10 +28,9 @@ const Me = () => {
   const user = useMyUserInfoForRoomStore((state) => state.user)
   const whoIsPainter = useWhoIsPainterClient((s) => s.value)
   const amIGuessed = useAmIGuessed((s) => s.amIGuessed)
-  const isGuest = 'ID' in user
-  const ID = isGuest ? user?.ID : user?.id
-  const name = isGuest ? user?.name : user?.usernameWithUsernameID
-  const pfp = isGuest ? null : user?.profilePicture
+  const ID = user?.ID
+  const name = user?.name
+  const pfp = null
   const amIGaveUp = useAmIGaveUp((s) => s.value.amIGaveUp)
   const amILoser = useAmILoser((s) => s.value.amILoser)
 

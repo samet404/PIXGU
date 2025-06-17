@@ -1,8 +1,8 @@
 import { joinedUserProducure } from '@/procedure'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
-import haversine from 'haversine-distance'
 import { lookupCity } from '@/db/geoIP'
+import { haversineDistance } from '@/utils/haversineDistance'
 
 export const getRoomByID = joinedUserProducure
   .input(z.string())
@@ -24,7 +24,7 @@ export const getRoomByID = joinedUserProducure
     const hostLLJSON = (await ctx.redisDb.get(`room:${ID}:host_LL`))!
     const hostLL: [number, number] = JSON.parse(hostLLJSON)
 
-    const distanceInMeters = haversine(myLl, hostLL)
+    const distanceInMeters = haversineDistance(myLl, hostLL)
     const distanceInKm = parseInt((distanceInMeters / 1000).toFixed(0))
     const name = await ctx.redisDb.get(`room:${ID}:name`)
     if (!name)

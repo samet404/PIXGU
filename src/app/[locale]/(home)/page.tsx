@@ -16,7 +16,7 @@ const Home = async ({
       locale: Locale
     }>
 }) => {
-  const isJoined = await api.auth.isJoined.query()
+  const isJoined = await api.auth.isJoined()
   const { locale } = await params
 
 

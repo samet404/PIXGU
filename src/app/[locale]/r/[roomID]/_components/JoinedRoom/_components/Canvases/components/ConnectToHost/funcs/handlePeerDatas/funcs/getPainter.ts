@@ -24,16 +24,16 @@ import { useLoserPlayers } from '@/zustand/store/useLoserPlayers'
 import { useAmILoser } from '@/zustand/store/useAmILoser'
 import { useAmIGaveUp } from '@/zustand/store/useAmIGaveUp'
 
-export const getPainter = (
-  data: CurrentPainter['data'],
-  myUserID: string,
-) => {
+export const getPainter = (data: CurrentPainter['data'], myUserID: string) => {
   const amIPainter = myUserID === data
   console.log('amIPainter', amIPainter)
 
   if (useMatchStatusClient.getState().isFirstMatch) {
     useTotalMatchCount.getState().set(usePlayers.getState().value.count + 1)
-    storePaintersAccess.initUsers([...usePlayers.getState().getPlayersIDs(), myUserID])
+    storePaintersAccess.initUsers([
+      ...usePlayers.getState().getPlayersIDs(),
+      myUserID,
+    ])
   }
 
   if (useIsGameStopped.getState().value.code?.includes('waitingForHost'))
@@ -54,10 +54,13 @@ export const getPainter = (
 
   resetMatchStates()
 
-  usePlayers.getState().getPlayersIDs().forEach(ID => {
-    if (ID === data) return
-    usePlayersPowerups.getState().setGuessrCardsWhileThemeIsSelecting(ID)
-  })
+  usePlayers
+    .getState()
+    .getPlayersIDs()
+    .forEach((ID) => {
+      if (ID === data) return
+      usePlayersPowerups.getState().setGuessrCardsWhileThemeIsSelecting(ID)
+    })
 
   usePlayersWhoGaveUp.getState().everyoneNotGaveUp()
   usePlayersPowerups.getState().setPainterCardsWhileThemeIsSelecting(data)

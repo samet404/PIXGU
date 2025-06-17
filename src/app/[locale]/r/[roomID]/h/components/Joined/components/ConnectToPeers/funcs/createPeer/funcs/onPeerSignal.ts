@@ -1,5 +1,5 @@
+import type PixguPeer from '@/pixgu-peer/types'
 import type { WebRTCSignalData } from '@/types/webRTCSignalData'
-import type PixguPeer from 'simple-peer'
 import { goldLog } from '@/utils/goldLog'
 import { useSocketIO } from '@/zustand/store/useSocketIO'
 

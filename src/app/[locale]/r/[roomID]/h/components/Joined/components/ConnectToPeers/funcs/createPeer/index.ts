@@ -14,7 +14,7 @@ export const createPeer = (
   user: Guest,
   locale: Locale,
 ) => {
-  const ID = 'id' in user ? user.id : user.ID
+  const ID = user.ID
 
   if (useMatchStatus.getState().value.matchCount !== 0) {
     useSocketIO.getState().io!.emit('not-allowed', ID)

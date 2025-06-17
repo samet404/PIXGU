@@ -1,9 +1,8 @@
 import type { Guest } from '@/types'
-import type { User } from 'lucia'
 import { createStore } from 'zustand'
 
 export type MyUserInfoForRoomStoreState = {
-  user: Guest | User
+  user: Guest
 }
 
 // export type MyUserInfoForRoomStoreAction = {}

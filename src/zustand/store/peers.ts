@@ -1,5 +1,5 @@
 import type { Peers } from '@/types'
-import type PixguPeer from 'simple-peer'
+import type PixguPeer from '@/pixgu-peer/types'
 import { create } from 'zustand'
 
 type State = {

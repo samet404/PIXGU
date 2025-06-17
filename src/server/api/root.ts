@@ -1,15 +1,13 @@
 // https://trpc.io/docs/server/routers#defining-a-router
 
-import { createTRPCRouter } from '@/server/api/trpc'
+import { createCallerFactory, createTRPCRouter } from '@/server/api/trpc'
 
 import {
   userRouter,
-  announcementRouter,
-  articleRouter,
   authRouter,
   gameRoomRouter,
+  settingsRouter
 } from './router'
-import { settingsRouter } from './router/settings'
 
 /**
  * This is the primary router for your server.
@@ -20,11 +18,18 @@ export const appRouter = createTRPCRouter({
   auth: authRouter,
   user: userRouter,
   settings: settingsRouter,
-  article: articleRouter,
   gameRoom: gameRoomRouter,
-  announcement: announcementRouter,
 })
 
 // Export only the type of a router!
 // This prevents us from importing server code on the client.
 export type AppRouter = typeof appRouter
+
+/**
+ * Create a server-side caller for the tRPC API.
+ * @example
+ * const trpc = createCaller(createContext);
+ * const res = await trpc.post.all();
+ *       ^? Post[]
+ */
+export const createCaller = createCallerFactory(appRouter);

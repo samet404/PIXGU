@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 const Page = async ({ params }: Props) => {
   const { locale } = await params
 
-  return <Login locale={locale} guest={true} oauth={true} />
+  return <Login locale={locale} guest={true} />
 }
 
 export default Page

@@ -8,7 +8,6 @@ import { States } from './components/States'
 import { ResetStates } from './components/ResetStates'
 import { Navbar } from './components/Navbar'
 import { Canvases } from './components/Canvases'
-import type { User } from 'lucia'
 import { UseTimersWorker } from './components/UseTimersWorker'
 import type { Guest } from '@/types/guest'
 import { MatchTimer } from './components/MatchTimer'
@@ -21,15 +20,15 @@ const outfit = Outfit({
 })
 
 
-const Joined = ({ roomID, user, langObj, guest, locale }: Props) => {
-  const userID = user?.id ? user.id : guest!.ID
+const Joined = ({ roomID,  langObj, guest, locale }: Props) => {
+  const userID = guest!.ID
 
   return (
     <div
       id="root"
       className={`${outfit.className} h-full w-full overflow-y-scroll`}
     >
-      <Providers locale={locale} userID={userID} roomID={roomID} user={user ?? guest!}>
+      <Providers locale={locale} userID={userID} roomID={roomID} user={guest!}>
         <ConnectToPeers locale={locale} />
         <UseTimersWorker locale={locale} />
         <HostingHealthDisplay langObj={langObj.health} locale={locale} />
@@ -54,6 +53,4 @@ type Props = {
   roomID: string
   locale: Locale
   guest: Guest | null
-  user: User | null
 }
-

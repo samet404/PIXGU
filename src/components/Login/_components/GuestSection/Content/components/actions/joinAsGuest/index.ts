@@ -68,7 +68,7 @@ export const joinAsGuest = async (input: { name: string, joinGame: boolean, redi
 
   if (joinGame) {
     if (redirectToRoomID) return redirectToRoomID
-    const roomID = await api.gameRoom.getRandomPublicRoomID.query()
+    const roomID = await api.gameRoom.getRandomPublicRoomID()
     if (!roomID) return '/create'
     return `/r/${roomID}`
   }

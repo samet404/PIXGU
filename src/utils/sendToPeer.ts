@@ -1,5 +1,5 @@
 import type { WebRTCConnData } from '@/types/webRTCConnData'
-import type PixguPeer from 'simple-peer'
+import type PixguPeer from '@/pixgu-peer/types'
 import { isObject } from './isObject'
 import { grayLog } from './grayLog'
 import { negativeLog } from './negativeLog'

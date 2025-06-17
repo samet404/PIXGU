@@ -1,5 +1,4 @@
 import type { Player } from '@/zustand/store/usePlayers'
-import type { User } from 'lucia'
 import type { Powerup, RainingColorsPowerupData, TimeBasedPowerups } from './powerups'
 
 /**
@@ -166,7 +165,7 @@ export type Coin = {
 
 export type PrevCoins = {
   event: 'prevCoins'
-  data: Record<User['id'], number>
+  data: Record<string, number>
 }
 
 export type YourCoin = {

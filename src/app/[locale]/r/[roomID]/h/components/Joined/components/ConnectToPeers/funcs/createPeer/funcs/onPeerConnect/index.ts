@@ -5,7 +5,6 @@ import { useSocketIO } from '@/zustand/store/useSocketIO'
 import { useSpectators } from '@/zustand/store/useSpectators'
 import { useHostingHealth } from '@/zustand/store/useHostingHealth'
 import type { Guest, Locale } from '@/types'
-import type PixguPeer from 'simple-peer'
 import { sendToPeer } from '@/utils/sendToPeer'
 import { positiveLog } from '@/utils/positiveLog'
 import { handlePeerDatas } from './funcs/handlePeerDatas'
@@ -16,6 +15,7 @@ import {
   postMsgToHostTimerWorker,
   type CanvasWorkerOnMsgData,
 } from '@/workers'
+import type PixguPeer from '@/pixgu-peer/types'
 
 const canvasWorker = getCanvasWorker()
 

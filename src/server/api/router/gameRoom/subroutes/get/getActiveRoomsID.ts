@@ -1,4 +1,5 @@
 import { joinedUserProducure } from '@/procedure'
+import { haversineDistance } from '@/utils/haversineDistance'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
@@ -43,8 +44,7 @@ export const getActiveRoomsID = joinedUserProducure
               })
 
             const parsedHostLL: [number, number] = JSON.parse(hostLL)
-            const haversine = (await import('haversine-distance')).default
-            const distanceInMeters = haversine(myLl, parsedHostLL)
+            const distanceInMeters = haversineDistance(myLl, parsedHostLL)
             const distanceInKm = distanceInMeters / 1000
 
             return {

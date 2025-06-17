@@ -19,6 +19,7 @@
     "baseUrl": "./",
     "paths": {
       "@/pixgu-peer": ["./src/pixgu-peer/pixguPeer.js"],
+      "@/pixgu-peer/types": ["./src/pixgu-peer/pixguPeer.d.ts"],
       "@/store/*": ["./src/store/*"],
       "@/middlewares": ["./src/middlewares/index.ts"],
       "@/helpers": ["./src/helpers/index.ts"],

@@ -7,8 +7,6 @@ import { roomIDSchema } from '@/zod/schema'
 import { notFound } from 'next/navigation'
 import { env } from '@/env/server'
 
-
-
 export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
   const { roomID } = await params
 
@@ -41,7 +39,7 @@ const Room = async ({
   params
 }: Props) => {
   const { roomID, locale } = await params
-  const isJoined = await api.auth.isJoined.query()
+  const isJoined = await api.auth.isJoined()
 
   try {
     roomIDSchema.parse(roomID)
@@ -49,10 +47,10 @@ const Room = async ({
     return notFound()
   }
 
-  const isRoomExits = await api.gameRoom.isExits.query({ roomID })
+  const isRoomExits = await api.gameRoom.isExits({ roomID })
   if (!isRoomExits) return notFound()
 
-  if (!isJoined) return <Login guest={true} oauth={false} redirectToRoomID={roomID} locale={locale} />
+  if (!isJoined) return <Login guest={true} redirectToRoomID={roomID} locale={locale} />
   return <JoinedRoom roomID={roomID} locale={locale} />
 }
 

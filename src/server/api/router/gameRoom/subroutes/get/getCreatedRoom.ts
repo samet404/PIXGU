@@ -6,8 +6,7 @@ export const getCreatedRoom = joinedUserProducure
   .input(z.object({ ID: z.string().max(10).min(4) }))
   .query(async ({ ctx, input }) => {
     const userID = (() => {
-      if (ctx.isGuest) return ctx.guest!.ID
-      return ctx.user!.id
+      return ctx.guest!.ID
     })()
     const { ID } = input
     const hostID = await ctx.redisDb.get(`room:${ID}:host_ID`)

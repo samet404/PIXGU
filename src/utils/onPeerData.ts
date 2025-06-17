@@ -2,7 +2,7 @@ import type {
   WebRTCConnDataFromClient,
   WebRTCConnDataFromHost,
 } from '@/types/webRTCConnData'
-import type PixguPeer from 'simple-peer'
+import type PixguPeer from '@/pixgu-peer/types'
 import { AES, enc } from 'crypto-js'
 
 export const onPeerData = <T extends 'fromHost' | 'fromClient'>(

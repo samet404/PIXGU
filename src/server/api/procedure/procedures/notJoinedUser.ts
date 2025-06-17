@@ -4,7 +4,7 @@ import { cookies } from 'next/headers'
 
 export const notJoinedUserProducure = publicProcedure.use(
   async ({ next, ctx, path, type }) => {
-    if (ctx.user) throw new TRPCError({ code: 'UNAUTHORIZED' })
+    // if (ctx.user) throw new TRPCError({ code: 'UNAUTHORIZED' })
 
     const guestAuthToken = (await cookies()).get('guest_auth_session')?.value
     if (!guestAuthToken) await next()

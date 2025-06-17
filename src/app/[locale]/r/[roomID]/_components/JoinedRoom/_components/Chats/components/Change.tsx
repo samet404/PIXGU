@@ -1,12 +1,11 @@
 'use client'
 
-import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useGuessChatLayout } from '@/zustand/store/useGuessChatLayout'
 import { useGeneralChatLayout } from '@/zustand/store/useGeneralChatLayout'
 import { useShortcut } from '@/hooks/useShortcut'
 import { useSpring, animated } from '@react-spring/web'
 import { useControls } from '@/zustand/store/useControls'
+import { RefreshCcw } from 'lucide-react'
 
 export const Change = () => {
   const keyBind = useControls(s => s.keys['Change in-game chat'])
@@ -56,12 +55,7 @@ export const Change = () => {
       className="h-7 flex-shrink-0 flex items-center justify-center bg-[#ffffff31] rounded-md text-[#ffffff5f] font-[700] gap-2"
     >
       <div className="text-[0.8rem] leading-3">{keyBind.join(' + ')}</div>
-      <div className="size-4 rounded-full">
-        <FontAwesomeIcon
-          icon={faArrowsRotate}
-          className="!h-full w-full pb-1"
-        />
-      </div>
+      <RefreshCcw className="size-5 opacity-50 text-[white] " />
     </animated.button>
   )
 }

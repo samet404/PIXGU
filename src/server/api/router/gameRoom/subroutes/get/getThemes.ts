@@ -10,7 +10,7 @@ export const getThemes = joinedUserProducure
   )
   .query(async ({ input, ctx }) => {
     const { roomID } = input
-    const clientID = ctx.isGuest ? ctx.guest!.ID : ctx.user!.id
+    const clientID = ctx.guest!.ID
 
     const isRoomExists =
       (await ctx.redisDb.sismember('active_rooms', roomID)) === 1

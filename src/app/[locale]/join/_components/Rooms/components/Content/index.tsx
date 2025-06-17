@@ -41,14 +41,14 @@ export const Content = forwardRef(
         </div>
       )
 
-    if (data.length === 0)
+    if (data?.length === 0)
       return (
         <div className="w-full animate-fade text-center text-white">
           {noroomText}
         </div>
       )
 
-    return data.map((ID) => <RoomItem key={ID} ID={ID} roomsKeysTexts={roomsKeysTexts} />)
+    return data?.map((ID) => <RoomItem key={ID} ID={ID} roomsKeysTexts={roomsKeysTexts} />)
   },
 )
 

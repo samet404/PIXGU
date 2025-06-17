@@ -1,13 +1,11 @@
 import { clsxMerge } from '@/utils/clsxMerge'
-import { type IconDefinition } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { type ComponentProps } from 'react'
+import { ReactNode, type ComponentProps } from 'react'
 
 type BtnProps = {
   isLoading: boolean
   isError: boolean
   isSuccess: boolean
-  icon: IconDefinition
+  icon: ReactNode
 } & ComponentProps<'button'>
 
 const Btn = ({ isLoading, isError, isSuccess, icon, ...rest }: BtnProps) => {
@@ -24,11 +22,12 @@ const Btn = ({ isLoading, isError, isSuccess, icon, ...rest }: BtnProps) => {
       )}
       {...rest}
     >
-      <FontAwesomeIcon
-        icon={icon}
-        color={isError ? '#ffffff7e' : isSuccess ? '#ffffff7e' : '#2d9dff'}
-        className="!h-full w-full"
-      />
+      <div className={clsxMerge('text-[#2d9dff]', {
+        'text-[#ff2e3c]': isError,
+        'text-[#42ff8a]': isSuccess,
+      })}>
+        {icon}
+      </div>
     </button>
   )
 }

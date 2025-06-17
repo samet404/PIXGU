@@ -1,5 +1,5 @@
+import type PixguPeer from '@/pixgu-peer/types'
 import { usePeers } from '@/zustand/store/usePeers'
-import type { SignalData } from 'simple-peer'
 import type { Socket } from 'socket.io-client'
 
 export const receiveSignal = (io: Socket) =>
@@ -9,5 +9,5 @@ export const receiveSignal = (io: Socket) =>
 
 type ReceviedSignal = {
   userID: string
-  signal: SignalData
+  signal: PixguPeer.SignalData
 }

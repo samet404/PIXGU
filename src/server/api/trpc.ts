@@ -8,10 +8,9 @@ import 'server-only'
  * TL;DR - This is where all the tRPC server stuff is created and plugged in. The pieces you will
  * need to use are documented accordingly near the end.
  */
-import { initTRPC } from '@trpc/server'
-import superjson from 'superjson'
-import { ZodError } from 'zod'
-
+import { initTRPC } from "@trpc/server";
+import superjson from "superjson";
+import { ZodError } from "zod";
 import { redisDb } from '@/redis'
 import { env } from '@/env/server'
 import { validateGuest } from '@/auth/guest'
@@ -29,8 +28,8 @@ import { getIP } from '@/utils'
  *
  * @see https://trpc.io/docs/server/context
  */
-
 export const createTRPCContext = async (opts: { headers: Headers }) => {
+
   const clientIP =
     process.env.NODE_ENV === 'development'
       ? env.IP_ADDRESS
@@ -50,7 +49,7 @@ export const createTRPCContext = async (opts: { headers: Headers }) => {
     clientIP,
     ...opts,
   }
-}
+};
 
 /**
  * 2. INITIALIZATION
@@ -69,9 +68,16 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
         zodError:
           error.cause instanceof ZodError ? error.cause.flatten() : null,
       },
-    }
+    };
   },
-})
+});
+
+/**
+ * Create a server-side caller.
+ *
+ * @see https://trpc.io/docs/server/server-side-calls
+ */
+export const createCallerFactory = t.createCallerFactory;
 
 /**
  * 3. ROUTER & PROCEDURE (THE IMPORTANT BIT)
@@ -85,7 +91,30 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
  *
  * @see https://trpc.io/docs/router
  */
-export const createTRPCRouter = t.router
+export const createTRPCRouter = t.router;
+
+/**
+ * Middleware for timing procedure execution and adding an artificial delay in development.
+ *
+ * You can remove this if you don't like it, but it can help catch unwanted waterfalls by simulating
+ * network latency that would occur in production but not in local development.
+ */
+const timingMiddleware = t.middleware(async ({ next, path }) => {
+  const start = Date.now();
+
+  if (t._config.isDev) {
+    // artificial delay in dev
+    const waitMs = Math.floor(Math.random() * 400) + 100;
+    await new Promise((resolve) => setTimeout(resolve, waitMs));
+  }
+
+  const result = await next();
+
+  const end = Date.now();
+  console.log(`[TRPC] ${path} took ${end - start}ms to execute`);
+
+  return result;
+});
 
 /**
  * Public (unauthenticated) procedure
@@ -94,4 +123,4 @@ export const createTRPCRouter = t.router
  * guarantee that a user querying is authorized, but you can still access user session data if they
  * are logged in.
  */
-export const publicProcedure = t.procedure
+export const publicProcedure = t.procedure.use(timingMiddleware);

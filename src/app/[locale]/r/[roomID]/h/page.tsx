@@ -41,22 +41,18 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
 const Content = async ({ params }: Props) => {
   const { locale, roomID } = await params
 
-  const isJoined = await api.auth.isJoined.query()
+  const isJoined = await api.auth.isJoined()
   if (!isJoined) redirect(`/${locale}/r/${roomID}`)
 
   const langObj = await getLangObj(locale)
-  const user = await api.auth.getUser.query()
-  const guest = await api.auth.getGuest.query()
+  const guest = await api.auth.getGuest()
   const hostID = await redisDb.get(`room:${roomID}:host_ID`)
 
-  const clientID = (() => {
-    if (user) return user.id
-    return guest!.ID
-  })()
+  const clientID = guest!.ID
 
   if (hostID !== clientID) redirect(`/${locale}/r/${roomID}`)
 
-  return <Joined langObj={langObj} roomID={roomID} user={user} guest={guest} locale={locale} />
+  return <Joined langObj={langObj} roomID={roomID} guest={guest} locale={locale} />
 }
 
 export default Content

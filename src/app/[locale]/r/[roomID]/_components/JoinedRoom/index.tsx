@@ -19,6 +19,10 @@ import { redisDb } from '@/db/redis'
 import { notFound } from 'next/navigation'
 import { PainterToolGuide } from './_components/PainterToolGuide'
 import { getLangObj } from './lang'
+import { UseTimersWorker } from './_components/UseTimersWorker'
+import { CanvasToolsShadow } from './_components/CanvasToolsShadow'
+import { ToolAlert } from './_components/ToolAlert'
+import { Logs } from './_components/Logs'
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -26,25 +30,26 @@ const outfit = Outfit({
 })
 
 const JoinedRoom = async ({ roomID, locale }: Props) => {
-  const havePassword = await api.gameRoom.isHavePass.query({
+  const havePassword = await api.gameRoom.isHavePass({
     roomID,
   })
 
   const hostID = await redisDb.get(`room:${roomID}:host_ID`)
   if (!hostID) notFound()
 
-  const guest = await api.auth.getGuest.query()
+  const guest = await api.auth.getGuest()
   const langObj = await getLangObj(locale)
+  if (!guest) return "An error occurred, please try again by refreshing the page."
 
   return (
     <div className={`${outfit.className} relative flex h-full w-full flex-col`}>
       <Providers
         locale={locale}
         havePassword={havePassword}
-        userID={guest!.ID}
+        userID={guest.ID}
         roomID={roomID}
         hostID={hostID}
-        guest={guest!!}
+        guest={guest}
       >
         <div className="relative flex h-full w-full flex-col">
           <UseTimersWorker />
@@ -56,7 +61,7 @@ const JoinedRoom = async ({ roomID, locale }: Props) => {
             <ToolAlert />
             <ResetStates />
             <CanvasTools langObj={langObj.canvasTools} />
-            <GameEnd userID={user ? user.id : guest!.ID} />
+            <GameEnd userID={guest.ID} />
             <Status langObj={langObj.status} />
             <Shortcuts langObj={langObj.shortcuts} />
             <div className="h-full w-full">
