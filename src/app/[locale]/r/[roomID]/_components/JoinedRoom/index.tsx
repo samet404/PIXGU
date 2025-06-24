@@ -30,22 +30,18 @@ const outfit = Outfit({
 })
 
 const JoinedRoom = async ({ roomID, locale }: Props) => {
-  const havePassword = await api.gameRoom.isHavePass({
-    roomID,
-  })
-
   const hostID = await redisDb.get(`room:${roomID}:host_ID`)
   if (!hostID) notFound()
 
   const guest = await api.auth.getGuest()
   const langObj = await getLangObj(locale)
-  if (!guest) return "An error occurred, please try again by refreshing the page."
+  if (!guest)
+    return 'An error occurred, please try again by refreshing the page.'
 
   return (
     <div className={`${outfit.className} relative flex h-full w-full flex-col`}>
       <Providers
         locale={locale}
-        havePassword={havePassword}
         userID={guest.ID}
         roomID={roomID}
         hostID={hostID}

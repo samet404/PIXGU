@@ -1,6 +1,5 @@
 import { createTRPCRouter } from '../../trpc'
 import {
-  isRoomHavePassword,
   isExits,
   getThemes,
   getCreatedRoom,
@@ -19,9 +18,6 @@ export const gameRoomRouter = createTRPCRouter({
   getCreatedRoomsIDs,
   getCreatedRoom,
   getThemes,
-
-
-  isHavePass: isRoomHavePassword,
 
   isExits,
 })

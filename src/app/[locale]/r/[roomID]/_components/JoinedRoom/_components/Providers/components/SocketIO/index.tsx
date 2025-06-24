@@ -2,10 +2,15 @@
 
 import { useSocketIO } from '@/zustand/store/useSocketIO'
 import { useEffect, useState, type PropsWithChildren } from 'react'
-import { io as IOClient, type ManagerOptions, type Socket, type SocketOptions } from 'socket.io-client'
+import {
+  io as IOClient,
+  type ManagerOptions,
+  type Socket,
+  type SocketOptions,
+} from 'socket.io-client'
 import { env } from '@/env/client'
-import { useAtom } from 'jotai'
-import { roomPasswordAtom } from '../../atoms'
+import { useAtom, useSetAtom } from 'jotai'
+import { roomNeedsPassword, roomPasswordAtom } from '../../atoms'
 import { DisconnectedView } from './components/DisconnectedView'
 import { LoadingView } from './components/LoadingView'
 import type { Locale } from '@/types'
@@ -21,6 +26,7 @@ const SOCKET_EVENTS = {
   CONNECT_ERROR: 'connect_error',
   RECONNECT_ERROR: 'reconnect_error',
   RECONNECT_ATTEMPT: 'reconnect_attempt',
+  ROOM_PASSWORD_NEEDED: 'room_password_needed',
 } as const
 
 const NAMESPACE = 'p'
@@ -34,7 +40,9 @@ const initStatusState: StatusState = {
   isDisconnected: false,
 }
 
-const createSocketConnection = (opts: Partial<ManagerOptions & SocketOptions>) =>
+const createSocketConnection = (
+  opts: Partial<ManagerOptions & SocketOptions>,
+) =>
   IOClient(`${env.NEXT_PUBLIC_SOCKETIO_URI}/${NAMESPACE}`, {
     autoConnect: false,
     withCredentials: true,
@@ -45,29 +53,33 @@ const createSocketConnection = (opts: Partial<ManagerOptions & SocketOptions>) =
 const useSocketSetup = (roomID: string) => {
   const [password, setPassword] = useAtom(roomPasswordAtom)
   const [status, setStatus] = useState<StatusState>(initStatusState)
-  const io = useSocketIO(s => s.io)
+  const io = useSocketIO((s) => s.io)
+  const setIsPasswordNeeded = useSetAtom(roomNeedsPassword)
   const [ioOpts] = useState<Partial<ManagerOptions & SocketOptions>>({
     auth: { roomID, password },
   })
 
   const handleAuth = (io: Socket, authStatus: AuthStatus) => {
     if (authStatus.isSuccess) {
-      setStatus(prev => ({ ...prev, isAuthSuccess: true }))
+      setStatus((prev) => ({ ...prev, isAuthSuccess: true }))
       io.emit(SOCKET_EVENTS.PLAYER_AUTH)
     } else {
-      setStatus(prev => ({
+      setStatus((prev) => ({
         ...prev,
         isAuthSuccess: false,
-        error: [...prev.error, `UNAUTHORIZED: You need to be ${authStatus.required.join(' or ')}`],
+        error: [
+          ...prev.error,
+          `UNAUTHORIZED: You need to be ${authStatus.required.join(' or ')}`,
+        ],
       }))
     }
   }
 
   const handlePlayerAuth = (authStatus: PlayerAuthStatus) => {
     if (authStatus.isSuccess) {
-      setStatus(prev => ({ ...prev, isPlayerAuthSuccess: true }))
+      setStatus((prev) => ({ ...prev, isPlayerAuthSuccess: true }))
     } else {
-      setStatus(prev => ({
+      setStatus((prev) => ({
         ...prev,
         isLoading: false,
         isConnected: false,
@@ -80,15 +92,18 @@ const useSocketSetup = (roomID: string) => {
     if (!io) return
 
     io.on(SOCKET_EVENTS.CONNECT, () => {
-      setStatus(prev => ({ ...prev, isConnected: true }))
+      setStatus((prev) => ({ ...prev, isConnected: true }))
       io.emit(SOCKET_EVENTS.AUTH)
     })
 
-    io.once(SOCKET_EVENTS.AUTH, (authStatus: AuthStatus) => handleAuth(io, authStatus))
+    io.once(SOCKET_EVENTS.AUTH, (authStatus: AuthStatus) =>
+      handleAuth(io, authStatus),
+    )
     io.once(SOCKET_EVENTS.PLAYER_AUTH, handlePlayerAuth)
+    io.once(SOCKET_EVENTS.ROOM_PASSWORD_NEEDED, () => setIsPasswordNeeded(true))
 
     io.on(SOCKET_EVENTS.DISCONNECT, () => {
-      setStatus(prev => ({
+      setStatus((prev) => ({
         ...prev,
         isLoading: false,
         isConnected: false,
@@ -108,21 +123,21 @@ const useSocketSetup = (roomID: string) => {
     io.on(SOCKET_EVENTS.RECONNECT_ATTEMPT, () => setStatus(initStatusState))
 
     io.on(SOCKET_EVENTS.ROOM_KILLED, ({ reason }) => {
-      setStatus(prev => ({
+      setStatus((prev) => ({
         ...prev,
         error: [...prev.error, `ROOM_KILLED: ${reason}`],
       }))
     })
 
     io.on(SOCKET_EVENTS.BLOCKED, () => {
-      setStatus(prev => ({
+      setStatus((prev) => ({
         ...prev,
         error: [...prev.error, 'BLOCKED: You are blocked from room by host'],
       }))
     })
 
     io.on(SOCKET_EVENTS.LEAVE_ROOM, (reason) => {
-      setStatus(prev => ({
+      setStatus((prev) => ({
         ...prev,
         error: [...prev.error, `LEAVE_ROOM: ${reason}`],
       }))
@@ -146,21 +161,23 @@ const useSocketSetup = (roomID: string) => {
 }
 
 export const SocketIOProvider = ({ roomID, locale, children }: Props) => {
-  const {
-    status,
-    setupSocketListeners,
-    password,
-    setPassword,
-    ioOpts,
-  } = useSocketSetup(roomID)
+  const { status, setupSocketListeners, password, setPassword, ioOpts } =
+    useSocketSetup(roomID)
 
-  const { isConnected, isPlayerAuthSuccess, isAuthSuccess, isLoading, isDisconnected, error } = status
+  const {
+    isConnected,
+    isPlayerAuthSuccess,
+    isAuthSuccess,
+    isLoading,
+    isDisconnected,
+    error,
+  } = status
 
   useEffect(() => {
     useSocketIO.getState().setIO(createSocketConnection(ioOpts))
   }, [ioOpts])
 
-  useEffect(setupSocketListeners, [useSocketIO(s => s.io)])
+  useEffect(setupSocketListeners, [useSocketIO((s) => s.io)])
 
   if (isConnected && isPlayerAuthSuccess && isAuthSuccess) return children
   if (isLoading) return <LoadingView />
@@ -185,25 +202,25 @@ type Props = PropsWithChildren<{
 
 type PlayerAuthStatus =
   | {
-    isSuccess: true
-  }
-  | {
-    isSuccess: false
-    reason: {
-      code: string
-      message: string
+      isSuccess: true
     }
-  }
+  | {
+      isSuccess: false
+      reason: {
+        code: string
+        message: string
+      }
+    }
 
 type AuthStatus =
   | {
-    isSuccess: true
-    as: string
-  }
+      isSuccess: true
+      as: string
+    }
   | {
-    isSuccess: false
-    required: string[]
-  }
+      isSuccess: false
+      required: string[]
+    }
 
 type StatusState = {
   error: string[]

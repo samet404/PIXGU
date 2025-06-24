@@ -8,6 +8,4 @@ export { getCreatedRoom } from './get/getCreatedRoom'
 export { getRandomRoomID } from './get/getRandomRoomID'
 export { getRandomPublicRoomID } from './get/getRandomPublicRoomID'
 
-export { isRoomHavePassword } from './is/isRoomHavePassword'
-
 export { isExits } from './is/isExits'

@@ -24,8 +24,8 @@ export const Providers = ({
   children,
 }: Props) => {
   return (
-    <Password havePassword={havePassword}>
-      <SocketIOProvider locale={locale} roomID={roomID}>
+    <SocketIOProvider locale={locale} roomID={roomID}>
+      <Password havePassword={havePassword}>
         <HostInfoStoreProvider
           initState={{
             amIHost: userID === hostID,
@@ -53,8 +53,8 @@ export const Providers = ({
             </RoomIDStoreProvider>
           </UserIDStoreProvider>
         </HostInfoStoreProvider>
-      </SocketIOProvider>
-    </Password>
+      </Password>
+    </SocketIOProvider>
   )
 }
 

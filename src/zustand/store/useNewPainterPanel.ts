@@ -1,21 +1,13 @@
 import { create } from 'zustand'
 
-type Value =
-  | {
-      isOpen: true
-      painterID: string
-      status: 'waitingForThemes'
-    }
-  | {
-      isOpen: true
-      painterID: string
-      status: 'selectingTheme'
-    }
-  | {
-      isOpen: false
-    }
+type State = {
+  value: {
+    isOpen: boolean
+    painterID?: string
+    status?: 'selectingTheme' | 'waitingForThemes'
+  }
+}
 
-type State = { value: Value }
 type Action = {
   open: (input: { painterID: string }) => void
   close: () => void
