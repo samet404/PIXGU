@@ -2,7 +2,11 @@
 
 import { useSocketIO } from '@/zustand/store/useSocketIO'
 import { useEffect, useState, type PropsWithChildren } from 'react'
-import { io as createIO, type ManagerOptions, type SocketOptions } from 'socket.io-client'
+import {
+  io as createIO,
+  type ManagerOptions,
+  type SocketOptions,
+} from 'socket.io-client'
 import { env } from '@/env/client'
 import { DisconnectedView } from './components/DisconnectedView'
 import { LoadingView } from './components/LoadingView'
@@ -38,7 +42,7 @@ const useSocketSetup = (wsUrl: string) => {
 
   const setupSocketConnection = () => {
     const OPTS: Partial<ManagerOptions & SocketOptions> = {
-      auth: { token: 'k3wzeu2cfwvp3r1ojjmwy17e6fme8l8cc9t059fe' },
+      auth: { token: localStorage.getItem('adminAuthToken') },
       autoConnect: false,
       withCredentials: true,
       secure: env.NEXT_PUBLIC_NODE_ENV === 'production',
@@ -48,17 +52,23 @@ const useSocketSetup = (wsUrl: string) => {
     const io = useSocketIO.getState().io!
 
     io.on(SOCKET_EVENTS.CONNECT, () => {
-      setStatus(prev => ({ ...prev, isConnected: true }))
+      setStatus((prev) => ({ ...prev, isConnected: true }))
     })
 
     io.on(SOCKET_EVENTS.AUTH, (authStatus: AuthStatus) => {
       console.log('authStatus: ', authStatus)
-      if (authStatus.isSuccess) setStatus(prev => ({ ...prev, isAuthSuccess: authStatus.isSuccess }))
-      else setStatus(prev => ({ ...prev, isAuthSuccess: false, error: [authStatus.reason] }))
+      if (authStatus.isSuccess)
+        setStatus((prev) => ({ ...prev, isAuthSuccess: authStatus.isSuccess }))
+      else
+        setStatus((prev) => ({
+          ...prev,
+          isAuthSuccess: false,
+          error: [authStatus.reason],
+        }))
     })
 
     io.on(SOCKET_EVENTS.DISCONNECT, () => {
-      setStatus(prev => ({
+      setStatus((prev) => ({
         ...prev,
         isLoading: false,
         isConnected: false,
@@ -90,7 +100,8 @@ const useSocketSetup = (wsUrl: string) => {
 export const SocketIOProvider = ({ children }: Props) => {
   const wsUrl = useAtomValue(wsUrlAtom)
   const { status, setupSocketConnection } = useSocketSetup(wsUrl)
-  const { isConnected, isAuthSuccess, isLoading, isDisconnected, error } = status
+  const { isConnected, isAuthSuccess, isLoading, isDisconnected, error } =
+    status
 
   useEffect(setupSocketConnection, [wsUrl])
 

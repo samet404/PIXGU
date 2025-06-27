@@ -38,9 +38,13 @@ const JoinedRoom = async ({ roomID, locale }: Props) => {
   if (!guest)
     return 'An error occurred, please try again by refreshing the page.'
 
+  const isRoomPasswordProtected =
+    (await redisDb.get(`room:${roomID}:password`)) !== null
+
   return (
     <div className={`${outfit.className} relative flex h-full w-full flex-col`}>
       <Providers
+        havePassword={isRoomPasswordProtected}
         locale={locale}
         userID={guest.ID}
         roomID={roomID}

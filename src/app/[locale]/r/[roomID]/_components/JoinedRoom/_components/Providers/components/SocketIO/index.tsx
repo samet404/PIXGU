@@ -10,7 +10,7 @@ import {
 } from 'socket.io-client'
 import { env } from '@/env/client'
 import { useAtom, useSetAtom } from 'jotai'
-import { roomNeedsPassword, roomPasswordAtom } from '../../atoms'
+import { roomPasswordAtom } from '../../atoms'
 import { DisconnectedView } from './components/DisconnectedView'
 import { LoadingView } from './components/LoadingView'
 import type { Locale } from '@/types'
@@ -26,7 +26,6 @@ const SOCKET_EVENTS = {
   CONNECT_ERROR: 'connect_error',
   RECONNECT_ERROR: 'reconnect_error',
   RECONNECT_ATTEMPT: 'reconnect_attempt',
-  ROOM_PASSWORD_NEEDED: 'room_password_needed',
 } as const
 
 const NAMESPACE = 'p'
@@ -54,7 +53,6 @@ const useSocketSetup = (roomID: string) => {
   const [password, setPassword] = useAtom(roomPasswordAtom)
   const [status, setStatus] = useState<StatusState>(initStatusState)
   const io = useSocketIO((s) => s.io)
-  const setIsPasswordNeeded = useSetAtom(roomNeedsPassword)
   const [ioOpts] = useState<Partial<ManagerOptions & SocketOptions>>({
     auth: { roomID, password },
   })
@@ -100,7 +98,6 @@ const useSocketSetup = (roomID: string) => {
       handleAuth(io, authStatus),
     )
     io.once(SOCKET_EVENTS.PLAYER_AUTH, handlePlayerAuth)
-    io.once(SOCKET_EVENTS.ROOM_PASSWORD_NEEDED, () => setIsPasswordNeeded(true))
 
     io.on(SOCKET_EVENTS.DISCONNECT, () => {
       setStatus((prev) => ({
