@@ -1,4 +1,5 @@
-![icon](https://pixgu.com/image/png/startbg.png)
+
+![startbg](https://github.com/user-attachments/assets/b8006a26-08c3-4f42-8424-27830360bdc3)
 
 PIXGU is a real-time multiplayer drawing and guessing game platform inspired by popular games like Gartic.io and Skribbl.io. Players take turns drawing pictures while others try to guess what's being drawn. Create private rooms and invite friends to play together!
 
@@ -26,6 +27,9 @@ PIXGU is a real-time multiplayer drawing and guessing game platform inspired by 
 | [Zustand](https://zustand-demo.pmnd.rs/)                                        | Lightweight state management for global application state                                           |
 | [Jotai](https://jotai.org/)                                                     | Atomic state management for component-level state                                                   |
 
+
+![bg2](https://github.com/user-attachments/assets/0e2b5cff-e039-49df-b5b4-93d9ae59af53)
+
 ### Development Tools
 
 - ESLint for code linting
@@ -50,3 +54,5 @@ PIXGU is a real-time multiplayer drawing and guessing game platform inspired by 
 ### Contributing
 
 You can contribute to this project by forking it and submitting a pull request.
+
+
